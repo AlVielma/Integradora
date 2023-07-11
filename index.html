@@ -13,90 +13,121 @@
     <title>Pop Ópticos</title>
 </head>
   <body>
-    <!--ARTURO COME PENEEEEE-->
-        <!--ARTURO EL CHUPAAS-->
-            <!--Header-->
-            <header class="header">
-                 <!--Barra navegacion-->
-                <nav class="navbar navbar-expand-lg bg-black">
-                    <div class="container-fluid">
-        
-                      <a class="navbar-brand text-white" href="#">
-                        <img src="images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-                        Pop Ópticos
-                      </a>
-        
-                      <div class="container-fluid">
-                        <form class="d-flex" role="search">
-                          <input class="form-control me-2 busqueda" type="search" placeholder="Search" aria-label="Search">
-                        </form>
-                      </div>
-        
-                      <a class="navbar-brand text-white" href="#">
-                        <img src="images/carrito.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-                      </a>
-                      <a class="navbar-brand text-white" href="#">
-                        <img src="images/usuario.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-                      </a>
-                    </div>
-                  </nav>
-                   <!--Barra catalogos-->
-                  <nav class="navbar navbar-expand-lg bg-dark">
-                    <div class="container-fluid">
-                      <button class="navbar-toggler border border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar"><img src="images/menu-hamburguesa.png" alt="Hamburgues" width="20" height="20"></span>
-                      </button>
-                      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                        <ul class="navbar-nav">
-                            
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Adultos
-                                </a>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">Pop Unisex</a></li>
-                                  <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="Hombrespop.php">Pop Hombre</a></li>
-                                  <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="#">Pop Mujer</a></li>
-                                </ul>
+  
+             <!--Header-->
+    <header class="header">
+      <!--Barra navegacion-->
+      <nav class="navbar navbar-expand-lg bg-black">
+          <div class="container-fluid">
+
+              <a class="navbar-brand text-white" href="index.html">
+                  <img src="images/icon.png" alt="Logo" width="30" height="30"
+                      class="d-inline-block align-text-top">
+                  Pop Ópticos
+              </a>
+
+              <div class="container-fluid">
+                  <form class="d-flex" role="search">
+                      <input class="form-control me-2 busqueda" type="search" placeholder="Search"
+                          aria-label="Search">
+                  </form>
+              </div>
+
+              <a class="navbar-brand text-white" href="pages/car.html">
+                  <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                </a>
+                <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"><img src="/../images/usuario.png" width="35" height="35" alt="Usuario"></a>
+
+              </div> 
+            </nav>
+            <!--Sidebar superior-->
+            <div class="offcanvas offcanvas-top bg-body-tertiary justify-content-center align-items-center text-center" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel" >
+              <div class="offcanvas-header">
+                <div class="row"><h3 class="offcanvas-title" id="offcanvasTopLabel text-center">¡Hola Pop!</h3></div>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+
+              <div class="offcanvas-body">
+                <div class="row">
+                  <div class="col-12">
+                    <i class="h5">¡Bienvenido! Inicia sesion o registrate</i>
+                    <img src="images/icon.png" alt="" width="70" height="70">
+                  </div>
+                </div>
+
+                <div class="row mx-5 text-center justify-content-center">
+                  <a href="pages/login.html" class="objeto-texto h3">Inicia Sesion</a>
+                  <a href="pages/register.html" class="objeto-texto h3">Registrate</a>
+                </div>
+              </div>
+            </div>
+            <!--/Sidebar superior-->
+      </nav>
+      <!--Barra catalogos-->
+      <nav class="navbar navbar-expand-lg bg-dark justify-content-center">
+          <div class="container-fluid">
+              <button class="navbar-toggler border border-white" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                  aria-label="Toggle navigation">
+                  <span class="navbar"><img src="images/menu-hamburguesa.png" alt="Hamburgues" width="20"
+                          height="20"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav mx-auto">
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                              data-bs-toggle="dropdown" aria-expanded="false">
+                              Adultos
+                          </a>
+                          <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="pages/popunisex.html">Pop Unisex</a></li>
+                              <li>
+                                  <hr class="dropdown-divider">
                               </li>
-                              
-                              <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Niños
-                                </a>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">Niños Pop</a></li>
-                                  <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="#">Niñas Pop</a></li>
-                                  
-                                </ul>
+                              <li><a class="dropdown-item" href="pages/pophombres.html">Pop Hombre</a></li>
+                              <li>
+                                  <hr class="dropdown-divider">
                               </li>
-        
-                              <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Solar
-                                </a>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">Solar Hombre</a></li>
-                                  <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="#">Solar Mujer</a></li>
-                                </ul>
+                              <li><a class="dropdown-item" href="pages/popmujer.html">Pop Mujer</a></li>
+                          </ul>
+                      </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                              data-bs-toggle="dropdown" aria-expanded="false">
+                              Niños
+                          </a>
+                          <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="pages/popniños.html">Niños Pop</a></li>
+                              <li>
+                                  <hr class="dropdown-divider">
                               </li>
-        
-                              <li class="nav-item">
-                                <a class="nav-link text-white" href="#">Blog</a>
+                              <li><a class="dropdown-item" href="pages/popniñas.html">Niñas Pop</a></li>
+                          </ul>
+                      </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                              data-bs-toggle="dropdown" aria-expanded="false">
+                              Solar
+                          </a>
+                          <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Solar Hombre</a></li>
+                              <li>
+                                  <hr class="dropdown-divider">
                               </li>
-        
-                              <li class="nav-item">
-                                <a class="nav-link text-white" href="#">Agenda Examen</a>
-                              </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </nav>
-            </header> 
+                              <li><a class="dropdown-item" href="#">Solar Mujer</a></li>
+                          </ul>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="#">Blog</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="#">Agenda Examen</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+  </header>
 
             <!--banner-->
 <div class="container-fluid">
@@ -241,7 +272,7 @@
             </div>
 
            
-            <!--CHUY CHINGAS A TU MADREEEEEEEEEE-->
+          
         
                                            
           
@@ -390,4 +421,3 @@
 </body>
 </html>
 
-<!-- nofvnojbnlfbnjkdfndbjkkjdbnkjnbkndf -->
