@@ -37,7 +37,21 @@ body
     box-shadow: 0 4px 8px rgba(128, 0, 128, 0.3);
   }
 
-
+  .objeto-texto
+{
+    text-decoration: none;
+    color: black;
+}
+.footer{
+    margin-top: 150px;
+}
+.centrar
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
   
   
 

@@ -1,0 +1,28 @@
+*
+{
+    font-family:Verdana;
+}
+body
+{
+    background-color:ghostwhite;
+}
+.azul
+{
+   
+    background: #D6FCFA;
+}
+
+.objeto-texto
+{
+    text-decoration: none;
+    color: black;
+}
+.footer{
+
+    margin-top: 350px;
+}
+.imagenes
+{
+    width: 60px;
+}
+
