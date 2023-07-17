@@ -21,7 +21,7 @@
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
 
-                <a class="navbar-brand text-white" href="/../index.html">
+                <a class="navbar-brand text-white" href="../index.php">
                     <img src="/../images/icon.png" alt="Logo" width="30" height="30"
                         class="d-inline-block align-text-top">
                     Pop Ópticos
@@ -81,15 +81,15 @@
                                 Adultos
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="popunisex.html">Pop Unisex</a></li>
+                                <li><a class="dropdown-item" href="popunisex.php">Pop Unisex</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="pophombres.html">Pop Hombre</a></li>
+                                <li><a class="dropdown-item" href="pophombres.php">Pop Hombre</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="popmujer.html">Pop Mujer</a></li>
+                                <li><a class="dropdown-item" href="popmujer.php">Pop Mujer</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -98,11 +98,11 @@
                                 Niños
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="popniños.html">Niños Pop</a></li>
+                                <li><a class="dropdown-item" href="popniños.php">Niños Pop</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="popniñas.html">Niñas Pop</a></li>
+                                <li><a class="dropdown-item" href="popniñas.php">Niñas Pop</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -111,18 +111,16 @@
                                 Solar
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Solar Hombre</a></li>
+                                <li><a class="dropdown-item" href="solarmujer.php">Solar Hombre</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Solar Mujer</a></li>
+                                <li><a class="dropdown-item" href="solarhombre.php">Solar Mujer</a></li>
                             </ul>
                         </li>
+                        
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Agenda Examen</a>
+                            <a class="nav-link text-white" href="exam.php">Agenda Examen</a>
                         </li>
                     </ul>
                 </div>
