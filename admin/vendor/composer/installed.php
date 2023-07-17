@@ -1,24 +1,15 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'vafd/integrador',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '748e4c1aae0d8278f0d21bbf556e1709d301dff9',
-        'type' => 'library',
+        'reference' => '80c8e5240acf521aeb7d0ab58bd6a2176b9e4702',
+        'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '748e4c1aae0d8278f0d21bbf556e1709d301dff9',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'dompdf/dompdf' => array(
             'pretty_version' => 'v2.0.3',
             'version' => '2.0.3.0',
@@ -70,6 +61,15 @@
             'reference' => 'e41d2140031d533348b2192a83f02d8dd8a71d30',
             'type' => 'library',
             'install_path' => __DIR__ . '/../sabberworm/php-css-parser',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'vafd/integrador' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '80c8e5240acf521aeb7d0ab58bd6a2176b9e4702',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
