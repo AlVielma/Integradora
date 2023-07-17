@@ -64,9 +64,9 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6 login-container">
-        <img src="../img/descarga.png" alt="Logo" class="img-fluid">
+        <img src="/admin/img/logo.jpg" alt="Logo" class="img-fluid">
         <h3>Iniciar sesión</h3>
-        <form action="/app/agenda.php" method="POST">
+        <form action="/admin/app/agenda.php" method="POST">
           <div class="form-group">
             <label for="username">Correo</label>
             <input type="text" class="form-control" id="username" name="username" required>
