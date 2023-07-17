@@ -1,6 +1,16 @@
 {
-    "require": {
-        "dompdf/dompdf": "^2.0",
-        "phpmailer/phpmailer": "^6.8"
-    }
+    "name": "vafd/integrador",
+    "description": "Nuestro proyecto integrador",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Vafd\\Integrador\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "vafd"
+        }
+    ],
+    "require": {}
 }
