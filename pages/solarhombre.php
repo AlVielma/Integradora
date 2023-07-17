@@ -57,8 +57,8 @@
                   </div>
 
                   <div class="row mx-5 text-center justify-content-center">
-                    <a href="/../pages/login.html" class="objeto-texto h3">Inicia Sesion</a>
-                    <a href="/../pages/register.html" class="objeto-texto h3">Registrate</a>
+                    <a href="login.html" class="objeto-texto h3">Inicia Sesion</a>
+                    <a href="register.html" class="objeto-texto h3">Registrate</a>
                   </div>
                 </div>
               </div>
@@ -111,18 +111,15 @@
                                 Solar
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Solar Hombre</a></li>
+                                <li><a class="dropdown-item" href="solarhombre.html">Solar Hombre</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Solar Mujer</a></li>
+                                <li><a class="dropdown-item" href="solarmujer.html">Solar Mujer</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Agenda Examen</a>
+                            <a class="nav-link text-white" href="exam.html">Agenda Examen</a>
                         </li>
                     </ul>
                 </div>
@@ -144,7 +141,7 @@
                <!-- Titulo -->
                 <div class="row border border-3 border-secondary align-items-center p-2 mb-4">
                     <div class="col-md-8">
-                    <h1 class="text-start text-black ms-5">Solar Mujer</h1>
+                    <h1 class="text-start text-black ms-5">Solar Hombre</h1>
                     </div>
                     <!-- Filtrador -->
                     <div class="col-md-2 text-md-end ">

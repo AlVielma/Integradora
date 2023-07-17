@@ -22,7 +22,7 @@
                     <div class="container-fluid">
         
                       <a class="navbar-brand text-white" href="#">
-                        <img src="images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+                        <img src="../images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                         Pop Ópticos
                       </a>
         
@@ -33,10 +33,10 @@
                       </div>
         
                       <a class="navbar-brand text-white" href="#">
-                        <img src="images/carrito.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+                        <img src="../images/carrito.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                       </a>
                       <a class="navbar-brand text-white" href="#">
-                        <img src="images/usuario.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+                        <img src="../images/usuario.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                       </a>
                     </div>
                   </nav>
@@ -44,7 +44,7 @@
                   <nav class="navbar navbar-expand-lg bg-dark">
                     <div class="container-fluid">
                       <button class="navbar-toggler border border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar"><img src="images/menu-hamburguesa.png" alt="Hamburgues" width="20" height="20"></span>
+                        <span class="navbar"><img src="../images/menu-hamburguesa.png" alt="Hamburgues" width="20" height="20"></span>
                       </button>
                       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav">
@@ -54,11 +54,11 @@
                                   Adultos
                                 </a>
                                 <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">Pop Unisex</a></li>
+                                  <li><a class="dropdown-item" href="popunisex.html">Pop Unisex</a></li>
                                   <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="Hombrespop.php">Pop Hombre</a></li>
+                                  <li><a class="dropdown-item" href="pophombres.html">Pop Hombre</a></li>
                                   <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="#">Pop Mujer</a></li>
+                                  <li><a class="dropdown-item" href="popmujer.html">Pop Mujer</a></li>
                                 </ul>
                               </li>
                               

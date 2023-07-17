@@ -81,14 +81,14 @@
                               Adultos
                           </a>
                           <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="pages/popunisex.html">Pop Unisex</a></li>
+                              <li><a class="dropdown-item" href="pages/popunisex.php">Pop Unisex</a></li>
                                                                 <hr class="dropdown-divider">
                               </li>
-                              <li><a class="dropdown-item" href="pages/pophombres.html">Pop Hombre</a></li>
+                              <li><a class="dropdown-item" href="pages/pophombres.php">Pop Hombre</a></li>
                               <li>
                                   <hr class="dropdown-divider">
                               </li>
-                              <li><a class="dropdown-item" href="pages/popmujer.html">Pop Mujer</a></li>
+                              <li><a class="dropdown-item" href="pages/popmujer.php">Pop Mujer</a></li>
                           </ul>
                       </li>
                       <li class="nav-item dropdown">
@@ -97,11 +97,11 @@
                               Niños
                           </a>
                           <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="pages/popniños.html">Niños Pop</a></li>
+                              <li><a class="dropdown-item" href="pages/popniños.php">Niños Pop</a></li>
                               <li>
                                   <hr class="dropdown-divider">
                               </li>
-                              <li><a class="dropdown-item" href="pages/popniñas.html">Niñas Pop</a></li>
+                              <li><a class="dropdown-item" href="pages/popniñas.php">Niñas Pop</a></li>
                           </ul>
                       </li>
                       <li class="nav-item dropdown">
@@ -110,18 +110,15 @@
                               Solar
                           </a>
                           <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">Solar Hombre</a></li>
+                              <li><a class="dropdown-item" href="pages/solarhombre.php">Solar Hombre</a></li>
                               <li>
                                   <hr class="dropdown-divider">
                               </li>
-                              <li><a class="dropdown-item" href="#">Solar Mujer</a></li>
+                              <li><a class="dropdown-item" href="pages/solarmujer.php">Solar Mujer</a></li>
                           </ul>
-                      </li>
+                      </li>      
                       <li class="nav-item">
-                          <a class="nav-link text-white" href="#">Blog</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link text-white" href="#">Agenda Examen</a>
+                          <a class="nav-link text-white" href="pages/exam.php">Agenda Examen</a>
                       </li>
                   </ul>
               </div>
@@ -318,7 +315,7 @@
           <section class="content-card-style-9 bg_cover mt-100 d-flex justify-content-center">
             <div class="position-relative">
               <img src="images/imagen7.jpg" alt="sobre nosotros" class="img-fluid">
-              <a href="#" class="btn btn-primary custom-button">Agenda tu examen</a>
+              <a href="pages/exam.php" class="btn btn-primary custom-button">Agenda tu examen</a>
             </div>
           </section>
           

@@ -62,15 +62,15 @@
                                 Adultos
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Pop Unisex</a></li>
+                                <li><a class="dropdown-item" href="popunisex.html">Pop Unisex</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Pop Hombre</a></li>
+                                <li><a class="dropdown-item" href="pophombres.html">Pop Hombre</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Pop Mujer</a></li>
+                                <li><a class="dropdown-item" href="popmujer.html">Pop Mujer</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -79,11 +79,11 @@
                                 Niños
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Niños Pop</a></li>
+                                <li><a class="dropdown-item" href="popniños.html">Niños Pop</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Niñas Pop</a></li>
+                                <li><a class="dropdown-item" href="popniñas.html">Niñas Pop</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -92,18 +92,15 @@
                                 Solar
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Solar Hombre</a></li>
+                                <li><a class="dropdown-item" href="solarhombre.html">Solar Hombre</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Solar Mujer</a></li>
+                                <li><a class="dropdown-item" href="solarmujer.html">Solar Mujer</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Agenda Examen</a>
+                            <a class="nav-link text-white" href="exam.html">Agenda Examen</a>
                         </li>
                     </ul>
                 </div>
@@ -273,7 +270,7 @@
 
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <h3>Pop Ópticos</h3>
-                <a href="index.html"><img src="images/icon64.png" alt=""></a>
+                <a href="index.html"><img src="../images/icon64.png" alt=""></a>
 
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
