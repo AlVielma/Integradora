@@ -1,0 +1,57 @@
+*
+{
+    font-family:Verdana;
+}
+body
+{
+    background-color:ghostwhite;
+}
+.single-content-card {
+    /* Transición suave para el efecto de transformación y sombra */
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .single-content-card:hover {
+    /* Desplazamiento hacia arriba al poner el cursor encima */
+    transform: translateY(-5px);
+    /* Sombra más intensa y notoria */
+    box-shadow: 0 8px 20px rgba(128, 0, 128, 0.5);
+  }
+  .custom-button {
+    position: absolute;
+    top: 70%; /* Ajusta la posición vertical */
+    left: 20%; /* Ajusta la posición horizontal */
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+    
+  .content-card-style-9:hover img {
+    box-shadow: 0 8px 16px rgba(128, 0, 128, 0.5);
+  }
+  
+  .content-card-style-9:hover .custom-button {
+    box-shadow: 0 4px 8px rgba(128, 0, 128, 0.3);
+  }
+
+  .objeto-texto
+{
+    text-decoration: none;
+    color: black;
+}
+.footer{
+    margin-top: 150px;
+}
+.centrar
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+  
+  
+
