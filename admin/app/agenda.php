@@ -30,6 +30,28 @@
       </div>
       <div class="description">Motivo de la cita 1</div>
       <button class="button cancel" onclick="cancelarCita(this)">Cancelar</button>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#1">
+        Ver datos
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Datos</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>1</p>
+              <p>John</p>
+              <p>Doe</p>
+              <p>123456789</p>
+              <p>john@example.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     
     <div class="agenda-item">
