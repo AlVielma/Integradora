@@ -304,28 +304,6 @@
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const collapseButton = document.getElementById('collapseButton');
-    const sidebar = document.getElementById('sidebar');
-    const content = document.getElementById('content');
-
-    collapseButton.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
-      content.classList.toggle('active');
-    });
-
-    function checkWidth() {
-      if (window.innerWidth <= 767) {
-        collapseButton.classList.remove('hidden');
-      } else {
-        collapseButton.classList.add('hidden');
-        sidebar.classList.remove('active');
-        content.classList.remove('active');
-      }
-    }
-
-    window.addEventListener('resize', checkWidth);
-    checkWidth();
-  </script>
+  <script src="/admin/js/boton.js"></script>
 </body>
 </html>
