@@ -1,3 +1,8 @@
+<?php
+require __DIR__ . '/../vendor/autoload.php';
+use App\Modelos\Conexion;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +41,7 @@
                         <img src="../images/icon.png" alt="Imagen" class="img-fluid col-6 col-md-4 col-lg-3">
                     </div>
                     <h2 class="mb-4">Nuevo Usuario Pop</h2>
-                    <form>
+                    <form action="" method="POST">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre" required>
