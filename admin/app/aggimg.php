@@ -1,3 +1,9 @@
+<?php
+require __DIR__.'/../../vendor/autoload.php';
+use App\Modelos\productos;
+$productos = new productos();
+$mostrar=$productos->mostrar_productos()
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,82 +33,51 @@
     </div>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Agregar
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Producto</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <!-- Formulario para agregar un nuevo producto -->
-            <form id="agregarForm">
-              <div class="mb-3">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" required>
-              </div>
-              <div class="mb-3">
-                <label for="marca">Marca</label>
-                <input type="text" class="form-control" id="marca" required>
-              </div>
-              <div class="mb-3">
-                <label for="tipo">Tipo de lente</label>
-                <input type="text" class="form-control" id="tipo" required>
-              </div>
-              <div class="mb-3">
-                <label for="descripcion">Descripción</label>
-                <textarea class="form-control" id="descripcion" rows="3" required></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="categoria">Categoría</label>
-                <select class="form-control" id="categoria" required>
-                  <!-- Las opciones de categoría se cargan dinámicamente con JavaScript -->
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="precio">Precio</label>
-                <input type="number" class="form-control" id="precio" required>
-              </div>
-              <div class="mb-3">
-                <label for="imagen">Agregar Imagen</label>
-                <input type="file" class="form-control" id="imagen">
-              </div>
-              <div class="mb-3">
-                <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control" id="cantidad" required>
-              </div>
-              <button type="submit" class="btn btn-primary">Guardar</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <a href="../../http/modalproducto.php" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalproducto">
+        Agregar
+    </a>
 
     <h2>Productos</h2>
 
     <!-- Tabla de productos -->
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Categoría</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody id="productosTabla">
-        <!-- Las filas de productos se agregan dinámicamente con JavaScript -->
-      </tbody>
-    </table>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="productosTabla">
+            <?php
+            foreach($productos as $product)
+            {
+            ?>
+              <tr>
+                <td><?php echo $product['nombre']; ?></td>
+                <td><?php echo $product['descripcion']; ?></td>
+                <td><?php echo $product['categoria']; ?></td>
+                <td><?php echo $product['precio']; ?></td>
+                <td><?php echo $product['stock']; ?></td>
+                <td>
+                  <a class="btn btn-warning" href=""><img src="../../images/editar.png" alt=""></a>
+                  <a class="btn btn-danger"href=""><img src="../../images/circulo-x.png" alt=""></a>
+                </td>
+              </tr>
+            <?php
+            }
+            ?>
+          </tbody>
+        </table>
+      </div>
   </div>
+  <?php
+  require __DIR__.'/../../src/http/modalproducto.php';
+  ?>
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/admin/js/agregarpro.js"></script>
