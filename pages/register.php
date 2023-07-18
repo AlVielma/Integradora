@@ -1,6 +1,50 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
 use App\Modelos\Conexion;
+require __DIR__ . '/../vendor/autoload.php';
+
+$conexion = new Conexion(); // Crear una instancia de la clase Conexion
+$pdo = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
+session_start();
+
+if(isset($_SESSION["nombre"])){
+    header("Location: ../index.php");
+}
+
+if(isset($_POST["submit"])){
+    $nombre = $_POST["nombre"];
+    $apellido = $_POST["apellido"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $confpassword = $_POST["confpassword"];
+
+    $passwordEncriptada = password_hash($password, PASSWORD_DEFAULT);
+    $confpasswordEncriptada = password_hash($confpassword, PASSWORD_DEFAULT);
+
+    if($passwordEncriptada == $confpasswordEncriptada){
+        $sql="SELECT * FROM Usuarios WHERE email='$email'";
+        $resultado = $pdo->query($sql);
+        if(!$resultado->num_rows > 0){
+            $sql = "INSERT INTO optica_bd_borrador1 (nombre, apellido, email, password, confpassword) VALUES ('$nombre', '$apellido', '$email', '$passwordEncriptada', '$confpasswordEncriptada')";
+            $resultado = $pdo->query($sql);
+
+            if($resultado){
+                echo "<script> alert ('Registrado con éxito') </script>";
+                $nombre = "";
+                $apellido = "";
+                $email = "";
+                $_POST["password"] = "";
+                $_POST["confpassword"] = "";
+
+            }else{
+                echo "<script> alert ('Error al registrarse') </script>";
+            }
+        }else{
+            echo "<script> alert ('Correo ya existe') </script>";
+        }
+    }else{
+        echo "<script> alert ('Las contraseñas no coinciden') </script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,27 +88,27 @@ use App\Modelos\Conexion;
                     <form action="" method="POST">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre" required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="apellido" placeholder="Ingresa tu apellido" required>
+                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingresa tu apellido" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
                         </div>
                         
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Confirmar contraseña</label>
-                            <input type="password" class="form-control" id="confpassword" placeholder="Confirma tu contraseña" required>
+                            <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirma tu contraseña" required>
                         </div>
                         <div class="text-center">
-                            <a href="#" class="btn btn-light btn-outline-dark">Crear cuenta</a>
+                            <input type="submit" value="registro" name="submit">
                         </div>
                     </form>
                 </div>
@@ -76,7 +120,7 @@ use App\Modelos\Conexion;
     
     
     <!-- Scripts de Bootstrap -->
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></>
 
 
 </body>
