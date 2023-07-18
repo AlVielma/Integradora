@@ -23,7 +23,7 @@ if(isset($_POST["submit"])){
         $sql="SELECT * FROM Usuarios WHERE email='$email'";
         $resultado = $pdo->query($sql);
         if(!$resultado->rowCount() > 0){
-            $sql = "INSERT INTO Usuarios (nombre, apellido, email, contraseña)";
+            $sql = "INSERT INTO Usuarios (nombre, apellido, email, contraseña )";
             $resultado = $pdo->query($sql);
 
             if($resultado){
