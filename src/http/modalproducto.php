@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalproducto" tabindex="-1" aria-labelledby="modalproudcto" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -8,40 +8,42 @@
           </div>
           <div class="modal-body">
             <!-- Formulario para agregar un nuevo producto -->
-            <form id="agregarForm">
+            <form method="post" enctype="multipart/form-data">
               <div class="mb-3">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" required>
+                <input type="text" class="form-control" name="nombre" required>
               </div>
               <div class="mb-3">
                 <label for="marca">Marca</label>
-                <input type="text" class="form-control" id="marca" required>
+                <input type="text" class="form-control" name="marca" required>
               </div>
               <div class="mb-3">
                 <label for="tipo">Tipo de lente</label>
-                <input type="text" class="form-control" id="tipo" required>
+                <input type="text" class="form-control" name="tipo" required>
               </div>
               <div class="mb-3">
                 <label for="descripcion">Descripción</label>
-                <textarea class="form-control" id="descripcion" rows="3" required></textarea>
+                <textarea class="form-control" name="descripcion" rows="3" required></textarea>
               </div>
               <div class="mb-3">
                 <label for="categoria">Categoría</label>
-                <select class="form-control" id="categoria" required>
-                  <!-- Las opciones de categoría se cargan dinámicamente con JavaScript -->
+                <select class="form-control" name="categoria" required>
+                  <option value="">Categorias</option>
+                  <?php
+                  
                 </select>
               </div>
               <div class="mb-3">
                 <label for="precio">Precio</label>
-                <input type="number" class="form-control" id="precio" required>
+                <input type="number" class="form-control" name="precio" required>
               </div>
               <div class="mb-3">
                 <label for="imagen">Agregar Imagen</label>
-                <input type="file" class="form-control" id="imagen">
+                <input type="file" class="form-control" name="imagen">
               </div>
               <div class="mb-3">
                 <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control" id="cantidad" required>
+                <input type="number" class="form-control" name="stock" required>
               </div>
               <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
