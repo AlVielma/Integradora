@@ -87,6 +87,7 @@
       agendaItem.parentNode.removeChild(agendaItem);
     }
   </script>
+
   <script src="/admin/js/boton.js"></script>
 </body>
 </html>
