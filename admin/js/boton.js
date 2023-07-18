@@ -4,17 +4,18 @@ const content = document.getElementById('content');
 
 collapseButton.addEventListener('click', () => {
   sidebar.classList.toggle('active');
-  content.classList.toggle('active');
 });
 
 function checkWidth() {
   if (window.innerWidth <= 767) {
     collapseButton.classList.remove('hidden');
+    content.style.transform = '';
   } else {
     collapseButton.classList.add('hidden');
     sidebar.classList.remove('active');
-    content.classList.remove('active');
+    content.style.transform = 'translateX(0)';
   }
 }
+
 window.addEventListener('resize', checkWidth);
 checkWidth();
