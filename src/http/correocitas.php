@@ -8,7 +8,6 @@ use PHPMailer\PHPMailer\Exception;
 require __DIR__ . '../../vendor/autoload.php';
 
 
-
 // Crea una nueva instancia de PHPMailer
 $mail = new PHPMailer(true);
 
