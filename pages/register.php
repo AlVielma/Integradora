@@ -42,6 +42,10 @@
                             <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre" required>
                         </div>
                         <div class="mb-3">
+                            <label for="apellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" placeholder="Ingresa tu apellido" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="email" class="form-label">Correo</label>
                             <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
                         </div>
