@@ -27,7 +27,7 @@ Class productos
     {
         $aggproducto = $this->conexion->prepare("INSERT INTO Productos(nombre,marca_id,tipo_lente_id,descripcion,imagen,precio,stock,categoria_id)
          VALUES (?,?,?,?,?,?,?,?)");
-        $producto->execute([$nombre,$marca_id,$tipo_lente_id,$descripcion,$imagen,$precio,$stock,$categoria_id]);
+        $aggproducto->execute([$nombre,$marca_id,$tipo_lente_id,$descripcion,$imagen,$precio,$stock,$categoria_id]);
 
     }
 

@@ -29,7 +29,7 @@
                 <label for="categoria">Categoría</label>
                 <select class="form-control" name="categoria" required>
                   <option value="">Categorias</option>
-                  <?php
+                  
                   
                 </select>
               </div>
