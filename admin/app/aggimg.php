@@ -86,18 +86,21 @@
     <h2>Productos</h2>
 
     <!-- Tabla de productos -->
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Categoría</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      
       <tbody id="productosTabla">
         <!-- Las filas de productos se agregan dinámicamente con JavaScript -->
       </tbody>
