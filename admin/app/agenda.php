@@ -24,57 +24,22 @@
 
   
   <div class="container-fluid" id="content">
-    <div class="agenda-item mt-2">
-      <div class="title">Cita 1</div>
-      <div class="details">
-        <span>Fecha: 2023-06-15</span> |
-        <span>Hora: 09:00 AM</span> |
-        <span>Agendado por: David</span>
+      <h1>CITAS</h1>
+     <!-- Tabla de productos -->
+     <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Telefono</th>
+              <th>Correo</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+            </tr>
+          </thead>
+        </table>
       </div>
-      <div class="description">Motivo de la cita 1</div>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#1">
-        Ver datos
-      </button>
-
-      <!-- Modal -->
-      <div class="modal fade" id="1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Datos</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>1</p>
-              <p>John</p>
-              <p>Doe</p>
-              <p>123456789</p>
-              <p>john@example.com</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="agenda-item">
-      <div class="title">Cita 2</div>
-      <div class="details">
-        <span>Fecha: 2023-06-16</span> |
-        <span>Hora: 02:30 PM</span> |
-        <span>Agendado por: Marquitos</span>
-      </div>
-      <div class="description">Motivo de la cita 2</div>
-    </div>
-
-    <div class="agenda-item">
-      <div class="title">Cita 3</div>
-      <div class="details">
-        <span>Fecha: 2023-06-17</span> |
-        <span>Hora: 11:15 AM</span> |
-        <span>Agendado por: JGL</span>
-      </div>
-      <div class="description">Motivo de la cita 3</div>
-    </div>
   </div>
 
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>

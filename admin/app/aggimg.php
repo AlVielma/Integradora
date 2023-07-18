@@ -101,10 +101,6 @@
         </table>
       </div>
       
-      <tbody id="productosTabla">
-        <!-- Las filas de productos se agregan dinámicamente con JavaScript -->
-      </tbody>
-    </table>
   </div>
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
