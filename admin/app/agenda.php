@@ -38,13 +38,6 @@
               <th>Hora</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>
-                <!-- PHP -->
-              </td>
-            </tr>
-          </tbody>
         </table>
       </div>
   </div>
