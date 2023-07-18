@@ -1,6 +1,6 @@
 <?php
 
-require '../vendor/autoload.php'; // Carga el autoloader de Composer
+require '../../vendor/autoload.php'; // Carga el autoloader de Composer
 
 use Dompdf\Dompdf; //llama a la biblioteca 
 
