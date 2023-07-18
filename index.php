@@ -133,7 +133,6 @@
       <div class="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
       </div>
       <div class="carousel-inner">
           <div class="carousel-item active">
@@ -142,9 +141,7 @@
           <div class="carousel-item">
               <img src="images/banner1.jpg" class="d-block w-100" alt="banner 2">
           </div>
-          <div class="carousel-item">
-              <img src="images/banner3.png" class="d-block w-100 h-100" alt="banner 3">
-          </div>
+         
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -158,15 +155,13 @@
 </div>
 
 
-
-
          
         
           <section class="container-fluid mb-4 mt-4">
             <div class="container">
               <div class="row">
                 <div class="col-12 col-lg-5">
-                  <img src="images/imagen2.jpg" alt="sobre nosotros" class="img-fluid">
+                  <img src="images/imagen2.2.jpg" alt="sobre nosotros" class="img-fluid">
                 </div>
                 <div class="col-12 col-lg-7">
                   <h2>Conócenos</h2>
@@ -315,7 +310,7 @@
           
           <section class="content-card-style-9 bg_cover mt-100 d-flex justify-content-center">
             <div class="position-relative">
-              <img src="images/imagen7.jpg" alt="sobre nosotros" class="img-fluid">
+              <img src="images/imagen7.jpg" alt="examen" class="img-fluid">
               <a href="pages/exam.php" class="btn btn-primary custom-button">Agenda tu examen</a>
             </div>
           </section>
@@ -332,7 +327,7 @@
               </div>
               <div class="row">
                 <div class="col-12 col-lg-5 text-center">
-                  <img class="img-fluid" src="images/contac.jpg" alt="">
+                  <img class="img-fluid" src="images/imagen2.jpg" alt="contactanos">
                 </div>
                 <div class="col-12 col-lg-7">
                   <div class="">
