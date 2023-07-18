@@ -13,7 +13,6 @@ function checkWidth() {
   } else {
     collapseButton.classList.add('hidden');
     sidebar.classList.remove('active');
-    content.style.transform = 'translateX(0)';
   }
 }
 
