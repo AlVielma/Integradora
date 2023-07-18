@@ -207,7 +207,7 @@
                 <div class="col-md-4 col-sm-9">
                   <div class="single-content-card text-center mt-30">
                     <div class="content-card-image">
-                      <img src="images/imagen3.jpg" alt="lente adulto" class="img-fluid">
+                      <img src="images/imagen4.jpg" alt="lente adulto" class="img-fluid">
                     </div>
                     <div class="content-card-content">
                       <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop Adultos</a></h4>
@@ -218,7 +218,7 @@
                 <div class="col-md-4 col-sm-9">
                   <div class="single-content-card text-center mt-30">
                     <div class="content-card-image">
-                      <img src="images/imagen5.jpg" alt="lente solar" class="img-fluid">
+                      <img src="images/imagen3.jpg" alt="lente solar" class="img-fluid">
                     </div>
                     <div class="content-card-content">
                       <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop solares</a></h4>
@@ -229,10 +229,10 @@
                 <div class="col-md-4 col-sm-9">
                   <div class="single-content-card text-center mt-30">
                     <div class="content-card-image">
-                      <img src="images/imagen4.jpg" alt="lente solar" class="img-fluid">
+                      <img src="images/imagen4.jpg" alt="lente niños" class="img-fluid">
                     </div>
                     <div class="content-card-content">
-                      <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop accesorios</a></h4>
+                      <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop niños</a></h4>
                       <p>Tenemos los mejores accesorios para tus lentes</p>
                     </div>
                   </div>
