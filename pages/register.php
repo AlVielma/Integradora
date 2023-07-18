@@ -18,13 +18,12 @@ if(isset($_POST["submit"])){
     $confpassword = $_POST["confpassword"];
 
     $passwordEncriptada = password_hash($password, PASSWORD_DEFAULT);
-    $confpasswordEncriptada = password_hash($confpassword, PASSWORD_DEFAULT);
 
-    if($passwordEncriptada == $confpasswordEncriptada){
+    if(password_verify($confpassword, $passwordEncriptada)){
         $sql="SELECT * FROM Usuarios WHERE email='$email'";
         $resultado = $pdo->query($sql);
-        if(!$resultado->num_rows > 0){
-            $sql = "INSERT INTO optica_bd_borrador1 (nombre, apellido, email, password, confpassword) VALUES ('$nombre', '$apellido', '$email', '$passwordEncriptada', '$confpasswordEncriptada')";
+        if(!$resultado->rowCount() > 0){
+            $sql = "INSERT INTO Usuarios (nombre, apellido, email, contraseña)";
             $resultado = $pdo->query($sql);
 
             if($resultado){
@@ -46,6 +45,7 @@ if(isset($_POST["submit"])){
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
