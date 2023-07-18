@@ -9,11 +9,10 @@ collapseButton.addEventListener('click', () => {
 function checkWidth() {
   if (window.innerWidth <= 767) {
     collapseButton.classList.remove('hidden');
-    content.style.transform = '';
+    sidebar.classList.remove('active');
   } else {
     collapseButton.classList.add('hidden');
-    sidebar.classList.remove('active');
-    content.style.transform = 'translateX(0)';
+    sidebar.classList.add('active');
   }
 }
 
