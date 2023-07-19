@@ -15,7 +15,7 @@ class Trabajador
     }
     public function mostrar()
     {
-        $consulta = $this->conectar->query("SELECT * FROM Usuarios");
+        $consulta = $this->conectar->query("SELECT * FROM Usuarios WHERE id_rol = 1");
         return $consulta->fetchAll(\PDO::FETCH_ASSOC);
         
     }
