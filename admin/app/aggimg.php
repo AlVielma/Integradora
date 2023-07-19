@@ -49,12 +49,13 @@ $mostrar=$productos->mostrar_productos()
               <th>Categoría</th>
               <th>Precio</th>
               <th>Cantidad</th>
+              <th>Imagen</th>
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody id="productosTabla">
+          <tbody>
             <?php
-            foreach($productos as $product)
+            foreach($mostrar as $product)
             {
             ?>
               <tr>
@@ -64,8 +65,14 @@ $mostrar=$productos->mostrar_productos()
                 <td><?php echo $product['precio']; ?></td>
                 <td><?php echo $product['stock']; ?></td>
                 <td>
-                  <a class="btn btn-warning" href=""><img src="../../images/editar.png" alt=""></a>
-                  <a class="btn btn-danger"href=""><img src="../../images/circulo-x.png" alt=""></a>
+                  <img src="<?php echo '/../../productosimg/'.$product['IMAGEN']; ?>" alt="Imagen del producto" width="100px" height="100px">
+                </td>
+
+                <td>
+                  <a class="btn btn-warning"><img src="../../images/editar.png" alt=""></a>
+
+                  <a class="btn btn-danger"data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modaleliminarproducto" ><img src="../../images/circulo-x.png" alt="">
+                  </a>
                 </td>
               </tr>
             <?php
@@ -77,11 +84,13 @@ $mostrar=$productos->mostrar_productos()
   </div>
   <?php
   require __DIR__.'/../../src/http/modalproducto.php';
+  require __DIR__.'/../../src/http/modaleliminarproducto.php';
   ?>
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/admin/js/agregarpro.js"></script>
   <script src="/admin/js/boton.js"></script>
+  <script src="/admin/js/modalcrud.js"></script>
 </body>
 
 </html>
