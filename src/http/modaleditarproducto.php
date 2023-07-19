@@ -7,7 +7,7 @@ $tipolente = $productos->mostrar_tipo_lentes();
 $marca = $productos->mostrar_marca();
 ?>
 
-<div class="modal fade" id="modalproducto" tabindex="-1" aria-labelledby="modalproudcto" aria-hidden="true">
+<div class="modal fade" id="modaleditarproducto" tabindex="-1" aria-labelledby="modaleditarproudcto" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -16,15 +16,15 @@ $marca = $productos->mostrar_marca();
           </div>
 
           <div class="modal-body">
-            <!-- Formulario para agregar un nuevo producto -->
-            <form action="../../src/http/guardarproducto.php" method="post" enctype="multipart/form-data" >
+            <form action="actualizar_producto.php" method="POST">
+            <input type="hidden" id="product_id" name="product_id" value="">
               <div class="mb-3">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" name="nombre" required>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
               </div>
               <div class="mb-3">
                 <label for="marca">Marca</label>
-                <select class="form-control" name="marca" required>
+                <select class="form-control" name="marca" id="marca" required>
                   <option value="">Marcas</option>
                   <?php
                   foreach ($marca as $marc) {
@@ -39,7 +39,7 @@ $marca = $productos->mostrar_marca();
               </div>
               <div class="mb-3">
                 <label for="tipo">Tipo de lente</label>
-                <select class="form-control" name="tipo_lente" required>
+                <select class="form-control" name="tipo_lente" id="tipo_lente" required>
                   <option value="">Tipo de lentes</option>
                   <?php
                   foreach ($tipolente as $tlente) {
@@ -54,12 +54,11 @@ $marca = $productos->mostrar_marca();
               </div>
               <div class="mb-3">
                 <label for="descripcion">Descripción</label>
-                <textarea class="form-control" name="descripcion" rows="3" required></textarea>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
               </div>
               <div class="mb-3">
                 <label for="categoria">Categoría</label>
-                <select class="form-control" name="categoria" required>
-                 <option value="">Categorías</option>
+                <select class="form-control" id="categoria" name="categoria" required>
                   <?php
                   foreach ($categorias as $cat) {
                   ?>
@@ -71,21 +70,25 @@ $marca = $productos->mostrar_marca();
                   ?>
                 </select>
               </div>
+              <!-- Agrega los demás campos del formulario de edición según tus necesidades -->
               <div class="mb-3">
                 <label for="precio">Precio</label>
-                <input type="number" class="form-control" name="precio" required>
+                <input type="number" class="form-control" id="precio" name="precio" required>
               </div>
               <div class="mb-3">
                 <label for="imagen">Agregar Imagen</label>
                 <input type="file" class="form-control" name="imagen">
               </div>
               <div class="mb-3">
-                <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control" name="stock" required>
+                <label for="stock">Cantidad</label>
+                <input type="number" class="form-control" id="stock" name="stock" required>
               </div>
-              <button type="submit" class="btn btn-primary" name="agregar">Guardar</button>
+            
+           
+              <button type="submit" class="btn btn-primary">Guardar cambios</button>
             </form>
           </div>
+
         </div>
       </div>
     </div>

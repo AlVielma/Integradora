@@ -10,3 +10,5 @@ eliminarmodal.addEventListener('shown.bs.modal', event => {
         document.getElementById('eliminarForm').submit();
     });
 });
+
+

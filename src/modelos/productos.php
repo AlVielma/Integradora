@@ -84,4 +84,17 @@ Class productos
         $eliminarprodu = $this->pdo->prepare("DELETE FROM Productos WHERE sku=?");
         $eliminarprodu->execute([$id]);
     }
+
+    public function actualizarproducto($nombre,$marca_id,$tipo_lente_id,$descripcion,$precio,$stock,$categoria_id,$id)
+    {
+        $actualizarpro = $this->pdo->prepare("UPDATE FROM Productos SET nombre=?,marca_id=?,tipo_lente_id=?,descripcion=?,precio=?,stock=?,categoria_id=? WHERE sku=?");
+        $actualizarpro->execute([$nombre,$marca_id,$tipo_lente_id,$descripcion,$precio,$stock,$categoria_id,$id]);
+    }   
+
+    public function actualizarimg($imagen,$id)
+    {
+        $actualizarimg = $this->pdo->preparare("UPDATE FROM Imagenes SET IMAGEN=? WHERE id_img=?");
+        $actualizarimg->execute([$imagen,$id]);
+    }
+
 }
