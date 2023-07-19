@@ -1,7 +1,26 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
 use App\Modelos\Conexion;
+require __DIR__ . '/../vendor/autoload.php';
+require '../src/modelos/registrar.php';
+
+$conexion = new Conexion(); // Crear una instancia de la clase Conexion
+$con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
+
+if(!empty($_POST)){
+    $nombre = trim($_POST['nombre']);
+    $apellido = trim($_POST['apellido']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $confpassword = trim($_POST['confpassword']);
+
+    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+    $id = registrarCliente([$nombre, $apellido, $email, $password_hash], $con);
+
+    header("Location: ../index.php");
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,30 +60,30 @@ use App\Modelos\Conexion;
                         <img src="../images/icon.png" alt="Imagen" class="img-fluid col-6 col-md-4 col-lg-3">
                     </div>
                     <h2 class="mb-4">Nuevo Usuario Pop</h2>
-                    <form action="" method="POST">
+                    <form action="register.php" method="POST" autocomplete="off">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre" required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="apellido" placeholder="Ingresa tu apellido" required>
+                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingresa tu apellido" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
                         </div>
                         
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Confirmar contraseña</label>
-                            <input type="password" class="form-control" id="confpassword" placeholder="Confirma tu contraseña" required>
+                            <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirma tu contraseña" required>
                         </div>
                         <div class="text-center">
-                            <a href="#" class="btn btn-light btn-outline-dark">Crear cuenta</a>
+                            <input type="submit" value="registro" name="submit">
                         </div>
                     </form>
                 </div>
@@ -76,7 +95,7 @@ use App\Modelos\Conexion;
     
     
     <!-- Scripts de Bootstrap -->
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></>
 
 
 </body>
