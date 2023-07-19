@@ -122,7 +122,7 @@ if(!empty($_POST)){
     
     
     <!-- Scripts de Bootstrap -->
-    <script src="js/bootstrap.bundle.min.js"></>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
 
 </body>
