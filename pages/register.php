@@ -6,8 +6,6 @@ require '../src/modelos/modelos.php';
 $conexion = new Conexion(); // Crear una instancia de la clase Conexion
 $con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
 
-$errors = [];
-
 if(!empty($_POST)){
     $nombre = trim($_POST['nombre']);
     $apellido = trim($_POST['apellido']);
