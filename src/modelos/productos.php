@@ -68,6 +68,19 @@ Class productos
 
     public function eliminarproducto($id)
     {
+        $obtenerimg = $this->pdo->prepare("SELECT IMAGEN FROM Imagenes WHERE id_img=?");
+        $obtenerimg->execute([$id]);
+        $imagenData = $obtenerimg->fetch(\PDO::FETCH_ASSOC);
+    
+        if ($imagenData && isset($imagenData['IMAGEN'])) {
+            $imagen = $imagenData['IMAGEN'];
+            $rutaImagen = __DIR__ . "/../../productosimg/" . $imagen;
+    
+           
+            if (file_exists($rutaImagen)) {
+                unlink($rutaImagen);
+            }
+        }
         $eliminarprodu = $this->pdo->prepare("DELETE FROM Productos WHERE sku=?");
         $eliminarprodu->execute([$id]);
     }
