@@ -1,9 +1,10 @@
 <?php
 
-if(!empty($_POST['registro'])){
-    if (empty($_POST['nombre']) or empty($_POST['apellido']) or empty($_POST['email']) or empty($_POST['password']) or empty($_POST['confpassword']) ) {
-        echo 'Uno de los campos esta vacio';
-    } else {
-        # code...
+function registrarCliente(array $datos, $con)
+{
+    $sql = $con->prepare("INSERT INTO Usuarios (nombre, apellido, email, contraseña, id_rol) VALUES (?,?,?,?,1)");
+    if($sql->execute($datos)){
+        return $con->lastInsertId();
     }
+    return 0;
 }

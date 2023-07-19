@@ -1,48 +1,23 @@
 <?php
 use App\Modelos\Conexion;
 require __DIR__ . '/../vendor/autoload.php';
+require '../src/modelos/modelos.php';
 
 $conexion = new Conexion(); // Crear una instancia de la clase Conexion
-$pdo = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
-session_start();
+$con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
 
-if(isset($_SESSION["nombre"])){
-    header("Location: ../index.php");
-}
+$errors = [];
 
-if(isset($_POST["submit"])){
-    $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $confpassword = $_POST["confpassword"];
+if(!empty($_POST)){
+    $nombre = trim($_POST['nombre']);
+    $apellido = trim($_POST['apellido']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $confpassword = trim($_POST['confpassword']);
 
-    $passwordEncriptada = password_hash($password, PASSWORD_DEFAULT);
+    $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    if(password_verify($confpassword, $passwordEncriptada)){
-        $sql="SELECT * FROM Usuarios WHERE email='$email'";
-        $resultado = $pdo->query($sql);
-        if(!$resultado->rowCount() > 0){
-            $sql = "INSERT INTO Usuarios (nombre, apellido, email, contraseña )";
-            $resultado = $pdo->query($sql);
-
-            if($resultado){
-                echo "<script> alert ('Registrado con éxito') </script>";
-                $nombre = "";
-                $apellido = "";
-                $email = "";
-                $_POST["password"] = "";
-                $_POST["confpassword"] = "";
-
-            }else{
-                echo "<script> alert ('Error al registrarse') </script>";
-            }
-        }else{
-            echo "<script> alert ('Correo ya existe') </script>";
-        }
-    }else{
-        echo "<script> alert ('Las contraseñas no coinciden') </script>";
-    }
+    $id = registrarCliente([$nombre, $apellido, $email, $password_hash], $con);
 }
 ?>
 
@@ -85,7 +60,7 @@ if(isset($_POST["submit"])){
                         <img src="../images/icon.png" alt="Imagen" class="img-fluid col-6 col-md-4 col-lg-3">
                     </div>
                     <h2 class="mb-4">Nuevo Usuario Pop</h2>
-                    <form action="" method="POST">
+                    <form action="register.php" method="POST" autocomplete="off">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
