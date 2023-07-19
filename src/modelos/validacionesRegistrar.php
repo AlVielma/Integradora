@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Modelos;
-class registrar{
+class validacionesRegistrar{
 
     /* longitud cadena y quita espacios en blanco*/
     /*true = uno esta vacio */
@@ -68,3 +68,4 @@ class registrar{
         }
     }
 }
+?>

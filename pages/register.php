@@ -1,9 +1,10 @@
 <?php
 use App\Modelos\Conexion;
-use App\Modelos\registrar;
+use App\Modelos\validacionesRegistrar;
+
 require __DIR__ . '/../vendor/autoload.php';
 
-$registrar = new registrar();
+$registrar = new validacionesRegistrar();
 $conexion = new Conexion(); // Crear una instancia de la clase Conexion
 $con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
 
