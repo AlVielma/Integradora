@@ -18,6 +18,8 @@ if(!empty($_POST)){
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
     $id = registrarCliente([$nombre, $apellido, $email, $password_hash], $con);
+
+    header("Location: ../index.php");
 }
 ?>
 
