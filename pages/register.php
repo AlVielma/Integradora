@@ -85,29 +85,30 @@ if(!empty($_POST)){
                         <img src="../images/icon.png" alt="Imagen" class="img-fluid col-6 col-md-4 col-lg-3">
                     </div>
                     <h2 class="mb-4">Nuevo Usuario Pop</h2>
+                        <div>
+                            <?php mostrarMensajes($errors); ?>
+                        </div>
                     <form action="register.php" method="POST" autocomplete="off">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre">
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" value="<?php echo isset($_POST['nombre']) ? $_POST['nombre'] : ''; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingresa tu apellido">
+                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingresa tu apellido" value="<?php echo isset($_POST['apellido']) ? $_POST['apellido'] : ''; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
                         </div>
-                        
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" value="<?php echo isset($_POST['password']) ? $_POST['password'] : ''; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Confirmar contraseña</label>
-                            <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirma tu contraseña">
+                            <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirma tu contraseña" value="<?php echo isset($_POST['confpassword']) ? $_POST['confpassword'] : ''; ?>">
                         </div>
-                        <?php mostrarMensajes($errors); ?>
                         <div class="text-center">
                             <input type="submit" value="registro" name="submit">
                         </div>
