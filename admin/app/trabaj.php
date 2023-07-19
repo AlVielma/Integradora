@@ -1,3 +1,35 @@
+<?php
+require __DIR__.'/../../vendor/autoload.php';
+use App\Modelos\Trabajador;
+
+$db = new Trabajador();
+$tabla = $db->mostrar();
+
+$successMessage = $errorMessage = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email']) && isset($_POST['contraseña'])) {
+        $nombre = $_POST['nombre'];
+        $apellido = $_POST['apellido'];
+        $email = $_POST['email'];
+        $contraseña = $_POST['contraseña'];
+
+        // Validar que los campos no estén vacíos
+        if (empty($nombre) || empty($apellido) || empty($email) || empty($contraseña)) {
+            $errorMessage = "Todos los campos son obligatorios. Por favor, ingresa todos los datos.";
+        } else {
+            // Agregar el quinto argumento id_rol con valor 1
+            $db->agregar($nombre, $apellido, $email, $contraseña, 1);
+            $successMessage = "El trabajador se agregó exitosamente.";
+
+            // Redireccionar después de procesar el formulario
+            header("Location: trabaj.php");
+            exit();
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -25,38 +57,31 @@
 
   <div class="container-fluid py-5" id="content">
     <h1 class="mb-4">Agregar Trabajador</h1>
-    <form id="agregarForm" class="row g-3 needs-validation">
+    <form id="agregarForm" class="row g-3 needs-validation" method="post">
       <div class="col-md-6">
         <label for="nombre" class="form-label">Nombre</label>
-        <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Ingresa el nombre" required>
+        <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Ingresa el nombre" required>
         <div class="invalid-feedback">
           Por favor, ingresa un nombre válido.
         </div>
       </div>
       <div class="col-md-6">
         <label for="apellido" class="form-label">Apellido</label>
-        <input type="text" class="form-control form-control-sm" id="apellido" placeholder="Ingresa el apellido" required>
+        <input type="text" class="form-control form-control-sm" id="apellido" name="apellido" placeholder="Ingresa el apellido" required>
         <div class="invalid-feedback">
           Por favor, ingresa un apellido válido.
         </div>
       </div>
       <div class="col-md-6">
         <label for="gmail" class="form-label">Correo electrónico</label>
-        <input type="email" class="form-control form-control-sm" id="gmail" placeholder="Ingresa el correo electrónico" required>
+        <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Ingresa el correo electrónico" required>
         <div class="invalid-feedback">
           Por favor, ingresa un correo electrónico válido.
         </div>
       </div>
       <div class="col-md-6">
-        <label for="telefono" class="form-label">Teléfono</label>
-        <input type="tel" class="form-control form-control-sm" id="telefono" placeholder="Ingresa el número de teléfono" required>
-        <div class="invalid-feedback">
-          Por favor, ingresa un número de teléfono válido.
-        </div>
-      </div>
-      <div class="col-md-6">
-        <label for="contrasena" class="form-label">Contraseña</label>
-        <input type="password" class="form-control form-control-sm" id="contrasena" placeholder="Ingresa una contraseña" required>
+        <label for="contraseña" class="form-label">Contraseña</label>
+        <input type="password" class="form-control form-control-sm" id="contraseña" name="contraseña" placeholder="Ingresa una contraseña" required>
         <div class="invalid-feedback">
           Por favor, ingresa una contraseña válida.
         </div>
@@ -65,7 +90,36 @@
         <button class="btn btn-primary" type="submit">Agregar</button>
       </div>
     </form>
-    <ul id="trabajadoresLista" class="list-group mt-4"></ul>
+
+    <div class="col-12 p-3">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Email</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($tabla as $fila): ?>
+              <tr>
+                <td><?php echo $fila['id']; ?></td>
+                <td><?php echo $fila['nombre']; ?></td>
+                <td><?php echo $fila['apellido']; ?></td>
+                <td><?php echo $fila['email']; ?></td>
+                <td>
+                  <!-- Agrega el atributo data-bs-target para especificar el destino del modal -->
+                  <a href="../../src/http/eliminartrabajador.php?id=<?php echo $fila['id']; ?>" class="btn btn-danger"><img src="../img//circulo-x.png" alt="Eliminar"></a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
