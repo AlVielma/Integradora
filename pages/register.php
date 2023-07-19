@@ -20,7 +20,7 @@ if(!empty($_POST)){
     }
 
     if(!esEmail($email)){
-        $errors[] = "La dirreccion de correo no es valida";
+        $errors[] = "La direccion de correo no es valida";
     }
 
     if(!validarContr($password, $confpassword)){
