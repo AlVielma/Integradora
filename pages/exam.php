@@ -192,7 +192,7 @@
             </div>
             <div class="modal-body">
                 <!--Formulario-->
-                <form action="../src/http/correocitas.php" method="POST">
+                <form action="../src/modelos/metodoscita.php" method="POST">
                     <div class="form-group">
                         <label for="nombre" class="text-center">Nombre del paciente:</label>
                         <input type="text" class="form-control w-75 mx-auto" id="nombre" name="nombre" maxlength="50" required>
