@@ -1,7 +1,7 @@
 <?php
 use App\Modelos\Conexion;
 require __DIR__ . '/../vendor/autoload.php';
-require '../src/modelos/modelos.php';
+require '../src/modelos/registrar.php';
 
 $conexion = new Conexion(); // Crear una instancia de la clase Conexion
 $con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
