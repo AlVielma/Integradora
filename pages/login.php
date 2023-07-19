@@ -35,16 +35,20 @@
                         <img src="../images/user-circle.png" alt="Imagen" class="img-fluid">
                     </div>
                     <h2 class="mb-4">Inicio de Sesión</h2>
-                    <form>
-                        <div class="mb-3">
+                    <?php mostrarMensajes($errors); ?>
+                    <form action="login.php" method="post" autocomplete="off"  >
+                        <div class="mb-3 form-floating">
                             <label for="email" class="form-label">Correo electrónico</label>
                             <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 form-floating">
                             <label for="password" class="form-label">Contraseña</label>
                             <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required>
                         </div>
-                        <a href="#" class="btn btn-light btn-outline-dark">Iniciar sesión</a>
+                        <div class="col-12">
+                            <a href="recupera.php">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <button type="submit" class="btn btn-light btn-outline-dark">Iniciar sesión</button>
                         <a href="register.html" class="btn btn-light btn-outline-dark">Regístrate</a>
                     </form>
                 </div>
