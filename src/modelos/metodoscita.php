@@ -1,7 +1,9 @@
 <?php
 namespace App\Modelos;
 use App\Modelos\Conexion;
-require __DIR__.'/../../vendor/autoload.php';
+require __DIR__ .'/../../vendor/autoload.php';
+
+
 
 class metodoscita
 {
@@ -35,6 +37,12 @@ class metodoscita
         $query=$this->conectar->prepare("DELETE FROM Citas_Cliente WHERE id=?");
         $query->execute([$id]);
     }
+    public function verificarSesion()
+    {
+        session_start();
+        return isset($_SESSION['usuario']); // Verificar si el usuario ha iniciado sesión
+    }
+
     public function __destruct()
     {
         $this->conectar = null; // Cierra la conexión establecida
