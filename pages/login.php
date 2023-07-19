@@ -1,3 +1,27 @@
+<?php
+use App\Modelos\Conexion;
+use App\Modelos\validacionesRegistrar;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$registrar = new validacionesRegistrar();
+$conexion = new Conexion(); // Crear una instancia de la clase Conexion
+$con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
+
+$errors = [];
+
+if(!empty($_POST)){
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+
+
+    if($registrar->esNulo([$email, $password, $confpassword])){
+        $errors[] = "Debe de llenar todos los campos";
+    }
+
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +59,7 @@
                         <img src="../images/user-circle.png" alt="Imagen" class="img-fluid">
                     </div>
                     <h2 class="mb-4">Inicio de Sesión</h2>
-                    <?php mostrarMensajes($errors); ?>
+                    <?php $registrar->mostrarMensajes($errors); ?>
                     <form action="login.php" method="post" autocomplete="off"  >
                         <div class="mb-3 form-floating">
                             <label for="email" class="form-label">Correo electrónico</label>

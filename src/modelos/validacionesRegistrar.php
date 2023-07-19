@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Modelos;
+
+use PDO;
+
 class validacionesRegistrar{
 
     /* longitud cadena y quita espacios en blanco*/
@@ -66,5 +69,35 @@ class validacionesRegistrar{
         echo '</ul>';
         }
     }
+
+    function login($email,$password,$con){
+        $sql = $con->prepare("SELECT id, password FROM  Usuarios where email like ? LIMIT 1" );
+        $sql->execute([$email]);
+        if($row = $sql->fetch(PDO::FETCH_ASSOC)){
+            <?php
+
+function login($email, $password, $con) {
+    $sql = $con->prepare("SELECT id, password FROM Usuarios WHERE email LIKE ? LIMIT 1");
+    $sql->execute([$email]);
+    $row = $sql->fetch(PDO::FETCH_ASSOC);
+
+    if ($row) {
+        // Verificar si la contraseña ingresada coincide con el hash almacenado en la base de datos
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['']
+            return true;
+        } else {
+            // La contraseña no coincide, no se permite el inicio de sesión
+            return false;
+        }
+    }
+
+    // El usuario no fue encontrado en la base de datos, no se permite el inicio de sesión
+    return false;
+}
+        }
+    }
+
+    
 }
 ?>
