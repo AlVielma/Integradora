@@ -1,8 +1,9 @@
 <?php
 use App\Modelos\Conexion;
+use App\Modelos\registrar;
 require __DIR__ . '/../vendor/autoload.php';
-require '../src/modelos/registrar.php';
 
+$registrar = new registrar();
 $conexion = new Conexion(); // Crear una instancia de la clase Conexion
 $con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
 
@@ -15,23 +16,23 @@ if(!empty($_POST)){
     $password = trim($_POST['password']);
     $confpassword = trim($_POST['confpassword']);
 
-    if(esNulo([$nombre, $apellido, $email, $password, $confpassword])){
+    if($registrar->esNulo([$nombre, $apellido, $email, $password, $confpassword])){
         $errors[] = "Debe de llenar todos los campos";
     }
 
-    if(!esEmail($email)){
+    if(!$registrar->esEmail($email)){
         $errors[] = "La direccion de correo no es valida";
     }
 
-    if(!validarContr($password, $confpassword)){
+    if(!$registrar->validarContr($password, $confpassword)){
         $errors[] = "Las contraseñas no coinciden";
     }
 
-    if(usuarioExist($nombre, $con)){
+    if($registrar->usuarioExist($nombre, $con)){
         $errors[] = "El nombre de usuario $nombre ya existe";
     }
 
-    if(emailExist($email, $con)){
+    if($registrar->emailExist($email, $con)){
         $errors[] = "El correo electronico $email ya existe";
     }
 
@@ -39,7 +40,7 @@ if(!empty($_POST)){
 
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-        $id = registrarCliente([$nombre, $apellido, $email, $password_hash], $con);
+        $registrar->registrarCliente([$nombre, $apellido, $email, $password_hash], $con);
 
         header("Location: ../index.php");
     }
@@ -86,7 +87,7 @@ if(!empty($_POST)){
                     </div>
                     <h2 class="mb-4">Nuevo Usuario Pop</h2>
                         <div>
-                            <?php mostrarMensajes($errors); ?>
+                            <?php $registrar->mostrarMensajes($errors); ?>
                         </div>
                     <form action="register.php" method="POST" autocomplete="off">
                         <div class="mb-3">
