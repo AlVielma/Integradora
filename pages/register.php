@@ -6,6 +6,8 @@ require '../src/modelos/registrar.php';
 $conexion = new Conexion(); // Crear una instancia de la clase Conexion
 $con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
 
+$errors = [];
+
 if(!empty($_POST)){
     $nombre = trim($_POST['nombre']);
     $apellido = trim($_POST['apellido']);
@@ -13,11 +15,34 @@ if(!empty($_POST)){
     $password = trim($_POST['password']);
     $confpassword = trim($_POST['confpassword']);
 
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    if(esNulo([$nombre, $apellido, $email, $password, $confpassword])){
+        $errors[] = "Debe de llenar todos los campos";
+    }
 
-    $id = registrarCliente([$nombre, $apellido, $email, $password_hash], $con);
+    if(!esEmail($email)){
+        $errors[] = "La dirreccion de correo no es valida";
+    }
 
-    header("Location: ../index.php");
+    if(!validarContr($password, $confpassword)){
+        $errors[] = "Las contraseñas no coinciden";
+    }
+
+    if(usuarioExist($nombre, $con)){
+        $errors[] = "El nombre de usuario $nombre ya existe";
+    }
+
+    if(emailExist($email, $con)){
+        $errors[] = "El correo electronico $email ya existe";
+    }
+
+    if(count($errors) == 0){
+
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+        $id = registrarCliente([$nombre, $apellido, $email, $password_hash], $con);
+
+        header("Location: ../index.php");
+    }
 }
 ?>
 
@@ -63,25 +88,26 @@ if(!empty($_POST)){
                     <form action="register.php" method="POST" autocomplete="off">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre">
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingresa tu apellido" required>
+                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingresa tu apellido">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico">
                         </div>
                         
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Confirmar contraseña</label>
-                            <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirma tu contraseña" required>
+                            <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirma tu contraseña">
                         </div>
+                        <?php mostrarMensajes($errors); ?>
                         <div class="text-center">
                             <input type="submit" value="registro" name="submit">
                         </div>
