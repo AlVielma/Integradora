@@ -25,25 +25,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($nombre) || empty($apellido) || empty($email) || empty($contraseña)) {
       $errorMessage = "Todos los campos son obligatorios. Por favor, ingresa todos los datos.";
     } else {
-      // Agregar el quinto argumento id_rol con valor 1
-      $db->agregar($nombre, $apellido, $email, $contraseña, 1);
-      $successMessage = "El trabajador se agregó exitosamente.";
 
-      // Redireccionar después de procesar el formulario
-      header("Location: trabaj.php");
-      exit();
-    }
+      if($registrar->esNulo([$nombre, $apellido, $email, $contraseña])){
+        $errors[] = "Debe de llenar todos los campos";
+      }
+  
+      if(!$registrar->esEmail($email)){
+          $errors[] = "La direccion de correo no es valida";
+      }
+  
+      if($registrar->emailExist($email, $con)){
+          $errors[] = "El correo electronico $email ya existe";
+      }
 
-    if($registrar->esNulo([$nombre, $apellido, $email, $contraseña])){
-      $errors[] = "Debe de llenar todos los campos";
-    }
+      if (empty($errors)) {
+          // Agregar el quinto argumento id_rol con valor 1
+          // Solo si el correo no existe previamente
+          $db->agregar($nombre, $apellido, $email, $contraseña, 1);
+          $successMessage = "El trabajador se agregó exitosamente.";
 
-    if(!$registrar->esEmail($email)){
-        $errors[] = "La direccion de correo no es valida";
-    }
-
-    if($registrar->emailExist($email, $con)){
-        $errors[] = "El correo electronico $email ya existe";
+          // Redireccionar después de procesar el formulario
+          header("Location: trabaj.php");
+          exit();
+        }
     }
   }
 }
