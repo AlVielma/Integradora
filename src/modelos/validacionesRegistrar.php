@@ -70,9 +70,16 @@ class validacionesRegistrar{
 
     function login($email, $password, $con) {
         try {
-            $sql = $con->prepare("SELECT id, email, contraseña, id_rol FROM Usuarios WHERE email LIKE ? LIMIT 1");
+            $sql = $con->prepare("SELECT * FROM Usuarios WHERE email LIKE ? LIMIT 1");
             $sql->execute([$email]);
             $row = $sql->fetch(\PDO::FETCH_ASSOC);
+
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['user_email'] = $row['email'];
+            $_SESSION['user_name'] = $row['nombre'];
+            $_SESSION['user_lastname'] = $row['apellido'];
+            $_SESSION['user_rol'] = $row['id_rol'];
+
     
             if ($row && password_verify($password, $row['contraseña'])) {
                 // La contraseña es válida, se permite el inicio de sesión
@@ -83,6 +90,7 @@ class validacionesRegistrar{
                 // Redireccionar según el rol del usuario
                 if ($id_rol == 1) {
                     // Si es admin, redirigir a la vista de admin
+
                     header("Location: ../admin/app/aggimg.php");
                 } else {
                     // Si es usuario, redirigir a la vista de usuario
