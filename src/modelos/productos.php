@@ -97,4 +97,11 @@ Class productos
         $actualizar = $this->pdo->prepare ("UPDATE Imagenes SET IMAGEN=? WHERE id_img=?");
         $actualizar->execute([$nombre,$id]);
     }
+    
+    public function imagenactual($id)
+    {
+        $imgactual =$this->pdo->prepare("SELECT IMAGEN FROM Imagenes WHERE id_img=?");
+        $imgactual->execute([$id]);
+        return $imgactual->fetchColumn();;
+    }
 }
