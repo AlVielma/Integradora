@@ -5,12 +5,30 @@ use App\Modelos\Conexion;
 $conexion = new Conexion();
 $con = $conexion->conectar();
 
-if(isset($_POST['busqueda'])){
-  $busqueda = $_GET['busqueda'];
+if (isset($_POST['busqueda'])) {
+  $busqueda = $_POST['busqueda'];
   $consulta = $con->query("CALL BuscadorPro('$busqueda');");
-  $product = $consulta->fetchAll(PDO::FETCH_OBJ);
+  
+  // Verificar si la consulta se ejecutó correctamente
+  if ($consulta) {
+    $product = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+    if (count($product) > 0) {
+      foreach ($product as $producto) {
+        echo "Nombre: " . htmlspecialchars($producto->nombre) . "<br>";
+        echo "Descripción: " . htmlspecialchars($producto->descripcion) . "<br>";
+        echo "Precio: " . htmlspecialchars($producto->precio) . "<br>";
+        echo "<br>";
+      }
+    } else {
+      echo "No se encontraron resultados.";
+    }
+  } else {
+    echo "Error al ejecutar la consulta.";
+  }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
