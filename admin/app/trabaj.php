@@ -21,11 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $contraseña = $_POST['contraseña'];
 
-    // Validar que los campos no estén vacíos
-    if (empty($nombre) || empty($apellido) || empty($email) || empty($contraseña)) {
-      $errorMessage = "Todos los campos son obligatorios. Por favor, ingresa todos los datos.";
-    } else {
-
       if($registrar->esNulo([$nombre, $apellido, $email, $contraseña])){
         $errors[] = "Debe de llenar todos los campos";
       }
@@ -50,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
   }
-}
 ?>
 
 <!DOCTYPE html>
