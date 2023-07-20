@@ -69,10 +69,10 @@ $mostrar=$productos->mostrar_productos()
                 </td>
 
                 <td>
-                <a class="btn btn-warning editar-producto" data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modaleditarproducto" data-bs-nombre="<?=$product['nombre'];?>" data-bs-descripcion="<?=$product['descripcion'];?>" data-bs-categoria="<?=$product['categoria'];?>" data-bs-precio="<?=$product['precio'];?>" data-bs-stock="<?=$product['stock'];?>" data-bs-imagen="<?=$product['IMAGEN'];?>">
-                  <img src="../../images/editar.png" alt="">
-                </a>
-
+                  <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaleditproducto" data-id="<?php echo $product['sku']; ?>" data-nombre="<?php echo $product['nombre']; ?>" data-descripcion="<?php echo $product['descripcion']; ?>
+                  "data-precio="<?php echo $product['precio']; ?>"data-stock="<?php echo $product['stock']; ?>"data-categoria="<?php echo $product['categoriaid']; ?>"data-imagen="<?php echo $product['IMAGEN']; ?>"data-lente="<?php echo $product['lenteid']; ?>">
+                    <img src="../../images/editar.png" alt="">
+                  </a>
 
                   <a class="btn btn-danger"data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modaleliminarproducto" ><img src="../../images/circulo-x.png" alt="">
                   </a>
@@ -86,15 +86,16 @@ $mostrar=$productos->mostrar_productos()
       </div>
   </div>
   <?php
+  require __DIR__.'/../../src/http/modaleditproducto.php';
   require __DIR__.'/../../src/http/modalproducto.php';
   require __DIR__.'/../../src/http/modaleliminarproducto.php';
-  require __DIR__.'/../../src/http/modaleditarproducto.php';
   ?>
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/admin/js/boton.js"></script>
   <script src="/admin/js/modalcrudeliminar.js"></script>
-  <script src="/admin/js/modalcrudeditar.js"></script>
+  <script src="/admin/js/editarproducto.js"></script>
 </body>
 
 </html>
+

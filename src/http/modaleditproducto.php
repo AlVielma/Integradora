@@ -7,7 +7,7 @@ $tipolente = $productos->mostrar_tipo_lentes();
 $marca = $productos->mostrar_marca();
 ?>
 
-<div class="modal fade" id="modaleditarproducto" tabindex="-1" aria-labelledby="modaleditarproudcto" aria-hidden="true">
+<div class="modal fade" id="modaleditproducto" tabindex="-1" aria-labelledby="modaleditproducto" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -16,16 +16,16 @@ $marca = $productos->mostrar_marca();
           </div>
 
           <div class="modal-body">
-            <form action="actualizar_producto.php" method="POST">
-            <input type="hidden" id="product_id" name="product_id" value="">
+          
+            <form action="../../src/http/actualizarproducto.php" method="post" enctype="multipart/form-data" >
+              <input type="hidden" name="id" id="edit-id">
               <div class="mb-3">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <input type="text" class="form-control" name="nombre" id="edit-nombre">
               </div>
               <div class="mb-3">
                 <label for="marca">Marca</label>
-                <select class="form-control" name="marca" id="marca" required>
-                  <option value="">Marcas</option>
+                <select class="form-control" name="marca" id="edit-marca">
                   <?php
                   foreach ($marca as $marc) {
                   ?>
@@ -39,8 +39,7 @@ $marca = $productos->mostrar_marca();
               </div>
               <div class="mb-3">
                 <label for="tipo">Tipo de lente</label>
-                <select class="form-control" name="tipo_lente" id="tipo_lente" required>
-                  <option value="">Tipo de lentes</option>
+                <select class="form-control" name="tipo_lente" id="edit-lente">
                   <?php
                   foreach ($tipolente as $tlente) {
                   ?>
@@ -54,11 +53,11 @@ $marca = $productos->mostrar_marca();
               </div>
               <div class="mb-3">
                 <label for="descripcion">Descripción</label>
-                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+                <textarea class="form-control" name="descripcion" id="edit-descripcion"rows="3" ></textarea>
               </div>
               <div class="mb-3">
                 <label for="categoria">Categoría</label>
-                <select class="form-control" id="categoria" name="categoria" required>
+                <select class="form-control" name="categoria" id="edit-categoria">
                   <?php
                   foreach ($categorias as $cat) {
                   ?>
@@ -70,25 +69,21 @@ $marca = $productos->mostrar_marca();
                   ?>
                 </select>
               </div>
-              <!-- Agrega los demás campos del formulario de edición según tus necesidades -->
               <div class="mb-3">
                 <label for="precio">Precio</label>
-                <input type="number" class="form-control" id="precio" name="precio" required>
+                <input type="number" class="form-control" name="precio" id="edit-precio">
               </div>
               <div class="mb-3">
                 <label for="imagen">Agregar Imagen</label>
-                <input type="file" class="form-control" name="imagen">
+                <input type="file" class="form-control" name="imagen"id="edit-imagen">
               </div>
               <div class="mb-3">
-                <label for="stock">Cantidad</label>
-                <input type="number" class="form-control" id="stock" name="stock" required>
+                <label for="cantidad">Cantidad</label>
+                <input type="number" class="form-control" name="stock" id="edit-stock">
               </div>
-            
-           
-              <button type="submit" class="btn btn-primary">Guardar cambios</button>
+              <button type="submit" class="btn btn-primary" name="editar">Guardar Cambios</button>
             </form>
           </div>
-
         </div>
       </div>
     </div>
