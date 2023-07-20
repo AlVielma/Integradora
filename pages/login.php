@@ -64,10 +64,9 @@ if (!empty($_POST)) {
                 <div class="border rounded border-light shadow-sm p-4 bg-white">
                     <div class="text-center mb-4">
                         <img src="../images/user-circle.png" alt="Imagen" class="img-fluid">
+                        <?php $registrar->mostrarMensajes($errors); ?>
                     </div>
                     <h2 class="mb-4">Inicio de Sesión</h2>
-
-                    <?php $registrar->mostrarMensajes($errors); ?>
 
                     <form action="login.php" method="post" autocomplete="off">
                         <div class="mb-3 form-floating">
