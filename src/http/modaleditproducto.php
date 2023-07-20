@@ -26,6 +26,7 @@ $marca = $productos->mostrar_marca();
               <div class="mb-3">
                 <label for="marca">Marca</label>
                 <select class="form-control" name="marca" id="edit-marca">
+               
                   <?php
                   foreach ($marca as $marc) {
                   ?>

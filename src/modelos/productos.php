@@ -15,8 +15,8 @@ Class productos
 
     public function mostrar_productos()
     {
-        $mostarproductos = $this->pdo->query("SELECT p.sku,p.nombre,p.descripcion,c.nombre as categoria ,p.precio,p.stock,i.IMAGEN,l.id as lenteid,c.id as categoriaid FROM 
-        Categorias c inner join Productos p ON p.sku=c.id INNER JOIN Imagenes i ON p.imagen = i.id_img inner join TiposLentes l on l.id=p.tipo_lente_id");
+        $mostarproductos = $this->pdo->query("SELECT p.sku,p.nombre,p.descripcion,c.nombre as categoria ,p.precio,p.stock ,i.IMAGEN,c.id as categoriaid,l.id as lenteid FROM 
+        Categorias c inner join Productos p ON p.categoria_id =c.id INNER JOIN Imagenes i ON p.imagen = i.id_img inner join TiposLentes l on l.id=p.tipo_lente_id;");
         return $mostarproductos->fetchAll(\PDO::FETCH_ASSOC);
     }
 
