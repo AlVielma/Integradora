@@ -1,3 +1,16 @@
+<?php
+require __DIR__ . '/vendor/autoload.php';
+use App\Modelos\Conexion;
+
+$conexion = new Conexion();
+$con = $conexion->conectar();
+
+if(isset($_POST['busqueda'])){
+  $busqueda = $_GET['busqueda'];
+  $consulta = $con->query("CALL BuscadorPro('$busqueda');");
+  $product = $consulta->fetchAll(PDO::FETCH_OBJ);
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +40,9 @@
               </a>
 
               <div class="container-fluid">
-                  <form class="d-flex" role="search">
+                  <form class="d-flex" role="search" method="POST">
                       <input class="form-control me-2 busqueda" type="search" placeholder="Search"
-                          aria-label="Search">
+                          aria-label="Search" name="busqueda">
                   </form>
               </div>
 

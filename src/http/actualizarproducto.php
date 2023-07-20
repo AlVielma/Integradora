@@ -13,16 +13,19 @@ if(isset($_POST['editar']))
     $name= "{$filename}.{$extension}";
     $real_path = "{$dir}{$filename}.{$extension}";
 
-    if(!file_exists($real_path))
+    if (!file_exists($real_path))
     {
-
-        move_uploaded_file($imagen['tmp_name'],$real_path);
-        $productos->actualizarproducto($nombre,$descripcion,$precio,$categoria,$tipo_lente,$marca,$stock,$id);
-        $productos->actualizarimg($name,$id);
+        $imagenactual = $productos->imagenactual($id);
+        if (!empty($imagenactual) && file_exists(__DIR__ . "/../../productosimg/" . $imagenactual)) {
+            unlink(__DIR__ . "/../../productosimg/" . $imagenactual);
+        }
+        move_uploaded_file($imagen['tmp_name'], $real_path);
+        $productos->actualizarproducto($nombre, $descripcion, $precio, $categoria, $tipo_lente, $marca, $stock, $id);
+        $productos->actualizarimg($name, $id);
         header('Location: /../../admin/app/aggimg.php');
     }
     else {
-        $productos->actualizarproducto($nombre,$descripcion,$precio,$categoria,$tipo_lente,$marca,$stock,$id);
+        $productos->actualizarproducto($nombre, $descripcion, $precio, $categoria, $tipo_lente, $marca, $stock, $id);
         header('Location: /../../admin/app/aggimg.php');
     }
 
