@@ -21,11 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $contraseña = $_POST['contraseña'];
 
-    // Validar que los campos no estén vacíos
-    if (empty($nombre) || empty($apellido) || empty($email) || empty($contraseña)) {
-      $errorMessage = "Todos los campos son obligatorios. Por favor, ingresa todos los datos.";
-    } else {
-
       if($registrar->esNulo([$nombre, $apellido, $email, $contraseña])){
         $errors[] = "Debe de llenar todos los campos";
       }
@@ -38,19 +33,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $errors[] = "El correo electronico $email ya existe";
       }
 
-      if (empty($errors)) {
-          // Agregar el quinto argumento id_rol con valor 1
-          // Solo si el correo no existe previamente
-          $db->agregar($nombre, $apellido, $email, $contraseña, 1);
-          $successMessage = "El trabajador se agregó exitosamente.";
+      if (count($errors) == 0) {
+        $password_hash = password_hash($contraseña, PASSWORD_DEFAULT);
+        // Agregar el quinto argumento id_rol con valor 1
+        // Solo si el correo no existe previamente
+        $db->agregar($nombre, $apellido, $email, $password_hash, 1);
+        $successMessage = "El trabajador se agregó exitosamente.";
 
-          // Redireccionar después de procesar el formulario
-          header("Location: trabaj.php");
-          exit();
-        }
+        // Redireccionar después de procesar el formulario
+        header("Location: trabaj.php");
+        exit();
+      }
     }
   }
-}
 ?>
 
 <!DOCTYPE html>
