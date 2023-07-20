@@ -1,5 +1,6 @@
 <?php
-require __DIR__.'/../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
+
 use App\Modelos\Trabajador;
 
 $db = new Trabajador();
@@ -8,25 +9,25 @@ $tabla = $db->mostrar();
 $successMessage = $errorMessage = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email']) && isset($_POST['contraseña'])) {
-        $nombre = $_POST['nombre'];
-        $apellido = $_POST['apellido'];
-        $email = $_POST['email'];
-        $contraseña = $_POST['contraseña'];
+  if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email']) && isset($_POST['contraseña'])) {
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $email = $_POST['email'];
+    $contraseña = $_POST['contraseña'];
 
-        // Validar que los campos no estén vacíos
-        if (empty($nombre) || empty($apellido) || empty($email) || empty($contraseña)) {
-            $errorMessage = "Todos los campos son obligatorios. Por favor, ingresa todos los datos.";
-        } else {
-            // Agregar el quinto argumento id_rol con valor 1
-            $db->agregar($nombre, $apellido, $email, $contraseña, 1);
-            $successMessage = "El trabajador se agregó exitosamente.";
+    // Validar que los campos no estén vacíos
+    if (empty($nombre) || empty($apellido) || empty($email) || empty($contraseña)) {
+      $errorMessage = "Todos los campos son obligatorios. Por favor, ingresa todos los datos.";
+    } else {
+      // Agregar el quinto argumento id_rol con valor 1
+      $db->agregar($nombre, $apellido, $email, $contraseña, 1);
+      $successMessage = "El trabajador se agregó exitosamente.";
 
-            // Redireccionar después de procesar el formulario
-            header("Location: trabaj.php");
-            exit();
-        }
+      // Redireccionar después de procesar el formulario
+      header("Location: trabaj.php");
+      exit();
     }
+  }
 }
 ?>
 
@@ -42,17 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-<div class="sidebar" id="sidebar">
-  <div class="logo">
-    <img src="../img/logo.jpg" alt="Logo">
+  <div class="sidebar" id="sidebar">
+    <div class="logo">
+      <img src="../img/logo.jpg" alt="Logo">
+    </div>
+    <a class="nav-link" href="aggimg.php"><i class="fas fa-box"></i><span>Gestionar Producto</span></a>
+    <a class="nav-link" href="trabaj.php"><i class="fas fa-users"></i><span>Gestionar Trabajadores</span></a>
+    <a class="nav-link" href="agenda.php"><i class="fas fa-calendar-alt"></i><span>Gestionar Agenda</span></a>
+    <a class="nav-link" href="consulta.php"><i class="fas fa-stethoscope"></i><span>Realizar Consulta</span></a>
+    <a class="nav-link" href="receta.php"><i class="fas fa-prescription"></i><span>Generar Receta</span></a>
+    <a class="nav-link" href="../index.php"><i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span></a>
   </div>
-  <a class="nav-link" href="aggimg.php"><i class="fas fa-box"></i><span>Gestionar Producto</span></a>
-  <a class="nav-link" href="trabaj.php"><i class="fas fa-users"></i><span>Gestionar Trabajadores</span></a>
-  <a class="nav-link" href="agenda.php"><i class="fas fa-calendar-alt"></i><span>Gestionar Agenda</span></a>
-  <a class="nav-link" href="consulta.php"><i class="fas fa-stethoscope"></i><span>Realizar Consulta</span></a>
-  <a class="nav-link" href="receta.php"><i class="fas fa-prescription"></i><span>Generar Receta</span></a>
-  <a class="nav-link" href="../index.php"><i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span></a>
-</div>
 
 
   <div class="container-fluid py-5" id="content">
@@ -104,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($tabla as $fila): ?>
+            <?php foreach ($tabla as $fila) : ?>
               <tr>
                 <td><?php echo $fila['id']; ?></td>
                 <td><?php echo $fila['nombre']; ?></td>

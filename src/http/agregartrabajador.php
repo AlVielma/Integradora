@@ -1,5 +1,4 @@
 <?php
-use App\Modelos\Metodos;
 use App\Modelos\Trabajador;
 
 require __DIR__.'/../../vendor/autoload.php';
