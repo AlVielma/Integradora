@@ -26,11 +26,11 @@ class Trabajador
         $query->execute([$nombre, $apellido, $email, $contraseña, $id_rol]);
     }
 
-    public function editar($id, $nombre, $apellido, $email, $contraseña, $id_rol)
+    /*public function editar($id, $nombre, $apellido, $email, $contraseña, $id_rol)
     {
         $query = $this->conectar->prepare("UPDATE Usuarios SET nombre=?, apellido=?, email=?, contraseña=?, id_rol=? WHERE id=?");
         $query->execute([$nombre, $apellido, $email, $contraseña, $id_rol, $id]);
-    }
+    }*/
 
     public function eliminar($id)
     {

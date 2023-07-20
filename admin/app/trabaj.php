@@ -61,28 +61,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form id="agregarForm" class="row g-3 needs-validation" method="post">
       <div class="col-md-6">
         <label for="nombre" class="form-label">Nombre</label>
-        <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Ingresa el nombre" required>
+        <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Ingresa el nombre">
         <div class="invalid-feedback">
           Por favor, ingresa un nombre válido.
         </div>
       </div>
       <div class="col-md-6">
         <label for="apellido" class="form-label">Apellido</label>
-        <input type="text" class="form-control form-control-sm" id="apellido" name="apellido" placeholder="Ingresa el apellido" required>
+        <input type="text" class="form-control form-control-sm" id="apellido" name="apellido" placeholder="Ingresa el apellido">
         <div class="invalid-feedback">
           Por favor, ingresa un apellido válido.
         </div>
       </div>
       <div class="col-md-6">
         <label for="gmail" class="form-label">Correo electrónico</label>
-        <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Ingresa el correo electrónico" required>
+        <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Ingresa el correo electrónico">
         <div class="invalid-feedback">
           Por favor, ingresa un correo electrónico válido.
         </div>
       </div>
       <div class="col-md-6">
         <label for="contraseña" class="form-label">Contraseña</label>
-        <input type="password" class="form-control form-control-sm" id="contraseña" name="contraseña" placeholder="Ingresa una contraseña" required>
+        <input type="password" class="form-control form-control-sm" id="contraseña" name="contraseña" placeholder="Ingresa una contraseña">
         <div class="invalid-feedback">
           Por favor, ingresa una contraseña válida.
         </div>
