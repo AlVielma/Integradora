@@ -2,8 +2,6 @@
 
 namespace App\Modelos;
 
-use PDO;
-
 class validacionesRegistrar{
 
     /* longitud cadena y quita espacios en blanco*/
@@ -74,7 +72,7 @@ class validacionesRegistrar{
         try {
             $sql = $con->prepare("SELECT id, email, contraseña, id_rol FROM Usuarios WHERE email LIKE ? LIMIT 1");
             $sql->execute([$email]);
-            $row = $sql->fetch(PDO::FETCH_ASSOC);
+            $row = $sql->fetch(\PDO::FETCH_ASSOC);
     
             if ($row && password_verify($password, $row['contraseña'])) {
                 // La contraseña es válida, se permite el inicio de sesión
