@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $errors[] = "El correo electronico $email ya existe";
       }
 
-      if (empty($errors)) {
+      if (count($errors) == 0) {
         $password_hash = password_hash($contraseña, PASSWORD_DEFAULT);
         // Agregar el quinto argumento id_rol con valor 1
         // Solo si el correo no existe previamente
