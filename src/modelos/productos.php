@@ -15,8 +15,8 @@ Class productos
 
     public function mostrar_productos()
     {
-        $mostarproductos = $this->pdo->query("SELECT p.sku,p.nombre,p.descripcion,c.nombre as categoria ,p.precio,p.stock,i.IMAGEN FROM 
-        Categorias c inner join Productos p ON p.sku=c.id INNER JOIN Imagenes i ON p.imagen = i.id_img");
+        $mostarproductos = $this->pdo->query("SELECT p.sku,p.nombre,p.descripcion,c.nombre as categoria ,p.precio,p.stock,i.IMAGEN,l.id as lenteid,c.id as categoriaid FROM 
+        Categorias c inner join Productos p ON p.sku=c.id INNER JOIN Imagenes i ON p.imagen = i.id_img inner join TiposLentes l on l.id=p.tipo_lente_id");
         return $mostarproductos->fetchAll(\PDO::FETCH_ASSOC);
     }
 
@@ -85,16 +85,16 @@ Class productos
         $eliminarprodu->execute([$id]);
     }
 
-    public function actualizarproducto($nombre,$marca_id,$tipo_lente_id,$descripcion,$precio,$stock,$categoria_id,$id)
+    public function actualizarproducto($nombre, $descripcion, $precio, $categoria, $lente, $marca, $stock, $id)
     {
-        $actualizarpro = $this->pdo->prepare("UPDATE FROM Productos SET nombre=?,marca_id=?,tipo_lente_id=?,descripcion=?,precio=?,stock=?,categoria_id=? WHERE sku=?");
-        $actualizarpro->execute([$nombre,$marca_id,$tipo_lente_id,$descripcion,$precio,$stock,$categoria_id,$id]);
-    }   
-
-    public function actualizarimg($imagen,$id)
-    {
-        $actualizarimg = $this->pdo->preparare("UPDATE FROM Imagenes SET IMAGEN=? WHERE id_img=?");
-        $actualizarimg->execute([$imagen,$id]);
+        $actualizar = $this->pdo->prepare ("UPDATE Productos SET nombre=?, descripcion=?, precio=?, categoria_id=?,
+        tipo_lente_id=?, marca_id=?, stock=? WHERE sku=?");
+        $actualizar->execute([$nombre, $descripcion, $precio, $categoria, $lente, $marca, $stock, $id]);
     }
 
+    public function actualizarimg($nombre,$id)
+    {
+        $actualizar = $this->pdo->prepare ("UPDATE Imagenes SET IMAGEN=? WHERE id_img=?");
+        $actualizar->execute([$nombre,$id]);
+    }
 }

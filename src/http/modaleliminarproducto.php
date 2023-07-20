@@ -1,4 +1,3 @@
-<!-- Modal -->
 <div class="modal fade" id="modaleliminarproducto" tabindex="-1" aria-labelledby="modaleliminarproducto" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
