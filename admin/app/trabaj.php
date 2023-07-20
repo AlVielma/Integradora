@@ -2,11 +2,17 @@
 require __DIR__ . '/../../vendor/autoload.php';
 
 use App\Modelos\Trabajador;
+use App\Modelos\Conexion;
+use App\Modelos\validacionesRegistrar;
 
 $db = new Trabajador();
+$conexion = new Conexion();
 $tabla = $db->mostrar();
+$con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
+$registrar = new validacionesRegistrar();
 
 $successMessage = $errorMessage = '';
+$errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email']) && isset($_POST['contraseña'])) {
@@ -26,6 +32,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Redireccionar después de procesar el formulario
       header("Location: trabaj.php");
       exit();
+    }
+
+    if($registrar->esNulo([$nombre, $apellido, $email, $contraseña])){
+      $errors[] = "Debe de llenar todos los campos";
+    }
+
+    if(!$registrar->esEmail($email)){
+        $errors[] = "La direccion de correo no es valida";
+    }
+
+    if($registrar->emailExist($email, $con)){
+        $errors[] = "El correo electronico $email ya existe";
     }
   }
 }
@@ -58,6 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <div class="container-fluid py-5" id="content">
     <h1 class="mb-4">Agregar Trabajador</h1>
+    <div>
+      <?php $registrar->mostrarMensajes($errors); ?>
+    </div>
     <form id="agregarForm" class="row g-3 needs-validation" method="post">
       <div class="col-md-6">
         <label for="nombre" class="form-label">Nombre</label>

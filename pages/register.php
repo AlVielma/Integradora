@@ -29,9 +29,9 @@ if(!empty($_POST)){
         $errors[] = "Las contraseñas no coinciden";
     }
 
-    if($registrar->usuarioExist($nombre, $con)){
+    /*if($registrar->usuarioExist($nombre, $con)){
         $errors[] = "El nombre de usuario $nombre ya existe";
-    }
+    }*/
 
     if($registrar->emailExist($email, $con)){
         $errors[] = "El correo electronico $email ya existe";
