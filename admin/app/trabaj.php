@@ -34,15 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
 
       if (empty($errors)) {
-          // Agregar el quinto argumento id_rol con valor 1
-          // Solo si el correo no existe previamente
-          $db->agregar($nombre, $apellido, $email, $contraseña, 1);
-          $successMessage = "El trabajador se agregó exitosamente.";
+        $password_hash = password_hash($contraseña, PASSWORD_DEFAULT);
+        // Agregar el quinto argumento id_rol con valor 1
+        // Solo si el correo no existe previamente
+        $db->agregar($nombre, $apellido, $email, $password_hash, 1);
+        $successMessage = "El trabajador se agregó exitosamente.";
 
-          // Redireccionar después de procesar el formulario
-          header("Location: trabaj.php");
-          exit();
-        }
+        // Redireccionar después de procesar el formulario
+        header("Location: trabaj.php");
+        exit();
+      }
     }
   }
 ?>
