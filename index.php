@@ -12,6 +12,7 @@
     <link rel="icon" href="images/icon.png">
     <title>Pop Ópticos</title>
 </head>
+
   <body>
              <!--Header-->
     <header class="header">
