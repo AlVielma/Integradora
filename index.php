@@ -1,35 +1,6 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
-use App\Modelos\Conexion;
-
-$conexion = new Conexion();
-$con = $conexion->conectar();
-
-if (isset($_POST['busqueda'])) {
-  $busqueda = $_POST['busqueda'];
-  $consulta = $con->query("CALL BuscadorPro('$busqueda');");
-  
-  // Verificar si la consulta se ejecutó correctamente
-  if ($consulta) {
-    $product = $consulta->fetchAll(PDO::FETCH_OBJ);
-
-    if (count($product) > 0) {
-      foreach ($product as $producto) {
-        echo "Nombre: " . htmlspecialchars($producto->nombre) . "<br>";
-        echo "Descripción: " . htmlspecialchars($producto->descripcion) . "<br>";
-        echo "Precio: " . htmlspecialchars($producto->precio) . "<br>";
-        echo "<br>";
-      }
-    } else {
-      echo "No se encontraron resultados.";
-    }
-  } else {
-    echo "Error al ejecutar la consulta.";
-  }
-}
+require 'vendor/autoload.php';
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,7 +29,7 @@ if (isset($_POST['busqueda'])) {
               </a>
 
               <div class="container-fluid">
-                  <form class="d-flex" role="search" method="POST">
+                  <form class="d-flex" role="search" method="POST" action="pages/busqueda.php">
                       <input class="form-control me-2 busqueda" type="search" placeholder="Search"
                           aria-label="Search" name="busqueda">
                   </form>
