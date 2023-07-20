@@ -55,8 +55,8 @@
                 </div>
 
                 <div class="row mx-5 text-center justify-content-center">
-                  <a href="pages/login.html" class="objeto-texto h3">Inicia Sesion</a>
-                  <a href="pages/register.html" class="objeto-texto h3">Registrate</a>
+                  <a href="pages/login.php" class="objeto-texto h3">Inicia Sesion</a>
+                  <a href="pages/register.php" class="objeto-texto h3">Registrate</a>
                 </div>
               </div>
             </div>

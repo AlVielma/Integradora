@@ -71,27 +71,35 @@ class validacionesRegistrar{
     }
 
     function login($email, $password, $con) {
-        $sql = $con->prepare("SELECT id, email, contraseña FROM Usuarios WHERE email LIKE ? LIMIT 1");
-        $sql->execute([$email]);
-        $row = $sql->fetch(PDO::FETCH_ASSOC);
+        try {
+            $sql = $con->prepare("SELECT id, email, contraseña, id_rol FROM Usuarios WHERE email LIKE ? LIMIT 1");
+            $sql->execute([$email]);
+            $row = $sql->fetch(PDO::FETCH_ASSOC);
     
-        if ($row && isset($row['contraseña'])) {
-            // Verificar si la contraseña ingresada coincide con el hash almacenado en la base de datos
-            if (password_verify($password, $row['contraseña'])) {
-                 // La contraseña es válida, se permite el inicio de sesión
-                $_SESSION['user_id'] = $row['id'];
-                $_SESSION['user_email'] = $row['email'];
-                header("location: ../index.php");
+            if ($row && password_verify($password, $row['contraseña'])) {
+                // La contraseña es válida, se permite el inicio de sesión
+    
+                // Almacenar el rol del usuario en una variable
+                $id_rol = $row['id_rol'];
+    
+                // Redireccionar según el rol del usuario
+                if ($id_rol == 1) {
+                    // Si es admin, redirigir a la vista de admin
+                    header("Location: ../admin/app/aggimg.php");
+                } else {
+                    // Si es usuario, redirigir a la vista de usuario
+                    header("Location: ../index.php");
+                }
                 exit;
             } else {
                 // La contraseña no coincide, no se permite el inicio de sesión
                 return 'La contraseña no coincide';
             }
-        } else {
-            // El usuario no fue encontrado en la base de datos o la clave 'password' no está definida
-            return 'El usuario y/o contraseña son incorrectos';
+        } catch (\PDOException $e) {
+            echo "Error en la consulta SQL: " . $e->getMessage();
         }
     }
+    
     
 
     

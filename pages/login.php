@@ -82,7 +82,7 @@ if (!empty($_POST)) {
                             <a href="recupera.php">¿Olvidaste tu contraseña?</a>
                         </div>
                         <button type="submit" class="btn btn-light btn-outline-dark">Iniciar sesión</button>
-                        <a href="register.html" class="btn btn-light btn-outline-dark">Regístrate</a>
+                        <a href="register.php" class="btn btn-light btn-outline-dark">Regístrate</a>
                     </form>
 
                 </div>
