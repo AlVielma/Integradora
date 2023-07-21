@@ -157,13 +157,12 @@ if (isset($_POST['busqueda'])) {
                     <div class="col-md-2 text-md-end ">
                         <select id="filter-category" class="form-select border border-black ">
                             <option value="">Filtrar por:</option>
-                            <option value="sunglasses">Mas vendidos</option>
                             <option value="optical">Precio: Mayor a Menor</option>
                             <option value="sunglasses">Precio: Menor a Mayor</option>
                         </select>
                     </div>
                     <div class="col-md-2 ">
-                        <h5 class=" text-black">Cantidad:</h5>
+                        <h5 class=" text-black">Cantidad: <?php echo count($product); ?></h5>
                     </div>
                 </div>
               <div class="row text-start">
