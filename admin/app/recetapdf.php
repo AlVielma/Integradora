@@ -124,27 +124,27 @@ ob_start();
             <div class="col1">
 
               <div class="form-group">
-                <label for="esf">O.D ESF: <span id="esfValue"></span></label>
+                <label for="esf_od">O.D ESF: <span id="esf_odValue"></span></label>
                 <?php echo $_POST['esf_od']; ?>
               </div>
 
               <div class="form-group">
-                <label for="esf">O.I ESF: <span id="esfValue"></span></label>
+                <label for="esf_oi">O.I ESF: <span id="esf_oiValue"></span></label>
                 <?php echo $_POST['esf_oi']; ?>
               </div>
 
               <div class="form-group">
-                <label for="cil">O.D CIL: <span id="cilValue"></span></label>
+                <label for="cil_od">O.D CIL: <span id="cil_odValue"></span></label>
                 <?php echo $_POST['cil_od']; ?>
               </div>
 
               <div class="form-group">
-                <label for="cil">O.I CIL: <span id="cilValue"></span></label>
+                <label for="cil_oi">O.I CIL: <span id="cil_oiValue"></span></label>
                 <?php echo $_POST['cil_oi']; ?>
               </div>
 
               <div class="form-group">
-                <label for="eje">O.D EJE: <span id="ejeValue"></span></label>
+                <label for="eje_od">O.D EJE: <span id="eje_odValue"></span></label>
                 <?php echo $_POST['eje_od']; ?>
               </div>
 
@@ -153,17 +153,17 @@ ob_start();
             <div class="col2">
 
               <div class="form-group">
-                <label for="eje">O.I EJE: <span id="ejeValue"></span></label>
+                <label for="eje_oi">O.I EJE: <span id="eje_oiValue"></span></label>
                 <?php echo $_POST['eje_oi']; ?>
               </div>
 
               <div class="form-group">
-                <label for="dip">O.D DIP: <span id="dipValue"></span></label>
+                <label for="dip_od">O.D DIP: <span id="dip_odValue"></span></label>
                 <?php echo $_POST['dip_od']; ?>
               </div>
 
               <div class="form-group">
-                <label for="dip">O.I DIP: <span id="dipValue"></span></label>
+                <label for="dip_oi">O.I DIP: <span id="dip_oiValue"></span></label>
                 <?php echo $_POST['dip_oi']; ?>
               </div>
 
@@ -173,7 +173,7 @@ ob_start();
               </div>
 
               <div class="form-group">
-                <label for="armazon">RX_ARMAZÓN: <span id="armazonValue"></span></label>
+                <label for="rx_armazon">RX_ARMAZÓN: <span id="rx_armazonValue"></span></label>
                 <?php echo $_POST['rx_armazon']; ?>
               </div>
             </div>
