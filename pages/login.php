@@ -1,6 +1,7 @@
 <?php
 use App\Modelos\Conexion;
 use App\Modelos\Usuario;
+use App\Modelos\validacionesUsuario;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -9,14 +10,28 @@ session_start();
 $conexion = new Conexion();
 $con = $conexion->conectar();
 
+$validacionesUsuario = new validacionesUsuario();
+
+$errors = [];
+
 if (!empty($_POST)) {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
-    $usuario = new Usuario($con);
-    $userData = $usuario->login($email, $password);
+    // Validar el formato del correo electrónico
+    if (!$validacionesUsuario->validarFormatoEmail($email)) {
+        $errors[] = "El formato del correo electrónico no es válido.";
+    }
 
-    if ($userData !== null) {
+    // Validar las credenciales con la base de datos
+    if (!$validacionesUsuario->validarCredenciales($email, $password, $con)) {
+        $errors[] = "La contraseña no coincide o el usuario no fue encontrado.";
+    }
+
+    if (empty($errors)) {
+        $usuario = new Usuario($con);
+        $userData = $usuario->login($email, $password);
+
         // Inicio de sesión exitoso, almacenar datos en las variables de sesión
         $_SESSION['user_id'] = $userData['id'];
         $_SESSION['user_email'] = $userData['email'];
@@ -32,9 +47,6 @@ if (!empty($_POST)) {
             header("Location: ../index.php");
             exit;
         }
-    } else {
-        // Inicio de sesión fallido, mostrar mensaje de error
-        $errors[] = "La contraseña no coincide o el usuario no fue encontrado";
     }
 }
 ?>
@@ -78,9 +90,10 @@ if (!empty($_POST)) {
                         <img src="../images/user-circle.png" alt="Imagen" class="img-fluid">
                     </div>
                     <div class="col-12 d-flex justify-content-center">
-                    <h2 class="mb-4">Inicio de Sesión</h2>
+                        <h2 class="mb-4">Inicio de Sesión</h2>
                     </div>
 
+                    <!-- Formulario de inicio de sesión -->
                     <form action="login.php" method="post" autocomplete="off">
                         <div class="mb-3 form-floating">
                             <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
@@ -90,6 +103,20 @@ if (!empty($_POST)) {
                             <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
                             <label for="password" class="form-label">Contraseña</label>
                         </div>
+
+                        <!-- Mostrar errores -->
+                        <?php if (!empty($errors)): ?>
+                            <div class="col-12 d-flex justify-content-center mt-3">
+                                <div class="alert alert-danger" role="alert">
+                                    <ul>
+                                        <?php foreach ($errors as $error): ?>
+                                            <li><?php echo $error; ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
                         <div class="col-12 d-flex justify-content-center">
                             <a href="recupera.php">¿Olvidaste tu contraseña?</a>
                         </div>
@@ -97,21 +124,11 @@ if (!empty($_POST)) {
                             <button type="submit" class="btn btn-light btn-outline-dark">Iniciar sesión</button>
                             <a href="register.php" class="btn btn-light btn-outline-dark">Regístrate</a>
                         </div>
-
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
-    <!-- Scripts de Bootstrap -->
-    <script src="js/bootstrap.bundle.min.js"></script>
-
-
 </body>
 
 </html>

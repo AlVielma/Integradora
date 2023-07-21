@@ -1,0 +1,71 @@
+<?php
+namespace App\Modelos;
+
+class validacionesUsuario
+{
+    // Verificar si algún parámetro es nulo
+    public function esNulo(array $parametros)
+    {
+        foreach ($parametros as $parametro) {
+            if (strlen(trim($parametro)) < 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Validar longitud del email y contraseña
+    public function validarLongitud($email, $password)
+    {
+        // Longitud mínima y máxima permitida para el email
+        $minLongitudEmail = 5;
+        $maxLongitudEmail = 100;
+        
+        // Longitud mínima y máxima permitida para la contraseña
+        $minLongitudPassword = 3;
+        $maxLongitudPassword = 20;
+
+        // Verificar si el email y contraseña cumplen con las longitudes permitidas
+        if (strlen($email) < $minLongitudEmail || strlen($email) > $maxLongitudEmail) {
+            return false;
+        }
+
+        if (strlen($password) < $minLongitudPassword || strlen($password) > $maxLongitudPassword) {
+            return false;
+        }
+
+        return true;
+    }
+
+    // Validar el formato del email utilizando la función filter_var
+    public function validarFormatoEmail($email)
+    {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    // Validar las credenciales del usuario en la base de datos
+    public function validarCredenciales($email, $password, $con)
+    {
+        try {
+            // Consultar la contraseña almacenada en la base de datos para el email proporcionado
+            $sql = $con->prepare("SELECT contraseña FROM Usuarios WHERE email LIKE ? LIMIT 1");
+            $sql->execute([$email]);
+            $hashContraseña = $sql->fetchColumn();
+
+            // Verificar si la contraseña es válida utilizando password_verify
+            if (!$hashContraseña || !password_verify($password, $hashContraseña)) {
+                return false;
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            // Manejar errores de consulta SQL
+            echo "Error en la consulta SQL: " . $e->getMessage();
+            return false;
+        }
+    }
+}
