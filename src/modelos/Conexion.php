@@ -28,6 +28,7 @@ class Conexion
             exit;
         }
     }
+    
     public function obtenerConexion()
     {
         return $this->conectar();
