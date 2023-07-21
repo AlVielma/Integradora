@@ -115,13 +115,6 @@
                       <input type="text" class="form-control" id="prisma" name="prisma" required>
                     </div>
                   </div>
-
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="rxFinal">RX FINAL: <span id="rxFinalValue"></span></label>
-                      <input type="text" class="form-control" id="rxFinal" name="rxFinal" required>
-                    </div>
-                  </div>
                 
                   <div class="col-md-2">
                     <div class="mb-3">
@@ -137,12 +130,6 @@
                     </div>
                   </div>
                   
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="add">ADD: <span id="addValue"></span></label>
-                      <input type="text" class="form-control" id="add" name="add" required>
-                    </div>
-                  </div>
                   
                   <div class="col-md-6">
                     <div class="mb-3">

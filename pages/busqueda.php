@@ -5,20 +5,15 @@ use App\Modelos\Conexion;
 $conexion = new Conexion();
 $con = $conexion->conectar();
 
+// Agregar la ruta base de las imágenes
+$rutaBaseImagenes = '/productosimg/';
+
+$product = [];
+
 if (isset($_POST['busqueda'])) {
   $busqueda = $_POST['busqueda'];
   $consulta = $con->query("CALL BuscadorPro('$busqueda');");
-  
-  // Verificar si la consulta se ejecutó correctamente
-  if ($consulta) {
-    $product = $consulta->fetchAll(PDO::FETCH_OBJ);
-
-    // Redirigir a otra página (resultado.php) y enviar los datos a través de la URL
-    header("Location: pages/busqueda.php?" . http_build_query(['data' => $product]));
-    exit(); // Detener la ejecución de este script después de la redirección
-  } else {
-    echo "Error al ejecutar la consulta.";
-  }
+  $product = $consulta->fetchAll(PDO::FETCH_OBJ);
 }
 ?>
 
@@ -50,9 +45,9 @@ if (isset($_POST['busqueda'])) {
                 </a>
 
                 <div class="container-fluid">
-                    <form class="d-flex" role="search">
+                    <form class="d-flex" role="search" method="POST">
                         <input class="form-control me-2 busqueda" type="search" placeholder="Search"
-                            aria-label="Search">
+                            aria-label="Search" name="busqueda">
                     </form>
                 </div>
 
@@ -171,24 +166,26 @@ if (isset($_POST['busqueda'])) {
                         <h5 class=" text-black">Cantidad:</h5>
                     </div>
                 </div>
-
-              
-                <!--fila-->
-                <div class="row text-start">
-                  <!--lentes5-->
-                  <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-                    <div class="card" style="width: 19rem;">
-                      <a href="#"><img src="/../images/lentes5.png" class="card-img-top" alt="..."></a>
-                      <div class="card-body">
-                        <?php  
-
-                        ?>
-                        <h5 class="card-title h4">Ky 0004</h5>
-                        <a class="objeto-texto" href="#"><p class="card-text h5">$1899,00 MXN</p></a>
-                      </div>
-                    </div>
-                  </div>
-         
+              <div class="row text-start">
+                <?php
+                  if (count($product) > 0) {
+                      foreach ($product as $producto) {
+                          echo '<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">';
+                          echo '<div class="card" style="width: 19rem;">';
+                          echo '<a href="#"><img src="'. $rutaBaseImagenes . $producto->imagen .'" class="card-img-top" alt="Imagen del producto"></a>';
+                          echo '<div class="card-body">';
+                          echo '<h5 class="card-title h4">' . $producto->nombre . '</h5>';
+                          echo '<a class="objeto-texto" href="#"><p class="card-text h5">' . $producto->precio . '</p></a>';
+                          echo '</div>';
+                          echo '</div>';
+                          echo '</div>';
+                      }
+                  } else {
+                      echo '<div class="col-sm-12">';
+                      echo '<p class="h5">No se encontraron resultados.</p>';
+                      echo '</div>';
+                  }
+                  ?>
                </div>
              </div>
             <!--footer-->

@@ -1,6 +1,3 @@
-<?php
-require 'vendor/autoload.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +26,7 @@ require 'vendor/autoload.php';
               </a>
 
               <div class="container-fluid">
-                  <form class="d-flex" role="search" method="POST" action="pages/busqueda.php">
+                  <form class="d-flex" role="search" method="POST" action="/pages/busqueda.php">
                       <input class="form-control me-2 busqueda" type="search" placeholder="Search"
                           aria-label="Search" name="busqueda">
                   </form>
