@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div>
       <?php $registrar->mostrarMensajes($errors); ?>
     </div>
-    <form id="agregarForm" class="row g-3 needs-validation" method="post">
+    <form id="agregarForm" class="row g-3 needs-validation" method="post" autocomplete="off">
       <div class="col-md-6">
         <label for="nombre" class="form-label">Nombre</label>
         <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Ingresa el nombre">
