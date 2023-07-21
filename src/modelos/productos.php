@@ -110,6 +110,6 @@ Class productos
     {
         $imgactual =$this->pdo->prepare("SELECT IMAGEN FROM Imagenes WHERE id_img=?");
         $imgactual->execute([$id]);
-        return $imgactuall->fetchColumn();
+        return $imgactual->fetchColumn();
     }
 }

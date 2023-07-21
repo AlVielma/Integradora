@@ -16,18 +16,20 @@ $query = $conect->prepare("SELECT p.sku,p.nombre,p.marca_id,tipo_lente_id,p.desc
 from Productos p inner join Imagenes i on p.imagen = i.id_img where sku=?");
 $query->execute([$id]);
 $conss = $query->fetch(PDO::FETCH_ASSOC);
+
 ?>
 
 <?php
+ extract($_POST);
+ extract($_FILES);
 if(isset($_POST['editar']))
 {
-    $productos = new productos();
-    extract($_POST);
-    extract($_FILES);
+
+   
     $dir = __DIR__.'/../../productosimg/';
     $pathinfo = pathinfo($imagen['name']);
     $filename = $pathinfo["filename"];
-    $extension = isset($pathinfo["extension"]) ? $pathinfo["extension"] : '';
+    $extension = $pathinfo["extension"];
     $name= "{$filename}.{$extension}";
     $real_path = "{$dir}{$filename}.{$extension}";
 
@@ -46,6 +48,7 @@ if(isset($_POST['editar']))
         $productos->actualizarproducto($nombre, $marca, $tipo_lente, $descripcion, $precio, $stock, $categoria, $id);
         header('Location: /../../admin/app/aggimg.php');
     }
+   
 }
 ?>
 <!doctype html>
@@ -57,7 +60,13 @@ if(isset($_POST['editar']))
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   </head>
   <body>
+
+<div class="container container form border border-black p-4">
   <form action="editproducto.php" method="post" enctype="multipart/form-data" >
+    <?php
+    
+    ?>
+  <legend>Editar producto</legend>
             <input type="hidden" value="<?php echo $conss['sku']; ?>" name="id">
               <div class="mb-3">
                 <label for="nombre">Nombre</label>
@@ -124,8 +133,13 @@ if(isset($_POST['editar']))
                 <label for="cantidad">Cantidad</label>
                 <input type="number" class="form-control" name="stock" value="<?php echo $conss['stock']; ?>">
               </div>
+              <div class="text-center">
               <button type="submit" class="btn btn-primary" name="editar">Guardar</button>
+                    
+              </div>
+             
             </form>
+    </div>
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
