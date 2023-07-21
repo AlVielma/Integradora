@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="container-fluid" id="content">
-        <h1>Historial y Antecedentes</h1>
+
 
         <?php if ($success) : ?>
             <div class="alert alert-success" role="alert">
@@ -126,6 +126,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
             <div class="row">
+            <div class="mb-3">
+                  <label for="nombre">Nombre del paciente:</label>
+                  <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+      
+                <div class="mb-3">
+                  <label for="edad">Edad:</label>
+                  <input type="text" class="form-control" id="edad" name="edad" required>
+                </div>
+
+                <h1>Historial y Antecedentes</h1>
+
                 <div class="col-md-3">
                     <label for="cefaleas">Cefaleas:</label>
                     <input type="checkbox" id="cefaleas" name="cefaleas" value="1">
@@ -144,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
-            <h2>Consulta</h2>
+           <!-- <h2>Consulta</h2> se elimino esta etiqueta -->
             <div class="row">
                 <div class="col-md-6">
                     <label for="ta">TA:</label>
@@ -177,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
-            <h2>Consulta Salud Ocular</h2>
+         <!--   <h2>Consulta Salud Ocular</h2>
             <div class="row">
                 <div class="col-md-3">
                     <label for="avLejosOd">A.V Lejos O.D.:</label>
@@ -195,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="avCercaOd">A.V Cerca O.D.:</label>
                     <input type="text" class="form-control" id="avCercaOd" name="avCercaOd">
                 </div>
-            </div>
+            </div> -->
 
             <h3>Rx En Uso</h3>
             <div class="row">
@@ -216,17 +228,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2>Agudeza Visual Con Corrección</h2>
             <div class="row">
                 <div class="col-md-4">
-                    <label for="avEOd">A.V.E O.D.:</label>
+                    <label for="avEOd">A.V.C.L O.D.:</label> <!--SE MODIFICO DE AVE A AVCL-->
                     <input type="text" class="form-control" id="avEOd" name="avEOd">
                 </div>
                 <div class="col-md-4">
-                    <label for="avEOi">A.V.E O.I.:</label>
+                    <label for="avEOi">A.V.C.L O.I.:</label>
                     <input type="text" class="form-control" id="avEOi" name="avEOi">
                 </div>
-                <div class="col-md-4">
+              <!--  <div class="col-md-4">
                     <label for="avEAo">A.V.E A.O.:</label>
                     <input type="text" class="form-control" id="avEAo" name="avEAo">
-                </div>
+                </div>   -->
             </div>
 
             <div class="row">
