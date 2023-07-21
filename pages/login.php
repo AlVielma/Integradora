@@ -1,28 +1,40 @@
 <?php
-
 use App\Modelos\Conexion;
-use App\Modelos\validacionesRegistrar;
+use App\Modelos\Usuario;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$registrar = new validacionesRegistrar();
-$conexion = new Conexion(); // Crear una instancia de la clase Conexion
-$con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
+session_start();
 
-$errors = [];
+$conexion = new Conexion();
+$con = $conexion->conectar();
 
 if (!empty($_POST)) {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
+    $usuario = new Usuario($con);
+    $userData = $usuario->login($email, $password);
 
-    if ($registrar->esNulo([$email, $password])) {
-        $errors[] = "Debe de llenar todos los campos";
-    }
+    if ($userData !== null) {
+        // Inicio de sesión exitoso, almacenar datos en las variables de sesión
+        $_SESSION['user_id'] = $userData['id'];
+        $_SESSION['user_email'] = $userData['email'];
+        $_SESSION['user_name'] = $userData['nombre'];
+        $_SESSION['user_lastname'] = $userData['apellido'];
+        $_SESSION['user_rol'] = $userData['id_rol'];
 
-    if (count($errors) == 0) {
-
-        $errors[] = $registrar->login($email, $password, $con);
+        // Redirigir al usuario según su rol
+        if ($_SESSION['user_rol'] == 1) {
+            header("Location: ../admin/app/aggimg.php");
+            exit;
+        } else {
+            header("Location: ../index.php");
+            exit;
+        }
+    } else {
+        // Inicio de sesión fallido, mostrar mensaje de error
+        $errors[] = "La contraseña no coincide o el usuario no fue encontrado";
     }
 }
 ?>
@@ -64,9 +76,10 @@ if (!empty($_POST)) {
                 <div class="border rounded border-light shadow-sm p-4 bg-white">
                     <div class="text-center mb-4">
                         <img src="../images/user-circle.png" alt="Imagen" class="img-fluid">
-                        <?php $registrar->mostrarMensajes($errors); ?>
                     </div>
+                    <div class="col-12 d-flex justify-content-center">
                     <h2 class="mb-4">Inicio de Sesión</h2>
+                    </div>
 
                     <form action="login.php" method="post" autocomplete="off">
                         <div class="mb-3 form-floating">
@@ -77,11 +90,14 @@ if (!empty($_POST)) {
                             <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
                             <label for="password" class="form-label">Contraseña</label>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 d-flex justify-content-center">
                             <a href="recupera.php">¿Olvidaste tu contraseña?</a>
                         </div>
-                        <button type="submit" class="btn btn-light btn-outline-dark">Iniciar sesión</button>
-                        <a href="register.php" class="btn btn-light btn-outline-dark">Regístrate</a>
+                        <div class="col-12 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-light btn-outline-dark">Iniciar sesión</button>
+                            <a href="register.php" class="btn btn-light btn-outline-dark">Regístrate</a>
+                        </div>
+
                     </form>
 
                 </div>
