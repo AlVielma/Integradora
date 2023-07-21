@@ -1,9 +1,54 @@
 <?php
 require __DIR__.'/../../vendor/autoload.php';
 use App\Modelos\productos;
+use App\Modelos\validacionproductos;
 $productos = new productos();
-$mostrar=$productos->mostrar_productos()
+$mostrar=$productos->mostrar_productos();
+$marcas= $productos->mostrar_marca();
+$categorias= $productos->mostrar_categorias();
+$tlente = $productos->mostrar_tipo_lentes();
+$validacion = new validacionproductos();
+$errors = [];
+extract($_POST);
+extract($_FILES);
+if(isset($_POST['agregar']))
+{
+   if($validacion->nulo([$nombre,$categoria,$marca,$tipo_lente,$descripcion,$precio,$stock]))
+   {
+      $errors[]="Los campos deben estar llenos";
+   }
+   if (empty($_FILES['imagen']['name'])) {
+    $errors[] = "Debes seleccionar una imagen";
+}
+
+   if(count($errors)==0)
+   {
+    $dir = __DIR__.'/../../productosimg/';
+    $pathinfo = pathinfo($imagen['name']);
+    $filename = $pathinfo["filename"];
+    $extension = $pathinfo["extension"];
+    $name = "{$filename}.{$extension}";
+    $real_path = "{$dir}{$filename}.{$extension}";
+
+    if(!file_exists($real_path))
+    {   
+        move_uploaded_file($imagen["tmp_name"],$real_path);
+        $productos->agregar_imagen($name);
+        $imagenid = $productos->get_lastid();
+        $productos->agregar_producto($nombre,$marca,$tipo_lente,$descripcion,$imagenid,$precio,$stock,$categoria);
+        header('Location: aggimg.php');
+    }
+    else
+    {
+        echo 'Archvio ya existe';
+    }
+   }
+   
+}   
+
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,8 +114,7 @@ $mostrar=$productos->mostrar_productos()
                 </td>
 
                 <td>
-                  <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaleditproducto" data-id="<?php echo $product['sku']; ?>" data-nombre="<?php echo $product['nombre']; ?>" data-descripcion="<?php echo $product['descripcion']; ?>
-                  "data-precio="<?php echo $product['precio']; ?>"data-stock="<?php echo $product['stock']; ?>"data-categoria="<?php echo $product['categoriaid']; ?>"data-imagen="<?php echo $product['IMAGEN']; ?>"data-lente="<?php echo $product['lenteid']; ?>">
+                  <a href="../../src/http/editproducto.php?sku=<?php echo $product['sku']; ?>" class="btn btn-warning">
                     <img src="../../images/editar.png" alt="">
                   </a>
 
@@ -85,16 +129,105 @@ $mostrar=$productos->mostrar_productos()
         </table>
       </div>
   </div>
+  
+  <!--MODALAGREGAR-->
+  <div class="modal fade" id="modalproducto" tabindex="-1" aria-labelledby="modalproudcto" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        
+          <div class="modal-header">
+         
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Producto</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            
+          </div>
+
+          <div class="modal-body">
+           
+            <form action="aggimg.php" method="post" enctype="multipart/form-data" >
+              <div class="mb-3">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" name="nombre" requireda>
+              </div>
+              <div class="mb-3">
+                <label for="marca">Marca</label>
+                <select class="form-control" name="marca" requireda>
+                  <option value="">Marcas</option>
+                  <?php
+                  foreach ($marcas as $marc) {
+                  ?>
+                      <option value="<?php echo $marc['id']; ?>">
+                          <?php echo $marc['nombre']; ?>
+                      </option>
+                  <?php
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="tipo">Tipo de lente</label>
+                <select class="form-control" name="tipo_lente" requireda>
+                  <option value="">Tipo de lentes</option>
+                  <?php
+                  foreach ($tlente as $tlente) {
+                  ?>
+                      <option value="<?php echo $tlente['id']; ?>">
+                          <?php echo $tlente['tipo_lente']; ?>
+                      </option>
+                  <?php
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="descripcion">Descripción</label>
+                <textarea class="form-control" name="descripcion" rows="3" requireda></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="categoria">Categoría</label>
+                <select class="form-control" name="categoria" requireda>
+                 <option value="">Categorías</option>
+                  <?php
+                  foreach ($categorias as $cat) {
+                  ?>
+                      <option value="<?php echo $cat['id']; ?>">
+                          <?php echo $cat['nombre']; ?>
+                      </option>
+                  <?php
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="precio">Precio</label>
+                <input type="number" class="form-control" name="precio" requireda>
+              </div>
+              <div class="mb-3">
+                <label for="imagen">Agregar Imagen</label>
+                <input type="file" class="form-control" name="imagen">
+              </div>
+              <div class="mb-3">
+                <label for="cantidad">Cantidad</label>
+                <input type="number" class="form-control" name="stock" requireda>
+              </div>
+              <button type="submit" class="btn btn-primary" name="agregar">Guardar</button>
+            </form>
+            <?php
+            $validacion->mensajes($errors);
+            ?>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/MODALAGREGAR-->
   <?php
-  require __DIR__.'/../../src/http/modaleditproducto.php';
-  require __DIR__.'/../../src/http/modalproducto.php';
   require __DIR__.'/../../src/http/modaleliminarproducto.php';
   ?>
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/admin/js/boton.js"></script>
   <script src="/admin/js/modalcrudeliminar.js"></script>
-  <script src="/admin/js/editarproducto.js"></script>
+
 </body>
 
 </html>

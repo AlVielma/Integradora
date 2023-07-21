@@ -12,11 +12,19 @@ Class productos
         $this->conexion = new Conexion();
         $this->pdo = $this->conexion->conectar();
     }
+    public function consultaeedit($id)
+    {
+        $consultaedit = $this->pdo->prepare("SELECT p.sku,p.nombre,p.marca_id,tipo_lente_id,p.descripcion,p.imagen,p.precio,p.stock,p.categoria_id,i.IMAGEN
+        from Productos p inner join Imagenes i on p.imagen = i.id_img where sku=?");
+        $consultaedit->execute([$id]);
+        return $obtconsulta =$consultaedit->fetchAll(\PDO::FETCH_ASSOC);
 
+    }
     public function mostrar_productos()
     {
-        $mostarproductos = $this->pdo->query("SELECT p.sku,p.nombre,p.descripcion,c.nombre as categoria ,p.precio,p.stock ,i.IMAGEN,c.id as categoriaid,l.id as lenteid FROM 
-        Categorias c inner join Productos p ON p.categoria_id =c.id INNER JOIN Imagenes i ON p.imagen = i.id_img inner join TiposLentes l on l.id=p.tipo_lente_id;");
+        $mostarproductos = $this->pdo->query("SELECT p.sku, p.nombre, p.descripcion, c.nombre AS categoria, p.precio, p.stock, i.IMAGEN
+        FROM Categorias c INNER JOIN Productos p ON p.categoria_id = c.id INNER JOIN Imagenes i
+        ON p.imagen = id_img");
         return $mostarproductos->fetchAll(\PDO::FETCH_ASSOC);
     }
 
@@ -85,11 +93,11 @@ Class productos
         $eliminarprodu->execute([$id]);
     }
 
-    public function actualizarproducto($nombre, $descripcion, $precio, $categoria, $lente, $marca, $stock, $id)
+    public function actualizarproducto($nombre, $marca_id,$tipo_lente_id,$descripcion,$precio,$stock,$categoria_id,$id)
     {
-        $actualizar = $this->pdo->prepare ("UPDATE Productos SET nombre=?, descripcion=?, precio=?, categoria_id=?,
-        tipo_lente_id=?, marca_id=?, stock=? WHERE sku=?");
-        $actualizar->execute([$nombre, $descripcion, $precio, $categoria, $lente, $marca, $stock, $id]);
+        $actualizar = $this->pdo->prepare ("UPDATE Productos SET nombre=?, marca_id=?, tipo_lente_id=?, descripcion=?, precio=?, stock=?, categoria_id=?
+        WHERE sku=?");
+        $actualizar->execute([$nombre, $marca_id,$tipo_lente_id,$descripcion,$precio,$stock,$categoria_id,$id]);
     }
 
     public function actualizarimg($nombre,$id)
@@ -102,6 +110,6 @@ Class productos
     {
         $imgactual =$this->pdo->prepare("SELECT IMAGEN FROM Imagenes WHERE id_img=?");
         $imgactual->execute([$id]);
-        return $imgactual->fetchColumn();;
+        return $imgactuall->fetchColumn();
     }
 }
