@@ -47,8 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener la conexión a la base de datos
     $db = $conexion->obtenerConexion();
     // Crear una instancia de la clase Metodos
-    $metodos = new App\Modelos\Metodos($db);
-
+    $metodos = new Metodos($db);
     // Agregar la consulta en la base de datos
     $metodos->agregarConsulta(
         $cefalesias,
