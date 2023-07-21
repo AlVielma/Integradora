@@ -67,38 +67,36 @@ class validacionesRegistrar{
         echo '</ul>';
         }
     }
-
+/*   
     function login($email, $password, $con) {
         try {
-            $sql = $con->prepare("SELECT id, email, contraseña, id_rol FROM Usuarios WHERE email LIKE ? LIMIT 1");
+            $sql = $con->prepare("SELECT id, nombre, apellido, email, contraseña, id_rol FROM Usuarios WHERE email LIKE ? LIMIT 1");
             $sql->execute([$email]);
             $row = $sql->fetch(\PDO::FETCH_ASSOC);
     
             if ($row && password_verify($password, $row['contraseña'])) {
                 // La contraseña es válida, se permite el inicio de sesión
     
-                // Almacenar el rol del usuario en una variable
-                $id_rol = $row['id_rol'];
+                // Almacenar los datos del usuario en las variables de sesión
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['user_email'] = $row['email'];
+                $_SESSION['user_name'] = $row['nombre'];
+                $_SESSION['user_lastname'] = $row['apellido'];
+                $_SESSION['user_rol'] = $row['id_rol'];
     
-                // Redireccionar según el rol del usuario
-                if ($id_rol == 1) {
-                    // Si es admin, redirigir a la vista de admin
-                    header("Location: ../admin/app/aggimg.php");
-                } else {
-                    // Si es usuario, redirigir a la vista de usuario
-                    header("Location: ../index.php");
-                }
-                exit;
+                // Devolver true para indicar que el inicio de sesión fue exitoso
+                return true;
             } else {
-                // La contraseña no coincide, no se permite el inicio de sesión
-                return 'La contraseña no coincide';
+                // La contraseña no coincide o el usuario no fue encontrado
+                // Devolver false para indicar que el inicio de sesión falló
+                return false;
             }
         } catch (\PDOException $e) {
             echo "Error en la consulta SQL: " . $e->getMessage();
         }
     }
     
-    
+    */
 
     
 }
