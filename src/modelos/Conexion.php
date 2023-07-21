@@ -3,7 +3,7 @@ namespace App\Modelos;
 
 class Conexion
 {
-    private $hostname="3.142.134.199";
+    private $hostname="3.145.111.95";
     private $database="optica_bd_borrador1";
     private $user="vielma";
     private $password="123";
@@ -29,4 +29,8 @@ class Conexion
         }
     }
     
+    public function obtenerConexion()
+    {
+        return $this->conectar();
+    }
 }

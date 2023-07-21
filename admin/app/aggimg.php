@@ -1,8 +1,18 @@
 <?php
+session_start();
 require __DIR__.'/../../vendor/autoload.php';
 use App\Modelos\productos;
 $productos = new productos();
-$mostrar=$productos->mostrar_productos()
+$mostrar=$productos->mostrar_productos();
+/*
+if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
+  // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
+  header("Location: ../../pages/login.php");
+  exit;
+
+ 
+}*/
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +33,16 @@ $mostrar=$productos->mostrar_productos()
   <a class="nav-link" href="agenda.php"><i class="fas fa-calendar-alt"></i><span>Gestionar Agenda</span></a>
   <a class="nav-link" href="consulta.php"><i class="fas fa-stethoscope"></i><span>Realizar Consulta</span></a>
   <a class="nav-link" href="receta.php"><i class="fas fa-prescription"></i><span>Generar Receta</span></a>
-  <a class="nav-link" href="../index.php"><i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span></a>
+  <a class="nav-link" href="../../src/http/logout.php"><i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span></a>
+  
+  <?php
+    // Verificar si el usuario ha iniciado sesión y mostrar su nombre en el sidebar
+    if (isset($_SESSION['user_name'])) {
+        echo '<div style="text-align: center; margin-top: 20px;">';
+        echo '<h2>¡Hola, ' . $_SESSION['user_name'] . '!</h2>';
+        echo '</div>';
+    }
+    ?>
 </div>
 <br>
 

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +27,9 @@
               </a>
 
               <div class="container-fluid">
-                  <form class="d-flex" role="search">
+                  <form class="d-flex" role="search" method="POST" action="/pages/busqueda.php">
                       <input class="form-control me-2 busqueda" type="search" placeholder="Search"
-                          aria-label="Search">
+                          aria-label="Search" name="busqueda">
                   </form>
               </div>
 
