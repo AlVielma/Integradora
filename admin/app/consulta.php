@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $avccOD20 = isset($_POST['avEOd']) ? $_POST['avEOd'] : null;
     $avccOI20 = isset($_POST['avEOi']) ? $_POST['avEOi'] : null;
     $avccAO20 = isset($_POST['avEAo']) ? $_POST['avEAo'] : null;
-    $descripcion = isset($_POST['diagnostico']) ? $_POST['diagnostico'] : null;
+    $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : '';
     // Crear una instancia de la clase Conexion
     $conexion = new Conexion();
     // Obtener la conexión a la base de datos
