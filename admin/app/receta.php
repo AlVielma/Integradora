@@ -42,9 +42,101 @@
                   <input type="text" class="form-control" id="edad" name="edad" required>
                 </div>
       
-                <!-- Agrega aquí más campos del formulario si los necesitas -->
-      
                 <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="tratamiento">Tratamiento: <span id="tratamientoValue"></span></label>
+                      <textarea class="form-control" id="tratamiento" name="tratamiento" rows="5" required></textarea>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="diagnostico">Diagnóstico: <span id="diagnosticoValue"></span></label>
+                      <textarea class="form-control" id="diagnostico" name="diagnostico" rows="5" required></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div class="manejo-recomendaciones">
+                Manejo y Recomendaciones
+              </div>
+      
+              <div class="row">
+                
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label for="esf_od">ESF_OD: <span id="esf_odValue"></span></label>
+                      <input type="text" class="form-control" id="esf_od" name="esf_od" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label for="esf_oi">ESF_OI: <span id="esf_oiValue"></span></label>
+                      <input type="text" class="form-control" id="esf_oi" name="esf_oi" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label for="cil_od">CIL_OD: <span id="cil_odValue"></span></label>
+                      <input type="text" class="form-control" id="cil_od" name="cil_od" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label for="cil_oi">CIL_OI: <span id="cil_oiValue"></span></label>
+                      <input type="text" class="form-control" id="cil_oi" name="cil_oi" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label for="eje_od">EJE_OD: <span id="eje_odValue"></span></label>
+                      <input type="text" class="form-control" id="eje_od" name="eje_od" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label for="eje_oi">EJE_OI: <span id="eje_oiValue"></span></label>
+                      <input type="text" class="form-control" id="eje_oi" name="eje_oi" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label for="dip_od">DIP_OD: <span id="dip_odValue"></span></label>
+                      <input type="text" class="form-control" id="dip_od" name="dip_od" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label for="dip_oi">DIP_OI: <span id="dip_oiValue"></span></label>
+                      <input type="text" class="form-control" id="dip_oi" name="dip_oi" required>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label for="material">MATERIAL: <span id="materialValue"></span></label>
+                      <input type="text" class="form-control" id="material" name="material" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label for="rx_armazon">RX_ARMAZÓN: <span id="rx_armazonValue"></span></label>
+                      <input type="text" class="form-control" id="rx_armazon" name="rx_armazon" required>
+                    </div>
+                  </div>
+                  
+              </div>
+    
+              <div class="col-md-6">
                   <div class="form-group">
                     <label for="plasticos">Plasticos:</label>
                     <input type="text" class="form-control" id="plasticos" name="plasticos" required>
@@ -60,106 +152,7 @@
                     <input type="text" class="form-control" id="totalPedido" name="totalPedido" required>
                   </div>
                 </div>
-              </div>
-            </div>
-              <div class="manejo-recomendaciones">
-                Manejo y Recomendaciones
-              </div>
-      
-              <div class="row">
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="dip">DIP: <span id="dipValue"></span></label>
-                      <input type="text" class="form-control" id="dip" name="dip" required>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="armazon">ARMAZÓN: <span id="armazonValue"></span></label>
-                      <input type="text" class="form-control" id="armazon" name="armazon" required>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="material">MATERIAL: <span id="materialValue"></span></label>
-                      <input type="text" class="form-control" id="material" name="material" required>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="esf">ESF: <span id="esfValue"></span></label>
-                      <input type="text" class="form-control" id="esf" name="esf" required>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="cil">CIL: <span id="cilValue"></span></label>
-                      <input type="text" class="form-control" id="cil" name="cil" required>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="eje">EJE: <span id="ejeValue"></span></label>
-                      <input type="text" class="form-control" id="eje" name="eje" required>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="prisma">PRISMA: <span id="prismaValue"></span></label>
-                      <input type="text" class="form-control" id="prisma" name="prisma" required>
-                    </div>
-                  </div>
-
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="rxFinal">RX FINAL: <span id="rxFinalValue"></span></label>
-                      <input type="text" class="form-control" id="rxFinal" name="rxFinal" required>
-                    </div>
-                  </div>
-                
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="od">O.D: <span id="odValue"></span></label>
-                      <input type="text" class="form-control" id="od" name="od" required>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="oi">O.I: <span id="oiValue"></span></label>
-                      <input type="text" class="form-control" id="oi" name="oi" required>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-2">
-                    <div class="mb-3">
-                      <label for="add">ADD: <span id="addValue"></span></label>
-                      <input type="text" class="form-control" id="add" name="add" required>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="tratamiento">Tratamiento: <span id="tratamientoValue"></span></label>
-                      <textarea class="form-control" id="tratamiento" name="tratamiento" rows="5" required></textarea>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="diagnostico">Diagnóstico: <span id="diagnosticoValue"></span></label>
-                      <textarea class="form-control" id="diagnostico" name="diagnostico" rows="5" required></textarea>
-                    </div>
-                  </div>
-                  
-              </div>
-    
+                <br>
               <div class="print-button">
                 <button type="submit" class="btn btn-success">Imprimir Receta</button>
               </div>
