@@ -17,9 +17,8 @@ if (isset($_POST['busqueda'])) {
   $orden = isset($_POST['orden']) ? $_POST['orden'] : '';
 
   // Consulta sin la cláusula ORDER BY
-  $consulta = $con->prepare("CALL BuscadorPro(:busqueda);");
-  $consulta->bindParam(':busqueda', $busqueda);
-  $consulta->execute();
+  $consulta = $con->prepare("CALL BuscadorPro(?);");
+  $consulta->execute([$busqueda]);
 
   $product = $consulta->fetchAll(PDO::FETCH_OBJ);
   // Cierra el cursor de la consulta anterior para liberar recursos
