@@ -12,40 +12,29 @@ $validacion = new validacionproductos();
 $errors = [];
 extract($_POST);
 extract($_FILES);
-if(isset($_POST['agregar']))
-{
-   if($validacion->nulo([$nombre,$categoria,$marca,$tipo_lente,$descripcion,$precio,$stock]))
-   {
-      $errors[]="Los campos deben estar llenos";
-   }
-   if (empty($_FILES['imagen']['name'])) {
-    $errors[] = "Debes seleccionar una imagen";
+if (isset($_POST['agregar'])) {
+  if ($validacion->nulo([$nombre, $categoria, $marca, $tipo_lente, $descripcion, $precio, $stock])) {
+      $errors[] = "Los campos deben estar llenos";
+  }
+  if (empty($_FILES['imagen']['name'])) {
+      $errors[] = "Debes seleccionar una imagen";
+  }
+
+  if (count($errors) == 0) {
+      $dir = __DIR__ . '/../../productosimg/';
+      $pathinfo = pathinfo($_FILES['imagen']['name']);
+      $filename = $pathinfo["filename"];
+      $extension = $pathinfo["extension"];
+      $name = time() . ".{$extension}"; // Aquí agregamos el timestamp actual al nombre del archivo
+      $real_path = "{$dir}{$name}";
+      move_uploaded_file($_FILES['imagen']['tmp_name'], $real_path);
+      $productos->agregar_imagen($name);
+      $imagenid = $productos->get_lastid();
+      $productos->agregar_producto($nombre, $marca, $tipo_lente, $descripcion, $imagenid, $precio, $stock, $categoria);
+      header('Location: aggimg.php');
+     
+  }
 }
-
-   if(count($errors)==0)
-   {
-    $dir = __DIR__.'/../../productosimg/';
-    $pathinfo = pathinfo($imagen['name']);
-    $filename = $pathinfo["filename"];
-    $extension = $pathinfo["extension"];
-    $name = "{$filename}.{$extension}";
-    $real_path = "{$dir}{$filename}.{$extension}";
-
-    if(!file_exists($real_path))
-    {   
-        move_uploaded_file($imagen["tmp_name"],$real_path);
-        $productos->agregar_imagen($name);
-        $imagenid = $productos->get_lastid();
-        $productos->agregar_producto($nombre,$marca,$tipo_lente,$descripcion,$imagenid,$precio,$stock,$categoria);
-        header('Location: aggimg.php');
-    }
-    else
-    {
-        echo 'Archvio ya existe';
-    }
-   }
-   
-}   
 
 /*
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
