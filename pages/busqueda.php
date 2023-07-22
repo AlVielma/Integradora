@@ -17,6 +17,7 @@ if (isset($_POST['busqueda'])) {
     // Cierra el cursor de la consulta anterior para liberar recursos
     $consulta->closeCursor();
 }
+
 ?>
 
 <!DOCTYPE html>
