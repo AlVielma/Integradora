@@ -24,7 +24,7 @@ session_start();
     <nav class="navbar navbar-expand-lg bg-black">
       <div class="container-fluid">
 
-        <a class="navbar-brand text-white" href="index.html">
+        <a class="navbar-brand text-white" href="index.php">
           <img src="images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
           Pop Ópticos
         </a>
@@ -85,7 +85,7 @@ session_start();
         <div class="row mx-5 text-center justify-content-center">
           <?php if (isset($_SESSION['user_name'])) : ?>
             <!-- Si la sesión está iniciada, muestra las opciones para el usuario logueado -->
-            <a href="pages/usuario.php" class="objeto-texto h3">Ver perfil</a>
+            <a href="pages/perfil.php" class="objeto-texto h3">Ver perfil</a>
             <a href="src/http/logout.php" class="objeto-texto h3">Cerrar sesión</a>
           <?php else : ?>
             <!-- Si el usuario no ha iniciado sesión, muestra las opciones para iniciar sesión o registrarse -->

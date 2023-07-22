@@ -11,10 +11,13 @@ $rutaBaseImagenes = '/productosimg/';
 $product = [];
 
 if (isset($_POST['busqueda'])) {
-  $busqueda = $_POST['busqueda'];
-  $consulta = $con->query("CALL BuscadorPro('$busqueda');");
-  $product = $consulta->fetchAll(PDO::FETCH_OBJ);
+    $busqueda = addslashes($_POST['busqueda']);
+    $consulta = $con->query("CALL BuscadorPro('$busqueda');");
+    $product = $consulta->fetchAll(PDO::FETCH_OBJ);
+    // Cierra el cursor de la consulta anterior para liberar recursos
+    $consulta->closeCursor();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -155,11 +158,13 @@ if (isset($_POST['busqueda'])) {
                     </div>
                     <!-- Filtrador -->
                     <div class="col-md-2 text-md-end ">
-                        <select id="filter-category" class="form-select border border-black ">
+                    <form action="" method="POST">
+                        <select name="orden" id="filter-category" class="form-select border border-black">
                             <option value="">Filtrar por:</option>
-                            <option value="optical">Precio: Mayor a Menor</option>
-                            <option value="sunglasses">Precio: Menor a Mayor</option>
+                            <option value="mayor_menor">Precio: Mayor a Menor</option>
+                            <option value="menor_mayor">Precio: Menor a Mayor</option>
                         </select>
+                    </form>
                     </div>
                     <div class="col-md-2 ">
                         <h5 class=" text-black">Cantidad: <?php echo count($product); ?></h5>
