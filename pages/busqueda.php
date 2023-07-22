@@ -6,18 +6,36 @@ $conexion = new Conexion();
 $con = $conexion->conectar();
 
 // Agregar la ruta base de las imágenes
-$rutaBaseImagenes = '/productosimg/';
+$rutaBaseImagenes = '../productosimg/';
 
 $product = [];
 
 if (isset($_POST['busqueda'])) {
-    $busqueda = addslashes($_POST['busqueda']);
-    $consulta = $con->query("CALL BuscadorPro('$busqueda');");
-    $product = $consulta->fetchAll(PDO::FETCH_OBJ);
-    // Cierra el cursor de la consulta anterior para liberar recursos
-    $consulta->closeCursor();
-}
+  $busqueda = addslashes($_POST['busqueda']);
 
+  // Obtener la opción de ordenamiento seleccionada
+  $orden = isset($_POST['orden']) ? $_POST['orden'] : '';
+
+  // Consulta sin la cláusula ORDER BY
+  $consulta = $con->prepare("CALL BuscadorPro(:busqueda);");
+  $consulta->bindParam(':busqueda', $busqueda);
+  $consulta->execute();
+
+  $product = $consulta->fetchAll(PDO::FETCH_OBJ);
+  // Cierra el cursor de la consulta anterior para liberar recursos
+  $consulta->closeCursor();
+
+  // Aplicar clasificación si es necesario
+  if ($orden === 'mayor_menor') {
+      usort($product, function ($a, $b) {
+          return $b->precio - $a->precio;
+      });
+  } elseif ($orden === 'menor_mayor') {
+      usort($product, function ($a, $b) {
+          return $a->precio - $b->precio;
+      });
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -157,15 +175,17 @@ if (isset($_POST['busqueda'])) {
                     <h1 class="text-start text-black ms-5">BUSQUEDA</h1>
                     </div>
                     <!-- Filtrador -->
-                    <div class="col-md-2 text-md-end ">
-                    <form action="" method="POST">
-                        <select name="orden" id="filter-category" class="form-select border border-black">
-                            <option value="">Filtrar por:</option>
-                            <option value="mayor_menor">Precio: Mayor a Menor</option>
-                            <option value="menor_mayor">Precio: Menor a Mayor</option>
-                        </select>
-                    </form>
-                    </div>
+                        <div class="col-md-2 text-md-end">
+                            <form id="sort-form" method="POST">
+                                <input type="hidden" name="busqueda" value="<?php echo isset($_POST['busqueda']) ? htmlentities($_POST['busqueda']) : ''; ?>">
+                                <select name="orden" id="filter-category" class="form-select border border-black">
+                                    <option value="">Filtrar por:</option>
+                                    <option value="mayor_menor">Precio: Mayor a Menor</option>
+                                    <option value="menor_mayor">Precio: Menor a Mayor</option>
+                                </select>
+                                <button id="sort-btn" class="btn btn-primary">Ordenar</button>
+                            </form>
+                        </div>
                     <div class="col-md-2 ">
                         <h5 class=" text-black">Cantidad: <?php echo count($product); ?></h5>
                     </div>
@@ -247,5 +267,15 @@ if (isset($_POST['busqueda'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <script>
+    document.getElementById('sort-btn').addEventListener('click', function () {
+        const sortForm = document.getElementById('sort-form');
+        const selectedOption = sortForm.elements['orden'].value;
+
+        if (selectedOption) {
+            sortForm.submit(); // Envía el formulario para activar la clasificación según la opción seleccionada
+        }
+    });
+    </script>
 </body>
 </html>
