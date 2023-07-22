@@ -54,18 +54,26 @@ ob_start();
     ?>
   </div>
   <div class="content">
-    <h1>Historial y Antecedentes</h1>
+
     <form action="consultapdf.php" method="POST">
       <div class="row">
         <div class="column">
           <h2>Historial y Antecedentes</h2>
           <div class="mb-3">
+                  <label for="nombre">Nombre del paciente:</label>
+                  <?php echo $_POST['nombre']; ?>
+                </div>
+                <div class="mb-3">
+                  <label for="edad">Edad:</label>
+                  <?php echo $_POST['edad']; ?>
+                </div>
+          <div class="mb-3">
             <label for="cefaleas">Cefaleas:</label>
             <?php
             if (isset($_POST['cefaleas']) && $_POST['cefaleas'] === "true") {
-              echo '(V)';
+              echo '(x)';
             } else {
-              echo '(X)';
+              echo '()';
             }
             ?>
           </div>
@@ -73,9 +81,9 @@ ob_start();
             <label for="fatigaOcular">Fatiga Ocular:</label>
             <?php
             if (isset($_POST['fatigaOcular']) && $_POST['fatigaOcular'] === "true") {
-              echo '(V)';
+              echo '(x)';
             } else {
-              echo '(X)';
+              echo '()';
             }
             ?>
           </div>
@@ -83,9 +91,9 @@ ob_start();
             <label for="ojoRojo">Ojo Rojo:</label>
             <?php
             if (isset($_POST['ojoRojo']) && $_POST['ojoRojo'] === "true") {
-              echo '(V)';
+              echo '(x)';
             } else {
-              echo '(X)';
+              echo '()';
             }
             ?>
           </div>
@@ -93,16 +101,16 @@ ob_start();
             <label for="borrosidad">Borrosidad:</label>
             <?php
             if (isset($_POST['borrosidad']) && $_POST['borrosidad'] === "true") {
-              echo '(V)';
+              echo '(x)';
             } else {
-              echo '(X)';
+              echo '()';
             }
             ?>
           </div>
         </div>
       
         <div class="column">
-          <h2>Consulta</h2>
+        
           <div class="mb-3">
             <label for="ta">TA:</label>
             <?php echo $_POST['ta']; ?>
@@ -113,7 +121,7 @@ ob_start();
           </div>
           <div class="mb-3">
             <label for="satO2">SatO2:</label>
-            <?php echo $_POST['sat02']; ?>
+            <?php echo $_POST['satO2']; ?>
           </div>
           <div class="mb-3">
             <label for="glicemia">Glicemia Capilar:</label>
@@ -124,9 +132,9 @@ ob_start();
             <label for="dm">DM:</label>
             <?php
             if (isset($_POST['dm']) && $_POST['dm'] === "true") {
-              echo '(V)';
+              echo '(x)';
             } else {
-              echo '(X)';
+              echo '()';
             }
             ?>
           </div>
@@ -134,33 +142,16 @@ ob_start();
             <label for="hta">HTA:</label>
             <?php
             if (isset($_POST['hta']) && $_POST['hta'] === "true") {
-              echo '(V)';
+              echo '(x)';
             } else {
-              echo '(X)';
+              echo '()';
             }
             ?>
           </div>
         </div>
       </div>
-      
-      <h2>Consulta Salud Ocular</h2>
-      <div class="mb-3">
-        <label for="avLejosOd">A.V Lejos O.D.:</label>
-        <?php echo $_POST['avLejosOd']; ?>
-      </div>
-      <div class="mb-3">
-        <label for="avCercaOd">A.V Cerca O.D.:</label>
-        <?php echo $_POST['avCercaOd']; ?>
-      </div>
-      <div class="mb-3">
-        <label for="avCercaOi">A.V Cerca O.I.:</label>
-        <?php echo $_POST['avCercaOi']; ?>
-      </div>
-      <div class="mb-3">
-        <label for="avCercaAo">A.V Cerca A.O.:</label>
-        <?php echo $_POST['avCercaAo']; ?>
-      </div>
-      
+
+
       <h3>Rx En Uso</h3>
       <div class="mb-3">
         <label for="rxUsoOd">OD:</label>
@@ -183,21 +174,13 @@ ob_start();
       <div class="mb-3">
         <label for="avEOi">A.V.E O.I.:</label>
         <?php echo $_POST['avEOi']; ?>
-      </div>
+      </div>    
+
       <div class="mb-3">
-        <label for="avEAo">A.V.E A.O.:</label>
-        <?php echo $_POST['avEAo']; ?>
+        <label for="descripcion">Descripcion:</label>
+        <?php echo $_POST['descripcion']; ?>      
       </div>
-      
-      <h2>Diagnóstico</h2>
-      <div class="diag">
-        <?php echo $_POST['diagnostico']; ?>
-      </div>
-      
-      <h2>Tratamiento</h2>
-      <div class="trat">
-        <?php echo $_POST['tratamiento']; ?>
-      </div>
+
     </form>
   </div>
 </body>

@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         <?php endif; ?>
 
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <form action="consultapdf.php" method="POST">
             <div class="row">
             <div class="mb-3">
                   <label for="nombre">Nombre del paciente:</label>
@@ -140,19 +140,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="col-md-3">
                     <label for="cefaleas">Cefaleas:</label>
-                    <input type="checkbox" id="cefaleas" name="cefaleas" value="1">
+                    <input type="checkbox" id="cefaleas" name="cefaleas" value="true">
                 </div>
                 <div class="col-md-3">
                     <label for="fatigaOcular">Fatiga Ocular:</label>
-                    <input type="checkbox" id="fatigaOcular" name="fatigaOcular" value="1">
+                    <input type="checkbox" id="fatigaOcular" name="fatigaOcular" value="true">
                 </div>
                 <div class="col-md-3">
                     <label for="ojoRojo">Ojo Rojo:</label>
-                    <input type="checkbox" id="ojoRojo" name="ojoRojo" value="1">
+                    <input type="checkbox" id="ojoRojo" name="ojoRojo" value="true">
                 </div>
                 <div class="col-md-3">
                     <label for="borrosidad">Borrosidad:</label>
-                    <input type="checkbox" id="borrosidad" name="borrosidad" value="1">
+                    <input type="checkbox" id="borrosidad" name="borrosidad" value="true">
                 </div>
             </div>
 
@@ -181,11 +181,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="row">
                 <div class="col-md-3">
                     <label for="dm">DM:</label>
-                    <input type="checkbox" id="dm" name="dm" value="1">
+                    <input type="checkbox" id="dm" name="dm" value="true">
                 </div>
                 <div class="col-md-3">
                     <label for="hta">HTA:</label>
-                    <input type="checkbox" id="hta" name="hta" value="1">
+                    <input type="checkbox" id="hta" name="hta" value="true">
                 </div>
             </div>
 

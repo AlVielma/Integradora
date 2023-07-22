@@ -9,25 +9,13 @@ $con = $conexion->conectar();
 $rutaBaseImagenes = '/productosimg/';
 
 $product = [];
-$may = [];
-$men = [];
 
 if (isset($_POST['busqueda'])) {
-  $busqueda = $_POST['busqueda'];
-  $consulta = $con->query("CALL BuscadorPro('$busqueda');");
-  $product = $consulta->fetchAll(PDO::FETCH_OBJ);
-  // Cierra el cursor de la consulta anterior para liberar recursos
-  $consulta->closeCursor();
-
-  $mayor = $con->query("CALL OrdenadosMayorMenor()"); 
-  $may = $mayor->fetchAll(PDO::FETCH_OBJ);
-  // Cierra el cursor de la consulta anterior para liberar recursos
-  $mayor->closeCursor();
-
-  $menor = $con->query("CALL OrdenadosMenorMayor()"); 
-  $men = $menor->fetchAll(PDO::FETCH_OBJ);
-  // Cierra el cursor de la consulta anterior para liberar recursos
-  $menor->closeCursor();
+    $busqueda = addslashes($_POST['busqueda']);
+    $consulta = $con->query("CALL BuscadorPro('$busqueda');");
+    $product = $consulta->fetchAll(PDO::FETCH_OBJ);
+    // Cierra el cursor de la consulta anterior para liberar recursos
+    $consulta->closeCursor();
 }
 ?>
 
@@ -169,51 +157,13 @@ if (isset($_POST['busqueda'])) {
                     </div>
                     <!-- Filtrador -->
                     <div class="col-md-2 text-md-end ">
-                        <select name="orden" id="filter-category" class="form-select border border-black ">
-                          <option value="">Filtrar por:</option>
-                          <option value="mayor_menor">Precio: Mayor a Menor 
-                          <?php
-                            if (count($may) > 0) {
-                                foreach ($may as $producto) {
-                                    echo '<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">';
-                                    echo '<div class="card" style="width: 19rem;">';
-                                    echo '<a href="#"><img src="'. $rutaBaseImagenes . $producto->imagen .'" class="card-img-top" alt="Imagen del producto"></a>';
-                                    echo '<div class="card-body">';
-                                    echo '<h5 class="card-title h4">' . $producto->nombre . '</h5>';
-                                    echo '<a class="objeto-texto" href="#"><p class="card-text h5">' . $producto->precio . '</p></a>';
-                                    echo '</div>';
-                                    echo '</div>';
-                                    echo '</div>';
-                                }
-                            } else {
-                                echo '<div class="col-sm-12">';
-                                echo '<p class="h5">No se encontraron resultados.</p>';
-                                echo '</div>';
-                            }
-                            ?>
-                          </option>
-                          <option value="menor_mayor">Precio: Menor a Mayor 
-                          <?php
-                            if (count($men) > 0) {
-                                foreach ($men as $producto) {
-                                    echo '<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">';
-                                    echo '<div class="card" style="width: 19rem;">';
-                                    echo '<a href="#"><img src="'. $rutaBaseImagenes . $producto->imagen .'" class="card-img-top" alt="Imagen del producto"></a>';
-                                    echo '<div class="card-body">';
-                                    echo '<h5 class="card-title h4">' . $producto->nombre . '</h5>';
-                                    echo '<a class="objeto-texto" href="#"><p class="card-text h5">' . $producto->precio . '</p></a>';
-                                    echo '</div>';
-                                    echo '</div>';
-                                    echo '</div>';
-                                }
-                            } else {
-                                echo '<div class="col-sm-12">';
-                                echo '<p class="h5">No se encontraron resultados.</p>';
-                                echo '</div>';
-                            }
-                            ?>
-                          </option>
+                    <form action="" method="POST">
+                        <select name="orden" id="filter-category" class="form-select border border-black">
+                            <option value="">Filtrar por:</option>
+                            <option value="mayor_menor">Precio: Mayor a Menor</option>
+                            <option value="menor_mayor">Precio: Menor a Mayor</option>
                         </select>
+                    </form>
                     </div>
                     <div class="col-md-2 ">
                         <h5 class=" text-black">Cantidad: <?php echo count($product); ?></h5>
