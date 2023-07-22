@@ -16,14 +16,12 @@ class validacionproductos
         return false;
     }
 
-    public function esimg($file_type)
+    function validarExtensionImagen($imagen)
     {
-        $allowed_types = array('image/jpeg', 'image/png','image/jpg');
-
-        if (in_array($file_type, $allowed_types)) {
-            return true;
-        }
-        return false;
+        $allowedExtensions = ['jpg', 'jpeg', 'png'];
+        $pathinfo = pathinfo($imagen['name']);
+        $extension = strtolower($pathinfo['extension']);
+        return in_array($extension, $allowedExtensions);
     }
 
     function mensajes(array $errors)

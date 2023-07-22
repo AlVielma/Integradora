@@ -19,6 +19,9 @@ if (isset($_POST['agregar'])) {
   if (empty($_FILES['imagen']['name'])) {
       $errors[] = "Debes seleccionar una imagen";
   }
+  if (!$validacion->validarExtensionImagen($_FILES['imagen'])) {
+    $errors[] = "Solo se permiten imágenes con extensiones .jpg, .png y .jpeg";
+  }
 
   if (count($errors) == 0) {
       $dir = __DIR__ . '/../../productosimg/';
@@ -211,7 +214,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               </div>
               <div class="mb-3">
                 <label for="imagen">Agregar Imagen</label>
-                <input type="file" class="form-control" name="imagen">
+                <input type="file" class="form-control" name="imagen" accept=".jpg, .png, .jpeg">
               </div>
               <div class="mb-3">
                 <label for="cantidad">Cantidad</label>
