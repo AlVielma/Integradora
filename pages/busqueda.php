@@ -176,7 +176,7 @@ if (isset($_POST['busqueda'])) {
                     <!-- Filtrador -->
                         <div class="col-md-2 text-md-end">
                             <form id="sort-form" method="POST">
-                                <input type="hidden" name="busqueda" value="<?php echo isset($_POST['busqueda']) ? htmlentities($_POST['busqueda']) : ''; ?>">
+                                <input type="hidden" name="busqueda" value="<?php echo isset($_POST['busqueda']) ? htmlentities($_POST['busqueda']) : ''; ?>"> <!-- verifica si hay algun producto que ordenar -->
                                 <select name="orden" id="filter-category" class="form-select border border-black">
                                     <option value="">Filtrar por:</option>
                                     <option value="mayor_menor">Precio: Mayor a Menor</option>
