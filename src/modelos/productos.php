@@ -115,9 +115,18 @@ Class productos
 
     public function masvendidos3()
     {
-        $masvendidos3 = $this->pdo->query("SELECT p.nombre,p.precio,i.IMAGEN FROM Productos p INNER JOIN Imagenes i on 
-        p.imagen = i.id_img WHERE p.stock < 10 LIMIT 3");
+        $masvendidos3 = $this->pdo->query("SELECT p.sku, p.nombre,p.precio,i.IMAGEN FROM Productos p INNER JOIN Imagenes i on 
+        p.imagen = i.id_img ORDER BY p.stock ASC LIMIT 3");
 
-        return $masvendidos3->fetch(\PDO::FETCH_ASSOC);
+        return $masvendidos3->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function descproducto($id)
+    {
+        $descproducto = $this->pdo->prepare("SELECT p.sku,p.nombre,p.descripcion, p.precio, m.nombre as Marca, i.IMAGEN,tp.tipo_lente
+        FROM Imagenes i INNER JOIN Productos p on i.id_img = p.imagen INNER JOIN
+        Marcas m on m.id = p.marca_id INNER JOIN TiposLentes tp on tp.id=p.tipo_lente_id WHERE p.sku=? LIMIT 1");
+        $descproducto->execute([$id]);
+        return $descproducto->fetch(\PDO::FETCH_ASSOC);
     }
 }

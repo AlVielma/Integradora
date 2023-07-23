@@ -1,5 +1,10 @@
 <?php
 session_start();
+use App\Modelos\productos;
+require 'vendor/autoload.php';
+require 'src/http/config.php';
+$productos = new productos();
+$vendidos= $productos->masvendidos3();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -298,42 +303,25 @@ session_start();
     <div class="row pt-5">
       <div class="col-12 col-lg-10 offset-lg-1">
         <div class="row">
-
+        <!--muestra los productos mas vendidos-->
+        <?php
+        foreach($vendidos as $producto)
+        {?>
           <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0">
             <div class="single-content-card">
-              <img class="card-img-top" src="images/lentes1.png" alt="Card image cap">
+              <img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap">
               <div class="card-body">
-                <h5 class="card-title h4">Kipling 4065</h5>
-                <a class="h4 font-weight-bold text-decoration-none" href="#">
-                  <p class="card-text h5">$1999,00 MXN</p>
+                <h5 class="card-title h4"><?php echo $producto['nombre']; ?></h5>
+                <a class="h4 font-weight-bold text-decoration-none" href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>&token=<?php echo hash_hmac('sha1',$producto['sku'],KEY_TOKEN); ?>">
+                  <p class="card-text h5">$<?php echo $producto['precio']; ?> MXN</p>
                 </a>
               </div>
             </div>
           </div>
+          <?php
+        }
+        ?>
 
-          <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0">
-            <div class="single-content-card">
-              <img class="card-img-top" src="images/lentes2.png" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title h4">Kipling 4065</h5>
-                <a class="h4 font-weight-bold text-decoration-none" href="#">
-                  <p class="card-text h5">$1999,00 MXN</p>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0">
-            <div class="single-content-card">
-              <img class="card-img-top" src="images/lentes5.png" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title h4">Kipling 4065</h5>
-                <a class="h4 font-weight-bold text-decoration-none" href="#">
-                  <p class="card-text h5">$1999,00 MXN</p>
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
