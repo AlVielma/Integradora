@@ -112,4 +112,12 @@ Class productos
         $imgactual->execute([$id]);
         return $imgactual->fetchColumn();
     }
+
+    public function masvendidos3()
+    {
+        $masvendidos3 = $this->pdo->query("SELECT p.nombre,p.precio,i.IMAGEN FROM Productos p INNER JOIN Imagenes i on 
+        p.imagen = i.id_img WHERE p.stock < 10 LIMIT 3");
+
+        return $masvendidos3->fetch(\PDO::FETCH_ASSOC);
+    }
 }
