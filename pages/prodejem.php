@@ -1,3 +1,44 @@
+<?php
+use App\Modelos\Conexion;
+use App\Modelos\productos;
+require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../src/http/config.php';
+$productos = new productos();
+$db = new Conexion();
+$con = $db->conectar();
+$sku = isset($_GET['id']) ? $_GET['id'] :'';
+$token = isset($_GET['token']) ? $_GET['token'] :'';
+
+if($sku == '' || $token=='')
+{
+  echo 'ERROR AL PROCESAR LA PETICION';
+  exit;
+}
+else{
+
+  $token_tmp=hash_hmac('sha1',$sku,KEY_TOKEN);
+
+  if($token == $token_tmp)
+  {
+    $sql = $con->prepare("SELECT COUNT(sku) FROM Productos WHERE sku=?");
+    $sql->execute([$sku]);
+    if($sql->fetchColumn()>0)
+    {
+      $descrip = $productos->descproducto($sku);
+      $producto = $descrip['nombre'];
+      $descripcion = $descrip['descripcion'];
+      $precio = $descrip['precio'];
+      $marca = $descrip['Marca'];
+      $imagen = $descrip['IMAGEN'];
+      $tipo_lente = $descrip['tipo_lente'];
+    }
+  }
+  else{
+    echo 'ERROR AL PROCESAR LA PETICION';
+    exit;
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +48,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
    <!--Css-->
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="../css/index.css">
     <!--Icon-->
     <link rel="icon" href="images/icon.png">
     <title>Pop Ópticos</title>
@@ -21,7 +62,7 @@
                 <nav class="navbar navbar-expand-lg bg-black">
                     <div class="container-fluid">
         
-                      <a class="navbar-brand text-white" href="#">
+                      <a class="navbar-brand text-white" href="/../index.php">
                         <img src="../images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                         Pop Ópticos
                       </a>
@@ -104,13 +145,14 @@
                 <div class="row">
                     <div class="col-md-6 order-md-1 text-center">
                       <!--aqui es donde se utilizaria php, titulo, marca, precio e imagenes-->
-                      <h1>Kipling 1116</h1>
-                      <h3>Kipling</h3>
-                      <h2>$1990.00</h2>
+                      <h1><?php echo $producto; ?></h1>
+                      <h3><?php echo $marca; ?></h3>
+                      <h2>$ <?php echo $precio; ?></h2>
                       <div class="mb-3 border-top border-5"></div>
                       <p class ="lead">
-                        Color amarillo
-                        Tipo de lente Monofocales
+                      <?php echo $descripcion; ?>
+                      <br>
+                      <?php echo $tipo_lente; ?>
                       </p>
                       <div class="mb-3 border-top border-5"></div>
                       <a href="#" class="btn btn-light btn-outline-dark">Añadir al carrito</a>
@@ -122,7 +164,7 @@
                         <div class="carousel-inner">
                           <div class="carousel-item active">
                             
-                            <img src="../images/lentes1.png" class="d-block w-100" alt="...">
+                            <img src="<?php echo '/../productosimg/'.$imagen; ?>" class="d-block w-100" alt="...">
 
                           </div>
                           <div class="carousel-item">
@@ -245,7 +287,7 @@
 
                 <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                     <h3>Pop Ópticos</h3>
-                    <a href="index.php"><img src="images/icon64.png" alt=""></a>
+                    <a href="../index.php"><img src="/../images/icon64.png" alt=""></a>
                   
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
@@ -268,13 +310,13 @@
                 <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                   <p class="h5">Redes</p>
                   <div class="mb-2">
-                    <a href="https://www.facebook.com/opticaPOP/"><img src="images/facebook.png" alt=""></a>
+                    <a href="https://www.facebook.com/opticaPOP/"><img src="/../images/facebook.png" alt=""></a>
                   </div>
                   <div class="mb-0">
                     <p>Facebook</p>
                   </div>
                   <div class="mb-2">
-                    <a href="https://wa.link/35sn9o"><img src="images/whatsapp.png" alt=""></a>
+                    <a href="https://wa.link/35sn9o"><img src="/../images/whatsapp.png" alt=""></a>
                   </div>
                   <div class="mb-0">
                     <p>Whatsapp</p>
