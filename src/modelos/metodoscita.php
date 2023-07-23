@@ -13,7 +13,6 @@ class metodoscita
     {
         $this->connect= new Conexion();
         $this->conectar=$this->connect->conectar();
-       
     }
     public function mostrar()
     {

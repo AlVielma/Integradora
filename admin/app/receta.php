@@ -1,3 +1,11 @@
+<?php
+use App\Modelos\Conexion;
+use App\Modelos\ValidacionesReceta;
+require __DIR__ . '/../../vendor/autoload.php';
+$success = false;
+$errorMessages = [];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,5 +175,10 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/admin/js/boton.js"></script>
+  <script>
+    window.addEventListener('beforeunload', function (event) {
+        event.returnValue = '¿Seguro que deseas salir? Los datos que has ingresado se perderán.';
+    });
+  </script>
 </body>
 </html>

@@ -1,95 +1,10 @@
 <?php
 use App\Modelos\Conexion;
-use App\Modelos\Metodos;
-use App\Modelos\PostAgregar;
+use App\Modelos\ValidacionesConsulta;
 require __DIR__ . '/../../vendor/autoload.php';
 $success = false;
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validar y sanitizar los datos del formulario
-    $cefalesias = isset($_POST['cefaleas']) ? 1 : 0;
-    $fatigaOcular = isset($_POST['fatigaOcular']) ? 1 : 0;
-    $ojoRojo = isset($_POST['ojoRojo']) ? 1 : 0;
-    $borrosidad = isset($_POST['borrosidad']) ? 1 : 0;
-    $ta = isset($_POST['ta']) ? $_POST['ta'] : null;
-    $fc = isset($_POST['fc']) ? $_POST['fc'] : null;
-    $satO2 = isset($_POST['satO2']) ? $_POST['satO2'] : null;
-    $glicemiaCapilar = isset($_POST['glicemia']) ? $_POST['glicemia'] : null;
-    $dm = isset($_POST['dm']) ? 1 : 0;
-    $hta = isset($_POST['hta']) ? 1 : 0;
-    $agudezaVisualScorrecion = isset($_POST['avEOd']) ? $_POST['avEOd'] : null;
-    $lejosOD20 = isset($_POST['avLejosOd']) ? $_POST['avLejosOd'] : null;
-    $lejosOI20 = isset($_POST['avLejosOi']) ? $_POST['avLejosOi'] : null;
-    $lejosAO20 = isset($_POST['avLejosAo']) ? $_POST['avLejosAo'] : null;
-    $cercaOD20 = isset($_POST['avCercaOd']) ? $_POST['avCercaOd'] : null;
-    $cercaOI20 = isset($_POST['avCercaOi']) ? $_POST['avCercaOi'] : null;
-    $cercaAO20 = isset($_POST['avCercaAo']) ? $_POST['avCercaAo'] : null;
-    $od = isset($_POST['rxUsoOd']) ? $_POST['rxUsoOd'] : null;
-    $oi = isset($_POST['rxUsoOi']) ? $_POST['rxUsoOi'] : null;
-    $material = isset($_POST['rxUsoMaterial']) ? $_POST['rxUsoMaterial'] : null;
-    $avclAOD20 = isset($_POST['avEOd']) ? $_POST['avEOd'] : null;
-    $avclAOI20 = isset($_POST['avEOi']) ? $_POST['avEOi'] : null;
-    $avclAAO20 = isset($_POST['avEAo']) ? $_POST['avEAo'] : null;
-    $avOD20 = isset($_POST['avEOd']) ? $_POST['avEOd'] : null;
-    $avOI20 = isset($_POST['avEOi']) ? $_POST['avEOi'] : null;
-    $avAO20 = isset($_POST['avEAo']) ? $_POST['avEAo'] : null;
-    $avscOD20 = isset($_POST['avEOd']) ? $_POST['avEOd'] : null;
-    $avscOI20 = isset($_POST['avEOi']) ? $_POST['avEOi'] : null;
-    $avscAO20 = isset($_POST['avEAo']) ? $_POST['avEAo'] : null;
-    $aveOD20 = isset($_POST['avEOd']) ? $_POST['avEOd'] : null;
-    $aveOI20 = isset($_POST['avEOi']) ? $_POST['avEOi'] : null;
-    $aveAO20 = isset($_POST['avEAo']) ? $_POST['avEAo'] : null;
-    $avccOD20 = isset($_POST['avEOd']) ? $_POST['avEOd'] : null;
-    $avccOI20 = isset($_POST['avEOi']) ? $_POST['avEOi'] : null;
-    $avccAO20 = isset($_POST['avEAo']) ? $_POST['avEAo'] : null;
-    $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : '';
-    // Crear una instancia de la clase Conexion
-    $conexion = new Conexion();
-    // Obtener la conexión a la base de datos
-    $db = $conexion->obtenerConexion();
-    // Crear una instancia de la clase Metodos
-    $metodos = new Metodos($db);
-    // Agregar la consulta en la base de datos
-    $metodos->agregarConsulta(
-        $cefalesias,
-        $fatigaOcular,
-        $ojoRojo,
-        $borrosidad,
-        $ta,
-        $fc,
-        $satO2,
-        $glicemiaCapilar,
-        $dm,
-        $hta,
-        $agudezaVisualScorrecion,
-        $lejosOD20,
-        $lejosOI20,
-        $lejosAO20,
-        $cercaOD20,
-        $cercaOI20,
-        $cercaAO20,
-        $od,
-        $oi,
-        $material,
-        $avclAOD20,
-        $avclAOI20,
-        $avclAAO20,
-        $avOD20,
-        $avOI20,
-        $avAO20,
-        $avscOD20,
-        $avscOI20,
-        $avscAO20,
-        $aveOD20,
-        $aveOI20,
-        $aveAO20,
-        $avccOD20,
-        $avccOI20,
-        $avccAO20,
-        $descripcion
-    );
+$errorMessages = [];
 
-    $success = true;
-}
 ?>
 
 <!DOCTYPE html>
@@ -188,27 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="checkbox" id="hta" name="hta" value="true">
                 </div>
             </div>
-
-         <!--   <h2>Consulta Salud Ocular</h2>
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="avLejosOd">A.V Lejos O.D.:</label>
-                    <input type="text" class="form-control" id="avLejosOd" name="avLejosOd">
-                </div>
-                <div class="col-md-3">
-                    <label for="avLejosOi">A.V Lejos O.I.:</label>
-                    <input type="text" class="form-control" id="avLejosOi" name="avLejosOi">
-                </div>
-                <div class="col-md-3">
-                    <label for="avLejosAo">A.V Lejos A.O.:</label>
-                    <input type="text" class="form-control" id="avLejosAo" name="avLejosAo">
-                </div>
-                <div class="col-md-3">
-                    <label for="avCercaOd">A.V Cerca O.D.:</label>
-                    <input type="text" class="form-control" id="avCercaOd" name="avCercaOd">
-                </div>
-            </div> -->
-
             <h3>Rx En Uso</h3>
             <div class="row">
                 <div class="col-md-4">
@@ -235,12 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="avEOi">A.V.C.L O.I.:</label>
                     <input type="text" class="form-control" id="avEOi" name="avEOi">
                 </div>
-              <!--  <div class="col-md-4">
-                    <label for="avEAo">A.V.E A.O.:</label>
-                    <input type="text" class="form-control" id="avEAo" name="avEAo">
-                </div>   -->
             </div>
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
@@ -258,5 +147,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/public/js/boton.js"></script>
+    <script>
+    window.addEventListener('beforeunload', function (event) {
+        event.returnValue = '¿Seguro que deseas salir? Los datos que has ingresado se perderán.';
+    });
+    </script>
 </body>
 </html>
