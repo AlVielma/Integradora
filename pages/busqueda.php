@@ -177,12 +177,11 @@ if (isset($_POST['busqueda'])) {
                         <div class="col-md-2 text-md-end">
                             <form id="sort-form" method="POST">
                                 <input type="hidden" name="busqueda" value="<?php echo isset($_POST['busqueda']) ? htmlentities($_POST['busqueda']) : ''; ?>"> <!-- verifica si hay algun producto que ordenar -->
-                                <select name="orden" id="filter-category" class="form-select border border-black">
+                                <select name="orden" id="filter-category" class="form-select border border-black" onchange="submitForm()">
                                     <option value="">Filtrar por:</option>
                                     <option value="mayor_menor">Precio: Mayor a Menor</option>
                                     <option value="menor_mayor">Precio: Menor a Mayor</option>
                                 </select>
-                                <button id="sort-btn" class="btn btn-primary">Ordenar</button>
                             </form>
                         </div>
                     <div class="col-md-2 ">
@@ -267,14 +266,11 @@ if (isset($_POST['busqueda'])) {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script>
-    document.getElementById('sort-btn').addEventListener('click', function () {
-        const sortForm = document.getElementById('sort-form');
-        const selectedOption = sortForm.elements['orden'].value;
-
-        if (selectedOption) {
-            sortForm.submit(); // Envía el formulario para activar la clasificación según la opción seleccionada
-        }
-    });
+      function submitForm() {
+          const sortForm = document.getElementById('sort-form');
+          sortForm.submit(); // Envía el formulario para activar la clasificación según la opción seleccionada
+      }
     </script>
+
 </body>
 </html>
