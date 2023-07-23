@@ -129,4 +129,54 @@ Class productos
         $descproducto->execute([$id]);
         return $descproducto->fetch(\PDO::FETCH_ASSOC);
     }
+    public function recomendados($id)
+    {
+        $recomendados = $this->pdo->prepare("SELECT p.sku, p.nombre,p.precio,i.IMAGEN FROM Productos p INNER JOIN Imagenes i on 
+        p.imagen = i.id_img WHERE p.sku<>? ORDER BY RAND() ASC LIMIT 8");
+        $recomendados->execute([$id]);
+        return $recomendados->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function pophombres()
+    {
+        $pophombres = $this->pdo->prepare("SELECT p.sku,p.nombre,p.precio,i.IMAGEN
+        FROM Productos p INNER JOIN Imagenes i on p.imagen = i.id_img WHERE p.categoria_id=1");
+        $pophombres->execute();
+        return $pophombres->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function popmujer()
+    {
+        $popmujer = $this->pdo->prepare("SELECT p.sku,p.nombre,p.precio,i.IMAGEN
+        FROM Productos p INNER JOIN Imagenes i on p.imagen = i.id_img WHERE p.categoria_id=2");
+        $popmujer->execute();
+        return $popmujer->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function popniño()
+    {
+        $popniño = $this->pdo->prepare("SELECT p.sku,p.nombre,p.precio,i.IMAGEN
+        FROM Productos p INNER JOIN Imagenes i on p.imagen = i.id_img WHERE p.categoria_id=3");
+        $popniño->execute();
+        return $popniño->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function popniña()
+    {
+        $pophombres = $this->pdo->prepare("SELECT p.sku,p.nombre,p.precio,i.IMAGEN
+        FROM Productos p INNER JOIN Imagenes i on p.imagen = i.id_img WHERE p.categoria_id=4");
+        $pophombres->execute();
+        return $pophombres->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function solarhombre()
+    {
+        $pophombres = $this->pdo->prepare("SELECT p.sku,p.nombre,p.precio,i.IMAGEN
+        FROM Productos p INNER JOIN Imagenes i on p.imagen = i.id_img WHERE p.categoria_id=5");
+        $pophombres->execute();
+        return $pophombres->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function solarmujer()
+    {
+        $pophombres = $this->pdo->prepare("SELECT p.sku,p.nombre,p.precio,i.IMAGEN
+        FROM Productos p INNER JOIN Imagenes i on p.imagen = i.id_img WHERE p.categoria_id=6");
+        $pophombres->execute();
+        return $pophombres->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
