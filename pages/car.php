@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +27,7 @@ session_start();
             <h5 class="display-6 fw-bold">Tu carrito está vacío</h5>
         </div>
         <div class="mb-3">
-            <a href="login.html" class="btn btn-light btn-outline-dark">Inicia sesión en tu cuenta</a>
+            <a href="login.php" class="btn btn-light btn-outline-dark">Inicia sesión en tu cuenta</a>
         </div>
         <div class="mb-3">
             <p class="lead">¿No tienes una cuenta?</p>
@@ -37,7 +35,7 @@ session_start();
         <div class="mb-3 border-top border-5"></div>
     
         <div class="mb-3">
-            <a href="register.html" class="btn btn-light btn-outline-dark ">Regístrate</a>
+            <a href="register.php" class="btn btn-light btn-outline-dark ">Regístrate</a>
         </div>
     </div>
     

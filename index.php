@@ -40,9 +40,17 @@ $vendidos= $productos->masvendidos3();
           </form>
         </div>
 
-        <a class="navbar-brand text-white" href="pages/car.html">
-          <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+        <?php if (isset($_SESSION['user_name'])) : ?>
+            <!-- Si la sesión está iniciada, muestre un carrito diferente -->
+            <a class="navbar-brand text-white" href="pages/incarejem.php">
+          <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
         </a>
+          <?php else : ?>
+            <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
+            <a class="navbar-brand text-white" href="pages/car.php">
+          <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+        </a>
+          <?php endif; ?>
         <!-- Si la sesión está iniciada, muestra el nombre del usuario en lugar del icono -->
         <?php if (isset($_SESSION['user_name'])) : ?>
           <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop" class="user-link text-white">
