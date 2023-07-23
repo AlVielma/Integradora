@@ -4,9 +4,23 @@ use App\Modelos\validacionesRegistrar;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+session_start();
+
 $registrar = new validacionesRegistrar();
 $conexion = new Conexion(); // Crear una instancia de la clase Conexion
 $con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
+
+// Verificar si el usuario ya ha iniciado sesión
+if(isset($_SESSION['user_id'])) {
+    // Redirigir al usuario según su rol
+   if($_SESSION['user_rol'] == 1){
+       header("Location: ../admin/app/aggimg.php");
+   }
+   else {
+       header("Location: ../index.php");
+   }
+   exit;
+}
 
 $errors = [];
 

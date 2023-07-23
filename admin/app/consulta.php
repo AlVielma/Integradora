@@ -2,6 +2,13 @@
 use App\Modelos\Conexion;
 use App\Modelos\ValidacionesConsulta;
 require __DIR__ . '/../../vendor/autoload.php';
+session_start();
+/*
+if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
+  // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
+  header("Location: ../../pages/login.php");
+  exit;
+}*/
 $success = false;
 $errorMessages = [];
 
@@ -18,17 +25,9 @@ $errorMessages = [];
     <link rel="stylesheet" href="/admin/css/produc.css">
 </head>
 <body>
-    <div class="sidebar" id="sidebar">
-        <div class="logo">
-            <img src="../img/logo.jpg" alt="Logo">
-        </div>
-        <a class="nav-link" href="aggimg.php"><i class="fas fa-box"></i><span>Gestionar Producto</span></a>
-        <a class="nav-link" href="trabaj.php"><i class="fas fa-users"></i><span>Gestionar Trabajadores</span></a>
-        <a class="nav-link" href="agenda.php"><i class="fas fa-calendar-alt"></i><span>Gestionar Agenda</span></a>
-        <a class="nav-link" href="consulta.php"><i class="fas fa-stethoscope"></i><span>Realizar Consulta</span></a>
-        <a class="nav-link" href="receta.php"><i class="fas fa-prescription"></i><span>Generar Receta</span></a>
-        <a class="nav-link" href="../index.php"><i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span></a>
-    </div>
+    <!--Sidebar-->
+<?php include 'sidebar.php';
+?>
 
     <div class="container-fluid" id="content">
 

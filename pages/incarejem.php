@@ -30,7 +30,7 @@ session_start();
             <h5 class="display-6 fw-bold">Tu carrito está vacío</h5>
         </div>
         <div class="mb-3">
-            <a href="#" class="btn btn-light btn-outline-dark">Seguir comprando</a>
+            <a href="popunisex.php" class="btn btn-light btn-outline-dark">Seguir comprando</a>
         </div>
         <div class="mb-3 border-top border-5"></div>
     </div>

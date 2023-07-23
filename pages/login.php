@@ -14,6 +14,18 @@ $validacionesUsuario = new validacionesUsuario();
 
 $errors = [];
 
+// Verificar si el usuario ya ha iniciado sesión
+if(isset($_SESSION['user_id'])) {
+     // Redirigir al usuario según su rol
+    if($_SESSION['user_rol'] == 1){
+        header("Location: ../admin/app/aggimg.php");
+    }
+    else {
+        header("Location: ../index.php");
+    }
+    exit;
+}
+
 if (!empty($_POST)) {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
