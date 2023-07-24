@@ -134,7 +134,17 @@
             </ul>
           </li>
           <li class="nav-item">
+            
+          <?php if (isset($_SESSION['user_name'])) : ?>
+            <!-- Si la sesión está iniciada, muestre un carrito diferente -->
             <a class="nav-link text-white" href="exam.php">Agenda Examen</a>
+        </a>
+          <?php else : ?>
+            <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
+            <a class="nav-link text-white" href="login.php">Agenda Examen</a>
+        </a>
+          <?php endif; ?>
+           
           </li>
           </ul>
         </div>

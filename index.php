@@ -158,7 +158,16 @@ $vendidos= $productos->masvendidos3();
             </ul>
           </li>
           <li class="nav-item">
+             
+          <?php if (isset($_SESSION['user_name'])) : ?>
+            <!-- Si la sesión está iniciada, muestre un carrito diferente -->
             <a class="nav-link text-white" href="pages/exam.php">Agenda Examen</a>
+        </a>
+          <?php else : ?>
+            <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
+            <a class="nav-link text-white" href="pages/login.php">Agenda Examen</a>
+        </a>
+          <?php endif; ?>
           </li>
           </ul>
         </div>
@@ -339,7 +348,17 @@ $vendidos= $productos->masvendidos3();
   <section class="content-card-style-9 bg_cover mt-100 d-flex justify-content-center">
     <div class="position-relative">
       <img src="images/imagen7.jpg" alt="examen" class="img-fluid">
-      <a href="pages/exam.php" class="btn btn-primary custom-button">Agenda tu examen</a>
+        
+      <?php if (isset($_SESSION['user_name'])) : ?>
+            <!-- Si la sesión está iniciada, muestre un carrito diferente -->
+            <a href="pages/exam.php" class="btn btn-primary custom-button">Agenda tu examen</a>
+        </a>
+          <?php else : ?>
+            <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
+            <a href="pages/login.php" class="btn btn-primary custom-button">Agenda tu examen</a>
+        </a>
+          <?php endif; ?>
+      
     </div>
   </section>
 
