@@ -1,22 +1,13 @@
 <?php
-use App\Modelos\Conexion;
-use App\Modelos\ValidacionesConsulta;
+use App\Modelos\ValidacionesConsultas;
 require __DIR__ . '/../../vendor/autoload.php';
+$validacionesConsultas = new ValidacionesConsultas();
 session_start();
-/*
-if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
-  // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
-  header("Location: ../../pages/login.php");
-  exit;
-}*/
-$success = false;
-$errorMessages = [];
+$erroresConsulta = isset($_GET['errores']) ? json_decode($_GET['errores'], true) : [];
 
 ?>
-
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,30 +19,22 @@ $errorMessages = [];
     <!--Sidebar-->
 <?php include 'sidebar.php';
 ?>
-
+    
     <div class="container-fluid" id="content">
-
-
-        <?php if ($success) : ?>
-            <div class="alert alert-success" role="alert">
-                Consulta agregada correctamente.
-            </div>
-        <?php endif; ?>
-
+      
         <form action="consultapdf.php" method="POST">
+
             <div class="row">
+           
             <div class="mb-3">
                   <label for="nombre">Nombre del paciente:</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre" required>
+                  <input type="text" class="form-control" id="nombre" name="nombre" value="" requireda>
                 </div>
-      
                 <div class="mb-3">
                   <label for="edad">Edad:</label>
-                  <input type="text" class="form-control" id="edad" name="edad" required>
+                  <input type="text" class="form-control" id="edad" name="edad" value="" requireda>
                 </div>
-
                 <h1>Historial y Antecedentes</h1>
-
                 <div class="col-md-3">
                     <label for="cefaleas">Cefaleas:</label>
                     <input type="checkbox" id="cefaleas" name="cefaleas" value="true">
@@ -68,9 +51,7 @@ $errorMessages = [];
                     <label for="borrosidad">Borrosidad:</label>
                     <input type="checkbox" id="borrosidad" name="borrosidad" value="true">
                 </div>
-            </div>
-
-           <!-- <h2>Consulta</h2> se elimino esta etiqueta -->
+            </div> <!-- <h2>Consulta</h2> se elimino esta etiqueta -->
             <div class="row">
                 <div class="col-md-6">
                     <label for="ta">TA:</label>
@@ -91,7 +72,6 @@ $errorMessages = [];
                     <input type="text" class="form-control" id="glicemia" name="glicemia">
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-3">
                     <label for="dm">DM:</label>
@@ -106,18 +86,17 @@ $errorMessages = [];
             <div class="row">
                 <div class="col-md-4">
                     <label for="rxUsoOd">OD:</label>
-                    <input type="text" class="form-control" id="rxUsoOd" name="rxUsoOd">
+                    <input type="text" class="form-control" id="rxUsoOd" name="rxUsoOd" requireda>
                 </div>
                 <div class="col-md-4">
                     <label for="rxUsoOi">OI:</label>
-                    <input type="text" class="form-control" id="rxUsoOi" name="rxUsoOi">
+                    <input type="text" class="form-control" id="rxUsoOi" name="rxUsoOi" requireda>
                 </div>
                 <div class="col-md-4">
                     <label for="rxUsoMaterial">Material:</label>
                     <input type="text" class="form-control" id="rxUsoMaterial" name="rxUsoMaterial">
                 </div>
             </div>
-
             <h2>Agudeza Visual Con Corrección</h2>
             <div class="row">
                 <div class="col-md-4">
@@ -137,19 +116,19 @@ $errorMessages = [];
                     </div>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary">Guardar</button>
-
+            <button type="submit" class="btn btn-primary" name="aceptar">Guardar</button>
+            <?php
+    
+    if (is_array($erroresConsulta) && count($erroresConsulta) > 0) {
+        $validacionesConsultas->msj($erroresConsulta);
+    }
+    ?>
         </form>
     </div>
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/public/js/boton.js"></script>
-    <script>
-    window.addEventListener('beforeunload', function (event) {
-        event.returnValue = '¿Seguro que deseas salir? Los datos que has ingresado se perderán.';
-    });
-    </script>
+   
 </body>
 </html>
