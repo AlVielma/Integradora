@@ -16,7 +16,7 @@ if (isset($_POST['busqueda'])) {
   // Obtener la opción de ordenamiento seleccionada
   $orden = isset($_POST['orden']) ? $_POST['orden'] : '';
 
-  // Consulta sin la cláusula ORDER BY
+
   $consulta = $con->prepare("CALL BuscadorPro(?);");
   $consulta->execute([$busqueda]);
 
