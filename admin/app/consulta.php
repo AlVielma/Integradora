@@ -1,37 +1,10 @@
 <?php
-
 use App\Modelos\ValidacionesConsultas;
 require __DIR__ . '/../../vendor/autoload.php';
 $validacionesConsultas = new ValidacionesConsultas();
 session_start();
-$success = false;
-$errorMessages = [];
+$erroresConsulta = isset($_GET['errores']) ? json_decode($_GET['errores'], true) : [];
 
-// Validar el formulario cuando se envíe
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los datos enviados por el formulario
-    $datos = [
-        'nombre' => isset($_POST['nombre']) ? $_POST['nombre'] : "",
-        'edad' => isset($_POST['edad']) ? $_POST['edad'] : "",
-        'avEOd' => isset($_POST['avEOd']) ? $_POST['avEOd'] : "",
-        'avEOi' => isset($_POST['avEOi']) ? $_POST['avEOi'] : "",
-        // Agrega aquí los demás datos del formulario
-    ];
-    // Realizar todas las validaciones y obtener los mensajes de error
-    $errores = $validacionesConsultas->validarFormulario($datos);
-    // Verificar si todos los campos están vacíos
-    $camposVacios = empty($datos['nombre']) && empty($datos['edad']) && empty($datos['avEOd']) && empty($datos['avEOi']);
-    // Si no hay errores y no todos los campos están vacíos, proceder a guardar los datos en la base de datos u otras acciones
-    if (empty($errores) && !$camposVacios) {
-        // Aquí puedes realizar las acciones necesarias, como guardar en la base de datos
-        // ...
-        // También puedes establecer la variable $success a true para mostrar un mensaje de éxito
-        $success = true;
-    } else {
-        // Si hay errores o todos los campos están vacíos, almacenar los mensajes en $errorMessages
-        $errorMessages = $errores;
-    }
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,21 +19,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!--Sidebar-->
 <?php include 'sidebar.php';
 ?>
+    
     <div class="container-fluid" id="content">
-        <?php if ($success) : ?>
-            <div class="alert alert-success" role="alert">
-                Consulta agregada correctamente.
-            </div>
-        <?php endif; ?>
+      
         <form action="consultapdf.php" method="POST">
+
             <div class="row">
+           
             <div class="mb-3">
                   <label for="nombre">Nombre del paciente:</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo isset($datos['nombre']) ? htmlspecialchars($datos['nombre']) : ""; ?>" required>
+                  <input type="text" class="form-control" id="nombre" name="nombre" value="" requireda>
                 </div>
                 <div class="mb-3">
                   <label for="edad">Edad:</label>
-                  <input type="text" class="form-control" id="edad" name="edad" value="<?php echo isset($datos['edad']) ? htmlspecialchars($datos['edad']) : ""; ?>" required>
+                  <input type="text" class="form-control" id="edad" name="edad" value="" requireda>
                 </div>
                 <h1>Historial y Antecedentes</h1>
                 <div class="col-md-3">
@@ -114,11 +86,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="row">
                 <div class="col-md-4">
                     <label for="rxUsoOd">OD:</label>
-                    <input type="text" class="form-control" id="rxUsoOd" name="rxUsoOd" required>
+                    <input type="text" class="form-control" id="rxUsoOd" name="rxUsoOd" requireda>
                 </div>
                 <div class="col-md-4">
                     <label for="rxUsoOi">OI:</label>
-                    <input type="text" class="form-control" id="rxUsoOi" name="rxUsoOi" required>
+                    <input type="text" class="form-control" id="rxUsoOi" name="rxUsoOi" requireda>
                 </div>
                 <div class="col-md-4">
                     <label for="rxUsoMaterial">Material:</label>
@@ -144,21 +116,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary" name="aceptar">Guardar</button>
+            <?php
+    
+    if (is_array($erroresConsulta) && count($erroresConsulta) > 0) {
+        $validacionesConsultas->msj($erroresConsulta);
+    }
+    ?>
         </form>
     </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/public/js/boton.js"></script>
-    <script>
-    window.addEventListener('beforeunload', function (event) {
-        event.returnValue = '¿Seguro que deseas salir? Los datos que has ingresado se perderán.';
-    });
-    </script>
-    <script>
-        function mostrarAlertaEdad() {
-            alert("La edad debe ser mayor o igual a 6.");
-        }
-    </script>
+   
 </body>
 </html>

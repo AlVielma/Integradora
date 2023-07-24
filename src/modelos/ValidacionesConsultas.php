@@ -2,69 +2,36 @@
 // archivo: ValidacionesConsulta.php
 namespace App\Modelos;
 class ValidacionesConsultas {
-    // Validar nombre
-    public function validarNombre(string $nombre): string {
-        if (empty(trim($nombre))) {
-            return "El nombre es obligatorio.";
+
+    function nulo(array $formulario)
+    {
+        foreach ($formulario as $form) 
+        {
+            if(strlen(trim($form))<1)
+            {
+                return true;
+            }
         }
-        return ""; 
+        return false;
     }
-
-    // Validar edad
-    public function validarEdad($edad){
-        if (empty($edad) || !is_numeric($edad)) {
-            return "La edad debe ser un número válido.";
+    
+    function mayor6($edad)
+    {
+        if($edad>6)
+        {
+            return true;
         }
-
-        if ($edad < 6) {
-            return "La edad debe ser mayor o igual a 6.";
-        }
-
-        return ""; 
+        return false;
     }
-
-    // Validar Rx Uso OD
-    public function validarRxUsoOd(float $valor): string {
-        if (empty(trim($valor))) {
-            return "El campo OD es obligatorio.";
+    function msj(array $errors)
+    {
+        if(count($errors) > 0){
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert"><ul>';
+        foreach($errors as $error){
+            echo '<li>' . $error . '</li>';
         }
-        return "";
-    }
-
-    // Validar Rx Uso OI
-    public function validarRxUsoOi(float $valor): string {
-        if (empty(trim($valor))) {
-            return "El campo OI es obligatorio.";
+        echo '</ul>';
         }
-        return ""; 
-    }
-
-    // Función para realizar todas las validaciones y retornar mensajes de error
-    public function validarFormulario(array $datos): array {
-        $errores = [];
-
-        $nombreError = $this->validarNombre($datos['nombre']);
-        $edadError = $this->validarEdad($datos['edad']);
-        $avEOdError = $this->validarRxUsoOd($datos['avEOd']);
-        $avEOiError = $this->validarRxUsoOi($datos['avEOi']);
-
-        if (!empty($nombreError)) {
-            $errores['nombre'] = $nombreError;
-        }
-
-        if (!empty($edadError)) {
-            $errores['edad'] = $edadError;
-        }
-
-        if (!empty($avEOdError)) {
-            $errores['avEOd'] = $avEOdError;
-        }
-
-        if (!empty($avEOiError)) {
-            $errores['avEOi'] = $avEOiError;
-        }
-
-        return $errores;
     }
 }
 
