@@ -2,7 +2,6 @@
 session_start();
 use App\Modelos\productos;
 require __DIR__.'/../vendor/autoload.php';
-require __DIR__.'/../src/http/config.php';
 $productos = new productos();
 $solarmujer= $productos->solarmujer();
 $total = count($solarmujer);
@@ -67,11 +66,11 @@ $total = count($solarmujer);
                   ?>
                   <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
                     <div class="card" style="width: 19rem;">
-                      <a href="prodejem.php?id=<?php echo $solarm['sku']; ?>&token=<?php echo hash_hmac('sha1',$solarm['sku'],KEY_TOKEN); ?>">
+                      <a href="prodejem.php?id=<?php echo $solarm['sku']; ?>">
                       <img src="<?php echo '/../productosimg/'.$solarm['IMAGEN']; ?>" class="card-img-top" alt="..."></a>
                       <div class="card-body">
                         <h5 class="card-title h4"><?php echo $solarh['nombre']; ?></h5>
-                        <a class="objeto-texto" href="prodejem.php?id=<?php echo $solarm['sku']; ?>&token=<?php echo hash_hmac('sha1',$solarm['sku'],KEY_TOKEN); ?>">
+                        <a class="objeto-texto" href="prodejem.php?id=<?php echo $solarm['sku']; ?>">
                         <p class="card-text h5">$<?php echo $solarm['precio']; ?>MXN</p></a>
                       </div>
                     </div>

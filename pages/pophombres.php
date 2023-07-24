@@ -2,7 +2,7 @@
 session_start();
 use App\Modelos\productos;
 require __DIR__.'/../vendor/autoload.php';
-require __DIR__.'/../src/http/config.php';
+
 $productos = new productos();
 $pophombres= $productos->pophombres();
 $total = count($pophombres);
@@ -67,11 +67,11 @@ $total = count($pophombres);
                   ?>
                   <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
                     <div class="card" style="width: 19rem;">
-                      <a href="prodejem.php?id=<?php echo $hombres['sku']; ?>&token=<?php echo hash_hmac('sha1',$hombres['sku'],KEY_TOKEN); ?>">
+                      <a href="prodejem.php?id=<?php echo $hombres['sku']; ?>">
                       <img src="<?php echo '/../productosimg/'.$hombres['IMAGEN']; ?>" class="card-img-top" alt="..."></a>
                       <div class="card-body">
                         <h5 class="card-title h4"><?php echo $hombres['nombre']; ?></h5>
-                        <a class="objeto-texto" href="prodejem.php?id=<?php echo $hombres['sku']; ?>&token=<?php echo hash_hmac('sha1',$hombres['sku'],KEY_TOKEN); ?>"><p class="card-text h5">$<?php echo $hombres['precio']; ?>MXN</p></a>
+                        <a class="objeto-texto" href="prodejem.php?id=<?php echo $hombres['sku']; ?>"><p class="card-text h5">$<?php echo $hombres['precio']; ?>MXN</p></a>
                       </div>
                     </div>
                   </div>
