@@ -53,87 +53,9 @@ else{
   
         
             <!--Header-->
-            <header class="header">
-                 <!--Barra navegacion-->
-                <nav class="navbar navbar-expand-lg bg-black">
-                    <div class="container-fluid">
-        
-                      <a class="navbar-brand text-white" href="/../index.php">
-                        <img src="../images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-                        Pop Ópticos
-                      </a>
-        
-                      <div class="container-fluid">
-                        <form class="d-flex" role="search">
-                          <input class="form-control me-2 busqueda" type="search" placeholder="Search" aria-label="Search">
-                        </form>
-                      </div>
-        
-                      <a class="navbar-brand text-white" href="#">
-                        <img src="../images/carrito.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-                      </a>
-                      <a class="navbar-brand text-white" href="#">
-                        <img src="../images/usuario.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-                      </a>
-                    </div>
-                  </nav>
-                   <!--Barra catalogos-->
-                  <nav class="navbar navbar-expand-lg bg-dark">
-                    <div class="container-fluid">
-                      <button class="navbar-toggler border border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar"><img src="../images/menu-hamburguesa.png" alt="Hamburgues" width="20" height="20"></span>
-                      </button>
-                      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                        <ul class="navbar-nav">
-                            
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Adultos
-                                </a>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="popunisex.html">Pop Unisex</a></li>
-                                  <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="pophombres.html">Pop Hombre</a></li>
-                                  <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="popmujer.html">Pop Mujer</a></li>
-                                </ul>
-                              </li>
-                              
-                              <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Niños
-                                </a>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">Niños Pop</a></li>
-                                  <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="#">Niñas Pop</a></li>
-                                  
-                                </ul>
-                              </li>
-        
-                              <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Solar
-                                </a>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">Solar Hombre</a></li>
-                                  <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="#">Solar Mujer</a></li>
-                                </ul>
-                              </li>
-        
-                              <li class="nav-item">
-                                <a class="nav-link text-white" href="#">Blog</a>
-                              </li>
-        
-                              <li class="nav-item">
-                                <a class="nav-link text-white" href="#">Agenda Examen</a>
-                              </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </nav>
-            </header> 
+            <?php
+            include 'header.php';
+            ?>
 
            <!--contenido-->
           <main class="mt-4 mb-4">
