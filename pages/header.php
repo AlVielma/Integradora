@@ -22,7 +22,7 @@
         </a>
           <?php else : ?>
             <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
-            <a class="navbar-brand text-white" href="car.html">
+            <a class="navbar-brand text-white" href="car.php">
           <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
         </a>
           <?php endif; ?>
