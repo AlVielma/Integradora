@@ -2,46 +2,37 @@
 namespace App\Modelos;
 
 class ValidacionesReceta {
-    public static function validarNombre($nombre) {
-        if (empty(trim($nombre))) {
-            return "El nombre del paciente es obligatorio.";
-        }
-        return ""; 
-    }
+    
 
-    public static function validarEdad($edad) {
-        if (empty($edad) || !is_numeric($edad)) {
-            return "La edad debe ser un número válido.";
+    function nulo(array $formulario)
+    {
+        foreach ($formulario as $form) 
+        {
+            if(strlen(trim($form))<1)
+            {
+                return true;
+            }
         }
-        return ""; 
+        return false;
     }
-
-    public static function validarMaterial($material) {
-        if (empty(trim($material))) {
-            return "El campo Material es obligatorio.";
+    
+    function mayor6($edad)
+    {
+        if($edad>6)
+        {
+            return true;
         }
-        return ""; 
+        return false;
     }
-
-    public static function validarArmazon($armazon) {
-        if (empty(trim($armazon))) {
-            return "El campo Armazón es obligatorio.";
+    function msj(array $errors)
+    {
+        if(count($errors) > 0){
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert"><ul>';
+        foreach($errors as $error){
+            echo '<li>' . $error . '</li>';
         }
-        return ""; 
-    }
-
-    public static function validarPlasticos($plasticos) {
-        if (empty(trim($plasticos))) {
-            return "El campo Plásticos es obligatorio.";
+        echo '</ul>';
         }
-        return ""; 
-    }
-
-    public static function validarTotalPedido($totalPedido) {
-        if (empty(trim($totalPedido)) || !is_numeric($totalPedido)) {
-            return "El Total de Pedido debe ser un número válido.";
-        }
-        return ""; 
-    }
+    }    
 }
 ?>
