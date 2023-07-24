@@ -3,7 +3,7 @@ namespace App\Modelos;
 
 class Conexion
 {
-    private $hostname="18.191.186.146";
+    private $hostname="13.59.126.104";
     private $database="optica_bd_borrador1";
     private $user="vielma";
     private $password="123";
