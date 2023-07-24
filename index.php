@@ -2,7 +2,6 @@
 session_start();
 use App\Modelos\productos;
 require 'vendor/autoload.php';
-require 'src/http/config.php';
 $productos = new productos();
 $vendidos= $productos->masvendidos3();
 ?>
@@ -329,7 +328,7 @@ $vendidos= $productos->masvendidos3();
               <img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap">
               <div class="card-body">
                 <h5 class="card-title h4"><?php echo $producto['nombre']; ?></h5>
-                <a class="h4 font-weight-bold text-decoration-none" href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>&token=<?php echo hash_hmac('sha1',$producto['sku'],KEY_TOKEN); ?>">
+                <a class="h4 font-weight-bold text-decoration-none" href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>">
                   <p class="card-text h5">$<?php echo $producto['precio']; ?> MXN</p>
                 </a>
               </div>

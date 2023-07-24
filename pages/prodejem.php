@@ -2,24 +2,19 @@
 use App\Modelos\Conexion;
 use App\Modelos\productos;
 require __DIR__.'/../vendor/autoload.php';
-require __DIR__.'/../src/http/config.php';
 $productos = new productos();
 $db = new Conexion();
 $con = $db->conectar();
 $sku = isset($_GET['id']) ? $_GET['id'] :'';
-$token = isset($_GET['token']) ? $_GET['token'] :'';
 
-if($sku == '' || $token=='')
+
+if($sku == '')
 {
   echo 'ERROR AL PROCESAR LA PETICION';
   exit;
 }
 else{
 
-  $token_tmp=hash_hmac('sha1',$sku,KEY_TOKEN);
-
-  if($token == $token_tmp)
-  {
     $sql = $con->prepare("SELECT COUNT(sku) FROM Productos WHERE sku=?");
     $sql->execute([$sku]);
     if($sql->fetchColumn()>0)
@@ -33,7 +28,7 @@ else{
       $tipo_lente = $descrip['tipo_lente'];
       $recomendados=$productos->recomendados($sku);
     }
-  }
+  
   else{
     echo 'ERROR AL PROCESAR LA PETICION';
     exit;
@@ -204,10 +199,10 @@ else{
               <!--lentes5-->
               <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
                 <div class="card" style="width: 19rem;">
-                  <a href="prodejem.php?id=<?php echo $reco['sku']; ?>&token=<?php echo hash_hmac('sha1',$reco['sku'],KEY_TOKEN); ?>"><img src="<?php echo '/../productosimg/'.$reco['IMAGEN'];?>" class="card-img-top" alt="..."></a>
+                  <a href="prodejem.php?id=<?php echo $reco['sku']; ?>"><img src="<?php echo '/../productosimg/'.$reco['IMAGEN'];?>" class="card-img-top" alt="..."></a>
                   <div class="card-body">
                     <h5 class="card-title h4"><?php echo $reco['nombre'];?></h5>
-                    <a class="objeto-texto" href="prodejem.php?id=<?php echo $reco['sku']; ?>&token=<?php echo hash_hmac('sha1',$reco['sku'],KEY_TOKEN); ?>"><p class="card-text h5">$<?php echo $reco['precio'];?> MXN</p></a>
+                    <a class="objeto-texto" href="prodejem.php?id=<?php echo $reco['sku']; ?>"><p class="card-text h5">$<?php echo $reco['precio'];?> MXN</p></a>
                   </div>
                 </div>
               </div>

@@ -194,10 +194,10 @@ if (isset($_POST['busqueda'])) {
                       foreach ($product as $producto) {
                           echo '<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">';
                           echo '<div class="card" style="width: 19rem;">';
-                          echo '<a href="#"><img src="'. $rutaBaseImagenes . $producto->imagen .'" class="card-img-top" alt="Imagen del producto"></a>';
+                          echo '<a href="prodejem.php?id=' . $producto->sku. '"><img src="'. $rutaBaseImagenes . $producto->imagen .'" class="card-img-top" alt="Imagen del producto"></a>';
                           echo '<div class="card-body">';
                           echo '<h5 class="card-title h4">' . $producto->nombre . '</h5>';
-                          echo '<a class="objeto-texto" href="#"><p class="card-text h5">' . $producto->precio . '</p></a>';
+                          echo '<a class="objeto-texto" href="prodejem.php?id=' . $producto->sku. '"><p class="card-text h5">' . $producto->precio . '</p></a>';
                           echo '</div>';
                           echo '</div>';
                           echo '</div>';
