@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'src/modelos/productos.php';
+require_once ('src/modelos/productos.php');
 use App\Modelos\productos;
 require  'vendor/autoload.php';
 $productos = new productos();
