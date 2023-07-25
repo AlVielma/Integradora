@@ -1,6 +1,7 @@
 <?php
 session_start();
 use App\Modelos\productos;
+require 'src/modelos/productos.php';
 require 'vendor/autoload.php';
 $productos = new productos();
 $vendidos= $productos->masvendidos3();
