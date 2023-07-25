@@ -21,12 +21,12 @@ class metodoscita
         cc.ultimo_examen,cc.uso_gotas FROM Citas_Cliente cc inner join Usuarios u on u.id = cc.usuario");
         return $consulta->fetchAll(\PDO::FETCH_ASSOC);
     }
-    public function agregar($nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen
+    public function agregar($sesion,$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen
     ,$uso_gotas)
     {
-        $query = $this->conectar->prepare("INSERT INTO Citas_Cliente (nombre, telefono, fecha_nacimiento, dia, hora, 
-        sintomas_oculares, enfermedades_oculares, lentes_actualmente, armazon, contacto, ultimo_examen, uso_gotas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
-        $query->execute([$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen
+        $query = $this->conectar->prepare("INSERT INTO Citas_Cliente (usuario,nombre, telefono, fecha_nacimiento, dia, hora, 
+        sintomas_oculares, enfermedades_oculares, lentes_actualmente, armazon, contacto, ultimo_examen, uso_gotas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $query->execute([$sesion,$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen
         ,$uso_gotas]);
     }
 
