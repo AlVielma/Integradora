@@ -55,6 +55,7 @@ $productosModelo = new productos();
         $nombre = $producto[0]['nombre'];
         $precio = $producto[0]['precio'];
         $imagen = $producto[0]['IMAGEN'];
+        $descripcion = $producto[0]['descripcion'];
 
         $total += $precio * $cantidad;
     ?>
@@ -64,6 +65,7 @@ $productosModelo = new productos();
             <img src="<?php echo '../productosimg/' . $imagen; ?>" alt="Imagen del producto" class="img-fluid">
           </div>
           <div class="col-md-8">
+          <p class="lead font-weight-bold"><?php echo $descripcion; ?></p>
             <p class="lead font-weight-bold">$<?php echo number_format($precio, 2); ?> MXN</p>
             <p class="lead font-weight-bold">Pop Ópticos</p>
             <!-- Resto del contenido del producto -->

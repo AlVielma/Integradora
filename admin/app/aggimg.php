@@ -77,7 +77,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
     <a href="../../http/modalproducto.php" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalproducto">
         Agregar
     </a>
-
+    
     <h2>Productos</h2>
 
     <!-- Tabla de productos -->
