@@ -1,6 +1,9 @@
 <?php
 session_start();
-
+use App\Modelos\productos;
+require 'vendor/autoload.php';
+$productos = new productos();
+$vendidos= $productos->masvendidos3();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -318,7 +321,23 @@ session_start();
       <div class="col-12 col-lg-10 offset-lg-1">
         <div class="row">
         <!--muestra los productos mas vendidos-->
-
+        <?php
+        foreach($vendidos as $producto)
+        {?>
+          <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0">
+            <div class="single-content-card">
+              <img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title h4"><?php echo $producto['nombre']; ?></h5>
+                <a class="h4 font-weight-bold text-decoration-none" href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>">
+                  <p class="card-text h5">$<?php echo $producto['precio']; ?> MXN</p>
+                </a>
+              </div>
+            </div>
+          </div>
+          <?php
+        }
+        ?>
 
         </div>
       </div>
