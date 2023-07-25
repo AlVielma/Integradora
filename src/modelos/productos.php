@@ -1,7 +1,7 @@
 <?php
 namespace App\Modelos;
+require 'Conexion.php';
 use App\Modelos\Conexion;
-require_once 'Conexion.php';
 require __DIR__.'/../../vendor/autoload.php';
 Class productos
 {
