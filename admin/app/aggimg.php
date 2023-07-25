@@ -1,7 +1,7 @@
 <?php
 session_start();
 require __DIR__.'/../../vendor/autoload.php';
-use App\Modelos\productos;
+use App\Modelos\productos;     
 use App\Modelos\validacionproductos;
 $productos = new productos();
 $mostrar=$productos->mostrar_productos();
@@ -38,16 +38,6 @@ if (isset($_POST['agregar'])) {
      
   }
 }
-
-/*
-if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
-  // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
-  header("Location: ../../pages/login.php");
-  exit;
-
- 
-}*/
-
 ?>
 
 <!DOCTYPE html>

@@ -1,5 +1,30 @@
 <?php
+/* este es exam.php */
+require __DIR__ . '/../vendor/autoload.php';
+use App\Modelos\metodoscita;
+
+$metodoscita = new metodoscita();
 session_start();
+
+// Verificar si el formulario ha sido enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregarexam'])) {
+    // Capturar los datos del formulario
+    $nombre = $_POST['nombre'];
+    $telefono = $_POST['telefono'];
+    $fecha_nacimiento = $_POST['fecha_nacimiento'];
+    $dia = $_POST['dia'];
+    $hora = $_POST['hora'];
+    $sintomas_oculares = $_POST['sintomas_oculares'];
+    $enfermedades_oculares = $_POST['enfermedades_oculares'];
+    $lentes_actualmente = $_POST['lentes_actualmente'];
+    $armazon = $_POST['armazon'];
+    $contacto = $_POST['contacto'];
+    $ultimo_examen = $_POST['ultimo_examen'];
+    $uso_gotas = $_POST['uso_gotas'];
+
+    // Llamar al método agregar con los valores capturados del formulario
+    $metodoscita->agregar($nombre, $telefono, $fecha_nacimiento, $dia, $hora, $sintomas_oculares, $enfermedades_oculares, $lentes_actualmente, $armazon, $contacto, $ultimo_examen, $uso_gotas);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,9 +109,9 @@ session_start();
                 <button class="btn btn-light btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#myModal">Agenda ahora</button>
             </div>
                     
-          </div>
         </div>
-      </section>
+        </div>
+    </section>
     
 
 <!-- Modal -->
@@ -98,8 +123,7 @@ session_start();
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!--Formulario-->
-                <form action="../src/modelos/metodoscita.php" method="POST">
+            <form action="exam.php" method="post">
                     <div class="form-group">
                         <label for="nombre" class="text-center">Nombre del paciente:</label>
                         <input type="text" class="form-control w-75 mx-auto" id="nombre" name="nombre" maxlength="50" required>
@@ -160,26 +184,19 @@ session_start();
                             <option value="0">No</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" class="btn btn-primary" name="agregarexam">Enviar</button></form>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-  
-   
-
     <!--footer-->
     <div class="container-fluid border border-black footer bg-dark text-white">
-
         <!--Footer superio-->
         <div class="row p-5 text-aling-center">
-
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <h3>Pop Ópticos</h3>
                 <a href="index.html"><img src="../images/icon64.png" alt=""></a>
-
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <p class="h5">Dirección</p>
@@ -187,7 +204,6 @@ session_start();
                     <p>Av.Juárez 4880 y Xochimilco Oriente, Torreón, Méxcio</p>
                 </div>
             </div>
-
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <p class="h5">Contacto</p>
                 <div class="mb-2">
@@ -198,7 +214,6 @@ session_start();
                         href="mailto:ventas@opticapop.com">ventas@opticapop.com</a>
                 </div>
             </div>
-
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                 <p class="h5">Redes</p>
                 <div class="mb-2">
@@ -235,6 +250,29 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
         integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
         crossorigin="anonymous"></script>
+        <script>
+  function enviarFormulario() {
+    // Obtener los datos del formulario
+    var formData = $('#formExamen').serialize();
+
+    // Realizar la solicitud AJAX para enviar los datos al servidor
+    $.ajax({
+      type: 'POST',
+      url: 'procesar_formulario.php', // Reemplaza 'procesar_formulario.php' con la ruta correcta al archivo PHP que procesa el formulario y agrega los datos a la base de datos
+      data: formData,
+      success: function(response) {
+        // Si la solicitud se completa exitosamente, puedes mostrar un mensaje de éxito o redirigir al usuario a otra página
+        alert('Formulario enviado correctamente');
+        window.location.href = 'exam.php';
+      },
+      error: function(xhr, status, error) {
+        // Si ocurre algún error en la solicitud AJAX, puedes mostrar un mensaje de error al usuario
+        alert('Error al enviar el formulario');
+      }
+    });
+  }
+</script>
+
 </body>
 
 </html>

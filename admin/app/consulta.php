@@ -4,7 +4,6 @@ require __DIR__ . '/../../vendor/autoload.php';
 $validacionesConsultas = new ValidacionesConsultas();
 session_start();
 $erroresConsulta = isset($_GET['errores']) ? json_decode($_GET['errores'], true) : [];
-
 ?>
 <!DOCTYPE html>
 <html>
