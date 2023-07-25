@@ -3,7 +3,10 @@ session_start();
 
 if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito']) || count($_SESSION['carrito']) === 0) {
   // Carrito vacío
+  header("Location: incarejem.php");
+  exit; 
   $carritoVacio = true;
+
 } else {
   // Carrito con productos
   $carritoVacio = false;
@@ -40,63 +43,48 @@ $productosModelo = new productos();
   ?>
 
   <!--Contenido-->
-
+  
   <div class="container border border-black mt-4 mb-4">
-    <?php if (!$carritoVacio) : ?>
-      <!-- Si el carrito tiene productos, mostrarlos aquí -->
-      <?php
-      $total = 0;
-      foreach ($_SESSION['carrito'] as $producto_id => $cantidad) {
-        // Obtener los detalles del producto desde la base de datos
-        $producto = $productosModelo->consultaeedit($producto_id);
-        if (!empty($producto)) {
-          // Se asume que cada producto tiene solo una fila en la consulta
-          $nombre = $producto[0]['nombre'];
-          $precio = $producto[0]['precio'];
-          $imagen = $producto[0]['IMAGEN'];
+    <?php
+    $total = 0;
+    foreach ($_SESSION['carrito'] as $producto_id => $cantidad) {
+      // Obtener los detalles del producto desde la base de datos
+      $producto = $productosModelo->consultaeedit($producto_id);
+      if (!empty($producto)) {
+        // Se asume que cada producto tiene solo una fila en la consulta
+        $nombre = $producto[0]['nombre'];
+        $precio = $producto[0]['precio'];
+        $imagen = $producto[0]['IMAGEN'];
 
-          $total += $precio * $cantidad;
-      ?>
-          <h2 class="text-center"><?php echo $nombre; ?></h2>
-          <div class="row">
-            <div class="col-md-4">
-              <img src="<?php echo '../productosimg/' . $imagen; ?>" alt="Imagen del producto" class="img-fluid">
-            </div>
-            <div class="col-md-8">
-              <p class="lead font-weight-bold">$<?php echo number_format($precio, 2); ?> MXN</p>
-              <p class="lead font-weight-bold">Pop Ópticos</p>
-              <!-- Resto del contenido del producto -->
-              <div class="row">
-                <div class="col-md-6">
-                  <input type="number" class="form-control btn-sm border-dark" value="<?php echo $cantidad; ?>" placeholder="Cantidad:" style="width: 150px;">
-                </div>
-                <div class="col-md-6">
-                  <form action="eliminar_producto.php" method="post">
-                    <input type="hidden" name="sku" value="<?php echo $producto_id; ?>">
-                    <button type="submit" class="btn btn-light btn-outline-dark">Eliminar</button>
-                  </form>
-                </div>
+        $total += $precio * $cantidad;
+    ?>
+        <h2 class="text-center"><?php echo $nombre; ?></h2>
+        <div class="row">
+          <div class="col-md-4">
+            <img src="<?php echo '../productosimg/' . $imagen; ?>" alt="Imagen del producto" class="img-fluid">
+          </div>
+          <div class="col-md-8">
+            <p class="lead font-weight-bold">$<?php echo number_format($precio, 2); ?> MXN</p>
+            <p class="lead font-weight-bold">Pop Ópticos</p>
+            <!-- Resto del contenido del producto -->
+            <div class="row">
+              <div class="col-md-6">
+                <input type="number" class="form-control btn-sm border-dark" value="<?php echo $cantidad; ?>" placeholder="Cantidad:" style="width: 150px;">
+              </div>
+              <div class="col-md-6">
+                <form action="eliminar_producto.php" method="post">
+                  <input type="hidden" name="sku" value="<?php echo $producto_id; ?>">
+                  <button type="submit" class="btn btn-light btn-outline-dark">Eliminar</button>
+                </form>
               </div>
             </div>
           </div>
-          <div class="mb-3 border-top border-5"></div>
-      <?php
-        }
+        </div>
+        <div class="mb-3 border-top border-5"></div>
+    <?php
       }
-      ?>
-    <?php else : ?>
-      <!-- Si el carrito está vacío, mostrar un mensaje -->
-      <h3 class="text-center">El carrito está vacío</h3>
-    <?php endif; ?>
-
-    <!-- Mostrar los botones de seguir comprando y apartar solo si el carrito no está vacío -->
-    <?php if (!$carritoVacio) : ?>
-      <div class="mb-3 align-items-center d-flex justify-content-center">
-        <a href="#" class="btn btn-light btn-outline-dark me-3">Seguir comprando</a>
-        <a href="#" class="btn btn-light btn-outline-dark">Apartar</a>
-      </div>
-    <?php endif; ?>
-  </div>
+    }
+    ?>
 
   <!--Contenido Recomendados-->
   <div class="container-fluid titulos-azul mt-4 mb-4">
