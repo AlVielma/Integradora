@@ -2,16 +2,18 @@
 use App\Modelos\Conexion;
 use App\Modelos\ValidacionesReceta;
 require __DIR__ . '/../../vendor/autoload.php';
+$validacionesReceta = new ValidacionesReceta();
 session_start();
+$erroresReceta = isset($_GET['errores']) ? json_decode($_GET['errores'], true) : [];
 /*
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
   // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
   header("Location: ../../pages/login.php");
   exit;
 }*/
-
+/*
 $success = false;
-$errorMessages = [];
+$errorMessages = [];*/
 
 ?>
 <!DOCTYPE html>
@@ -43,25 +45,25 @@ $errorMessages = [];
               <div class="col-md-6">
                 <div class="mb-3">
                   <label for="nombre">Nombre del paciente:</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre" required>
+                  <input type="text" class="form-control" id="nombre" name="nombre" >
                 </div>
       
                 <div class="mb-3">
                   <label for="edad">Edad:</label>
-                  <input type="text" class="form-control" id="edad" name="edad" required>
+                  <input type="text" class="form-control" id="edad" name="edad" >
                 </div>
       
                 <div class="col-md-6">
                     <div class="mb-3">
                       <label for="tratamiento">Tratamiento: <span id="tratamientoValue"></span></label>
-                      <textarea class="form-control" id="tratamiento" name="tratamiento" rows="5" required></textarea>
+                      <textarea class="form-control" id="tratamiento" name="tratamiento" rows="5" ></textarea>
                     </div>
                   </div>
                   
                   <div class="col-md-6">
                     <div class="mb-3">
                       <label for="diagnostico">Diagnóstico: <span id="diagnosticoValue"></span></label>
-                      <textarea class="form-control" id="diagnostico" name="diagnostico" rows="5" required></textarea>
+                      <textarea class="form-control" id="diagnostico" name="diagnostico" rows="5" ></textarea>
                     </div>
                   </div>
                 </div>
@@ -76,70 +78,70 @@ $errorMessages = [];
                   <div class="col-md-2">
                     <div class="mb-3">
                       <label for="esf_od">ESF_OD: <span id="esf_odValue"></span></label>
-                      <input type="text" class="form-control" id="esf_od" name="esf_od" required>
+                      <input type="text" class="form-control" id="esf_od" name="esf_od" >
                     </div>
                   </div>
 
                   <div class="col-md-2">
                     <div class="mb-3">
                       <label for="esf_oi">ESF_OI: <span id="esf_oiValue"></span></label>
-                      <input type="text" class="form-control" id="esf_oi" name="esf_oi" required>
+                      <input type="text" class="form-control" id="esf_oi" name="esf_oi" >
                     </div>
                   </div>
 
                   <div class="col-md-2">
                     <div class="mb-3">
                       <label for="cil_od">CIL_OD: <span id="cil_odValue"></span></label>
-                      <input type="text" class="form-control" id="cil_od" name="cil_od" required>
+                      <input type="text" class="form-control" id="cil_od" name="cil_od" >
                     </div>
                   </div>
 
                   <div class="col-md-2">
                     <div class="mb-3">
                       <label for="cil_oi">CIL_OI: <span id="cil_oiValue"></span></label>
-                      <input type="text" class="form-control" id="cil_oi" name="cil_oi" required>
+                      <input type="text" class="form-control" id="cil_oi" name="cil_oi" >
                     </div>
                   </div>
 
                   <div class="col-md-2">
                     <div class="mb-3">
                       <label for="eje_od">EJE_OD: <span id="eje_odValue"></span></label>
-                      <input type="text" class="form-control" id="eje_od" name="eje_od" required>
+                      <input type="text" class="form-control" id="eje_od" name="eje_od" >
                     </div>
                   </div>
 
                   <div class="col-md-2">
                     <div class="mb-3">
                       <label for="eje_oi">EJE_OI: <span id="eje_oiValue"></span></label>
-                      <input type="text" class="form-control" id="eje_oi" name="eje_oi" required>
+                      <input type="text" class="form-control" id="eje_oi" name="eje_oi" >
                     </div>
                   </div>
 
                   <div class="col-md-2">
                     <div class="mb-3">
                       <label for="dip_od">DIP_OD: <span id="dip_odValue"></span></label>
-                      <input type="text" class="form-control" id="dip_od" name="dip_od" required>
+                      <input type="text" class="form-control" id="dip_od" name="dip_od" >
                     </div>
                   </div>
 
                   <div class="col-md-2">
                     <div class="mb-3">
                       <label for="dip_oi">DIP_OI: <span id="dip_oiValue"></span></label>
-                      <input type="text" class="form-control" id="dip_oi" name="dip_oi" required>
+                      <input type="text" class="form-control" id="dip_oi" name="dip_oi" >
                     </div>
                   </div>
                   
                   <div class="col-md-2">
                     <div class="mb-3">
                       <label for="material">MATERIAL: <span id="materialValue"></span></label>
-                      <input type="text" class="form-control" id="material" name="material" required>
+                      <input type="text" class="form-control" id="material" name="material" >
                     </div>
                   </div>
 
                   <div class="col-md-2">
                     <div class="mb-3">
                       <label for="rx_armazon">RX_ARMAZÓN: <span id="rx_armazonValue"></span></label>
-                      <input type="text" class="form-control" id="rx_armazon" name="rx_armazon" required>
+                      <input type="text" class="form-control" id="rx_armazon" name="rx_armazon" >
                     </div>
                   </div>
                   
@@ -148,23 +150,30 @@ $errorMessages = [];
               <div class="col-md-6">
                   <div class="form-group">
                     <label for="plasticos">Plasticos:</label>
-                    <input type="text" class="form-control" id="plasticos" name="plasticos" required>
+                    <input type="text" class="form-control" id="plasticos" name="plasticos" >
                   </div>
         
                   <div class="form-group">
                     <label for="armazon">Armazón:</label>
-                    <input type="text" class="form-control" id="armazon" name="armazon" required>
+                    <input type="text" class="form-control" id="armazon" name="armazon" >
                   </div>
         
                   <div class="form-group">
                     <label for="totalPedido">Total de Pedido:</label>
-                    <input type="text" class="form-control" id="totalPedido" name="totalPedido" required>
+                    <input type="text" class="form-control" id="totalPedido" name="totalPedido" >
                   </div>
                 </div>
                 <br>
               <div class="print-button">
-                <button type="submit" class="btn btn-success">Imprimir Receta</button>
+                <button type="submit" class="btn btn-success" name="aceptarr">Imprimir Receta</button>
               </div>
+
+              <?php
+    
+    if (is_array($erroresReceta) && count($erroresReceta) > 0) {
+        $validacionesReceta->msj($erroresReceta);
+    }
+    ?>
             </form>            
           </div>
         </div>
@@ -176,10 +185,6 @@ $errorMessages = [];
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/admin/js/boton.js"></script>
-  <script>
-    window.addEventListener('beforeunload', function (event) {
-        event.returnValue = '¿Seguro que deseas salir? Los datos que has ingresado se perderán.';
-    });
-  </script>
+ 
 </body>
 </html>
