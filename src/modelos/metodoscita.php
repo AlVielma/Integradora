@@ -16,7 +16,7 @@ class metodoscita
     }
     public function mostrar()
     {
-        $consulta = $this->conectar->query("SELECT u.nombre, cc.nombre, cc.telefono, cc.fecha_nacimiento
+        $consulta = $this->conectar->query("SELECT cc.nombre, u.apellido, cc.telefono,u.email ,cc.fecha_nacimiento
         ,cc.dia,cc.hora,cc.sintomas_oculares,cc.enfermedades_oculares,cc.lentes_actualmente,cc.armazon,cc.contacto,
         cc.ultimo_examen,cc.uso_gotas FROM Citas_Cliente cc inner join Usuarios u on u.id = cc.usuario");
         return $consulta->fetchAll(\PDO::FETCH_ASSOC);

@@ -46,13 +46,22 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
             </tr>
           </thead>
           <tbody>
-            <td>F</td>
-            <td>A</td>
-            <td>F</td>
-            <td>F</td>
-            <td>F</td>
-            <td>F</td>
-            <td>F</td>
+            <?php
+            foreach($cita_m as $m)
+            {
+            ?>
+            <tr>
+              <td><?php echo $m['nombre']; ?></td>
+              <td><?php echo $m['apellido']; ?></td>
+              <td><?php echo $m['telefono']; ?></td>
+              <td><?php echo $m['email']; ?></td>
+              <td><?php echo $m['dia']; ?></td>
+              <td><?php echo $m['hora']; ?></td>
+              <td><a href="" class="btn btn-danger">Cancelar</a></td>
+            </tr>
+            <?php
+            }
+            ?>
           </tbody>
         </table>
       </div>
