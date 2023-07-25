@@ -1,11 +1,16 @@
 <?php
 session_start();
+use App\Modelos\metodoscita;
+require __DIR__.'/../../src/modelos/metodoscita.php';
+$cita= new metodoscita();
+$cita_m = $cita->mostrar();
 /*
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
   // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
   header("Location: ../../pages/login.php");
   exit;
 }*/
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,7 +31,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
   
   <div class="container-fluid" id="content">
       <h1>CITAS</h1>
-     <!-- Tabla de productos -->
+     <!-- Tabla de Citas -->
      <div class="table-responsive">
         <table class="table">
           <thead>
@@ -37,8 +42,18 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               <th>Correo</th>
               <th>Fecha</th>
               <th>Hora</th>
+              <th>Cancelar</th>
             </tr>
           </thead>
+          <tbody>
+            <td>F</td>
+            <td>A</td>
+            <td>F</td>
+            <td>F</td>
+            <td>F</td>
+            <td>F</td>
+            <td>F</td>
+          </tbody>
         </table>
       </div>
   </div>
