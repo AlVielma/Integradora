@@ -1,5 +1,23 @@
 <?php
 session_start();
+use App\Modelos\metodoscita;
+require __DIR__.'/../src/modelos/metodoscita.php';
+$cita = new metodoscita();
+extract($_POST);
+$errors = [];
+if(isset($_POST['mandar_exm']))
+{
+    if(isset($_SESSION['user_name']))
+    {
+        $cita->agregar($_SESSION['user_id'],$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen,$uso_gotas);
+
+    }
+    else 
+    {
+        header('Location: login.php');
+    }
+   
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,7 +117,7 @@ session_start();
             </div>
             <div class="modal-body">
                 <!--Formulario-->
-                <form action="../src/modelos/metodoscita.php" method="POST">
+                <form action="exam.php" method="POST">
                     <div class="form-group">
                         <label for="nombre" class="text-center">Nombre del paciente:</label>
                         <input type="text" class="form-control w-75 mx-auto" id="nombre" name="nombre" maxlength="50" required>
@@ -160,7 +178,7 @@ session_start();
                             <option value="0">No</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" name="mandar_exm" class="btn btn-primary">Enviar</button>
                 </form>
             </div>
         </div>
