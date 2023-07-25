@@ -59,7 +59,7 @@ $productosModelo = new productos();
                     <h2 class="text-center"><?php echo $nombre; ?></h2>
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="<?php echo $imagen; ?>" alt="Imagen del producto" class="img-fluid">
+                            <img src="<?php echo '../productosimg/'.$imagen; ?>" alt="Imagen del producto" class="img-fluid">
                         </div>
                         <div class="col-md-8">
                             <p class="lead font-weight-bold">$<?php echo number_format($precio, 2); ?> MXN</p>

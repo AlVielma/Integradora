@@ -108,11 +108,11 @@ if (!empty($_POST)) {
                     <!-- Formulario de inicio de sesión -->
                     <form action="login.php" method="post" autocomplete="off">
                         <div class="mb-3 form-floating">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico">
                             <label for="email" class="form-label">Correo electrónico</label>
                         </div>
                         <div class="mb-3 form-floating">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña">
                             <label for="password" class="form-label">Contraseña</label>
                         </div>
 
