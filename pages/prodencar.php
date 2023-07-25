@@ -1,3 +1,20 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito']) || count($_SESSION['carrito']) === 0) {
+  // Carrito vacío
+  $carritoVacio = true;
+} else {
+  // Carrito con productos
+  $carritoVacio = false;
+}
+
+require __DIR__.'/../vendor/autoload.php';
+use App\Modelos\productos;
+$productosModelo = new productos();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,158 +35,64 @@
 <body>
 
     <!--Header-->
-    <header class="header">
-        <!--Barra navegacion-->
-        <nav class="navbar navbar-expand-lg bg-black">
-            <div class="container-fluid">
-
-                <a class="navbar-brand text-white" href="login.html">
-                    <img src="../images/icon.png" alt="Logo" width="30" height="30"
-                        class="d-inline-block align-text-top">
-                    Pop Ópticos
-                </a>
-
-                <div class="container-fluid">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2 busqueda" type="search" placeholder="Search"
-                            aria-label="Search">
-                    </form>
-                </div>
-
-                <a class="navbar-brand text-white" href="pages/car.html">
-                    <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
-                  </a>
-                <a class="navbar-brand text-white" href="#">
-                    <img src="../images/usuario.png" alt="Logo" width="30" height="30"
-                        class="d-inline-block align-text-top">
-                </a>
-            </div>
-        </nav>
-        <!--Barra catalogos-->
-        <nav class="navbar navbar-expand-lg bg-dark justify-content-center">
-            <div class="container-fluid">
-                <button class="navbar-toggler border border-white" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar"><img src="../images/menu-hamburguesa.png" alt="Hamburgues" width="20"
-                            height="20"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Adultos
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="popunisex.html">Pop Unisex</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="pophombres.html">Pop Hombre</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="popmujer.html">Pop Mujer</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Niños
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="popniños.html">Niños Pop</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="popniñas.html">Niñas Pop</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Solar
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="solarhombre.html">Solar Hombre</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="solarmujer.html">Solar Mujer</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="exam.html">Agenda Examen</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <?php include 'header.php';
+    ?>
 
     <!--Contenido-->
+
     <div class="container border border-black mt-4 mb-4">
-        <div class=" mt-4 mb-4"">
-            <!--Recuerda que aqui el los campos se modifican con php, esto es solo una prueba como se veria-->
-          <h2 class="text-center">Ky 0004</h2>
-          <div class="row">
-            <div class="col-md-4 ">
-              <img src="../images/lentes5.png"" alt="Imagen del producto" class="img-fluid ">
-            </div>
-            <div class="col-md-8">
-              <p  class="lead font-weight-bold">$1899,00 MXN</p>
-              <p  class="lead font-weight-bold">Pop Ópticos</p>
-              <p>Lentes Monofocales con armazon de color negro</p>
+        <?php if (!$carritoVacio) : ?>
+            <!-- Si el carrito tiene productos, mostrarlos aquí -->
+            <?php
+            $total = 0;
+            foreach ($_SESSION['carrito'] as $producto_id => $cantidad) {
+                // Obtener los detalles del producto desde la base de datos
+                $producto = $productosModelo->consultaeedit($producto_id);
+                if (!empty($producto)) {
+                    // Se asume que cada producto tiene solo una fila en la consulta
+                    $nombre = $producto[0]['nombre'];
+                    $precio = $producto[0]['precio'];
+                    $imagen = $producto[0]['IMAGEN'];
 
-              <div class="row">
-                <div class="col-md-6">
-                    <input type="number" class="form-control btn-sm border-dark" placeholder="Cantidad:" style="width: 150px;">
-                </div>
-                <div class="col-md-6">
-                  <button class="btn btn-light btn-outline-dark">Eliminar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="mb-3 border-top border-5"></div>
+                    $total += $precio * $cantidad;
+            ?>
+                    <h2 class="text-center"><?php echo $nombre; ?></h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="<?php echo $imagen; ?>" alt="Imagen del producto" class="img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <p class="lead font-weight-bold">$<?php echo number_format($precio, 2); ?> MXN</p>
+                            <p class="lead font-weight-bold">Pop Ópticos</p>
+                            <!-- Resto del contenido del producto -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control btn-sm border-dark" value="<?php echo $cantidad; ?>" placeholder="Cantidad:" style="width: 150px;">
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-light btn-outline-dark">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 border-top border-5"></div>
+            <?php
+                }
+            }
+            ?>
+        <?php else : ?>
+            <!-- Si el carrito está vacío, mostrar un mensaje -->
+            <h3 class="text-center">El carrito está vacío</h3>
+        <?php endif; ?>
 
-        <div class=" mt-4 mb-4"">
-            <h2 class="text-center">Kipling 1116</h2>
-            <div class="row">
-              <div class="col-md-4 ">
-                <img src="../images/lentes1.png" alt="Imagen del producto" class="d-block w-100 ">
-              </div>
-              <div class="col-md-8">
-                <p  class="lead font-weight-bold">$1990.00</p>
-                <p  class="lead font-weight-bold">Kipling</p>
-                <p>Color amarillo
-                    Tipo de lente Monofocales</p>
-  
-                <div class="row">
-                  <div class="col-md-6">
-                      <input type="number" class="form-control btn-sm border-dark" placeholder="Cantidad:" style="width: 150px;">
-                  </div>
-                  <div class="col-md-6">
-                    <button class="btn btn-light btn-outline-dark">Eliminar</button>
-                  </div>
-                </div>
-              </div>
+        <!-- Mostrar los botones de seguir comprando y apartar solo si el carrito no está vacío -->
+        <?php if (!$carritoVacio) : ?>
+            <div class="mb-3 align-items-center d-flex justify-content-center">
+                <a href="#" class="btn btn-light btn-outline-dark me-3">Seguir comprando</a>
+                <a href="#" class="btn btn-light btn-outline-dark">Apartar</a>
             </div>
-          </div>
-          
-          <div class="mb-3 border-top border-5"></div>
-        
-        <!-- Agrega más elementos de productos aquí -->
-        
-        <div class="mb-3 align-items-center d-flex justify-content-center">
-          <a href="#" class="btn btn-light btn-outline-dark me-3">Seguir comprando</a>
-          <a href="#" class="btn btn-light btn-outline-dark">Apartar</a>
-        </div>
-      </div>
-      
+        <?php endif; ?>
+    </div>
     
      <!--Contenido Recomendados-->
      <div class="container-fluid titulos-azul mt-4 mb-4">

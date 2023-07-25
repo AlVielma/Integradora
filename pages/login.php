@@ -51,6 +51,7 @@ if (!empty($_POST)) {
         $_SESSION['user_lastname'] = $userData['apellido'];
         $_SESSION['user_rol'] = $userData['id_rol'];
 
+        
         // Redirigir al usuario según su rol
         if ($_SESSION['user_rol'] == 1) {
             header("Location: ../admin/app/aggimg.php");
@@ -70,7 +71,6 @@ if (!empty($_POST)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Bootstrap-->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <!--Css-->
     <link rel="stylesheet" href="../css/index.css">
@@ -118,6 +118,7 @@ if (!empty($_POST)) {
 
                         <!-- Mostrar errores -->
                         <?php if (!empty($errors)): ?>
+                        <div class='row'>
                             <div class="col-12 d-flex justify-content-center mt-3">
                                 <div class="alert alert-danger" role="alert">
                                     <ul>
@@ -127,6 +128,7 @@ if (!empty($_POST)) {
                                     </ul>
                                 </div>
                             </div>
+                         </div>
                         <?php endif; ?>
 
                         <div class="col-12 d-flex justify-content-center">

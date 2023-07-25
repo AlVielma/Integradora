@@ -15,18 +15,26 @@
           </form>
         </div>
 
-        <?php if (isset($_SESSION['user_name'])) : ?>
-            <!-- Si la sesión está iniciada, muestre un carrito diferente -->
-            <a class="navbar-brand text-white" href="incarejem.php">
-          <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
-        </a>
-          <?php else : ?>
-            <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
-            <a class="navbar-brand text-white" href="car.php">
-          <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
-        </a>
-          <?php endif; ?>
-
+         <!-- Lugar donde se muestra el icono del carrito -->
+         <?php if (isset($_SESSION['user_name'])) : ?>
+                <!-- Si la sesión está iniciada, muestre un carrito diferente -->
+                <?php if (empty($_SESSION['carrito'])) : ?>
+                    <!-- Si el carrito está vacío, redirecciona a la página car.php -->
+                    <a class="navbar-brand text-white" href="incarejem.php">
+                        <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                    </a>
+                <?php else : ?>
+                    <!-- Si el carrito NO está vacío, redirecciona a la página incarejem.php -->
+                    <a class="navbar-brand text-white" href="prodencar.php">
+                        <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                    </a>
+                <?php endif; ?>
+            <?php else : ?>
+                <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a la página car.php para registrarse -->
+                <a class="navbar-brand text-white" href="car.php">
+                    <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                </a>
+            <?php endif; ?>
         
         <!-- Si la sesión está iniciada, muestra el nombre del usuario en lugar del icono -->
         <?php if (isset($_SESSION['user_name'])) : ?>

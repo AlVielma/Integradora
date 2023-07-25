@@ -1,12 +1,12 @@
 <?php
 use App\Modelos\Conexion;
 use App\Modelos\productos;
+session_start();
 require __DIR__.'/../vendor/autoload.php';
 $productos = new productos();
 $db = new Conexion();
 $con = $db->conectar();
 $sku = isset($_GET['id']) ? $_GET['id'] :'';
-
 
 if($sku == '')
 {
@@ -73,8 +73,11 @@ else{
                       <?php echo $tipo_lente; ?>
                       </p>
                       <div class="mb-3 border-top border-5"></div>
-                      <a href="#" class="btn btn-light btn-outline-dark">Añadir al carrito</a>
-                    </div>
+                <form action="agregar_al_carrito.php" method="post">
+                    <input type="hidden" name="producto_id" value="<?php echo $sku; ?>">
+                    <button type="submit" name="agregar_al_carrito" class="btn btn-light btn-outline-dark">Añadir al carrito</button>
+                </form>
+            </div>
                     <div class="col-md-6 order-md-2">
                       <!--aqui es donde se utilizaria php, se utilizara foreach para imagenes-->
 
