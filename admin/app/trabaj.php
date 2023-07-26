@@ -11,6 +11,9 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
 use App\Modelos\Trabajador;
 use App\Modelos\Conexion;
 use App\Modelos\validacionesRegistrar;
+require_once __DIR__.'/../../src/modelos/trabajador.php';
+require_once __DIR__.'/../../src/modelos/Conexion.php';
+require_once __DIR__.'/../../src/modelos/validacionesRegistrar.php';
 
 $db = new Trabajador();
 $conexion = new Conexion();

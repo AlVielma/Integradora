@@ -1,6 +1,7 @@
 <?php
 session_start();
 use App\Modelos\productos;
+require __DIR__.'/../src/modelos/productos.php';
 require __DIR__.'/../vendor/autoload.php';
 $productos = new productos();
 $popmujer= $productos->popmujer();

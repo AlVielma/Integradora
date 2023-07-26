@@ -1,7 +1,7 @@
 <?php
 session_start();
 use App\Modelos\metodoscita;
-require __DIR__.'/../../src/modelos/metodoscita.php';
+require_once __DIR__.'/../../src/modelos/metodoscita.php';
 $cita= new metodoscita();
 $cita_m = $cita->mostrar();
 /*

@@ -1,11 +1,26 @@
 <?php
 session_start();
 use App\Modelos\productos;
+require_once __DIR__.'/../src/modelos/productos.php';
 require __DIR__.'/../vendor/autoload.php';
 
 $productos = new productos();
 $pophombres= $productos->pophombres();
 $total = count($pophombres);
+
+// Obtener la opción de ordenamiento seleccionada
+$orden = isset($_POST['orden']) ? $_POST['orden'] : '';
+
+// Aplicar clasificación si es necesario
+if ($orden === 'mayor_menor') {
+    usort($pophombres, function ($a, $b) {
+        return $b['precio'] - $a['precio'];
+    });
+} elseif ($orden === 'menor_mayor') {
+    usort($pophombres, function ($a, $b) {
+        return $a['precio'] - $b['precio'];
+    });
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,14 +60,16 @@ $total = count($pophombres);
                     <h1 class="text-start text-black ms-5">Pop Hombre</h1>
                     </div>
                     <!-- Filtrador -->
-                    <div class="col-md-2 text-md-end ">
-                        <select id="filter-category" class="form-select border border-black ">
-                            <option value="">Filtrar por:</option>
-                            <option value="sunglasses">Mas vendidos</option>
-                            <option value="optical">Precio: Mayor a Menor</option>
-                            <option value="sunglasses">Precio: Menor a Mayor</option>
-                        </select>
-                    </div>
+                    <div class="col-md-2 text-md-end">
+                            <form id="sort-form" method="POST">
+                                <input type="hidden" name="busqueda" value="<?php echo isset($_POST['busqueda']) ? htmlentities($_POST['busqueda']) : ''; ?>"> <!-- verifica si hay algun producto que ordenar y evita que el usuario ingrese código malicioso -->
+                                <select name="orden" id="filter-category" class="form-select border border-black" onchange="submitForm()">
+                                    <option value="">Filtrar por:</option>
+                                    <option value="mayor_menor">Precio: Mayor a Menor</option>
+                                    <option value="menor_mayor">Precio: Menor a Mayor</option>
+                                </select>
+                            </form>
+                        </div>
                     <div class="col-md-2 ">
                         <h5 class=" text-black">Cantidad:<?php echo $total; ?></h5>
                     </div>
@@ -135,5 +152,11 @@ $total = count($pophombres);
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <script>
+      function submitForm() {
+          const sortForm = document.getElementById('sort-form');
+          sortForm.submit(); // Envía el formulario para activar la clasificación según la opción seleccionada
+      }
+    </script>
 </body>
 </html>

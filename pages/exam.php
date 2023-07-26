@@ -2,7 +2,8 @@
 session_start();
 use App\Modelos\metodoscita;
 use App\Modelos\validacionescita;
-require __DIR__.'/../src/modelos/metodoscita.php';
+require_once __DIR__.'/../src/modelos/metodoscita.php';
+require_once __DIR__.'/../src/modelos/validacionescita.php';
 $cita = new metodoscita();
 $vali = new validacionescita();
 
