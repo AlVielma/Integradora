@@ -107,8 +107,7 @@
                 Adultos
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="popunisex.php">Pop Unisex</a></li>
-                <hr class="dropdown-divider">
+              
             </li>
             <li><a class="dropdown-item" href="pophombres.php">Pop Hombre</a></li>
             <li>
