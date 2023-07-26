@@ -6,6 +6,20 @@ require __DIR__.'/../vendor/autoload.php';
 $productos = new productos();
 $popmujer= $productos->popmujer();
 $total = count($popmujer);
+
+// Obtener la opción de ordenamiento seleccionada
+$orden = isset($_POST['orden']) ? $_POST['orden'] : '';
+
+// Aplicar clasificación si es necesario
+if ($orden === 'mayor_menor') {
+    usort($pophombres, function ($a, $b) {
+        return $b['precio'] - $a['precio'];
+    });
+} elseif ($orden === 'menor_mayor') {
+    usort($pophombres, function ($a, $b) {
+        return $a['precio'] - $b['precio'];
+    });
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,13 +60,15 @@ $total = count($popmujer);
                     </div>
                     <!-- Filtrador -->
                     <div class="col-md-2 text-md-end">
-                        <select id="filter-category" class="form-select border border-black">
-                            <option value="">Filtrar por:</option>
-                            <option value="sunglasses">Mas vendidos</option>
-                            <option value="optical">Precio: Mayor a Menor</option>
-                            <option value="sunglasses">Precio: Menor a Mayor</option>
-                        </select>
-                    </div>
+                            <form id="sort-form" method="POST">
+                                <input type="hidden" name="busqueda" value="<?php echo isset($_POST['busqueda']) ? htmlentities($_POST['busqueda']) : ''; ?>"> <!-- verifica si hay algun producto que ordenar y evita que el usuario ingrese código malicioso -->
+                                <select name="orden" id="filter-category" class="form-select border border-black" onchange="submitForm()">
+                                    <option value="">Filtrar por:</option>
+                                    <option value="mayor_menor">Precio: Mayor a Menor</option>
+                                    <option value="menor_mayor">Precio: Menor a Mayor</option>
+                                </select>
+                            </form>
+                        </div>
                     <div class="col-md-2 ">
                         <h5 class=" text-black">Cantidad: <?php echo $total; ?></h5>
                     </div>
