@@ -57,7 +57,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               <td><?php echo $m['email']; ?></td>
               <td><?php echo $m['dia']; ?></td>
               <td><?php echo $m['hora']; ?></td>
-              <td><a href="" class="btn btn-danger">Cancelar</a></td>
+              <td><a href="" class="btn btn-danger"data-bs-toggle="modal" data-bs-id="<?=$m['id'];?>" data-bs-target="#modaleliminarcita">Cancelar</a></td>
             </tr>
             <?php
             }
@@ -66,12 +66,15 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
         </table>
       </div>
   </div>
-
+  <?php
+  require __DIR__.'/../../src/http/modaleliminarcita.php';
+  ?>
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/admin/js/boton.js"></script>
+  <script src="/admin/js/cancelarcita.js"></script>
 </body>
 
 </html>
