@@ -1,15 +1,50 @@
 <?php
 session_start();
 use App\Modelos\metodoscita;
+use App\Modelos\validacionescita;
 require __DIR__.'/../src/modelos/metodoscita.php';
 $cita = new metodoscita();
-extract($_POST);
+$vali = new validacionescita();
+
 $errors = [];
+$horariovalido = array();
+$inicio = strtotime("9:00");
+$fin = strtotime("20:00");
+while ($inicio <= $fin) {
+    $horariovalido[] = date("H:i", $inicio);
+    $inicio = strtotime('+30 minutes', $inicio);
+}
+
 if(isset($_POST['mandar_exm']))
-{
+{   
     if(isset($_SESSION['user_name']))
-    {
-        $cita->agregar($_SESSION['user_id'],$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen,$uso_gotas);
+    {   extract($_POST);
+        $ocupado =$cita->verificarcitas($dia,$hora);
+        if($ocupado->rowCount()>0)
+        {
+            $errors[]="Esta hora esta ocupada";
+        }
+        if($vali->numero($telefono))
+        {
+            $errors[]="El numero solo debe constar de 10 digitos";
+        }
+        if(!$vali->issnumber($telefono))
+        {
+            $errors[]="El numero debe ser numerico";
+        }
+        if($vali->nulo([$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen,$uso_gotas]))
+        {
+            $errors[]="Todos los campos deben llenarse";
+        }
+        if($vali->caractmas($nombre))
+        {
+            $errors[]="El nombre no debe tener mas de 50 caracteres";
+        }
+        if(count($errors)==0)
+        {
+            $cita->agregar($_SESSION['user_id'],$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen,$uso_gotas);
+
+        }
 
     }
     else 
@@ -113,31 +148,47 @@ if(isset($_POST['mandar_exm']))
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="myModalLabel">Agenda tu examen</h5>
+                
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="container">
+                <?php
+                $vali->mensajes($errors);
+                ?>
             </div>
             <div class="modal-body">
                 <!--Formulario-->
                 <form action="exam.php" method="POST">
                     <div class="form-group">
                         <label for="nombre" class="text-center">Nombre del paciente:</label>
-                        <input type="text" class="form-control w-75 mx-auto" id="nombre" name="nombre" maxlength="50" required>
+                        <input type="text" class="form-control w-75 mx-auto" id="nombre" name="nombre" maxlengtha="50" requireda>
                     </div>
                     <div class="form-group">
                         <label for="telefono" class="text-center">Teléfono:</label>
-                        <input type="tel" class="form-control w-75 mx-auto" id="telefono" name="telefono" maxlength="10" required>
+                        <input type="tel" class="form-control w-75 mx-auto" id="telefono" name="telefono" maxlength="10" requireda>
                     </div>
                     <div class="form-group">
                         <label for="fecha_nacimiento" class="text-center">Fecha de nacimiento:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                        <input type="date" class="form-control w-75 mx-auto" id="fecha_nacimiento" name="fecha_nacimiento" requireda>
                     </div>
                     <div class="form-group">
                         <label for="dia" class="text-center">Día:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia" required>
+                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia" requireda>
                     </div>
                     <div class="form-group">
                         <label for="hora" class="text-center">Hora:</label>
-                        <input type="time" class="form-control w-75 mx-auto" id="hora" name="hora" required>
+                        <select name="hora"class="form-control" id="hora">
+                            <option value="">Horario</option>
+                            <?php
+                            foreach($horariovalido as $hora)
+                            {
+                                echo "<option value='$hora'>$hora</option>";
+                            }
+                            ?>
+                           
+                        </select>
                     </div>
+
                     <div class="form-group">
                         <label for="sintomas_oculares" class="text-center">Síntomas oculares:</label>
                         <textarea class="form-control w-75 mx-auto" id="sintomas_oculares" name="sintomas_oculares"></textarea>
@@ -148,38 +199,39 @@ if(isset($_POST['mandar_exm']))
                     </div>
                     <div class="form-group">
                         <label for="lentes_actualmente" class="text-center">¿Usa lentes actualmente?</label>
-                        <select class="form-control w-75 mx-auto" id="lentes_actualmente" name="lentes_actualmente" required>
+                        <select class="form-control w-75 mx-auto" id="lentes_actualmente" name="lentes_actualmente" requireda>
                             <option value="1">Sí</option>
                             <option value="0">No</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="armazon" class="text-center">¿Necesita armazón?</label>
-                        <select class="form-control w-75 mx-auto" id="armazon" name="armazon" required>
+                        <select class="form-control w-75 mx-auto" id="armazon" name="armazon" requireda>
                             <option value="1">Sí</option>
                             <option value="0">No</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="contacto" class="text-center">¿Usa lentes de contacto?</label>
-                        <select class="form-control w-75 mx-auto" id="contacto" name="contacto" required>
+                        <select class="form-control w-75 mx-auto" id="contacto" name="contacto" requireda>
                             <option value="1">Sí</option>
                             <option value="0">No</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="ultimo_examen" class="text-center">Fecha del último examen:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="ultimo_examen" name="ultimo_examen" required>
+                        <input type="date" class="form-control w-75 mx-auto" id="ultimo_examen" name="ultimo_examen" requireda>
                     </div>
                     <div class="form-group">
                         <label for="uso_gotas" class="text-center">¿Usa gotas oculares?</label>
-                        <select class="form-control w-75 mx-auto" id="uso_gotas" name="uso_gotas" required>
+                        <select class="form-control w-75 mx-auto" id="uso_gotas" name="uso_gotas" requireda>
                             <option value="1">Sí</option>
                             <option value="0">No</option>
                         </select>
                     </div>
                     <button type="submit" name="mandar_exm" class="btn btn-primary">Enviar</button>
                 </form>
+
             </div>
         </div>
     </div>
