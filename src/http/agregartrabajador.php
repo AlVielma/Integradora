@@ -1,5 +1,6 @@
 <?php
 use App\Modelos\Trabajador;
+require_once __DIR__.'/../modelos/trabajador.php';
 
 require __DIR__.'/../../vendor/autoload.php';
 

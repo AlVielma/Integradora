@@ -1,5 +1,6 @@
 <?php
 use App\Modelos\metodoscita;
+require_once __DIR__.'/../modelos/metodoscita.php';
 require __DIR__.'/../../vendor/autoload.php';
 
 if(isset($_POST['cancelar_cita']))
