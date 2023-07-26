@@ -1,5 +1,5 @@
 <?php
-require 'PDFGenerator.php';
+require_once 'PDFGenerator.php';
 use App\Modelos\ValidacionesConsultas;
 require_once __DIR__.'/../../src/modelos/ValidacionesConsultas.php';
 $pdfGenerator = new PDFGenerator();
