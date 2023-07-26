@@ -69,7 +69,7 @@ $total = count($solarmujer);
                       <a href="prodejem.php?id=<?php echo $solarm['sku']; ?>">
                       <img src="<?php echo '/../productosimg/'.$solarm['IMAGEN']; ?>" class="card-img-top" alt="..."></a>
                       <div class="card-body">
-                        <h5 class="card-title h4"><?php echo $solarh['nombre']; ?></h5>
+                        <h5 class="card-title h4"><?php echo $solarm['nombre']; ?></h5>
                         <a class="objeto-texto" href="prodejem.php?id=<?php echo $solarm['sku']; ?>">
                         <p class="card-text h5">$<?php echo $solarm['precio']; ?>MXN</p></a>
                       </div>
