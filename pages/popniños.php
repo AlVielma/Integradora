@@ -68,7 +68,7 @@ $total = count($popniño);
                   <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
                     <div class="card" style="width: 19rem;">
                       <a href="prodejem.php?id=<?php echo $niño['sku']; ?>">
-                      <img src="<?php echo '/../productosimg/'.$niño['IMAGEN']; ?>" class="card-img-top" alt="..."></a>
+                      <img src="<?php echo '/../productosimg/'.$niño['IMAGEN']; ?>" class="card-img-top" alt="..."width="200px" height="230px"></a>
                       <div class="card-body">
                         <h5 class="card-title h4"><?php echo $niño['nombre']; ?></h5>
                         <a class="objeto-texto" href="prodejem.php?id=<?php echo $niño['sku']; ?>">

@@ -124,8 +124,7 @@ $vendidos= $productos->masvendidos3();
                 Adultos
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="pages/popunisex.php">Pop Unisex</a></li>
-                <hr class="dropdown-divider">
+               
             </li>
             <li><a class="dropdown-item" href="pages/pophombres.php">Pop Hombre</a></li>
             <li>
