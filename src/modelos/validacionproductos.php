@@ -41,4 +41,10 @@ class validacionproductos
         echo '</ul>';
         }
     }
+    
+    function sanitizar($parametro)
+    {
+        return filter_var($parametro, FILTER_SANITIZE_SPECIAL_CHARS);
+    }
+    
 }
