@@ -2,6 +2,8 @@
 use App\Modelos\Conexion;
 
 use App\Modelos\Trabajador;
+require_once __DIR__.'/../modelos/Conexion.php';
+require_once __DIR__.'/../modelos/trabajador.php';
 
 require __DIR__.'/../../vendor/autoload.php';
 

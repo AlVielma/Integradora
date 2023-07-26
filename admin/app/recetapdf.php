@@ -1,5 +1,5 @@
 <?php
-require 'PDFGenerator.php';
+require_once 'PDFGenerator.php';
 
 $pdfGenerator = new PDFGenerator();
 
