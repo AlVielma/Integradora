@@ -13,7 +13,7 @@ $inicio = strtotime("9:00");
 $fin = strtotime("20:00");
 while ($inicio <= $fin) {
     $horariovalido[] = date("H:i", $inicio);
-    $inicio = strtotime('+30 minutes', $inicio);
+    $inicio = strtotime('+1 hour', $inicio);
 }
 
 if(isset($_POST['mandar_exm']))
@@ -21,6 +21,9 @@ if(isset($_POST['mandar_exm']))
     if(isset($_SESSION['user_name']))
     {   extract($_POST);
         $ocupado =$cita->verificarcitas($dia,$hora);
+        $nombres=$vali->filtrarString($nombre);
+        $sintomasocc=$vali->filtrarString($sintomas_oculares);
+        $enfermedadesoc=$vali->filtrarString($enfermedades_oculares);
         if($ocupado->rowCount()>0)
         {
             $errors[]="Esta hora esta ocupada";
@@ -43,7 +46,15 @@ if(isset($_POST['mandar_exm']))
         }
         if(count($errors)==0)
         {
-            $cita->agregar($_SESSION['user_id'],$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen,$uso_gotas);
+           if($nombres == $nombre && $sintomasocc==$sintomas_oculares && $enfermedadesoc==$enfermedades_oculares)
+           {
+            $cita->agregar($_SESSION['user_id'],$nombres,$telefono,$fecha_nacimiento,$dia,$hora,$sintomasocc,$enfermedadesoc,$lentes_actualmente,$armazon,$contacto,$ultimo_examen,$uso_gotas);
+
+           }
+           else
+           {
+            $errors[] = "Hubo un problema con los datos ingresados.";
+           }
 
         }
 
@@ -81,6 +92,11 @@ if(isset($_POST['mandar_exm']))
     <!--Iconos y la bienvenida a la seccion-->
     <section id="container-fluid">
         <div class="row">
+        <div class="">
+            <?php
+                $vali->mensajes($errors);
+                ?>
+            </div>
             <div class="col-10 offset-1">
                 <div class="header text-center">
                     <h2 class="text-uppercase mb-3 mt-4 allies-title">Pop Ópticos te invita a sacar tu examen de la vista!</h2>
@@ -137,7 +153,7 @@ if(isset($_POST['mandar_exm']))
             <div class="col-12 col-lg-7 d-flex align-items-center justify-content-center">
                 <button class="btn btn-light btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#myModal">Agenda ahora</button>
             </div>
-                    
+           
           </div>
         </div>
       </section>
@@ -153,9 +169,7 @@ if(isset($_POST['mandar_exm']))
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="container">
-                <?php
-                $vali->mensajes($errors);
-                ?>
+               
             </div>
             <div class="modal-body">
                 <!--Formulario-->

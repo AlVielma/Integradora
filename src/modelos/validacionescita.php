@@ -42,16 +42,6 @@ class validacionescita
         }
     }
 
-    function horario()
-    {
-        $horariovalido = array();
-        $inicio = strtotime("9:00");
-        $fin=strtotime("20:00");
-        while ($inicio <= $fin) {
-            $horariovalido[] = date("H:i", $inicio);
-            $horaInicio = strtotime('+30 minutes', $fin);
-        }
-    }
 
     function issnumber($numero)
     {
@@ -60,5 +50,9 @@ class validacionescita
             return true;
         }
         return false;
+    }
+    function filtrarString($string)
+    {
+        return filter_var($string, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH | FILTER_FLAG_ENCODE_HIGH);
     }
 }
