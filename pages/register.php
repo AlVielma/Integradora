@@ -87,7 +87,7 @@ if(!empty($_POST)){
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
     
-                <a class="navbar-brand text-white" href="#">
+                <a class="navbar-brand text-white" href="../index.php">
                     <img src="../images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top mx-auto">
                     Pop Ópticos
                 </a>
