@@ -3,6 +3,10 @@ require __DIR__.'/../../vendor/autoload.php';
 use App\Modelos\productos;
 use App\Modelos\validacionproductos;
 use App\Modelos\Conexion;
+require_once __DIR__.'/../modelos/productos.php';
+require_once __DIR__.'/../modelos/validacionproductos.php';
+require_once __DIR__.'/../modelos/Conexion.php';
+
 $conexion = new Conexion();
 $conect= $conexion->conectar();
 $productos = new productos();

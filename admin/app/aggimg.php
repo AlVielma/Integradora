@@ -14,7 +14,9 @@ $validacion = new validacionproductos();
 $errors = [];
 extract($_POST);
 extract($_FILES);
+
 if (isset($_POST['agregar'])) {
+  
   if ($validacion->nulo([$nombre, $categoria, $marca, $tipo_lente, $descripcion, $precio, $stock])) {
       $errors[] = "Los campos deben estar llenos";
   }
@@ -29,6 +31,9 @@ if (isset($_POST['agregar'])) {
 }
 
   if (count($errors) == 0) {
+      $nombres = filter_var($nombre, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+      $descripcions = filter_var($entrada, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+      
       $dir = __DIR__ . '/../../productosimg/';
       $pathinfo = pathinfo($_FILES['imagen']['name']);
       $filename = $pathinfo["filename"];
@@ -38,7 +43,7 @@ if (isset($_POST['agregar'])) {
       move_uploaded_file($_FILES['imagen']['tmp_name'], $real_path);
       $productos->agregar_imagen($name);
       $imagenid = $productos->get_lastid();
-      $productos->agregar_producto($nombre, $marca, $tipo_lente, $descripcion, $imagenid, $precio, $stock, $categoria);
+      $productos->agregar_producto($nombres, $marca, $tipo_lente, $descripcions, $imagenid, $precio, $stock, $categoria);
       header('Location: aggimg.php');
      
   }

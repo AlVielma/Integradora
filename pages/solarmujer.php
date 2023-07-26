@@ -6,6 +6,20 @@ require __DIR__.'/../vendor/autoload.php';
 $productos = new productos();
 $solarmujer= $productos->solarmujer();
 $total = count($solarmujer);
+
+// Obtener la opción de ordenamiento seleccionada
+$orden = isset($_POST['orden']) ? $_POST['orden'] : '';
+
+// Aplicar clasificación si es necesario
+if ($orden === 'mayor_menor') {
+    usort($solarmujer, function ($a, $b) {
+        return $b['precio'] - $a['precio'];
+    });
+} elseif ($orden === 'menor_mayor') {
+    usort($solarmujer, function ($a, $b) {
+        return $a['precio'] - $b['precio'];
+    });
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,14 +59,16 @@ $total = count($solarmujer);
                     <h1 class="text-start text-black ms-5">Solar Mujer</h1>
                     </div>
                     <!-- Filtrador -->
-                    <div class="col-md-2 text-md-end ">
-                        <select id="filter-category" class="form-select border border-black ">
-                            <option value="">Filtrar por:</option>
-                            <option value="sunglasses">Mas vendidos</option>
-                            <option value="optical">Precio: Mayor a Menor</option>
-                            <option value="sunglasses">Precio: Menor a Mayor</option>
-                        </select>
-                    </div>
+                    <div class="col-md-2 text-md-end">
+                            <form id="sort-form" method="POST">
+                                <input type="hidden" name="busqueda" value="<?php echo isset($_POST['busqueda']) ? htmlentities($_POST['busqueda']) : ''; ?>"> <!-- verifica si hay algun producto que ordenar y evita que el usuario ingrese código malicioso -->
+                                <select name="orden" id="filter-category" class="form-select border border-black" onchange="submitForm()">
+                                    <option value="">Filtrar por:</option>
+                                    <option value="mayor_menor">Precio: Mayor a Menor</option>
+                                    <option value="menor_mayor">Precio: Menor a Mayor</option>
+                                </select>
+                            </form>
+                        </div>
                     <div class="col-md-2 ">
                         <h5 class=" text-black">Cantidad:<?php echo $total;?></h5>
                     </div>
@@ -84,59 +100,13 @@ $total = count($solarmujer);
                </div>
              </div>
             <!--footer-->
-            <div class="container-fluid border border-black footer bg-dark text-white">
-
-              <!--Footer superio-->
-              <div class="row p-5 text-aling-center">
-
-                <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                    <h3>Pop Ópticos</h3>
-                    <a href="index.php"><img src="/../images/icon64.png" alt=""></a>
-                  
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                  <p class="h5">Dirección</p>
-                  <div class="mb-2">
-                    <p>Av.Juárez 4880 y Xochimilco Oriente, Torreón, Méxcio</p>
-                  </div>
-                </div>
-
-                <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                  <p class="h5">Contacto</p>
-                  <div class="mb-2">
-                    <p>871 735 8778</p>
-                  </div>
-                  <div class="mb-2">
-                    <p class="text-decoration-none text-white">ventas@opticapop.com</p>
-                  </div>
-                </div>
-
-                <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                  <p class="h5">Redes</p>
-                  <div class="mb-2">
-                    <a href="https://www.facebook.com/opticaPOP/"><img src="/../images/facebook.png" alt=""></a>
-                  </div>
-                  <div class="mb-0">
-                    <p>Facebook</p>
-                  </div>
-                  <div class="mb-2">
-                    <a href="https://wa.link/35sn9o"><img src="/../images/whatsapp.png" alt=""></a>
-                  </div>
-                  <div class="mb-0">
-                    <p>Whatsapp</p>
-                  </div>
-                </div>
-                 <!--Derechos de autor-->
-                <div class="col-xs-12 pt-5">
-                  <p class="text-white text-center"> Copyright - All rights reserved © 2023</p>
-                </div>
-                
-              </div>
-             
-            </div>
+           <?php
+           include 'footer.php';
+           ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <script src="../admin/js/recar.js"></script>
 </body>
 </html>
