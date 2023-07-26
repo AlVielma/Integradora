@@ -1,13 +1,25 @@
 <?php
 
 namespace App\Modelos;
-
 class validacionesRegistrar{
 
+    
     /* longitud cadena y quita espacios en blanco*/
     /*true = uno esta vacio */
+    private function sanitizar($parametro){
+    $parametro = htmlspecialchars($parametro, ENT_QUOTES, 'UTF-8');
+    $parametro = filter_var($parametro, FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH | FILTER_FLAG_ENCODE_LOW | FILTER_FLAG_ENCODE_HIGH);
+    $parametro = trim($parametro);
+    $parametro = filter_var($parametro, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH | FILTER_FLAG_ENCODE_HIGH);
+    $parametro = str_replace(array(';', '--', '*', '%', '!', '=', '<', '>'), '', $parametro);
+    if (preg_match('/<.*>|SELECT|UPDATE|DELETE|INSERT|CREATE|DROP|ALTER/i', $parametro)) {
+        return false;
+    }
+    $parametro = filter_var($parametro, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION | FILTER_FLAG_ALLOW_THOUSAND | FILTER_FLAG_ALLOW_SCIENTIFIC);
+    return $parametro;}
     function esNulo(array $parametros){
         foreach($parametros as $parametro){
+            $parametro = $this->sanitizar($parametro);
             if(strlen(trim($parametro)) < 1){
                 return true;
             }
@@ -15,8 +27,10 @@ class validacionesRegistrar{
         return false;
     }
 
-    /* Estructura correcta email*/
+    /* Estructura correcta email */
     function esEmail($email){
+        // Sanitizar el email antes de validar su estructura
+        $email = $this->sanitizar($email);
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
             return true;
         }
@@ -25,6 +39,8 @@ class validacionesRegistrar{
 
     /*Validacion entre 2 string */
     function validarContr($password, $confpassword){
+        $password = $this->sanitizar($password);
+        $confpassword = $this->sanitizar($confpassword);
         if(strcmp($password, $confpassword) === 0){
             return true;
         }
@@ -33,9 +49,27 @@ class validacionesRegistrar{
 
     function registrarCliente(array $datos, $con)
     {
-        $sql = $con->prepare("INSERT INTO Usuarios (nombre, apellido, email, contraseña, id_rol) VALUES (?,?,?,?,2)");
-        if($sql->execute($datos));
+    foreach ($datos as $dato) {
+        // Validar y sanitizar cada dato
+        if ($this->sanitizar($dato) === false) {
+            // Al menos uno de los datos contiene contenido no permitido
+            return false;
+        }
     }
+
+    // Realizar más validaciones, si es necesario, para asegurar que los datos sean correctos
+    // Por ejemplo, verificar si el email ya existe en la base de datos antes de insertar
+
+    $sql = $con->prepare("INSERT INTO Usuarios (nombre, apellido, email, contraseña, id_rol) VALUES (?,?,?,?,2)");
+    if ($sql->execute($datos)) {
+        // La consulta se realizó con éxito
+        return true;
+    } else {
+        // Ocurrió un error al ejecutar la consulta
+        return false;
+    }
+    }
+
 
     function usuarioExist($usuario, $con)
     {
@@ -67,7 +101,7 @@ class validacionesRegistrar{
         echo '</ul>';
         }
     }
-/*   
+    /*   
     function login($email, $password, $con) {
         try {
             $sql = $con->prepare("SELECT id, nombre, apellido, email, contraseña, id_rol FROM Usuarios WHERE email LIKE ? LIMIT 1");
@@ -96,8 +130,6 @@ class validacionesRegistrar{
         }
     }
     
-    */
-
-    
+    */ 
 }
 ?>
