@@ -1,5 +1,5 @@
 <?php
-require_once 'PDFGenerator.php';
+require_once __DIR__ . '/PDFGenerator.php';
 
 $pdfGenerator = new PDFGenerator();
 
