@@ -27,6 +27,7 @@ class metodoscita
     {
         $query = $this->conectar->prepare("INSERT INTO Citas_Cliente (usuario,nombre, telefono, fecha_nacimiento, dia, hora, 
         sintomas_oculares, enfermedades_oculares, lentes_actualmente, armazon, contacto, ultimo_examen, uso_gotas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+         $ultimo_examen = empty($ultimo_examen) ? null : $ultimo_examen;
         $query->execute([$sesion,$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen
         ,$uso_gotas]);
     }
