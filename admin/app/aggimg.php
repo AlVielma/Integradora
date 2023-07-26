@@ -3,6 +3,8 @@ session_start();
 require __DIR__.'/../../vendor/autoload.php';
 use App\Modelos\productos;
 use App\Modelos\validacionproductos;
+require_once __DIR__.'/../../src/modelos/productos.php';
+require_once __DIR__.'/../../src/modelos/validacionproductos.php';
 $productos = new productos();
 $mostrar=$productos->mostrar_productos();
 $marcas= $productos->mostrar_marca();

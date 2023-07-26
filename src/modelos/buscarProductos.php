@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 use App\Modelos\Conexion;
+require_once 'Conexion.php';
 
 class busq{
 

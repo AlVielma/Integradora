@@ -3,6 +3,10 @@ use App\Modelos\Conexion;
 use App\Modelos\Usuario;
 use App\Modelos\validacionesUsuario;
 
+require_once __DIR__.'/../src/modelos/Conexion.php';
+require_once __DIR__.'/../src/modelos/Usuario.php';
+require_once __DIR__.'/../src/modelos/validacionesUsuario.php';
+
 require __DIR__ . '/../vendor/autoload.php';
 
 session_start();

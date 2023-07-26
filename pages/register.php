@@ -1,6 +1,8 @@
 <?php
 use App\Modelos\Conexion;
 use App\Modelos\validacionesRegistrar;
+require_once __DIR__.'/../src/modelos/Conexion.php';
+require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
 
 require __DIR__ . '/../vendor/autoload.php';
 

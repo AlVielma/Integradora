@@ -1,8 +1,13 @@
 <?php
 use App\Modelos\Conexion;
 use App\Modelos\productos;
+require_once __DIR__.'/../src/modelos/productos.php';
+require_once __DIR__.'/../src/modelos/Conexion.php';
 session_start();
 require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../src/modelos/productos.php';
+require_once __DIR__.'/../src/modelos/Conexion.php';
+
 $productos = new productos();
 $db = new Conexion();
 $con = $db->conectar();
