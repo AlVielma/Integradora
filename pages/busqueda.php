@@ -1,8 +1,8 @@
 <?php
+session_start();
 require __DIR__ . '/../vendor/autoload.php';
 use App\Modelos\Conexion;
 require_once __DIR__.'/../src/modelos/Conexion.php';
-session_start();
 $conexion = new Conexion();
 $con = $conexion->conectar();
 
