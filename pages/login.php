@@ -48,12 +48,6 @@ if (!empty($_POST)) {
         $usuario = new Usuario($con);
         $userData = $usuario->login($email, $password);
 
-        // Inicio de sesión exitoso, almacenar datos en las variables de sesión
-        $_SESSION['user_id'] = $userData['id'];
-        $_SESSION['user_email'] = $userData['email'];
-        $_SESSION['user_name'] = $userData['nombre'];
-        $_SESSION['user_lastname'] = $userData['apellido'];
-        $_SESSION['user_rol'] = $userData['id_rol'];
 
         
         // Redirigir al usuario según su rol
