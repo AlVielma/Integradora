@@ -32,7 +32,6 @@ class Carrito
         $agregarCarrito = $this->pdo->prepare("INSERT INTO Carritos (usuario, producto_id, cantidad, fecha_pedido, total) VALUES (?, ?, ?, ?, ?)");
         $agregarCarrito->execute([$usuario_id, $producto_id, $cantidad, $fecha_pedido, $total]);
 
-        // Puedes agregar alguna lógica adicional aquí, como verificar si el producto ya existe en el carrito antes de insertarlo.
     }
 
     public function eliminarProducto($usuario_id, $producto_id)
