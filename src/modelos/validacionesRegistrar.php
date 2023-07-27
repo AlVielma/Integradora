@@ -89,15 +89,24 @@ class validacionesRegistrar{
         return false;
     }
 
-    function mostrarMensajes(array $errors)
-    {
-        if(count($errors) > 0){
+    public function mostrarMensajes(array $errors) {
+        if (count($errors) > 0) {
             echo '<div class="alert alert-warning alert-dismissible fade show" role="alert"><ul>';
-        foreach($errors as $error){
-            echo '<li>' . $error . '</li>';
+            foreach ($errors as $error) {
+                echo '<li>' . htmlspecialchars($error) . '</li>';
+            }
+            echo '</ul></div>';
         }
-        echo '</ul>';
-        }
+    }
+    function filtrarString($string)
+    {
+        return filter_var($string, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH | FILTER_FLAG_ENCODE_HIGH);
+    }
+
+    function sqlinj($string)
+    {
+        $parametro = str_replace(array(';', '--', '*', '%', '!', '=', '<', '>'), '', $string);
+        return $parametro;
     }
     /*   
     function login($email, $password, $con) {

@@ -33,6 +33,11 @@ if(!empty($_POST)){
     $password = trim($_POST['password']);
     $confpassword = trim($_POST['confpassword']);
 
+    $nombres = $registrar->filtrarString($nombre);
+    $apellidos = $registrar->filtrarString($apellido);
+    $passwordd = $registrar->filtrarString($password);
+    $confpasswords=$registrar->filtrarString($confpassword);
+
     if($registrar->esNulo([$nombre, $apellido, $email, $password, $confpassword])){
         $errors[] = "Debe de llenar todos los campos";
     }
@@ -55,11 +60,19 @@ if(!empty($_POST)){
 
     if(count($errors) == 0){
 
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
-
-        $registrar->registrarCliente([$nombre, $apellido, $email, $password_hash], $con);
-
-        header("Location: ../index.php");
+        if($nombres==$nombre && $apellidos==$apellido && $password==$passwordd && $confpasswords==$confpassword)
+        {
+            $password_hash = password_hash($passwordd, PASSWORD_DEFAULT);
+            $nombresinj=$registrar->sqlinj($nombres);
+            $apelliinj=$registrar->sqlinj($apellidos);
+            $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash], $con);
+    
+            header("Location: ../index.php");
+        }
+        else{
+            $errors[] = "ERROR AL INGRESO DE DATOS";
+        }
+       
     }
 }
 ?>
@@ -109,11 +122,11 @@ if(!empty($_POST)){
                     <form action="register.php" method="POST" autocomplete="off">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" value="<?php echo isset($_POST['nombre']) ? $_POST['nombre'] : ''; ?>">
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" value="<?php echo isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : ''; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingresa tu apellido" value="<?php echo isset($_POST['apellido']) ? $_POST['apellido'] : ''; ?>">
+                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingresa tu apellido" value="<?php echo isset($_POST['apellido']) ? htmlspecialchars($_POST['apellido']) : ''; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo</label>
