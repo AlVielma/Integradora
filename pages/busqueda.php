@@ -9,14 +9,10 @@ $con = $conexion->conectar();
 // Agregar la ruta base de las imágenes
 $rutaBaseImagenes = '../productosimg/';
 
-$product = [];
-
-if (isset($_POST['busqueda'])) {
-  $busqueda = addslashes($_POST['busqueda']);
-
-  // Obtener la opción de ordenamiento seleccionada
+// Verificar si se ha enviado el formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $busqueda = isset($_POST['busqueda']) ? addslashes($_POST['busqueda']) : '';
   $orden = isset($_POST['orden']) ? $_POST['orden'] : '';
-
 
   $consulta = $con->prepare("CALL BuscadorPro(?);");
   $consulta->execute([$busqueda]);
@@ -27,14 +23,28 @@ if (isset($_POST['busqueda'])) {
 
   // Aplicar clasificación si es necesario
   if ($orden === 'mayor_menor') {
-      usort($product, function ($a, $b) {
-          return $b->precio - $a->precio;
-      });
+    usort($product, function ($a, $b) {
+      return $b->precio - $a->precio;
+    });
   } elseif ($orden === 'menor_mayor') {
-      usort($product, function ($a, $b) {
-          return $a->precio - $b->precio;
-      });
+    usort($product, function ($a, $b) {
+      return $a->precio - $b->precio;
+    });
   }
+
+  // Guardar los resultados en la variable de sesión
+  $_SESSION['productos'] = $product;
+
+  // Redirigir utilizando el método GET
+  header('Location: ' . $_SERVER['PHP_SELF']);
+  exit();
+}
+
+// Si hay resultados de búsqueda almacenados en la sesión, los cargamos
+if (isset($_SESSION['productos'])) {
+  $product = $_SESSION['productos'];
+} else {
+  $product = [];
 }
 ?>
 
@@ -111,13 +121,14 @@ if (isset($_POST['busqueda'])) {
              
             </div>
 
-
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script src="../admin/js/recar.js"></script>
     <script>
-      history.replaceState(null,null,location.pathname);
-    </script>
-
+  // Evitar reenvío del formulario al actualizar la página
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+</script>
 </body>
 </html>
