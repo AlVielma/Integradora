@@ -83,7 +83,7 @@ if (isset($_SESSION['user_id'])) {
                             </div>
                             <div class="col-md-6">
                                 <form action="eliminar_producto.php" method="post">
-                                    <input type="hidden" name="sku" value="<?php echo $producto_id; ?>">
+                                    <input type="hidden" name="sku" value="<?php echo $producto['sku']; ?>">
                                     <button type="submit" class="btn btn-light btn-outline-dark">Eliminar</button>
                                 </form>
                             </div>
