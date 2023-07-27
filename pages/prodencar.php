@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -95,6 +94,10 @@ if (isset($_SESSION['user_id'])) {
         }
     }
     ?>
+     <div class="text-center">
+        <a href="../index.php" class="btn btn-primary btn-lg">Seguir comprando</a>
+        <a href="apartar.php" class="btn btn-success btn-lg">Apartar</a>
+    </div>
 </div>
 
 
