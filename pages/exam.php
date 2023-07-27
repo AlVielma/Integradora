@@ -36,9 +36,9 @@ if(isset($_POST['mandar_exm']))
         {
             $errors[]="El numero debe ser numerico";
         }
-        if($vali->nulo([$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen,$uso_gotas]))
+        if($vali->nulo([$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$lentes_actualmente,$armazon,$contacto,$uso_gotas]))
         {
-            $errors[]="Todos los campos deben llenarse";
+            $errors[]="Los campos deben llenarse, solo Fecha del Ultimo examen, Síntomas oculares y Enfermedades oculares son opcionales";
         }
         if($vali->caractmas($nombre))
         {
@@ -188,7 +188,7 @@ if(isset($_POST['mandar_exm']))
                     </div>
                     <div class="form-group">
                         <label for="dia" class="text-center">Día:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia" requireda>
+                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia"  min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+1 days')) ?>"requireda>
                     </div>
                     <div class="form-group">
                         <label for="hora" class="text-center">Hora:</label>
