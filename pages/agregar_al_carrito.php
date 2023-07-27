@@ -2,7 +2,8 @@
 session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
-
+require_once __DIR__.'/../src/modelos/Carrito.php';
+require_once __DIR__.'/../src/modelos/productos.php';
 use App\Modelos\Carrito;
 use App\Modelos\productos;
 

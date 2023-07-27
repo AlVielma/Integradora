@@ -1,5 +1,7 @@
 <?php
 namespace App\Modelos;
+require_once 'Conexion.php';
+require_once 'productos.php';
 
 use App\Modelos\Conexion;
 use App\Modelos\productos;
