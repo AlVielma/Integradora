@@ -1,35 +1,29 @@
 <?php
 session_start();
+
 require __DIR__ . '/../vendor/autoload.php';
 
-// Verificar si el usuario ha iniciado sesión
-if (!isset($_SESSION['user_name'])) {
-    // Si el usuario no ha iniciado sesión, redirigirlo al inicio de sesión
-    header("Location: login.php");
-    exit;
-}
+use App\Modelos\Carrito;
+use App\Modelos\productos;
 
-// Verificar si se envió el formulario para agregar al carrito
-if (isset($_POST['agregar_al_carrito'])) {
+// Crear un objeto de la clase Carrito
+$carrito = new Carrito();
+
+if (isset($_POST['producto_id'])) {
+    // Obtener el ID del usuario actual desde la sesión (asumiendo que ya inició sesión)
+    $usuario_id = $_SESSION['user_id'];
+
     // Obtener el ID del producto que se va a agregar al carrito
     $producto_id = $_POST['producto_id'];
 
-    // Verificar si el producto ya existe en el carrito
-    if (isset($_SESSION['carrito'][$producto_id])) {
-        // Si el producto ya existe en el carrito, mostrar un mensaje de error
-        $_SESSION['error'] = "El producto ya está en el carrito.";
-    } else {
-        // Si el producto no existe en el carrito, agregarlo
-        $_SESSION['carrito'][$producto_id] = 1; // La cantidad por defecto es 1
-        $_SESSION['success'] = "El producto se agregó al carrito exitosamente.";
-    }
+    // Agregar el producto al carrito
+    $carrito->agregarProducto($usuario_id, $producto_id);
 
     // Redirigir de vuelta a la página de detalle del producto
     header("Location: prodejem.php?id=" . $producto_id);
     exit;
-} else {
-    // Si no se envió el formulario de agregar al carrito, redirigir a la página de inicio
-    header("Location: ../index.php");
-    exit;
 }
+
+$productosModelo = new productos();
 ?>
+

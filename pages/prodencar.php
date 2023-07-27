@@ -1,24 +1,28 @@
+
 <?php
 session_start();
 
-if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito']) || count($_SESSION['carrito']) === 0) {
-  // Carrito vacío
-  header("Location: incarejem.php");
-  exit; 
-  $carritoVacio = true;
-
-} else {
-  // Carrito con productos
-  $carritoVacio = false;
-}
-
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\Modelos\Carrito;
 use App\Modelos\productos;
 
+// Crear un objeto de la clase Carrito
+$carritoModelo = new Carrito();
 $productosModelo = new productos();
-?>
 
+// Verificar si el usuario ha iniciado sesión
+if (isset($_SESSION['user_id'])) {
+    // Obtener el ID del usuario actual desde la sesión
+    $usuario_id = $_SESSION['user_id'];
+
+    // Obtener los productos del carrito para el usuario actual desde la base de datos
+    $productosCarrito = $carritoModelo->obtenerProductosCarrito($usuario_id);
+} else {
+    // El usuario no ha iniciado sesión o no tiene productos en el carrito
+    $productosCarrito = [];
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,47 +50,52 @@ $productosModelo = new productos();
   
   <div class="container border border-black mt-4 mb-4">
     <?php
-    $total = 0;
-    foreach ($_SESSION['carrito'] as $producto_id => $cantidad) {
-      // Obtener los detalles del producto desde la base de datos
-      $producto = $productosModelo->consultaeedit($producto_id);
-      if (!empty($producto)) {
-        // Se asume que cada producto tiene solo una fila en la consulta
-        $nombre = $producto[0]['nombre'];
-        $precio = $producto[0]['precio'];
-        $imagen = $producto[0]['IMAGEN'];
-        $descripcion = $producto[0]['descripcion'];
-
-        $total += $precio * $cantidad;
-    ?>
-        <h2 class="text-center"><?php echo $nombre; ?></h2>
-        <div class="row">
-          <div class="col-md-4">
-            <img src="<?php echo '../productosimg/' . $imagen; ?>" alt="Imagen del producto" class="img-fluid">
-          </div>
-          <div class="col-md-8">
-          <p class="lead font-weight-bold"><?php echo $descripcion; ?></p>
-            <p class="lead font-weight-bold">$<?php echo number_format($precio, 2); ?> MXN</p>
-            <p class="lead font-weight-bold">Pop Ópticos</p>
-            <!-- Resto del contenido del producto -->
-            <div class="row">
-              <div class="col-md-6">
-                <input type="number" class="form-control btn-sm border-dark" value="<?php echo $cantidad; ?>" placeholder="Cantidad:" style="width: 150px;">
-              </div>
-              <div class="col-md-6">
-                <form action="eliminar_producto.php" method="post">
-                  <input type="hidden" name="sku" value="<?php echo $producto_id; ?>">
-                  <button type="submit" class="btn btn-light btn-outline-dark">Eliminar</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mb-3 border-top border-5"></div>
+    if (empty($productosCarrito)) {
+        // Mostrar mensaje de carrito vacío
+        echo '<h2 class="text-center">El carrito está vacío.</h2>';
+    } else {
+        $total = 0;
+        foreach ($productosCarrito as $producto) {
+            // Obtener los detalles del producto desde la base de datos
+            $productoDetalles = $productosModelo->consultaeedit($producto['sku']);
+            if (!empty($productoDetalles)) {
+                // Se asume que cada producto tiene solo una fila en la consulta
+                $nombre = $productoDetalles[0]['nombre'];
+                $precio = $productoDetalles[0]['precio'];
+                $imagen = $productoDetalles[0]['IMAGEN'];
+                $descripcion = $productoDetalles[0]['descripcion'];
+              ?>
+                <h2 class="text-center"><?php echo $nombre; ?></h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="<?php echo '../productosimg/' . $imagen; ?>" alt="Imagen del producto" class="img-fluid">
+                    </div>
+                    <div class="col-md-8">
+                        <p class="lead font-weight-bold"><?php echo $descripcion; ?></p>
+                        <p class="lead font-weight-bold">$<?php echo number_format($precio, 2); ?> MXN</p>
+                        <p class="lead font-weight-bold">Pop Ópticos</p>
+                        <!-- Resto del contenido del producto -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control btn-sm border-dark" value="<?php echo $cantidad; ?>" placeholder="Cantidad:" style="width: 150px;">
+                            </div>
+                            <div class="col-md-6">
+                                <form action="eliminar_producto.php" method="post">
+                                    <input type="hidden" name="sku" value="<?php echo $producto_id; ?>">
+                                    <button type="submit" class="btn btn-light btn-outline-dark">Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 border-top border-5"></div>
     <?php
-      }
+            }
+        }
     }
     ?>
+</div>
+
 
   <!--Contenido Recomendados-->
   <div class="container-fluid titulos-azul mt-4 mb-4">

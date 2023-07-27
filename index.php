@@ -41,17 +41,44 @@ $vendidos= $productos->masvendidos3();
           </form>
         </div>
 
-        <?php if (isset($_SESSION['user_name'])) : ?>
-            <!-- Si la sesión está iniciada, muestre un carrito diferente -->
-            <a class="navbar-brand text-white" href="pages/incarejem.php">
-          <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
-        </a>
-          <?php else : ?>
-            <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
-            <a class="navbar-brand text-white" href="pages/car.php">
-          <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
-        </a>
-          <?php endif; ?>
+        <?php
+            use App\Modelos\Carrito;
+            require 'vendor/autoload.php';
+
+            $carrito = new Carrito();
+
+            // Verificar si el usuario ha iniciado sesión y si el carrito está vacío
+            $carritoVacio = true;
+            if (isset($_SESSION['user_id'])) {
+                if (!empty($carrito->obtenerProductosCarrito($_SESSION['user_id']))) {
+                    $carritoVacio = false;
+                }
+            }
+            ?>
+
+            <!-- Mostrar el ícono del carrito y enlazarlo a la página correspondiente -->
+            <?php if (isset($_SESSION['user_name'])) : ?>
+                <!-- Si el usuario ha iniciado sesión, redirigir al carrito correspondiente -->
+                <?php if ($carritoVacio) : ?>
+                    <!-- Si el carrito está vacío, redireccionar a la página incarejem.php -->
+                    <a class="navbar-brand text-white" href="pages/incarejem.php">
+                        <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                    </a>
+                <?php else : ?>
+                    <!-- Si el carrito NO está vacío, redireccionar a la página prodencar.php -->
+                    <a class="navbar-brand text-white" href="pages/prodencar.php">
+                        <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                    </a>
+                <?php endif; ?>
+            <?php else : ?>
+                <!-- Si el usuario no ha iniciado sesión, redireccionar a la página car.php -->
+                <a class="navbar-brand text-white" href="pages/car.php">
+                    <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                </a>
+            <?php endif; ?>
+
+
+
         <!-- Si la sesión está iniciada, muestra el nombre del usuario en lugar del icono -->
         <?php if (isset($_SESSION['user_name'])) : ?>
           <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop" class="user-link text-white">
