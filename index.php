@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 use App\Modelos\productos;
 require_once 'src/modelos/productos.php';
 require 'vendor/autoload.php';

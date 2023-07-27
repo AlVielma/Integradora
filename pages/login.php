@@ -3,10 +3,6 @@ use App\Modelos\Conexion;
 use App\Modelos\Usuario;
 use App\Modelos\validacionesUsuario;
 
-require_once __DIR__.'/../src/modelos/Conexion.php';
-require_once __DIR__.'/../src/modelos/Usuario.php';
-require_once __DIR__.'/../src/modelos/validacionesUsuario.php';
-
 require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
@@ -48,6 +44,12 @@ if (!empty($_POST)) {
         $usuario = new Usuario($con);
         $userData = $usuario->login($email, $password);
 
+        // Inicio de sesión exitoso, almacenar datos en las variables de sesión
+        $_SESSION['user_id'] = $userData['id'];
+        $_SESSION['user_email'] = $userData['email'];
+        $_SESSION['user_name'] = $userData['nombre'];
+        $_SESSION['user_lastname'] = $userData['apellido'];
+        $_SESSION['user_rol'] = $userData['id_rol'];
 
         
         // Redirigir al usuario según su rol
