@@ -25,11 +25,10 @@ session_start();
         <table class="table">
           <thead>
             <tr>
-              <th>Cliente</th>
-              <th>Correo</th>
+              <th>Cliente</th> 
               <th>Fecha</th>
               <th>Total pedido</th>
-              <th>Confirmar/Cancelar</th>
+              <th>Acciones</th>
             </tr>
           </thead>
         </table>
