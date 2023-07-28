@@ -30,7 +30,7 @@ class Carrito
         $fecha_pedido = date("Y-m-d"); // Obtener la fecha actual
         $total = $precio * $cantidad;
 
-        $agregarCarrito = $this->pdo->prepare("INSERT INTO Carritos (usuario, producto_id, cantidad, fecha_pedido, total) VALUES (?, ?, ?, ?, ?)");
+        $agregarCarrito = $this->pdo->prepare("INSERT INTO Carritos (usuario, producto_id, cantidad, fecha_pedido, total, estado_id) VALUES (?, ?, ?, ?, ?, ?)");
         $agregarCarrito->execute([$usuario_id, $producto_id, $cantidad, $fecha_pedido, $total]);
     }
 
