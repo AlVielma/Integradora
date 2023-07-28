@@ -355,7 +355,7 @@ $vendidos= $productos->masvendidos3();
         {?>
           <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0">
             <div class="single-content-card">
-              <img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap">
+              <a href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>"><img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap"></a>
               <div class="card-body">
                 <h5 class="card-title h4"><?php echo $producto['nombre']; ?></h5>
                 <a class="h4 font-weight-bold text-decoration-none" href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>">
