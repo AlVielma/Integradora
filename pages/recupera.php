@@ -24,32 +24,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Validar el email
         if (!$validacionrecu->esEmail($email)) {
             $error = "El email no es válido.";
-        }
-
-        // Validar las contraseñas
-        if (!$validacionrecu->validarContraseña($newPassword, $confirmNewPassword)) {
-            $error = "Las contraseñas no coinciden.";
-        }
-
-        // Crear una instancia de la clase RecuperarContra
-        $recuperarContra = new RecuperarContra();
-
-        // Obtener el ID del usuario por su correo electrónico
-        $idUsuario = $recuperarContra->obtenerIdUsuarioPorEmail($email);
-
-        // Verificar si el usuario no fue encontrado (ID es false o -1)
-        if ($idUsuario === false || $idUsuario === -1) {
-            $error = "El correo electrónico ingresado no coincide con ningún usuario.";
         } else {
-            // Cambiar la contraseña del usuario
-            if ($recuperarContra->cambiarContraseña($idUsuario, $newPassword)) {
-                // Mensaje de éxito
-                $_SESSION['exito'] = true;
-                // Redirigir a esta página para evitar el reenvío del formulario
-                header("Location: recupera.php");
-                exit();
+            // Crear una instancia de la clase RecuperarContra
+            $recuperarContra = new RecuperarContra();
+
+            // Obtener el ID del usuario por su correo electrónico
+            $idUsuario = $recuperarContra->obtenerIdUsuarioPorEmail($email);
+
+            // Verificar si el usuario no fue encontrado (ID es false o -1)
+            if ($idUsuario === false || $idUsuario === -1) {
+                $error = "El correo electrónico ingresado no coincide con ningún usuario.";
             } else {
-                $error = "Hubo un error al cambiar la contraseña.";
+                // Cambiar la contraseña del usuario
+                if ($recuperarContra->cambiarContraseña($idUsuario, $newPassword)) {
+                    // Mensaje de éxito
+                    $_SESSION['exito'] = true;
+                    // Redirigir a esta página para evitar el reenvío del formulario
+                    header("Location: recupera.php");
+                    exit();
+                } else {
+                    $error = "Hubo un error al cambiar la contraseña.";
+                }
             }
         }
     } else {
@@ -101,13 +96,13 @@ if (isset($_SESSION['exito']) && $_SESSION['exito'] === true) {
                             <p class="text-center">Por favor, presiona <a href="../index.php" class="text-primary">Pop Ópticos</a> para continuar en nuestra página.</p>
                         </div>
                     <?php endif; ?>
+                    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($error) && $error !== ""): ?>
+                        <p class="error"><?php echo $error; ?></p>
+                    <?php endif; ?>
                     <form action="recupera.php" method="POST" autocomplete="off">
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
-                            <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($error) && !$validacionrecu->esEmail($email)): ?>
-                                <p class="error"><?php echo $error; ?></p>
-                            <?php endif; ?>
                         </div>
                         <div class="mb-3">
                             <label for="contraseñanueva" class="form-label">Nueva contraseña</label>
@@ -120,9 +115,6 @@ if (isset($_SESSION['exito']) && $_SESSION['exito'] === true) {
                         <div class="text-center">
                             <input class="btn btn-primary" type="submit" value="Confirmar" name="submit">
                         </div>
-                        <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($error) && ($newPassword !== $confirmNewPassword)): ?>
-                            <p class="error"><?php echo "Las contraseñas no coinciden."; ?></p>
-                        <?php endif; ?>
                     </form>
                 </div>
             </div>
@@ -131,7 +123,8 @@ if (isset($_SESSION['exito']) && $_SESSION['exito'] === true) {
     <!-- Scripts de Bootstrap -->
     <script src="js/bootstrap.bundle.min.js"></script>
     <script>
-      history.replaceState(null,null,location.pathname);
+    history.replaceState(null,null,location.pathname);
     </script>
 </body>
 </html>
+
