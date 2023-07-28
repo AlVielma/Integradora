@@ -35,96 +35,37 @@ session_start();
         <div class="mb-3 border-top border-5"></div>
     </div>
     
-     <!--Contenido Recomendados-->
-     <div class="container-fluid titulos-azul mt-4 mb-4">
-        <!--Titulo azul-->
-        <div class="row justify-text">
-         <h4 class="text-center azul text-black">Otros productos</h4>
+    
+    <!--Contenido Recomendados-->
+    <div class="container-fluid titulos-azul mt-4 mb-4">
+    <!--Titulo azul-->
+    <div class="row justify-text">
+      <h4 class="text-center azul text-black">Recomendados</h4>
+    </div>
+    <!--fila-->
+    <div class="row text-start">
+      <?php
+      foreach ($recomendados as $reco) {
+      ?>
+        <!--lentes5-->
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
+          <div class="card" style="width: 19rem;">
+            <a href="prodejem.php?id=<?php echo $reco['sku']; ?>"><img src="<?php echo '/../productosimg/' . $reco['IMAGEN']; ?>" class="card-img-top" alt="..." width="200px" height="230px"></a>
+            <div class="card-body">
+              <h5 class="card-title h4"><?php echo $reco['nombre']; ?></h5>
+              <a class="objeto-texto" href="prodejem.php?id=<?php echo $reco['sku']; ?>">
+                <p class="card-text h5">$<?php echo $reco['precio']; ?> MXN</p>
+              </a>
+            </div>
+          </div>
         </div>
-        <!--fila-->
-        <div class="row text-start">
-          <!--lentes5-->
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes5.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Ky 0004</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$1899,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-          <!--lentes6-->
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes6.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Silver Seven</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$2299,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-          <!--lentes7-->
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes7.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Kipling 4065</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$1999,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-          <!--lentes8-->
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes8.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Cloe25288</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$2599,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-          <!--lentes3-->
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes3.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Ky Eyewear 0091</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$1699,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-           <!--lentes4-->
-           <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes4.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Axess clip solar 2717</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$2799,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-           <!--lentes1-->
-           <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes1.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Kipling 1116</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$1990,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-            <!--lentes2-->
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-              <div class="card" style="width: 19rem;">
-                <a href="#"><img src="../images/lentes2.png" class="card-img-top" alt="..."></a>
-                <div class="card-body">
-                  <h5 class="card-title h4">Ky Eyewear 3556</h5>
-                  <a class="objeto-texto" href="#"><p class="card-text h5">$1699,00 MXN</p></a>
-                </div>
-              </div>
-            </div>
-       </div>
-      </div>
+      <?php
+      }
+      ?>
+
+
+    </div>
+  </div>
 
     <!--footer-->
     <?php
