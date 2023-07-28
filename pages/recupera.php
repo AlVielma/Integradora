@@ -20,14 +20,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newPassword = $_POST['contraseñanueva']; // Nueva contraseña
         $confirmNewPassword = $_POST['confirmarcontraseña']; // Confirmar nueva contraseña
 
-        // Verificar si las contraseñas coinciden
-        if ($newPassword !== $confirmNewPassword) {
+        // Validar el email
+        if (!$validacionrecu->esEmail($email)) {
+            $error = "El email no es válido.";
+        }
+
+        // Validar las contraseñas
+        if (!$validacionrecu->validarContraseña($newPassword, $confirmNewPassword)) {
             $error = "Las contraseñas no coinciden.";
-        } else {
+        }
+
+        // Verificar si las contraseñas coinciden
+        if ($newPassword === $confirmNewPassword) {
             // Crear una instancia de la clase RecuperarContra
             $recuperarContra = new RecuperarContra();
             $idUsuario = $recuperarContra->obtenerIdUsuarioPorEmail($email);
-            if ($idUsuario !== false) {
+            if ($idUsuario === false) {
+                $error = "Usuario no encontrado.";
+            } else {
                 // Cambiar la contraseña del usuario
                 if ($recuperarContra->cambiarContraseña((int)$idUsuario, $newPassword)) {
                     // Mensaje de éxito
@@ -40,21 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-        
-        // Validar el email
-        if (!$validacionrecu->esEmail($email)) {
-            $error = "El email no es válido.";
-        }
-
-        // Validar las contraseñas
-        if (!$validacionrecu->validarContraseña($newPassword, $confirmNewPassword)) {
-            $error = "Las contraseñas no coinciden.";
-        }
     } else {
         $error = "Por favor, completa todos los campos del formulario.";
     }
 }
-
 // Verificar si se encuentra un mensaje de éxito en la sesión
 $mensaje = "";
 if (isset($_SESSION['exito']) && $_SESSION['exito'] === true) {
