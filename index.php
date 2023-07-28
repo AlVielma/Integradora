@@ -45,6 +45,7 @@ $vendidos= $productos->masvendidos3();
         <?php
             use App\Modelos\Carrito;
             require 'vendor/autoload.php';
+            require_once 'src/modelos/Carrito.php';
 
             $carrito = new Carrito();
 
