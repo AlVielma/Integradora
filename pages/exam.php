@@ -221,7 +221,7 @@ if(isset($_POST['mandar_exm']))
                     </div>
                     <div class="form-group">
                         <label for="dia" class="text-center">Día:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia"  min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+1 days')) ?>"requireda>
+                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia"  min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+10 days')) ?>"requireda>
                     </div>
                     <div class="form-group">
                         <label for="hora" class="text-center">Hora:</label>
