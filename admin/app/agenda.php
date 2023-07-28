@@ -42,7 +42,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               <th>Correo</th>
               <th>Fecha</th>
               <th>Hora</th>
-              <th>Cancelar</th>
+              <th>Cancelar/Hecho</th>
             </tr>
           </thead>
           <tbody>
@@ -57,7 +57,9 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               <td><?php echo $m['email']; ?></td>
               <td><?php echo $m['dia']; ?></td>
               <td><?php echo $m['hora']; ?></td>
-              <td><a href="" class="btn btn-danger"data-bs-toggle="modal" data-bs-id="<?=$m['id'];?>" data-bs-target="#modaleliminarcita">Cancelar</a></td>
+              <td><a href="" class="btn btn-danger"data-bs-toggle="modal" data-bs-id="<?=$m['id'];?>" data-bs-target="#modaleliminarcita">Cancelar</a>
+              <a href="../../src/http/hechocita.php?id=<?php echo $m['id'];?>" class="btn btn-success">Hecho</a></td>
+              
             </tr>
             <?php
             }

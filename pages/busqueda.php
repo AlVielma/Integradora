@@ -11,7 +11,9 @@ $rutaBaseImagenes = '../productosimg/';
 
 // Verificar si se ha enviado el formulario
 if (isset($_POST['busqueda'])) {
-  $busqueda = isset($_POST['busqueda']) ? addslashes($_POST['busqueda']) : '';
+  $busqueda = addslashes($_POST['busqueda']);
+
+  // Obtener la opción de ordenamiento seleccionada
   $orden = isset($_POST['orden']) ? $_POST['orden'] : '';
 
   $consulta = $con->prepare("CALL BuscadorPro(?);");
@@ -32,19 +34,17 @@ if (isset($_POST['busqueda'])) {
     });
   }
 
-  // Guardar los resultados en la variable de sesión
+  // Guardar los resultados en la variable de sesión solo si se ha realizado una búsqueda o filtrado
   $_SESSION['productos'] = $product;
-
-  // Redirigir utilizando el método GET
-  header('Location: ' . $_SERVER['PHP_SELF']);
-  exit();
-}
-
-// Si hay resultados de búsqueda almacenados en la sesión, los cargamos
-if (isset($_SESSION['productos'])) {
+} elseif (isset($_SESSION['productos'])) {
+  // Si no se ha enviado el formulario, cargar los productos desde la sesión
   $product = $_SESSION['productos'];
 } else {
-  $product = [];
+  // Si no hay resultados de búsqueda en la sesión ni se ha enviado el formulario, cargar todos los productos
+  $consultaTodos = $con->prepare("SELECT * FROM Productos;");
+  $consultaTodos->execute();
+  $product = $consultaTodos->fetchAll(PDO::FETCH_OBJ);
+  $consultaTodos->closeCursor();
 }
 ?>
 
@@ -124,5 +124,8 @@ if (isset($_SESSION['productos'])) {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script src="../admin/js/recar.js"></script>
+    <script>
+      history.replaceState(null,null,location.pathname);
+    </script>
 </body>
 </html>
