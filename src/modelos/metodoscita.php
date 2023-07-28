@@ -46,7 +46,7 @@ class metodoscita
 
     public function verificarcitas($dia,$hora)
     {
-        $query = $this->conectar->prepare("SELECT * FROM Citas_Cliente WHERE dia=? AND hora=?");
+        $query = $this->conectar->prepare("SELECT * FROM Citas_Cliente WHERE dia=? AND hora=? AND activo=1");
         $query->execute([$dia, $hora]);
         return $query;
     }
