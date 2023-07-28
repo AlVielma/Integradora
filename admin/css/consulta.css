@@ -20,6 +20,10 @@
     border-radius: 5px;
   }
 
+  span{
+    margin-left: 10px;
+  }
+
   .sidebar a i {
     margin-right: 10px;
   }
