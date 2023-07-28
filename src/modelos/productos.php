@@ -180,4 +180,16 @@ Class productos
         $pophombres->execute();
         return $pophombres->fetchAll(\PDO::FETCH_ASSOC);
     }
+    
+    // Función para obtener productos recomendados generales (sin necesidad de ID específico)
+    public function productosRecomendadosGenerales($cantidad = 8)
+    {
+        $recomendados = $this->pdo->prepare("SELECT p.sku, p.nombre, p.precio, i.IMAGEN 
+            FROM Productos p 
+            INNER JOIN Imagenes i ON p.imagen = i.id_img 
+            ORDER BY RAND() 
+            LIMIT ?");
+        $recomendados->execute([$cantidad]);
+        return $recomendados->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
