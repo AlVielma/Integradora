@@ -129,5 +129,8 @@ if (isset($_SESSION['exito']) && $_SESSION['exito'] === true) {
     </div>
     <!-- Scripts de Bootstrap -->
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+      history.replaceState(null,null,location.pathname);
+    </script>
 </body>
 </html>
