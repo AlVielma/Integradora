@@ -10,7 +10,7 @@ $con = $conexion->conectar();
 $rutaBaseImagenes = '../productosimg/';
 
 // Verificar si se ha enviado el formulario
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['busqueda'])) {
   $busqueda = isset($_POST['busqueda']) ? addslashes($_POST['busqueda']) : '';
   $orden = isset($_POST['orden']) ? $_POST['orden'] : '';
 
@@ -124,11 +124,5 @@ if (isset($_SESSION['productos'])) {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script src="../admin/js/recar.js"></script>
-    <script>
-  // Evitar reenvío del formulario al actualizar la página
-  if (window.history.replaceState) {
-    window.history.replaceState(null, null, window.location.href);
-  }
-</script>
 </body>
 </html>

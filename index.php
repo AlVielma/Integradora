@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 use App\Modelos\productos;
 require_once 'src/modelos/productos.php';
 require 'vendor/autoload.php';
@@ -44,6 +45,7 @@ $vendidos= $productos->masvendidos3();
         <?php
             use App\Modelos\Carrito;
             require 'vendor/autoload.php';
+            require_once 'src/modelos/Carrito.php';
 
             $carrito = new Carrito();
 
@@ -115,10 +117,10 @@ $vendidos= $productos->masvendidos3();
           <div class="col-12">
             <?php if (isset($_SESSION['user_name'])) : ?>
               <!-- Si la sesión está iniciada, muestra el mensaje personalizado -->
-              <i class="h5">¡Bienvenido! Ver perfil y cerrar sesión</i>
+              <i class="h5">¡Bienvenido!</i>
             <?php else : ?>
               <!-- Si el usuario no ha iniciado sesión, muestra el mensaje predeterminado -->
-              <i class="h5">¡Bienvenido! Inicia sesión o regístrate</i>
+              <i class="h5">¡Bienvenido!</i>
             <?php endif; ?>
           </div>
         </div>

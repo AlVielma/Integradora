@@ -54,5 +54,18 @@ class Carrito
 
         return $productosCarrito;
     }
+
+    public function actualizarProducto($usuario_id, $producto_id, $cantidad){
+        // Obtener el precio del producto desde la base de datos
+        $productosModelo = new productos();
+        $producto = $productosModelo->consultaeedit($producto_id);
+        $precio = $producto[0]['precio'];
+
+        // Actualizar la cantidad y el total del producto en la tabla "Carritos"
+        $total = $precio * $cantidad;
+
+        $actualizarCarrito = $this->pdo->prepare("UPDATE Carritos SET cantidad = ?, total = ? WHERE usuario = ? AND producto_id = ?");
+        $actualizarCarrito->execute([$cantidad, $total, $usuario_id, $producto_id]);
+    }
 }
 ?>

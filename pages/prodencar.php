@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -33,7 +32,6 @@ if (isset($_SESSION['user_id'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--Bootstrap-->
-  <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <!--Css-->
   <link rel="stylesheet" href="../css/index.css">
@@ -83,7 +81,7 @@ if (isset($_SESSION['user_id'])) {
                             </div>
                             <div class="col-md-6">
                                 <form action="eliminar_producto.php" method="post">
-                                    <input type="hidden" name="sku" value="<?php echo $producto_id; ?>">
+                                    <input type="hidden" name="sku" value="<?php echo $producto['sku']; ?>">
                                     <button type="submit" class="btn btn-light btn-outline-dark">Eliminar</button>
                                 </form>
                             </div>
@@ -96,115 +94,14 @@ if (isset($_SESSION['user_id'])) {
         }
     }
     ?>
+     <div class="text-center">
+        <a href="../index.php" class="btn btn-primary btn-lg">Seguir comprando</a>
+        <a href="apartar.php" class="btn btn-success btn-lg">Ver total</a>
+    </div>
 </div>
 
 
   <!--Contenido Recomendados-->
-  <div class="container-fluid titulos-azul mt-4 mb-4">
-    <!--Titulo azul-->
-    <div class="row justify-text">
-      <h4 class="text-center azul text-black">Otros productos</h4>
-    </div>
-    <!--fila-->
-    <div class="row text-start">
-      <!--lentes5-->
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-        <div class="card" style="width: 19rem;">
-          <a href="#"><img src="../images/lentes5.png" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <h5 class="card-title h4">Ky 0004</h5>
-            <a class="objeto-texto" href="#">
-              <p class="card-text h5">$1899,00 MXN</p>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!--lentes6-->
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-        <div class="card" style="width: 19rem;">
-          <a href="#"><img src="../images/lentes6.png" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <h5 class="card-title h4">Silver Seven</h5>
-            <a class="objeto-texto" href="#">
-              <p class="card-text h5">$2299,00 MXN</p>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!--lentes7-->
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-        <div class="card" style="width: 19rem;">
-          <a href="#"><img src="../images/lentes7.png" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <h5 class="card-title h4">Kipling 4065</h5>
-            <a class="objeto-texto" href="#">
-              <p class="card-text h5">$1999,00 MXN</p>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!--lentes8-->
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-        <div class="card" style="width: 19rem;">
-          <a href="#"><img src="../images/lentes8.png" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <h5 class="card-title h4">Cloe25288</h5>
-            <a class="objeto-texto" href="#">
-              <p class="card-text h5">$2599,00 MXN</p>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!--lentes3-->
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-        <div class="card" style="width: 19rem;">
-          <a href="#"><img src="../images/lentes3.png" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <h5 class="card-title h4">Ky Eyewear 0091</h5>
-            <a class="objeto-texto" href="#">
-              <p class="card-text h5">$1699,00 MXN</p>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!--lentes4-->
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-        <div class="card" style="width: 19rem;">
-          <a href="#"><img src="../images/lentes4.png" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <h5 class="card-title h4">Axess clip solar 2717</h5>
-            <a class="objeto-texto" href="#">
-              <p class="card-text h5">$2799,00 MXN</p>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!--lentes1-->
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-        <div class="card" style="width: 19rem;">
-          <a href="#"><img src="../images/lentes1.png" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <h5 class="card-title h4">Kipling 1116</h5>
-            <a class="objeto-texto" href="#">
-              <p class="card-text h5">$1990,00 MXN</p>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!--lentes2-->
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-        <div class="card" style="width: 19rem;">
-          <a href="#"><img src="../images/lentes2.png" class="card-img-top" alt="..."></a>
-          <div class="card-body">
-            <h5 class="card-title h4">Ky Eyewear 3556</h5>
-            <a class="objeto-texto" href="#">
-              <p class="card-text h5">$1699,00 MXN</p>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!--footer-->
   <?php
