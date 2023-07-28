@@ -19,7 +19,7 @@ class Carrito
         $this->pdo = $this->conexion->conectar();
     }
 
-    public function agregarProducto($usuario_id, $producto_id)
+    public function agregarProducto($usuario_id, $producto_id, $cantidad)
     {
         // Obtener el precio del producto desde la base de datos
         $productosModelo = new productos();
@@ -28,12 +28,10 @@ class Carrito
 
         // Insertar el producto en la tabla "Carritos"
         $fecha_pedido = date("Y-m-d"); // Obtener la fecha actual
-        $cantidad = 1; // La cantidad por defecto es 1
         $total = $precio * $cantidad;
 
         $agregarCarrito = $this->pdo->prepare("INSERT INTO Carritos (usuario, producto_id, cantidad, fecha_pedido, total) VALUES (?, ?, ?, ?, ?)");
         $agregarCarrito->execute([$usuario_id, $producto_id, $cantidad, $fecha_pedido, $total]);
-
     }
 
     public function eliminarProducto($usuario_id, $producto_id)
@@ -44,7 +42,7 @@ class Carrito
 
     public function obtenerProductosCarrito($usuario_id)
     {
-        $obtenerCarrito = $this->pdo->prepare("SELECT c.id, p.sku, p.nombre, p.descripcion, p.precio, c.cantidad, i.IMAGEN
+        $obtenerCarrito = $this->pdo->prepare("SELECT c.id, p.sku, p.nombre, p.descripcion, p.precio, c.cantidad, i.IMAGEN, c.total
                                               FROM Carritos c 
                                               INNER JOIN Productos p ON c.producto_id = p.sku
                                               INNER JOIN Imagenes i ON p.imagen = i.id_img
