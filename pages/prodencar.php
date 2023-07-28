@@ -2,8 +2,8 @@
 session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__.'/../src/modelos/Carrito.php';
-require_once __DIR__.'/../src/modelos/productos.php';
+require_once __DIR__ . '/../src/modelos/Carrito.php';
+require_once __DIR__ . '/../src/modelos/productos.php';
 
 use App\Modelos\Carrito;
 use App\Modelos\productos;
@@ -14,14 +14,14 @@ $productosModelo = new productos();
 
 // Verificar si el usuario ha iniciado sesión
 if (isset($_SESSION['user_id'])) {
-    // Obtener el ID del usuario actual desde la sesión
-    $usuario_id = $_SESSION['user_id'];
+  // Obtener el ID del usuario actual desde la sesión
+  $usuario_id = $_SESSION['user_id'];
 
-    // Obtener los productos del carrito para el usuario actual desde la base de datos
-    $productosCarrito = $carritoModelo->obtenerProductosCarrito($usuario_id);
+  // Obtener los productos del carrito para el usuario actual desde la base de datos
+  $productosCarrito = $carritoModelo->obtenerProductosCarrito($usuario_id);
 } else {
-    // El usuario no ha iniciado sesión o no tiene productos en el carrito
-    $productosCarrito = [];
+  // El usuario no ha iniciado sesión o no tiene productos en el carrito
+  $productosCarrito = [];
 }
 ?>
 
@@ -47,66 +47,69 @@ if (isset($_SESSION['user_id'])) {
   ?>
 
   <!--Contenido-->
-  
+
   <div class="container border border-black mt-4 mb-4">
     <?php
     if (empty($productosCarrito)) {
-        // Mostrar mensaje de carrito vacío
-        echo '<h2 class="text-center">El carrito está vacío.</h2>';
+      // Mostrar mensaje de carrito vacío
+      echo '<h2 class="text-center">El carrito está vacío.</h2>';
     } else {
-        $total = 0;
-        foreach ($productosCarrito as $producto) {
-            // Obtener los detalles del producto desde la base de datos
-            $productoDetalles = $productosModelo->consultaeedit($producto['sku']);
-            if (!empty($productoDetalles)) {
-                // Se asume que cada producto tiene solo una fila en la consulta
-                $nombre = $productoDetalles[0]['nombre'];
-                $precio = $productoDetalles[0]['precio'];
-                $imagen = $productoDetalles[0]['IMAGEN'];
-                $descripcion = $productoDetalles[0]['descripcion'];
-              ?>
-                <h2 class="text-center"><?php echo $nombre; ?></h2>
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="<?php echo '../productosimg/' . $imagen; ?>" alt="Imagen del producto" class="img-fluid">
-                    </div>
-                    <div class="col-md-8">
-                        <p class="lead font-weight-bold"><?php echo $descripcion; ?></p>
-                        <p class="lead font-weight-bold">$<?php echo number_format($precio, 2); ?> MXN</p>
-                        <p class="lead font-weight-bold">Pop Ópticos</p>
-                        <!-- Resto del contenido del producto -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <input type="number" class="form-control btn-sm border-dark" value="<?php echo $cantidad; ?>" placeholder="Cantidad:" style="width: 150px;">
-                            </div>
-                            <div class="col-md-6">
-                                <form action="eliminar_producto.php" method="post">
-                                    <input type="hidden" name="sku" value="<?php echo $producto['sku']; ?>">
-                                    <button type="submit" class="btn btn-light btn-outline-dark">Eliminar</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+      $total = 0;
+      foreach ($productosCarrito as $producto) {
+        // Obtener los detalles del producto desde la base de datos
+        $productoDetalles = $productosModelo->consultaeedit($producto['sku']);
+        if (!empty($productoDetalles)) {
+          // Se asume que cada producto tiene solo una fila en la consulta
+          $nombre = $productoDetalles[0]['nombre'];
+          $precio = $productoDetalles[0]['precio'];
+          $imagen = $productoDetalles[0]['IMAGEN'];
+          $descripcion = $productoDetalles[0]['descripcion'];
+    ?>
+          <h2 class="text-center"><?php echo $nombre; ?></h2>
+          <div class="row">
+            <div class="col-md-4">
+              <img src="<?php echo '../productosimg/' . $imagen; ?>" alt="Imagen del producto" class="img-fluid">
+            </div>
+            <div class="col-md-8">
+              <p class="lead font-weight-bold"><?php echo $descripcion; ?></p>
+              <p class="lead font-weight-bold">Precio Unitario: $<?php echo number_format($precio, 2); ?> MXN</p>
+              <p class="lead font-weight-bold">Pop Ópticos</p>
+              <!-- Resto del contenido del producto -->
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="cantidad" class="form-label">Cantidad:</label>
+                  <!-- Mostrar la cantidad en un label o texto -->
+                  <span><?php echo $producto['cantidad']; ?></span>
+                  <p class="lead font-weight-bold">Total: $<?php echo number_format($producto['total'], 2); ?> MXN</p>
                 </div>
-                <div class="mb-3 border-top border-5"></div>
+                <div class="col-md-6">
+                  <form action="eliminar_producto.php" method="post">
+                    <input type="hidden" name="sku" value="<?php echo $producto['sku']; ?>">
+                    <button type="submit" class="btn btn-light btn-outline-dark">Eliminar</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 mt-3 border-top border-5"></div>
     <?php
-            }
         }
+      }
     }
     ?>
-     <div class="text-center">
-        <a href="../index.php" class="btn btn-primary btn-lg">Seguir comprando</a>
-        <a href="apartar.php" class="btn btn-success btn-lg">Ver total</a>
+    <div class="text-center">
+    <a href="../index.php" class="btn btn-primary btn-lg">Seguir comprando</a>
+    <a href="ver_total_carrito.php" class="btn btn-success btn-lg">Ver total y finalizar </a>
     </div>
-</div>
+  </div>
 
 
   <!--Contenido Recomendados-->
 
   <!--footer-->
   <?php
-           include 'footer.php';
-           ?>
+  include 'footer.php';
+  ?>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
