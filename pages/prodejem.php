@@ -29,6 +29,7 @@ if ($sku == '') {
     $marca = $descrip['Marca'];
     $imagen = $descrip['IMAGEN'];
     $tipo_lente = $descrip['tipo_lente'];
+    $stock = $descrip['stock'];
     $recomendados = $productos->recomendados($sku);
   } else {
     echo 'ERROR AL PROCESAR LA PETICION';
@@ -61,52 +62,55 @@ if ($sku == '') {
   ?>
 
   <!--contenido-->
-  <main class="mt-4 mb-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 order-md-1 text-center">
-          <!--aqui es donde se utilizaria php, titulo, marca, precio e imagenes-->
-          <h1><?php echo $producto; ?></h1>
-          <h3><?php echo $marca; ?></h3>
-          <h2>$ <?php echo $precio; ?></h2>
-          <div class="mb-3 border-top border-5"></div>
-          <p class="lead">
-            <?php echo $descripcion; ?>
-            <br>
-            <?php echo $tipo_lente; ?>
-          </p>
-          <div class="mb-3 border-top border-5"></div>
+ <!--contenido-->
+<main class="mt-4 mb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 order-md-1 text-center">
+        <!--aqui es donde se utilizaria php, titulo, marca, precio e imagenes-->
+        <h1><?php echo $producto; ?></h1>
+        <h3><?php echo $marca; ?></h3>
+        <h2>$ <?php echo $precio; ?></h2>
+        <p><strong> Productos disponibles:</strong> <?php echo $stock; ?></p> <!-- Mostrar el stock del producto -->
+        <div class="mb-3 border-top border-5"></div>
+        <p class="lead">
+          <?php echo $descripcion; ?>
+          <br>
+          <?php echo $tipo_lente; ?>
+        </p>
+        <div class="mb-3 border-top border-5"></div>
 
-          <form action="agregar_al_carrito.php" method="post">
-            <input type="hidden" name="producto_id" value="<?php echo $sku; ?>">
-            <div class="mb-3">
-              <label for="cantidad" class="form-label">Cantidad:</label>
-              <input type="number" name="cantidad" id="cantidad" min="1" value="1" class="form-control">
-            </div>
-            <button type="submit" name="agregar_al_carrito" class="btn btn-light btn-outline-dark">Añadir al carrito</button>
-          </form>
-          
-        </div>
-        <div class="col-md-6 order-md-2">
-          <!--aqui es donde se utilizaria php, se utilizara foreach para imagenes-->
+        <form action="agregar_al_carrito.php" method="post">
+          <input type="hidden" name="producto_id" value="<?php echo $sku; ?>">
+          <div class="mb-3">
+            <label for="cantidad" class="form-label">Cantidad:</label>
+            <input type="number" name="cantidad" id="cantidad" min="1" max="<?php echo $stock; ?>" value="1" class="form-control">
+          </div>
+          <button type="submit" name="agregar_al_carrito" class="btn btn-light btn-outline-dark">Añadir al carrito</button>
+        </form>
 
-          <div id="carouselImages" class="carousel slide">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
+      </div>
+      <div class="col-md-6 order-md-2">
+        <!--aqui es donde se utilizaria php, se utilizara foreach para imagenes-->
 
-                <img src="<?php echo '/../productosimg/' . $imagen; ?>" class="d-block w-100" alt="...">
+        <div id="carouselImages" class="carousel slide">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
 
-              </div>
+              <img src="<?php echo '/../productosimg/' . $imagen; ?>" class="d-block w-100" alt="...">
 
             </div>
 
           </div>
 
         </div>
-      </div>
 
+      </div>
     </div>
-  </main>
+
+  </div>
+</main>
+
 
   <!--Contenido Recomendados-->
   <div class="container-fluid titulos-azul mt-4 mb-4">
