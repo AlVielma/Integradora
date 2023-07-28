@@ -72,7 +72,7 @@ if (isset($_SESSION['user_id'])) {
             </div>
             <div class="col-md-8">
               <p class="lead font-weight-bold"><?php echo $descripcion; ?></p>
-              <p class="lead font-weight-bold">Total: $<?php echo number_format($producto['total'], 2); ?> MXN</p>
+              <p class="lead font-weight-bold">Precio Unitario: $<?php echo number_format($precio, 2); ?> MXN</p>
               <p class="lead font-weight-bold">Pop Ópticos</p>
               <!-- Resto del contenido del producto -->
               <div class="row">
@@ -80,6 +80,7 @@ if (isset($_SESSION['user_id'])) {
                   <label for="cantidad" class="form-label">Cantidad:</label>
                   <!-- Mostrar la cantidad en un label o texto -->
                   <span><?php echo $producto['cantidad']; ?></span>
+                  <p class="lead font-weight-bold">Total: $<?php echo number_format($producto['total'], 2); ?> MXN</p>
                 </div>
                 <div class="col-md-6">
                   <form action="eliminar_producto.php" method="post">
@@ -90,7 +91,7 @@ if (isset($_SESSION['user_id'])) {
               </div>
             </div>
           </div>
-          <div class="mb-3 border-top border-5"></div>
+          <div class="mb-3 mt-3 border-top border-5"></div>
     <?php
         }
       }
