@@ -69,14 +69,14 @@ if(isset($_POST['mandar_exm']))
                 $mail->Password   = 'irpfvhqxqxyivwbt';                               
                 $mail->SMTPSecure = 'tls';            
                 $mail->Port = 587;                           
-            
- 
+                    $persona = '<h1>CITA AGENDADA POR'.$nombres.'</h3>';
+                    $contenido = '<h3>CITA EL DIA '.$dia.'A LAS '.$hora.'</h3>';
                 $mail->setFrom('fgolmos10@gmail.com', $nombres);
-                $mail->addAddress('vielma7220@gmail.com');
-            
+                $mail->addAddress($_SESSION['user_email']);
+             
                 $mail->isHTML(true);                                
                 $mail->Subject = 'CITA';
-                $mail->Body    = 'CITA EL DIA '.$dia.' A LAS '.$hora.' DE '.$nombres;
+                $mail->Body    = ''.$persona.''.$contenido;
                 $mail->send();
                 header('Location: exam.php');
                
