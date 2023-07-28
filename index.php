@@ -279,10 +279,10 @@ $vendidos= $productos->masvendidos3();
         <div class="col-md-4 col-sm-9">
           <div class="single-content-card text-center mt-30">
             <div class="content-card-image">
-              <img src="images/imagen4.jpg" alt="lente adulto" class="img-fluid">
+              <a href="pages/pophombres.php"><img src="images/imagen4.jpg" alt="lente adulto" class="img-fluid"></a>
             </div>
             <div class="content-card-content">
-              <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop Adultos</a></h4>
+              <h4><a href="pages/pophombres.php" class="h4 font-weight-bold text-decoration-none">Pop Adultos</a></h4>
               <p>Tenemos los mejores lentes para hombres y mujeres</p>
             </div>
           </div>
@@ -290,10 +290,10 @@ $vendidos= $productos->masvendidos3();
         <div class="col-md-4 col-sm-9">
           <div class="single-content-card text-center mt-30">
             <div class="content-card-image">
-              <img src="images/imagen3.jpg" alt="lente solar" class="img-fluid">
+             <a href="pages/solarhombre.php"><img src="images/imagen3.jpg" alt="lente solar" class="img-fluid"></a>
             </div>
             <div class="content-card-content">
-              <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop solares</a></h4>
+              <h4><a href="pages/solarhombre.php" class="h4 font-weight-bold text-decoration-none">Pop solares</a></h4>
               <p>Contamos con los mejores y mas atractivos lentes solares</p>
             </div>
           </div>
@@ -301,10 +301,10 @@ $vendidos= $productos->masvendidos3();
         <div class="col-md-4 col-sm-9">
           <div class="single-content-card text-center mt-30">
             <div class="content-card-image">
-              <img src="images/imagen4.jpg" alt="lente niños" class="img-fluid">
+             <a  href="pages/popniños.php"><img src="images/imagen4.jpg" alt="lente niños" class="img-fluid"></a>
             </div>
             <div class="content-card-content">
-              <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop niños</a></h4>
+              <h4><a href="pages/popniños.php" class="h4 font-weight-bold text-decoration-none">Pop niños</a></h4>
               <p>Tenemos los mejores accesorios para tus lentes</p>
             </div>
           </div>
