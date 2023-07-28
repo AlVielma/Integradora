@@ -5,8 +5,8 @@ session_start();
 use App\Modelos\RecuperarContra;
 use App\Modelos\Validacionrecu;
 
-require_once '../src/modelos/recuperarcontra.php';
-require_once '../src/modelos/Validacionrecu.php'; 
+require_once __DIR__.'/../src/modelos/recuperarcontra.php';
+require_once __DIR__.'/../src/modelos/validacionrecu.php'; 
 
 $validacionrecu = new Validacionrecu();
 
