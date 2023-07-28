@@ -2,11 +2,17 @@
 session_start();
 use App\Modelos\metodoscita;
 use App\Modelos\validacionescita;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/Exception.php';
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/SMTP.php';
 require_once __DIR__.'/../src/modelos/metodoscita.php';
 require_once __DIR__.'/../src/modelos/validacionescita.php';
+require __DIR__ . '/../vendor/autoload.php';
 $cita = new metodoscita();
 $vali = new validacionescita();
-
 $errors = [];
 $horariovalido = array();
 $inicio = strtotime("9:00");
@@ -20,11 +26,12 @@ if(isset($_POST['mandar_exm']))
 {   
     if(isset($_SESSION['user_name']))
     {   extract($_POST);
-        $ocupado =$cita->verificarcitas($dia,$hora);
+        $ocupado =$cita->verificarcitas($dia,$hora);#SANITIZACION DE SCRIPTS
         $nombres=$vali->filtrarString($nombre);
         $sintomasocc=$vali->filtrarString($sintomas_oculares);
         $enfermedadesoc=$vali->filtrarString($enfermedades_oculares);
-        if($ocupado->rowCount()>0)
+
+        if($ocupado->rowCount()>0)#SI UNA HORA ESTA OCUPADA EL MISMO DIA Y DEVUELVE 1 FILA
         {
             $errors[]="Esta hora esta ocupada";
         }
@@ -49,7 +56,33 @@ if(isset($_POST['mandar_exm']))
            if($nombres == $nombre && $sintomasocc==$sintomas_oculares && $enfermedadesoc==$enfermedades_oculares)
            {
             $cita->agregar($_SESSION['user_id'],$nombres,$telefono,$fecha_nacimiento,$dia,$hora,$sintomasocc,$enfermedadesoc,$lentes_actualmente,$armazon,$contacto,$ultimo_examen,$uso_gotas);
+            #CORREO
+            $mail = new PHPMailer(true);
 
+            try {
+                //Server settings
+                $mail->SMTPDebug = SMTP::DEBUG_SERVER;                    
+                $mail->isSMTP();                                          
+                $mail->Host = 'smtp.gmail.com';                    
+                $mail->SMTPAuth   = true;                                   
+                $mail->Username   = 'fgolmos10@gmail.com';                   
+                $mail->Password   = 'irpfvhqxqxyivwbt';                               
+                $mail->SMTPSecure = 'tls';            
+                $mail->Port = 587;                           
+            
+ 
+                $mail->setFrom('fgolmos10@gmail.com', $nombres);
+                $mail->addAddress('vielma7220@gmail.com');
+            
+                $mail->isHTML(true);                                
+                $mail->Subject = 'CITA';
+                $mail->Body    = 'CITA EL DIA '.$dia.' A LAS '.$hora.' DE '.$nombres;
+                $mail->send();
+                header('Location: exam.php');
+                echo 'Message has been sent';
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
            }
            else
            {
