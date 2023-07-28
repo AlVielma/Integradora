@@ -5,8 +5,8 @@ session_start();
 use App\Modelos\RecuperarContra;
 use App\Modelos\Validacionrecu;
 
-require_once '../src/modelos/recuperarcontra.php';
-require_once '../src/modelos/Validacionrecu.php'; 
+require_once __DIR__.'/../src/modelos/recuperarcontra.php';
+require_once __DIR__.'/../src/modelos/validacionrecu.php'; 
 
 $validacionrecu = new Validacionrecu();
 
@@ -130,5 +130,8 @@ if (isset($_SESSION['exito']) && $_SESSION['exito'] === true) {
     </div>
     <!-- Scripts de Bootstrap -->
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+      history.replaceState(null,null,location.pathname);
+    </script>
 </body>
 </html>

@@ -30,6 +30,35 @@ class validacionproductos
         // Si $pathinfo no es un array o no contiene la clave 'extension', retornar falso
         return false;
     }
+    function issnumber($numero)
+    {
+        if(is_numeric($numero))
+        {
+            return true;
+        }
+        return false;
+    }
+    function numero($numero)
+    {
+        if(strlen(trim($numero))>10)
+        {
+            return true;
+        }
+        return false;
+    }
+    function caractmas($nombre)
+    {
+        if(strlen(trim($nombre))>100)
+        {
+            return true;
+        }
+        return false;
+    }
+    function sqlinj($string)
+    {
+        $parametro = str_replace(array(';', '--', '*', '%', '!', '=', '<', '>'), '', $string);
+        return $parametro;
+    }
 
     function mensajes(array $errors)
     {

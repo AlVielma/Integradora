@@ -69,17 +69,17 @@ if(isset($_POST['mandar_exm']))
                 $mail->Password   = 'irpfvhqxqxyivwbt';                               
                 $mail->SMTPSecure = 'tls';            
                 $mail->Port = 587;                           
-            
- 
+                    $persona = '<h1>CITA AGENDADA POR'.$nombres.'</h3>';
+                    $contenido = '<h3>CITA EL DIA '.$dia.'A LAS '.$hora.'</h3>';
                 $mail->setFrom('fgolmos10@gmail.com', $nombres);
-                $mail->addAddress('vielma7220@gmail.com');
-            
+                $mail->addAddress($_SESSION['user_email']);
+             
                 $mail->isHTML(true);                                
                 $mail->Subject = 'CITA';
-                $mail->Body    = 'CITA EL DIA '.$dia.' A LAS '.$hora.' DE '.$nombres;
+                $mail->Body    = ''.$persona.''.$contenido;
                 $mail->send();
                 header('Location: exam.php');
-                echo 'Message has been sent';
+               
             } catch (Exception $e) {
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
@@ -221,7 +221,7 @@ if(isset($_POST['mandar_exm']))
                     </div>
                     <div class="form-group">
                         <label for="dia" class="text-center">Día:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia"  min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+1 days')) ?>"requireda>
+                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia"  min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+10 days')) ?>"requireda>
                     </div>
                     <div class="form-group">
                         <label for="hora" class="text-center">Hora:</label>

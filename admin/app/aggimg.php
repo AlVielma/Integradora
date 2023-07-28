@@ -24,6 +24,15 @@ if (isset($_POST['agregar'])) {
   if (empty($_FILES['imagen']['name'])) {
       $errors[] = "Debes seleccionar una imagen";
   }
+  if(!$validacion->issnumber($precio))
+  {
+      $errors[]="El precio debe ser numerico";
+  }
+  if(!$validacion->issnumber($stock))
+  {
+      $errors[]="El stock debe ser numerico";
+  }
+
   if (isset($_FILES['imagen']) && is_array($_FILES['imagen'])) {
     // Llamamos a la función validarExtensionImagen solo si hay información válida en $_FILES['imagen']
     if (!$validacion->validarExtensionImagen($_FILES['imagen'])) {
