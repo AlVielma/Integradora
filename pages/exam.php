@@ -79,7 +79,7 @@ if(isset($_POST['mandar_exm']))
                 $mail->Body    = 'CITA EL DIA '.$dia.' A LAS '.$hora.' DE '.$nombres;
                 $mail->send();
                 header('Location: exam.php');
-                echo 'Message has been sent';
+               
             } catch (Exception $e) {
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
