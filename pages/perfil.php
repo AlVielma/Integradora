@@ -22,7 +22,7 @@ session_start();
            
     <div class="container mt-5">
     <div class="row">
-        <div class="col-4">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <img src="/../images/icon2.png" width="200" height="200" alt="">
         </div>
         <div class="col-4 imagenes">
