@@ -145,6 +145,10 @@ if (!empty($_POST)) {
             </div>
         </div>
     </div>
+
+    <script>
+      history.replaceState(null,null,location.pathname);
+    </script>
 </body>
 
 </html>
