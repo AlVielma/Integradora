@@ -282,7 +282,7 @@ $vendidos= $productos->masvendidos3();
               <img src="images/imagen4.jpg" alt="lente adulto" class="img-fluid">
             </div>
             <div class="content-card-content">
-              <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop Adultos</a></h4>
+              <h4><a href="pages/pophombres.php" class="h4 font-weight-bold text-decoration-none">Pop Adultos</a></h4>
               <p>Tenemos los mejores lentes para hombres y mujeres</p>
             </div>
           </div>
@@ -293,7 +293,7 @@ $vendidos= $productos->masvendidos3();
               <img src="images/imagen3.jpg" alt="lente solar" class="img-fluid">
             </div>
             <div class="content-card-content">
-              <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop solares</a></h4>
+              <h4><a href="pages/solarhombre.php" class="h4 font-weight-bold text-decoration-none">Pop solares</a></h4>
               <p>Contamos con los mejores y mas atractivos lentes solares</p>
             </div>
           </div>
@@ -304,7 +304,7 @@ $vendidos= $productos->masvendidos3();
               <img src="images/imagen4.jpg" alt="lente niños" class="img-fluid">
             </div>
             <div class="content-card-content">
-              <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop niños</a></h4>
+              <h4><a href="pages/popniños.php" class="h4 font-weight-bold text-decoration-none">Pop niños</a></h4>
               <p>Tenemos los mejores accesorios para tus lentes</p>
             </div>
           </div>
@@ -355,7 +355,7 @@ $vendidos= $productos->masvendidos3();
         {?>
           <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0">
             <div class="single-content-card">
-              <img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap">
+              <a href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>"><img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap"></a>
               <div class="card-body">
                 <h5 class="card-title h4"><?php echo $producto['nombre']; ?></h5>
                 <a class="h4 font-weight-bold text-decoration-none" href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>">

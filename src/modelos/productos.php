@@ -124,7 +124,7 @@ Class productos
 
     public function descproducto($id)
     {
-        $descproducto = $this->pdo->prepare("SELECT p.sku,p.nombre,p.descripcion, p.precio, m.nombre as Marca, i.IMAGEN,tp.tipo_lente
+        $descproducto = $this->pdo->prepare("SELECT p.sku,p.nombre,p.descripcion, p.precio, m.nombre as Marca, i.IMAGEN,tp.tipo_lente, stock
         FROM Imagenes i INNER JOIN Productos p on i.id_img = p.imagen INNER JOIN
         Marcas m on m.id = p.marca_id INNER JOIN TiposLentes tp on tp.id=p.tipo_lente_id WHERE p.sku=? LIMIT 1");
         $descproducto->execute([$id]);
@@ -180,7 +180,7 @@ Class productos
         $pophombres->execute();
         return $pophombres->fetchAll(\PDO::FETCH_ASSOC);
     }
-    
+
     // Función para obtener productos recomendados generales (sin necesidad de ID específico)
     public function productosRecomendadosGenerales($cantidad = 8)
     {
