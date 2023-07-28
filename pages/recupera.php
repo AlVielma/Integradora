@@ -12,6 +12,7 @@ $validacionrecu = new Validacionrecu();
 
 // Variables para almacenar mensajes
 $error = "";
+$mensaje = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener los datos del formulario
@@ -30,38 +31,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = "Las contraseñas no coinciden.";
         }
 
-        // Verificar si las contraseñas coinciden
-        if ($newPassword === $confirmNewPassword) {
-            // Crear una instancia de la clase RecuperarContra
-            $recuperarContra = new RecuperarContra();
-            $idUsuario = $recuperarContra->obtenerIdUsuarioPorEmail($email);
-            if ($idUsuario === false) {
-                $error = "Usuario no encontrado.";
+        // Crear una instancia de la clase RecuperarContra
+        $recuperarContra = new RecuperarContra();
+
+        // Obtener el ID del usuario por su correo electrónico
+        $idUsuario = $recuperarContra->obtenerIdUsuarioPorEmail($email);
+
+        // Verificar si el usuario no fue encontrado (ID es false o -1)
+        if ($idUsuario === false || $idUsuario === -1) {
+            $error = "El correo electrónico ingresado no coincide con ningún usuario.";
+        } else {
+            // Cambiar la contraseña del usuario
+            if ($recuperarContra->cambiarContraseña($idUsuario, $newPassword)) {
+                // Mensaje de éxito
+                $_SESSION['exito'] = true;
+                // Redirigir a esta página para evitar el reenvío del formulario
+                header("Location: recupera.php");
+                exit();
             } else {
-                // Cambiar la contraseña del usuario
-                if ($recuperarContra->cambiarContraseña((int)$idUsuario, $newPassword)) {
-                    // Mensaje de éxito
-                    $_SESSION['exito'] = true;
-                    // Redirigir a esta página para evitar el reenvío del formulario
-                    header("Location: recupera.php");
-                    exit();
-                } else {
-                    $error = "Hubo un error al cambiar la contraseña.";
-                }
+                $error = "Hubo un error al cambiar la contraseña.";
             }
         }
     } else {
         $error = "Por favor, completa todos los campos del formulario.";
     }
 }
-// Verificar si se encuentra un mensaje de éxito en la sesión
-$mensaje = "";
+
 if (isset($_SESSION['exito']) && $_SESSION['exito'] === true) {
     $mensaje = "La contraseña se cambió exitosamente.";
     // Limpiar la variable de sesión para que el mensaje no aparezca en futuros refrescos
     unset($_SESSION['exito']);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
