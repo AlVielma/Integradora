@@ -1,5 +1,9 @@
 <?php
 session_start();
+require_once '../src/modelos/productos.php'; 
+use App\Modelos\productos;
+$productos = new productos();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,37 +39,37 @@ session_start();
         <div class="mb-3 border-top border-5"></div>
     </div>
     
-    
-    <!--Contenido Recomendados-->
-    <div class="container-fluid titulos-azul mt-4 mb-4">
-    <!--Titulo azul-->
+
+<!-- Contenido Recomendados -->
+<div class="container-fluid titulos-azul mt-4 mb-4">
+    <!-- Titulo azul -->
     <div class="row justify-text">
-      <h4 class="text-center azul text-black">Recomendados</h4>
+        <h4 class="text-center azul text-black">Recomendados</h4>
     </div>
-    <!--fila-->
+    <!-- fila -->
     <div class="row text-start">
-      <?php
-      foreach ($recomendados as $reco) {
-      ?>
-        <!--lentes5-->
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-          <div class="card" style="width: 19rem;">
-            <a href="prodejem.php?id=<?php echo $reco['sku']; ?>"><img src="<?php echo '/../productosimg/' . $reco['IMAGEN']; ?>" class="card-img-top" alt="..." width="200px" height="230px"></a>
-            <div class="card-body">
-              <h5 class="card-title h4"><?php echo $reco['nombre']; ?></h5>
-              <a class="objeto-texto" href="prodejem.php?id=<?php echo $reco['sku']; ?>">
-                <p class="card-text h5">$<?php echo $reco['precio']; ?> MXN</p>
-              </a>
+        <?php
+        $recomendados = $productos->productosRecomendadosGenerales(8); // Obtiene 8 productos recomendados
+        foreach ($recomendados as $reco) {
+        ?>
+            <!--lentes5-->
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
+                <div class="card" style="width: 19rem;">
+                    <a href="prodejem.php?id=<?php echo $reco['sku']; ?>"><img src="<?php echo '/../productosimg/' . $reco['IMAGEN']; ?>" class="card-img-top" alt="..." width="200px" height="230px"></a>
+                    <div class="card-body">
+                        <h5 class="card-title h4"><?php echo $reco['nombre']; ?></h5>
+                        <a class="objeto-texto" href="prodejem.php?id=<?php echo $reco['sku']; ?>">
+                            <p class="card-text h5">$<?php echo $reco['precio']; ?> MXN</p>
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      <?php
-      }
-      ?>
-
-
+        <?php
+        }
+        ?>
     </div>
-  </div>
+</div>
+
 
     <!--footer-->
     <?php
