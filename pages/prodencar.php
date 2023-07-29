@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
   $usuario_id = $_SESSION['user_id'];
 
   // Obtener los productos del carrito para el usuario actual desde la base de datos
-  $productosCarrito = $carritoModelo->obtenerProductosCarrito($usuario_id);
+  $productosCarrito = $carritoModelo->obtenerProductosCarritoEstado1($usuario_id);
 } else {
   // El usuario no ha iniciado sesión o no tiene productos en el carrito
   $productosCarrito = [];
