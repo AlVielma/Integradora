@@ -43,7 +43,7 @@ function calcularTotal($productosCarrito)
 
 // Verificar si se ha hecho clic en el botón de "Finalizar Compra"
 if (isset($_POST['finalizar_compra'])) {
-
+    
     // Carga el autoloader de Composer
     require __DIR__ . '../../vendor/autoload.php';
 
