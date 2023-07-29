@@ -1,4 +1,5 @@
 <?php
+session_start();
 require __DIR__.'/../../vendor/autoload.php';
 use App\Modelos\productos;
 use App\Modelos\validacionproductos;
@@ -6,7 +7,7 @@ use App\Modelos\Conexion;
 require_once __DIR__.'/../modelos/productos.php';
 require_once __DIR__.'/../modelos/validacionproductos.php';
 require_once __DIR__.'/../modelos/Conexion.php';
-
+$errores = [];
 $conexion = new Conexion();
 $conect= $conexion->conectar();
 $productos = new productos();
@@ -15,44 +16,80 @@ $marcas= $productos->mostrar_marca();
 $categorias= $productos->mostrar_categorias();
 $tlente = $productos->mostrar_tipo_lentes();
 $validacion = new validacionproductos();
-$id = $_GET['sku'];
+$id = $_GET['sku'] ?? null;
 $query = $conect->prepare("SELECT p.sku,p.nombre,p.marca_id,tipo_lente_id,p.descripcion,p.imagen,p.precio,p.stock,p.categoria_id,i.IMAGEN
 from Productos p inner join Imagenes i on p.imagen = i.id_img where sku=?");
 $query->execute([$id]);
 $conss = $query->fetch(PDO::FETCH_ASSOC);
 
-?>
 
-<?php
  extract($_POST);
  extract($_FILES);
 if(isset($_POST['editar']))
 {
-
    
-    $dir = __DIR__.'/../../productosimg/';
-    $pathinfo = pathinfo($imagen['name']);
-    $filename = $pathinfo["filename"];
-    $extension = $pathinfo["extension"];
-    $name= "{$filename}.{$extension}";
-    $real_path = "{$dir}{$filename}.{$extension}";
-
-    if (!file_exists($real_path))
+      $nombres = $validacion->filtrarString($nombre);
+    $descripcions = $validacion->filtrarString($descripcion);
+    if(!$validacion->issnumber($stock))
     {
-        $imagenactual = $productos->imagenactual($id);
-        if (!empty($imagenactual) && file_exists(__DIR__ . "/../../productosimg/" . $imagenactual)) {
-            unlink(__DIR__ . "/../../productosimg/" . $imagenactual);
+      $errores[]="El stock debe ser numerico";
+    }
+    if(!$validacion->issnumber($precio))
+    {
+      $errores[]="El precio debe ser numerico";
+    }
+    if (isset($_FILES['imagen']['name']) && !empty($_FILES['imagen']['name'])) {
+      // Llamamos a la función validarExtensionImagen solo si hay información válida en $_FILES['imagen']
+      if (!$validacion->validarExtensionImagen($_FILES['imagen'])) {
+          $errores[] = "Solo se permiten imágenes con extensiones .jpg, .png y .jpeg";
+      }
+
+     }
+    
+
+    if(count($errores)==0)
+    {
+      $dir = __DIR__.'/../../productosimg/';
+      $pathinfo = pathinfo($imagen['name']);
+      $filename = $pathinfo["filename"];
+      $extension = isset($pathinfo["extension"]) ? $pathinfo["extension"] : null;
+      $name= "{$filename}.{$extension}";
+      $real_path = "{$dir}{$filename}.{$extension}";
+      if (!file_exists($real_path))
+      {
+        if($nombre==$nombres && $descripcion==$descripcions)
+        {
+          $imagenactual = $productos->imagenactual($id);
+          if (!empty($imagenactual) && file_exists(__DIR__ . "/../../productosimg/" . $imagenactual)) {
+              unlink(__DIR__ . "/../../productosimg/" . $imagenactual);
+          }
+          move_uploaded_file($imagen['tmp_name'], $real_path);
+          $nombresinj=$validacion->sqlinj($nombres);
+          $descripcioninj=$validacion->sqlinj($descripcions);
+          $productos->actualizarproducto($nombresinj, $marca, $tipo_lente, $descripcioninj, $precio, $stock, $categoria, $id);
+          $productos->actualizarimg($name, $id);
+          header('Location: /../../admin/app/aggimg.php');
+          exit();
         }
-        move_uploaded_file($imagen['tmp_name'], $real_path);
-        $productos->actualizarproducto($nombre, $marca, $tipo_lente, $descripcion, $precio, $stock, $categoria, $id);
-        $productos->actualizarimg($name, $id);
-        header('Location: /../../admin/app/aggimg.php');
+        else
+        {
+          $errores[]="ERROR CON EL INGRESO DE DATOS";
+        }
+      }
+      else {
+         if($nombre==$nombres && $descripcion==$descripcions)
+         {
+          $nombresinj=$validacion->sqlinj($nombres);
+          $descripcioninj=$validacion->sqlinj($descripcions);
+          $productos->actualizarproducto($nombresinj, $marca, $tipo_lente, $descripcioninj, $precio, $stock, $categoria, $id);
+          header('Location: /../../admin/app/aggimg.php');
+         }
+         else
+        {
+          $errores[]="ERROR CON EL INGRESO DE DATOS";
+        }
+      }
     }
-    else {
-        $productos->actualizarproducto($nombre, $marca, $tipo_lente, $descripcion, $precio, $stock, $categoria, $id);
-        header('Location: /../../admin/app/aggimg.php');
-    }
-   
 }
 ?>
 <!doctype html>
@@ -64,12 +101,17 @@ if(isset($_POST['editar']))
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   </head>
   <body>
-
+  
 <div class="container container form border border-black p-4">
-  <form action="editproducto.php" method="post" enctype="multipart/form-data" >
+  <div>
     <?php
-    
+    $validacion->mensajes($errores);
     ?>
+  </div>
+  <form action="editproducto.php?sku=<?php echo $id; ?>" method="post" enctype="multipart/form-data" >
+    <div>
+     
+    </div>
   <legend>Editar producto</legend>
             <input type="hidden" value="<?php echo $conss['sku']; ?>" name="id">
               <div class="mb-3">
