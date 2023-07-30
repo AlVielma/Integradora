@@ -29,7 +29,6 @@ class Carrito
         $precio = $producto[0]['precio'];
 
         // Insertar el producto en la tabla "Carritos"
-        $fecha_pedido = date("Y-m-d"); // Obtener la fecha actual
         $total = $precio * $cantidad;
 
         $agregarCarrito = $this->pdo->prepare("INSERT INTO Carritos (usuario, producto_id, cantidad, total, estado_id) VALUES (?, ?, ?, ?, ?)");
@@ -81,4 +80,66 @@ class Carrito
         $actualizarCarrito = $this->pdo->prepare("UPDATE Carritos SET cantidad = ?, total = ? WHERE usuario = ? AND producto_id = ?");
         $actualizarCarrito->execute([$cantidad, $total, $usuario_id, $producto_id]);
     }
+    public function finalizarCompra($usuario_id)
+    {
+        // Obtener los productos del carrito para el usuario actual
+        $productosCarrito = $this->obtenerProductosCarritoEstado1($usuario_id);
+
+        // Calcular el total de la compra
+        $totalCompra = calcularTotal($productosCarrito);
+
+        // Crear una nueva instancia de la clase DateTime para obtener la fecha actual
+        $fecha_pedido = new \DateTime();
+        $fecha_pedido = $fecha_pedido->format('Y-m-d');
+
+        // Iniciar una transacción para garantizar la consistencia de la base de datos
+        $this->pdo->beginTransaction();
+
+        try {
+            // Insertar los detalles de la compra en la tabla DetalleCompra
+            $insertarDetalle = $this->pdo->prepare("INSERT INTO DetalleCompra (usuario_id, fecha_pedido, total, estado_id) VALUES (?, ?, ?, ?)");
+            $insertarDetalle->execute([$usuario_id, $fecha_pedido, $totalCompra, 2]);
+
+            // Obtener el ID de la compra recién realizada
+            $compra_id = $this->pdo->lastInsertId();
+
+            // Actualizar el estado de los productos en la tabla Carritos
+            $actualizarEstado = $this->pdo->prepare("UPDATE Carritos SET estado_id = 2 WHERE usuario = ? AND estado_id = 1");
+            $actualizarEstado->execute([$usuario_id]);
+
+            // Confirmar la transacción
+            $this->pdo->commit();
+
+            return $compra_id;
+        } catch (\Exception $e) {
+            // Revertir la transacción en caso de error
+            $this->pdo->rollBack();
+            throw $e;
+        }
+    }
+    public function obtenerDetallesCompras()
+    {
+        $obtenerDetalles = $this->pdo->query("SELECT dc.id, u.nombre as nombre_cliente, u.apellido as apellido_cliente, dc.fecha_pedido, dc.total, dc.estado_id
+                                              FROM DetalleCompra dc 
+                                              INNER JOIN Usuarios u ON dc.usuario_id = u.id
+                                              ORDER BY dc.fecha_pedido DESC");
+        $detallesCompras = $obtenerDetalles->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $detallesCompras;
+    }
+
+    // Función para cambiar el estado de una compra a "Finalizado" (3)
+    public function confirmarCompra($compra_id)
+    {
+        $actualizarEstado = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 3 WHERE id = ?");
+        $actualizarEstado->execute([$compra_id]);
+    }
+
+    // Función para cambiar el estado de una compra a "Inactivo" (1)
+    public function cancelarCompra($compra_id)
+    {
+        $actualizarEstado = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 1 WHERE id = ?");
+        $actualizarEstado->execute([$compra_id]);
+    }
+
 }

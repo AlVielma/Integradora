@@ -43,7 +43,10 @@ function calcularTotal($productosCarrito)
 
 // Verificar si se ha hecho clic en el botón de "Finalizar Compra"
 if (isset($_POST['finalizar_compra'])) {
-    
+
+    // Finalizar la compra y obtener el ID de la compra recién realizada
+    $compra_id = $carritoModelo->finalizarCompra($usuario_id);
+
     // Carga el autoloader de Composer
     require __DIR__ . '../../vendor/autoload.php';
 
