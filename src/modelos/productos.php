@@ -25,7 +25,7 @@ Class productos
     {
         $mostarproductos = $this->pdo->query("SELECT p.sku, p.nombre, p.descripcion, c.nombre AS categoria, p.precio, p.stock, i.IMAGEN
         FROM Categorias c INNER JOIN Productos p ON p.categoria_id = c.id INNER JOIN Imagenes i
-        ON p.imagen = id_img");
+        ON p.imagen = i.id_img");
         return $mostarproductos->fetchAll(\PDO::FETCH_ASSOC);
     }
 
