@@ -180,15 +180,16 @@ public function confirmarCompra($compra_id, $usuario_id)
     }
 }
 
-
-
-
-
     // Función para cambiar el estado de una compra a "Inactivo" (1)
-    public function cancelarCompra($compra_id)
+    public function cancelarCompra($compra_id, $usuario_id)
     {
-        $actualizarEstado = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 1 WHERE id = ?");
-        $actualizarEstado->execute([$compra_id]);
+       // Actualizar el estado de la compra a "Finalizado" (3) en la tabla DetalleCompra
+    $actualizarEstadoCompra = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 4 WHERE id = ?");
+    $actualizarEstadoCompra->execute([$compra_id]);
+
+    // Actualizar el estado del carrito a "Confirmado" (3) en la tabla Carritos
+    $actualizarEstadoCarrito = $this->pdo->prepare("UPDATE Carritos SET estado_id = 4 WHERE id = ? AND usuario = ?");
+    $actualizarEstadoCarrito->execute([$compra_id, $usuario_id]);
     }
 
     public function __destruct()

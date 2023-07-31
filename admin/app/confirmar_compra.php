@@ -16,8 +16,6 @@ if (isset($_GET['id'])) {
     // Confirmar la compra
     $carritoModelo->confirmarCompra($compra_id,$usuario_id);
 
-    echo '<script>alert("Orden Confirmada");</script>';
-    
     // Redirigir de regreso a la lista de detalles de compras
     header("Location: pendientes.php");
     exit;

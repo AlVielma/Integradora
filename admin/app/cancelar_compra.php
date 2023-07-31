@@ -6,15 +6,14 @@ use App\Modelos\Carrito;
 
 // Obtener el ID de la compra a cancelar desde el parámetro en la URL
 if (isset($_GET['id'])) {
+    $usuario_id = $_GET['usuario_id'];
     $compra_id = $_GET['id'];
 
+    // Crear un objeto de la clase Carrito
     $carritoModelo = new Carrito();
 
     // Cancelar la compra
-    $carritoModelo->cancelarCompra($compra_id);
-
-    // Mostrar mensaje de "Orden Cancelada"
-    echo '<script>alert("Orden Cancelada");</script>';
+    $carritoModelo->confirmarCompra($compra_id,$usuario_id);
 
     // Redirigir de regreso a la lista de detalles de compras
     header("Location: pendientes.php");

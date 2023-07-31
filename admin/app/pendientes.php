@@ -70,7 +70,7 @@ $detallesCompras = $carritoModelo->obtenerDetallesCompra();
             <!-- Botón para confirmar la compra -->
             <a href="confirmar_compra.php?id=<?php echo $detalleCompra['id_compra']; ?>&usuario_id=<?php echo $detalleCompra['usuario_id']; ?>" class="btn btn-success">Confirmar</a>
             <!-- Botón para cancelar la compra -->
-            <a href="cancelar_compra.php?id=<?php echo $detalleCompra['id_compra']; ?>" class="btn btn-danger">Cancelar</a>
+            <a href="cancelar_compra.php?id=<?php echo $detalleCompra['id_compra']; ?>&usuario_id=<?php echo $detalleCompra['usuario_id']; ?>" class="btn btn-danger">Cancelar</a>
           <?php else : ?>
             <!-- Mostrar mensaje indicando que la compra está confirmada o finalizada -->
             <?php echo ($detalleCompra['estado_id'] == 1) ? 'Inactivo' : 'Confirmada'; ?>
