@@ -7,13 +7,14 @@ use App\Modelos\Carrito;
 
 // Obtener el ID de la compra a confirmar desde el parámetro en la URL
 if (isset($_GET['id'])) {
+    $usuario_id = $_GET['usuario_id'];
     $compra_id = $_GET['id'];
 
     // Crear un objeto de la clase Carrito
     $carritoModelo = new Carrito();
 
     // Confirmar la compra
-    $carritoModelo->confirmarCompra($compra_id);
+    $carritoModelo->confirmarCompra($compra_id,$usuario_id);
 
     echo '<script>alert("Orden Confirmada");</script>';
     

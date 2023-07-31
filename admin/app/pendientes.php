@@ -58,7 +58,7 @@ $detallesCompras = $carritoModelo->obtenerDetallesCompras();
               <td>
                 <?php if ($detalleCompra['estado_id'] == 2) : ?>
                   <!-- Botón para confirmar la compra -->
-                  <a href="confirmar_compra.php?id=<?php echo $detalleCompra['id']; ?>" class="btn btn-success">Confirmar</a>
+                  <a href="confirmar_compra.php?id=<?php echo $detalleCompra['id']; ?>&usuario_id=<?php echo $detalleCompra['usuario_id']; ?>" class="btn btn-success">Confirmar</a>
                   <!-- Botón para cancelar la compra -->
                   <a href="cancelar_compra.php?id=<?php echo $detalleCompra['id']; ?>" class="btn btn-danger">Cancelar</a>
                 <?php else : ?>

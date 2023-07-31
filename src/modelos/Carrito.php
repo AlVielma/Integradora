@@ -119,7 +119,7 @@ class Carrito
     }
     public function obtenerDetallesCompras()
     {
-        $obtenerDetalles = $this->pdo->query("SELECT dc.id, u.nombre as nombre_cliente, u.apellido as apellido_cliente, dc.fecha_pedido, dc.total, dc.estado_id
+        $obtenerDetalles = $this->pdo->query("SELECT dc.id,dc.usuario_id,u.nombre as nombre_cliente, u.apellido as apellido_cliente, dc.fecha_pedido, dc.total, dc.estado_id
                                               FROM DetalleCompra dc 
                                               INNER JOIN Usuarios u ON dc.usuario_id = u.id
                                               ORDER BY dc.fecha_pedido DESC");
