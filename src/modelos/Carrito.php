@@ -121,28 +121,28 @@ class Carrito
 
 
     public function obtenerDetallesCompra()
-{
-    $obtenerDetalles = $this->pdo->query("SELECT dc.id as id_compra, dc.usuario_id, u.nombre as nombre_cliente, u.apellido as apellido_cliente, dc.fecha_pedido, dc.total, dc.estado_id
-                                          FROM DetalleCompra dc
-                                          INNER JOIN Usuarios u ON dc.usuario_id = u.id
-                                          GROUP BY dc.id, dc.usuario_id, u.nombre, u.apellido, dc.fecha_pedido, dc.total, dc.estado_id
-                                          ORDER BY dc.fecha_pedido DESC");
-
-    $detallesCompras = $obtenerDetalles->fetchAll(\PDO::FETCH_ASSOC);
-
-    // Ahora, para cada compra, obtendremos los productos asociados
-    foreach ($detallesCompras as &$detalleCompra) {
-        $obtenerProductos = $this->pdo->query("SELECT p.nombre as nombre_producto, c.cantidad, c.total as total_producto
-                                               FROM Carritos c
-                                               INNER JOIN Productos p ON c.producto_id = p.sku
-                                               WHERE c.compra_id = " . $detalleCompra['id_compra']);
-        $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
-
-        $detalleCompra['productos'] = $productos;
+    {
+        $obtenerDetalles = $this->pdo->query("SELECT dc.id as id_compra, dc.usuario_id, u.nombre as nombre_cliente, u.apellido as apellido_cliente, dc.fecha_pedido, dc.total, dc.estado_id
+                                              FROM DetalleCompra dc
+                                              INNER JOIN Usuarios u ON dc.usuario_id = u.id
+                                              GROUP BY dc.id, dc.usuario_id, u.nombre, u.apellido, dc.fecha_pedido, dc.total, dc.estado_id
+                                              ORDER BY dc.fecha_pedido DESC");
+    
+        $detallesCompras = $obtenerDetalles->fetchAll(\PDO::FETCH_ASSOC);
+    
+        // Ahora, para cada compra, obtendremos los productos asociados
+        foreach ($detallesCompras as &$detalleCompra) {
+            $obtenerProductos = $this->pdo->query("SELECT p.nombre as nombre_producto, c.cantidad, c.total as total_producto
+                                                   FROM Carritos c
+                                                   INNER JOIN Productos p ON c.producto_id = p.sku
+                                                   WHERE c.compra_id = " . $detalleCompra['id_compra']);
+            $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
+    
+            $detalleCompra['productos'] = $productos;
+        }
+    
+        return $detallesCompras;
     }
-
-    return $detallesCompras;
-}
 
 
    // Función para cambiar el estado de una compra a "Finalizado" (3)
@@ -180,14 +180,13 @@ public function confirmarCompra($compra_id, $usuario_id)
     }
 }
 
-    // Función para cambiar el estado de una compra a "Inactivo" (1)
     public function cancelarCompra($compra_id, $usuario_id)
     {
-       // Actualizar el estado de la compra a "Finalizado" (3) en la tabla DetalleCompra
+       // Actualizar el estado de la compra a "Cancelado" (4) en la tabla DetalleCompra
     $actualizarEstadoCompra = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 4 WHERE id = ?");
     $actualizarEstadoCompra->execute([$compra_id]);
 
-    // Actualizar el estado del carrito a "Confirmado" (3) en la tabla Carritos
+    // Actualizar el estado del carrito a "Cancelado" (4) en la tabla Carritos
     $actualizarEstadoCarrito = $this->pdo->prepare("UPDATE Carritos SET estado_id = 4 WHERE id = ? AND usuario = ?");
     $actualizarEstadoCarrito->execute([$compra_id, $usuario_id]);
     }

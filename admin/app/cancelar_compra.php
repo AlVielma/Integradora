@@ -13,7 +13,7 @@ if (isset($_GET['id'])) {
     $carritoModelo = new Carrito();
 
     // Cancelar la compra
-    $carritoModelo->confirmarCompra($compra_id,$usuario_id);
+    $carritoModelo->cancelarCompra($compra_id,$usuario_id);
 
     // Redirigir de regreso a la lista de detalles de compras
     header("Location: pendientes.php");
