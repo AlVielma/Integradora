@@ -128,12 +128,47 @@ class Carrito
         return $detallesCompras;
     }
 
-    // Función para cambiar el estado de una compra a "Finalizado" (3)
-    public function confirmarCompra($compra_id)
-    {
-        $actualizarEstado = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 3 WHERE id = ?");
-        $actualizarEstado->execute([$compra_id]);
+  // Función para cambiar el estado de una compra a "Finalizado" (3)
+public function confirmarCompra($compra_id)
+{
+    // Actualizar el estado de la compra a "Finalizado" (3)
+    $actualizarEstadoCompra = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 3 WHERE id = ?");
+    $actualizarEstadoCompra->execute([$compra_id]);
+
+    // Obtener el ID del carrito asociado a la compra
+    $obtenerCarritoId = $this->pdo->prepare("SELECT carrito_id FROM DetalleCompra WHERE id = ?");
+    $obtenerCarritoId->execute([$compra_id]);
+    $carrito_id = $obtenerCarritoId->fetchColumn();
+
+    // Actualizar el estado del carrito a "Finalizado" (3)
+    $actualizarEstadoCarrito = $this->pdo->prepare("UPDATE Carritos SET estado_id = 3 WHERE id = ?");
+    $actualizarEstadoCarrito->execute([$carrito_id]);
+
+    // Obtener los productos asociados al carrito confirmado
+    $obtenerProductos = $this->pdo->prepare("SELECT producto_id, cantidad FROM Carritos WHERE id = ?");
+    $obtenerProductos->execute([$carrito_id]);
+    $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Reducir el stock de los productos confirmados
+    foreach ($productos as $producto) {
+        $producto_id = $producto['producto_id'];
+        $cantidad_confirmada = $producto['cantidad'];
+
+        // Obtener el stock actual del producto
+        $obtenerStock = $this->pdo->prepare("SELECT stock FROM Productos WHERE sku = ?");
+        $obtenerStock->execute([$producto_id]);
+        $stock_actual = $obtenerStock->fetchColumn();
+
+        // Calcular el nuevo stock después de confirmar la compra
+        $nuevo_stock = $stock_actual - $cantidad_confirmada;
+
+        // Actualizar el stock del producto en la tabla Productos
+        $actualizarStock = $this->pdo->prepare("UPDATE Productos SET stock = ? WHERE sku = ?");
+        $actualizarStock->execute([$nuevo_stock, $producto_id]);
     }
+}
+
+
 
     // Función para cambiar el estado de una compra a "Inactivo" (1)
     public function cancelarCompra($compra_id)

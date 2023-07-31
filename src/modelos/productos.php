@@ -192,4 +192,21 @@ Class productos
         $recomendados->execute([$cantidad]);
         return $recomendados->fetchAll(\PDO::FETCH_ASSOC);
     }
+   
+
+public function obtenerStock($producto_id)
+{
+    $obtenerStock = $this->pdo->prepare("SELECT stock FROM Productos WHERE sku = ?");
+    $obtenerStock->execute([$producto_id]);
+    return $obtenerStock->fetchColumn();
+}
+
+
+
+public function actualizarStock($producto_id, $nuevo_stock)
+{
+    $actualizarStock = $this->pdo->prepare("UPDATE Productos SET stock = ? WHERE sku = ?");
+    $actualizarStock->execute([$nuevo_stock, $producto_id]);
+}
+
 }
