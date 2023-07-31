@@ -1,4 +1,5 @@
 <?php
+/*index.php*/
 session_start();
 
 use App\Modelos\productos;
