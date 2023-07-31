@@ -397,40 +397,41 @@ $vendidos= $productos->masvendidos3();
 
   <section id="contact" class="bg-light py-3">
     <div class="container">
-      <div class="row py-2">
-        <div class="col-12 text-center">
-          <h2 class="display-6 "><b>Contactanos</b></h2>
-          <p>Nos interesa saber tu opinion</p>
+        <div class="row py-2">
+            <div class="col-12 text-center">
+                <h2 class="display-6"><b>Contactanos</b></h2>
+                <p>Nos interesa saber tu opinión</p>
+            </div>
         </div>
-
-      </div>
-      <div class="row">
-        <div class="col-12 col-lg-5 text-center">
-          <img class="img-fluid" src="images/imagen2.jpg" alt="contactanos">
+        <div class="row">
+            <div class="col-12 col-lg-5 text-center">
+                <img class="img-fluid" src="images/imagen2.jpg" alt="contactanos">
+            </div>
+            <div class="col-12 col-lg-7">
+                <div class="">
+                    <form action="correoquejas.php" method="post">
+                        <div class="form-floating">
+                            <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre" name="nombre">
+                            <label for="floatingName">Tu nombre</label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <input required type="email" class="form-control rounded-0" id="floatingInput" placeholder="name@example.com" name="email">
+                            <label for="floatingInput">Correo electrónico</label>
+                        </div>
+                        <div class=" mt-3">
+                            <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="4" name="comentario"></textarea>
+                            <label for="floatingTextarea">Comentario</label>
+                        </div>
+                        <div class="mt-3">
+                            <button class="btn btn-primary w-100 rounded-0" type="submit">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="col-12 col-lg-7">
-          <div class="">
-            <form action="">
-              <div class="form-floating">
-                <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre">
-
-              </div>
-              <div class="form-floating mt-3">
-                <input required type="email" class="form-control rounded-0" id="floatingInput" placeholder="name@example.com">
-
-              </div>
-              <div class=" mt-3">
-                <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="4"></textarea>
-              </div>
-              <div class="mt-3">
-                <button class="btn btn-primary w-100 rounded-0" type="submit">Send</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
+
 
 
 
