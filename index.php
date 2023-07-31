@@ -9,6 +9,33 @@ require_once 'src/modelos/productos.php';
 require 'vendor/autoload.php';
 $productos = new productos();
 $vendidos= $productos->masvendidos3();
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  // Accede a los datos del formulario
+  $nombre = $_POST["nombre"];
+  $email = $_POST["email"];
+  $comentario = $_POST["comentario"];
+
+  // El resto de tu código existente para enviar el correo
+  // ...
+  // Configura los destinatarios
+  $mail->setFrom($email, $nombre);
+  $mail->addAddress('vafd_utt1@gmail.com');
+  $mail->addReplyTo($email, $nombre);
+
+  // Configura el contenido del correo
+  $mail->isHTML(true);
+  $mail->Subject = 'Queja o Comentario';
+  $mail->Body = 'Nombre: ' . $nombre . '<br>Email: ' . $email . '<br>Comentario: ' . $comentario;
+
+  // Envía el correo
+  $mail->send();
+  // Redirecciona a la página principal y muestra una alerta
+  echo '<script>alert("Gracias por tu queja o comentario. Lo hemos recibido y te responderemos pronto.");</script>';
+  echo '<script>window.location.href = "index.php";</script>';
+} else {
+  echo '<script>alert("Error: Método de solicitud incorrecto.");</script>';
+}
+?>
 ?>
 <!DOCTYPE html>
 <html lang="en">
