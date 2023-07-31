@@ -80,6 +80,7 @@ class Carrito
         $actualizarCarrito = $this->pdo->prepare("UPDATE Carritos SET cantidad = ?, total = ? WHERE usuario = ? AND producto_id = ?");
         $actualizarCarrito->execute([$cantidad, $total, $usuario_id, $producto_id]);
     }
+    
     public function finalizarCompra($usuario_id)
     {
         // Obtener los productos del carrito para el usuario actual
