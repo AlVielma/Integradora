@@ -3,6 +3,8 @@
 session_start();
 
 use App\Modelos\productos;
+use App\http\correoquejas;
+require_once 'src/http/correoquejas.php';
 require_once 'src/modelos/productos.php';
 require 'vendor/autoload.php';
 $productos = new productos();
