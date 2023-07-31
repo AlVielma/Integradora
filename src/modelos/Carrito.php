@@ -128,25 +128,20 @@ class Carrito
         return $detallesCompras;
     }
 
-  // Función para cambiar el estado de una compra a "Finalizado" (3)
-public function confirmarCompra($compra_id)
+// Función para cambiar el estado de una compra a "Finalizado" (3)
+public function confirmarCompra($compra_id, $usuario_id)
 {
-    // Actualizar el estado de la compra a "Finalizado" (3)
-    $actualizarEstadoCompra = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 3 WHERE id = ?");
-    $actualizarEstadoCompra->execute([$compra_id]);
+    // Actualizar el estado de la compra a "Finalizado" (3) en la tabla DetalleCompra
+    $actualizarEstadoCompra = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 3 WHERE id = ? AND usuario_id = ?");
+    $actualizarEstadoCompra->execute([$compra_id, $usuario_id]);
 
-    // Obtener el ID del carrito asociado a la compra
-    $obtenerCarritoId = $this->pdo->prepare("SELECT carrito_id FROM DetalleCompra WHERE id = ?");
-    $obtenerCarritoId->execute([$compra_id]);
-    $carrito_id = $obtenerCarritoId->fetchColumn();
-
-    // Actualizar el estado del carrito a "Finalizado" (3)
-    $actualizarEstadoCarrito = $this->pdo->prepare("UPDATE Carritos SET estado_id = 3 WHERE id = ?");
-    $actualizarEstadoCarrito->execute([$carrito_id]);
+    // Actualizar el estado del carrito a "Finalizado" (3) en la tabla Carritos
+    $actualizarEstadoCarrito = $this->pdo->prepare("UPDATE Carritos SET estado_id = 3 WHERE id = ? AND usuario = ?");
+    $actualizarEstadoCarrito->execute([$compra_id, $usuario_id]);
 
     // Obtener los productos asociados al carrito confirmado
-    $obtenerProductos = $this->pdo->prepare("SELECT producto_id, cantidad FROM Carritos WHERE id = ?");
-    $obtenerProductos->execute([$carrito_id]);
+    $obtenerProductos = $this->pdo->prepare("SELECT producto_id, cantidad FROM Carritos WHERE id = ? AND usuario = ?");
+    $obtenerProductos->execute([$compra_id, $usuario_id]);
     $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
 
     // Reducir el stock de los productos confirmados
@@ -167,6 +162,7 @@ public function confirmarCompra($compra_id)
         $actualizarStock->execute([$nuevo_stock, $producto_id]);
     }
 }
+
 
 
 
