@@ -209,4 +209,8 @@ public function actualizarStock($producto_id, $nuevo_stock)
     $actualizarStock->execute([$nuevo_stock, $producto_id]);
 }
 
+public function __destruct()
+    {
+        $this->pdo = null; // Cierra la conexión establecida
+    }
 }

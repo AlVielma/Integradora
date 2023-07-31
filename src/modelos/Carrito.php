@@ -103,10 +103,11 @@ class Carrito
             // Obtener el ID de la compra recién realizada
             $compra_id = $this->pdo->lastInsertId();
 
-            // Actualizar el estado de los productos en la tabla Carritos
-            $actualizarEstado = $this->pdo->prepare("UPDATE Carritos SET estado_id = 2 WHERE usuario = ? AND estado_id = 1");
-            $actualizarEstado->execute([$usuario_id]);
 
+            // Actualizar el campo "compra_id" en la tabla "Carritos" con el ID de la compra asociada
+            $actualizarCarrito = $this->pdo->prepare("UPDATE Carritos SET compra_id = ?, estado_id = 2 WHERE usuario = ? AND estado_id = 1");
+            $actualizarCarrito->execute([$compra_id, $usuario_id]);
+            
             // Confirmar la transacción
             $this->pdo->commit();
 
@@ -117,30 +118,46 @@ class Carrito
             throw $e;
         }
     }
-    public function obtenerDetallesCompras()
-    {
-        $obtenerDetalles = $this->pdo->query("SELECT dc.id,dc.usuario_id,u.nombre as nombre_cliente, u.apellido as apellido_cliente, dc.fecha_pedido, dc.total, dc.estado_id
-                                              FROM DetalleCompra dc 
-                                              INNER JOIN Usuarios u ON dc.usuario_id = u.id
-                                              ORDER BY dc.fecha_pedido DESC");
-        $detallesCompras = $obtenerDetalles->fetchAll(\PDO::FETCH_ASSOC);
 
-        return $detallesCompras;
+
+    public function obtenerDetallesCompra()
+{
+    $obtenerDetalles = $this->pdo->query("SELECT dc.id as id_compra, dc.usuario_id, u.nombre as nombre_cliente, u.apellido as apellido_cliente, dc.fecha_pedido, dc.total, dc.estado_id
+                                          FROM DetalleCompra dc
+                                          INNER JOIN Usuarios u ON dc.usuario_id = u.id
+                                          GROUP BY dc.id, dc.usuario_id, u.nombre, u.apellido, dc.fecha_pedido, dc.total, dc.estado_id
+                                          ORDER BY dc.fecha_pedido DESC");
+
+    $detallesCompras = $obtenerDetalles->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Ahora, para cada compra, obtendremos los productos asociados
+    foreach ($detallesCompras as &$detalleCompra) {
+        $obtenerProductos = $this->pdo->query("SELECT p.nombre as nombre_producto, c.cantidad, c.total as total_producto
+                                               FROM Carritos c
+                                               INNER JOIN Productos p ON c.producto_id = p.sku
+                                               WHERE c.compra_id = " . $detalleCompra['id_compra']);
+        $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
+
+        $detalleCompra['productos'] = $productos;
     }
 
-// Función para cambiar el estado de una compra a "Finalizado" (3)
+    return $detallesCompras;
+}
+
+
+   // Función para cambiar el estado de una compra a "Finalizado" (3)
 public function confirmarCompra($compra_id, $usuario_id)
 {
     // Actualizar el estado de la compra a "Finalizado" (3) en la tabla DetalleCompra
-    $actualizarEstadoCompra = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 3 WHERE id = ? AND usuario_id = ?");
-    $actualizarEstadoCompra->execute([$compra_id, $usuario_id]);
+    $actualizarEstadoCompra = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 3 WHERE id = ?");
+    $actualizarEstadoCompra->execute([$compra_id]);
 
-    // Actualizar el estado del carrito a "Finalizado" (3) en la tabla Carritos
+    // Actualizar el estado del carrito a "Confirmado" (3) en la tabla Carritos
     $actualizarEstadoCarrito = $this->pdo->prepare("UPDATE Carritos SET estado_id = 3 WHERE id = ? AND usuario = ?");
     $actualizarEstadoCarrito->execute([$compra_id, $usuario_id]);
 
     // Obtener los productos asociados al carrito confirmado
-    $obtenerProductos = $this->pdo->prepare("SELECT producto_id, cantidad FROM Carritos WHERE id = ? AND usuario = ?");
+    $obtenerProductos = $this->pdo->prepare("SELECT producto_id, cantidad FROM Carritos WHERE compra_id = ? AND usuario = ?");
     $obtenerProductos->execute([$compra_id, $usuario_id]);
     $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -166,6 +183,7 @@ public function confirmarCompra($compra_id, $usuario_id)
 
 
 
+
     // Función para cambiar el estado de una compra a "Inactivo" (1)
     public function cancelarCompra($compra_id)
     {
@@ -173,4 +191,8 @@ public function confirmarCompra($compra_id, $usuario_id)
         $actualizarEstado->execute([$compra_id]);
     }
 
+    public function __destruct()
+    {
+        $this->pdo = null; // Cierra la conexión establecida
+    }
 }
