@@ -89,7 +89,7 @@ if ($sku == '') {
           <input type="hidden" name="producto_id" value="<?php echo $sku; ?>">
           <div class="mb-3">
             <label for="cantidad" class="form-label">Cantidad:</label>
-            <input type="number" name="cantidad" id="cantidad" min="1" max="<?php echo $stock; ?>" value="1" class="form-control">
+            <input type="number" name="cantidad" id="cantidad" min="1" max="<?php echo min(5, $stock); ?>" value="1" class="form-control">
           </div>
           <button type="submit" name="agregar_al_carrito" class="btn btn-light btn-outline-dark">Añadir al carrito</button>
         </form>
