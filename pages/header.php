@@ -1,20 +1,11 @@
- <!--Header-->
- <header class="header">
+
+<!--Header-->
+<header class="header">
     <!--Barra navegacion-->
     <nav class="navbar navbar-expand-lg bg-black">
-      <div class="container-fluid">
-
-        <a class="navbar-brand text-white" href="../index.php">
-          <img src="../images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-          Pop Ópticos
-        </a>
-
         <div class="container-fluid">
-          <form class="d-flex" role="search" method="POST" action="busqueda.php">
-            <input class="form-control me-2 busqueda" type="search" placeholder="Search" aria-label="Search" name="busqueda">
-          </form>
-        </div>
 
+<<<<<<< HEAD
         <?php if (isset($_SESSION['user_name'])) : ?>
             <!-- Si la sesión está iniciada, muestre un carrito diferente -->
             <a class="navbar-brand text-white" href="incarejem.php">
@@ -33,15 +24,73 @@
           <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop" class="user-link text-white">
             <?php echo $_SESSION['user_name']; ?>
           </a>
+=======
+            <a class="navbar-brand text-white" href="../index.php">
+                <img src="../images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+                Pop Ópticos
+            </a>
 
-        <?php else : ?>
-          <!-- Si el usuario no ha iniciado sesión, muestra el icono predeterminado -->
-          <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-            <img src="../images/usuario.png" width="35" height="35" alt="Usuario">
-          </a>
-        <?php endif; ?>
+            <div class="container-fluid">
+                <form class="d-flex" role="search" method="POST" action="busqueda.php">
+                    <input class="form-control me-2 busqueda" type="search" placeholder="Search" aria-label="Search"
+                        name="busqueda">
+                </form>
+            </div>
 
-      </div>
+            <?php
+            use App\Modelos\Carrito;
+            require_once __DIR__ . '/../vendor/autoload.php';
+            require_once __DIR__ . '/../src/modelos/Carrito.php';
+
+            $carrito = new Carrito();
+
+            // Verificar si el usuario ha iniciado sesión y si el carrito está vacío
+            $carritoVacio = true;
+            if (isset($_SESSION['user_id'])) {
+                if (!empty($carrito->obtenerProductosCarrito($_SESSION['user_id']))) {
+                    $carritoVacio = false;
+                }
+            }
+            ?>
+
+            <!-- Mostrar el ícono del carrito y enlazarlo a la página correspondiente -->
+            <?php if (isset($_SESSION['user_id'])) : ?>
+                <!-- Si el usuario ha iniciado sesión, redirigir al carrito correspondiente -->
+                <?php if ($carritoVacio) : ?>
+                    <!-- Si el carrito está vacío, redireccionar a la página incarejem.php -->
+                    <a class="navbar-brand text-white" href="incarejem.php">
+                        <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                    </a>
+                <?php else : ?>
+                    <!-- Si el carrito NO está vacío, redireccionar a la página prodencar.php -->
+                    <a class="navbar-brand text-white" href="prodencar.php">
+                        <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                    </a>
+                <?php endif; ?>
+            <?php else : ?>
+                <!-- Si el usuario no ha iniciado sesión, redireccionar a la página car.php -->
+                <a class="navbar-brand text-white" href="car.php">
+                    <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                </a>
+            <?php endif; ?>
+>>>>>>> e513c5118efd58b1f8fe455b8472a39146efdf58
+
+
+            <!-- Si la sesión está iniciada, muestra el nombre del usuario en lugar del icono -->
+            <?php if (isset($_SESSION['user_name'])) : ?>
+                <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"
+                    class="user-link text-white">
+                    <?php echo $_SESSION['user_name']; ?>
+                </a>
+
+            <?php else : ?>
+                <!-- Si el usuario no ha iniciado sesión, muestra el icono predeterminado -->
+                <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                    <img src="../images/usuario.png" width="35" height="35" alt="Usuario">
+                </a>
+            <?php endif; ?>
+
+        </div>
     </nav>
 
     <!--Sidebar superior-->
@@ -64,10 +113,10 @@
           <div class="col-12">
             <?php if (isset($_SESSION['user_name'])) : ?>
               <!-- Si la sesión está iniciada, muestra el mensaje personalizado -->
-              <i class="h5">¡Bienvenido! Ver perfil y cerrar sesión</i>
+              <i class="h5">¡Bienvenido!</i>
             <?php else : ?>
               <!-- Si el usuario no ha iniciado sesión, muestra el mensaje predeterminado -->
-              <i class="h5">¡Bienvenido! Inicia sesión o regístrate</i>
+              <i class="h5">¡Bienvenido!</i>
             <?php endif; ?>
           </div>
         </div>
@@ -99,8 +148,7 @@
                 Adultos
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="popunisex.php">Pop Unisex</a></li>
-                <hr class="dropdown-divider">
+              
             </li>
             <li><a class="dropdown-item" href="pophombres.php">Pop Hombre</a></li>
             <li>

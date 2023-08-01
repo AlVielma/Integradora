@@ -1,13 +1,52 @@
 <?php
+/*index.php*/
 session_start();
+
 use App\Modelos\productos;
+use App\http\correoquejas;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/Exception.php';
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/SMTP.php';
+require_once __DIR__ .'/src/http/correoquejas.php';
+require_once __DIR__. 'src/modelos/productos.php';
 require 'vendor/autoload.php';
 $productos = new productos();
 $vendidos= $productos->masvendidos3();
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  // Accede a los datos del formulario
+  $nombre = $_POST["nombre"];
+  $email = $_POST["email"];
+  $comentario = $_POST["comentario"];
+
+  // El resto de tu código existente para enviar el correo
+  // ...
+  // Configura los destinatarios
+  $mail->setFrom($email, $nombre);
+  $mail->addAddress('vafd_utt1@gmail.com');
+  $mail->addReplyTo($email, $nombre);
+
+  // Configura el contenido del correo
+  $mail->isHTML(true);
+  $mail->Subject = 'Queja o Comentario';
+  $mail->Body = 'Nombre: ' . $nombre . '<br>Email: ' . $email . '<br>Comentario: ' . $comentario;
+
+  // Envía el correo
+  $mail->send();
+  // Redirecciona a la página principal y muestra una alerta
+  echo '<script>alert("Gracias por tu queja o comentario. Lo hemos recibido y te responderemos pronto.");</script>';
+  echo '<script>window.location.href = "index.php";</script>';
+} else {
+  echo '<script>alert("Error: Método de solicitud incorrecto.");</script>';
+}
+?>
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
+  <!--ARTUROSEX-->
+<!--asdasdasd-->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,17 +78,45 @@ $vendidos= $productos->masvendidos3();
           </form>
         </div>
 
-        <?php if (isset($_SESSION['user_name'])) : ?>
-            <!-- Si la sesión está iniciada, muestre un carrito diferente -->
-            <a class="navbar-brand text-white" href="pages/incarejem.php">
-          <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
-        </a>
-          <?php else : ?>
-            <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
-            <a class="navbar-brand text-white" href="pages/car.php">
-          <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
-        </a>
-          <?php endif; ?>
+        <?php
+            use App\Modelos\Carrito;
+            require 'vendor/autoload.php';
+            require_once 'src/modelos/Carrito.php';
+
+            $carrito = new Carrito();
+
+            // Verificar si el usuario ha iniciado sesión y si el carrito está vacío
+            $carritoVacio = true;
+            if (isset($_SESSION['user_id'])) {
+                if (!empty($carrito->obtenerProductosCarrito($_SESSION['user_id']))) {
+                    $carritoVacio = false;
+                }
+            }
+            ?>
+
+            <!-- Mostrar el ícono del carrito y enlazarlo a la página correspondiente -->
+            <?php if (isset($_SESSION['user_name'])) : ?>
+                <!-- Si el usuario ha iniciado sesión, redirigir al carrito correspondiente -->
+                <?php if ($carritoVacio) : ?>
+                    <!-- Si el carrito está vacío, redireccionar a la página incarejem.php -->
+                    <a class="navbar-brand text-white" href="pages/incarejem.php">
+                        <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                    </a>
+                <?php else : ?>
+                    <!-- Si el carrito NO está vacío, redireccionar a la página prodencar.php -->
+                    <a class="navbar-brand text-white" href="pages/prodencar.php">
+                        <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                    </a>
+                <?php endif; ?>
+            <?php else : ?>
+                <!-- Si el usuario no ha iniciado sesión, redireccionar a la página car.php -->
+                <a class="navbar-brand text-white" href="pages/car.php">
+                    <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+                </a>
+            <?php endif; ?>
+
+
+
         <!-- Si la sesión está iniciada, muestra el nombre del usuario en lugar del icono -->
         <?php if (isset($_SESSION['user_name'])) : ?>
           <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop" class="user-link text-white">
@@ -86,10 +153,10 @@ $vendidos= $productos->masvendidos3();
           <div class="col-12">
             <?php if (isset($_SESSION['user_name'])) : ?>
               <!-- Si la sesión está iniciada, muestra el mensaje personalizado -->
-              <i class="h5">¡Bienvenido! Ver perfil y cerrar sesión</i>
+              <i class="h5">¡Bienvenido!</i>
             <?php else : ?>
               <!-- Si el usuario no ha iniciado sesión, muestra el mensaje predeterminado -->
-              <i class="h5">¡Bienvenido! Inicia sesión o regístrate</i>
+              <i class="h5">¡Bienvenido!</i>
             <?php endif; ?>
           </div>
         </div>
@@ -122,8 +189,7 @@ $vendidos= $productos->masvendidos3();
                 Adultos
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="pages/popunisex.php">Pop Unisex</a></li>
-                <hr class="dropdown-divider">
+               
             </li>
             <li><a class="dropdown-item" href="pages/pophombres.php">Pop Hombre</a></li>
             <li>
@@ -249,10 +315,10 @@ $vendidos= $productos->masvendidos3();
         <div class="col-md-4 col-sm-9">
           <div class="single-content-card text-center mt-30">
             <div class="content-card-image">
-              <img src="images/imagen4.jpg" alt="lente adulto" class="img-fluid">
+              <a href="pages/pophombres.php"><img src="images/imagen4.jpg" alt="lente adulto" class="img-fluid"></a>
             </div>
             <div class="content-card-content">
-              <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop Adultos</a></h4>
+              <h4><a href="pages/pophombres.php" class="h4 font-weight-bold text-decoration-none">Pop Adultos</a></h4>
               <p>Tenemos los mejores lentes para hombres y mujeres</p>
             </div>
           </div>
@@ -260,10 +326,10 @@ $vendidos= $productos->masvendidos3();
         <div class="col-md-4 col-sm-9">
           <div class="single-content-card text-center mt-30">
             <div class="content-card-image">
-              <img src="images/imagen3.jpg" alt="lente solar" class="img-fluid">
+             <a href="pages/solarhombre.php"><img src="images/imagen3.jpg" alt="lente solar" class="img-fluid"></a>
             </div>
             <div class="content-card-content">
-              <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop solares</a></h4>
+              <h4><a href="pages/solarhombre.php" class="h4 font-weight-bold text-decoration-none">Pop solares</a></h4>
               <p>Contamos con los mejores y mas atractivos lentes solares</p>
             </div>
           </div>
@@ -271,10 +337,10 @@ $vendidos= $productos->masvendidos3();
         <div class="col-md-4 col-sm-9">
           <div class="single-content-card text-center mt-30">
             <div class="content-card-image">
-              <img src="images/imagen4.jpg" alt="lente niños" class="img-fluid">
+             <a  href="pages/popniños.php"><img src="images/imagen4.jpg" alt="lente niños" class="img-fluid"></a>
             </div>
             <div class="content-card-content">
-              <h4><a href="#0" class="h4 font-weight-bold text-decoration-none">Pop niños</a></h4>
+              <h4><a href="pages/popniños.php" class="h4 font-weight-bold text-decoration-none">Pop niños</a></h4>
               <p>Tenemos los mejores accesorios para tus lentes</p>
             </div>
           </div>
@@ -325,7 +391,7 @@ $vendidos= $productos->masvendidos3();
         {?>
           <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0">
             <div class="single-content-card">
-              <img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap">
+              <a href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>"><img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap"></a>
               <div class="card-body">
                 <h5 class="card-title h4"><?php echo $producto['nombre']; ?></h5>
                 <a class="h4 font-weight-bold text-decoration-none" href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>">
@@ -364,40 +430,41 @@ $vendidos= $productos->masvendidos3();
 
   <section id="contact" class="bg-light py-3">
     <div class="container">
-      <div class="row py-2">
-        <div class="col-12 text-center">
-          <h2 class="display-6 "><b>Contactanos</b></h2>
-          <p>Nos interesa saber tu opinion</p>
+        <div class="row py-2">
+            <div class="col-12 text-center">
+                <h2 class="display-6"><b>Contactanos</b></h2>
+                <p>Nos interesa saber tu opinión</p>
+            </div>
         </div>
-
-      </div>
-      <div class="row">
-        <div class="col-12 col-lg-5 text-center">
-          <img class="img-fluid" src="images/imagen2.jpg" alt="contactanos">
+        <div class="row">
+            <div class="col-12 col-lg-5 text-center">
+                <img class="img-fluid" src="images/imagen2.jpg" alt="contactanos">
+            </div>
+            <div class="col-12 col-lg-7">
+                <div class="">
+                    <form action="correoquejas.php" method="post">
+                        <div class="form-floating">
+                            <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre" name="nombre">
+                            <label for="floatingName">Tu nombre</label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <input required type="email" class="form-control rounded-0" id="floatingInput" placeholder="name@example.com" name="email">
+                            <label for="floatingInput">Correo electrónico</label>
+                        </div>
+                        <div class=" mt-3">
+                            <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="4" name="comentario"></textarea>
+                            <label for="floatingTextarea">Comentario</label>
+                        </div>
+                        <div class="mt-3">
+                            <button class="btn btn-primary w-100 rounded-0" type="submit">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="col-12 col-lg-7">
-          <div class="">
-            <form action="">
-              <div class="form-floating">
-                <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre">
-
-              </div>
-              <div class="form-floating mt-3">
-                <input required type="email" class="form-control rounded-0" id="floatingInput" placeholder="name@example.com">
-
-              </div>
-              <div class=" mt-3">
-                <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="4"></textarea>
-              </div>
-              <div class="mt-3">
-                <button class="btn btn-primary w-100 rounded-0" type="submit">Send</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
+
 
 
 

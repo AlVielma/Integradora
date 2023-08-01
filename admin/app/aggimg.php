@@ -3,6 +3,8 @@ session_start();
 require __DIR__.'/../../vendor/autoload.php';
 use App\Modelos\productos;     
 use App\Modelos\validacionproductos;
+require_once __DIR__.'/../../src/modelos/productos.php';
+require_once __DIR__.'/../../src/modelos/validacionproductos.php';
 $productos = new productos();
 $mostrar=$productos->mostrar_productos();
 $marcas= $productos->mostrar_marca();
@@ -12,29 +14,51 @@ $validacion = new validacionproductos();
 $errors = [];
 extract($_POST);
 extract($_FILES);
+$erroresedit = isset($_GET['errores']) ? json_decode($_GET['errores'], true) : [];
 if (isset($_POST['agregar'])) {
-  if ($validacion->nulo([$nombre, $categoria, $marca, $tipo_lente, $descripcion, $precio, $stock])) {
-      $errors[] = "Los campos deben estar llenos";
-  }
-  if (empty($_FILES['imagen']['name'])) {
-      $errors[] = "Debes seleccionar una imagen";
-  }
-  if (!$validacion->validarExtensionImagen($_FILES['imagen'])) {
-    $errors[] = "Solo se permiten imágenes con extensiones .jpg, .png y .jpeg";
-  }
+    $nombres = $validacion->filtrarString($nombre);
+    $descripcions = $validacion->filtrarString($descripcion);
+    if ($validacion->nulo([$nombre, $categoria, $marca, $tipo_lente, $descripcion, $precio, $stock])) {
+        $errors[] = "Los campos deben estar llenos";
+    }
+    if (empty($_FILES['imagen']['name'])) {
+        $errors[] = "Debes seleccionar una imagen";
+    }
+    if(!$validacion->issnumber($precio))
+    {
+        $errors[]="El precio debe ser numerico";
+    }
+    if(!$validacion->issnumber($stock))
+    {
+        $errors[]="El stock debe ser numerico";
+    }
 
-  if (count($errors) == 0) {
-      $dir = __DIR__ . '/../../productosimg/';
-      $pathinfo = pathinfo($_FILES['imagen']['name']);
-      $filename = $pathinfo["filename"];
-      $extension = $pathinfo["extension"];
-      $name = time() . ".{$extension}"; // Aquí agregamos el timestamp actual al nombre del archivo
-      $real_path = "{$dir}{$name}";
-      move_uploaded_file($_FILES['imagen']['tmp_name'], $real_path);
-      $productos->agregar_imagen($name);
-      $imagenid = $productos->get_lastid();
-      $productos->agregar_producto($nombre, $marca, $tipo_lente, $descripcion, $imagenid, $precio, $stock, $categoria);
-      header('Location: aggimg.php');
+    if (isset($_FILES['imagen']) && is_array($_FILES['imagen'])) {
+        // Llamamos a la función validarExtensionImagen solo si hay información válida en $_FILES['imagen']
+        if (!$validacion->validarExtensionImagen($_FILES['imagen'])) {
+            $errors[] = "Solo se permiten imágenes con extensiones .jpg, .png y .jpeg";
+        }
+    }
+
+    if (count($errors) == 0) {
+      if ($nombres === $nombre && $descripcions === $descripcion) {
+        $dir = __DIR__ . '/../../productosimg/';
+        $pathinfo = pathinfo($_FILES['imagen']['name']);
+        $filename = $pathinfo["filename"];
+        $extension = $pathinfo["extension"];
+        $name = time() . ".{$extension}"; // Aquí agregamos el timestamp actual al nombre del archivo
+        $real_path = "{$dir}{$name}";
+        move_uploaded_file($_FILES['imagen']['tmp_name'], $real_path);
+        $productos->agregar_imagen($name);
+        $imagenid = $productos->get_lastid();
+        $productos->agregar_producto($nombres, $marca, $tipo_lente, $descripcions, $imagenid, $precio, $stock, $categoria);
+        header('Location: aggimg.php');
+        exit;
+      }
+      else{
+        $errors[] = "Hubo un problema con los datos ingresados.";
+      }
+     
      
   }
 }
@@ -56,6 +80,14 @@ if (isset($_POST['agregar'])) {
 <br>
 
   <div class="container-fluid" id="content">
+    <div>
+    <?php
+    
+    if (is_array($erroresedit) && count($erroresedit) > 0) {
+        $validacion->mensajes($erroresedit);
+    }
+    ?>
+    </div>
     <div class="">
       <h1>Agregar Producto</h1>
     </div>
@@ -64,7 +96,7 @@ if (isset($_POST['agregar'])) {
     <a href="../../http/modalproducto.php" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalproducto">
         Agregar
     </a>
-
+    
     <h2>Productos</h2>
 
     <!-- Tabla de productos -->

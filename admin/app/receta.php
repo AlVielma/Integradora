@@ -1,7 +1,9 @@
 <?php
 use App\Modelos\Conexion;
 use App\Modelos\ValidacionesReceta;
-require __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__.'/../../src/modelos/Conexion.php';
+require_once __DIR__.'/../../src/modelos/validacionesReceta.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 session_start();
 /*
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {

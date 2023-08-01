@@ -1,5 +1,9 @@
 <?php
 session_start();
+require_once '../src/modelos/productos.php'; 
+use App\Modelos\productos;
+$productos = new productos();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,152 +34,47 @@ session_start();
             <h5 class="display-6 fw-bold">Tu carrito está vacío</h5>
         </div>
         <div class="mb-3">
-            <a href="popunisex.php" class="btn btn-light btn-outline-dark">Seguir comprando</a>
+            <a href="pophombres.php" class="btn btn-light btn-outline-dark">Seguir comprando</a>
         </div>
         <div class="mb-3 border-top border-5"></div>
     </div>
     
-     <!--Contenido Recomendados-->
-     <div class="container-fluid titulos-azul mt-4 mb-4">
-        <!--Titulo azul-->
-        <div class="row justify-text">
-         <h4 class="text-center azul text-black">Otros productos</h4>
-        </div>
-        <!--fila-->
-        <div class="row text-start">
-          <!--lentes5-->
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes5.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Ky 0004</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$1899,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-          <!--lentes6-->
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes6.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Silver Seven</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$2299,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-          <!--lentes7-->
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes7.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Kipling 4065</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$1999,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-          <!--lentes8-->
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes8.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Cloe25288</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$2599,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-          <!--lentes3-->
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes3.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Ky Eyewear 0091</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$1699,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-           <!--lentes4-->
-           <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes4.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Axess clip solar 2717</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$2799,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-           <!--lentes1-->
-           <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-            <div class="card" style="width: 19rem;">
-              <a href="#"><img src="../images/lentes1.png" class="card-img-top" alt="..."></a>
-              <div class="card-body">
-                <h5 class="card-title h4">Kipling 1116</h5>
-                <a class="objeto-texto" href="#"><p class="card-text h5">$1990,00 MXN</p></a>
-              </div>
-            </div>
-          </div>
-            <!--lentes2-->
+
+<!-- Contenido Recomendados -->
+<div class="container-fluid titulos-azul mt-4 mb-4">
+    <!-- Titulo azul -->
+    <div class="row justify-text">
+        <h4 class="text-center azul text-black">Recomendados</h4>
+    </div>
+    <!-- fila -->
+    <div class="row text-start">
+        <?php
+        $recomendados = $productos->productosRecomendadosGenerales(8); // Obtiene 8 productos recomendados
+        foreach ($recomendados as $reco) {
+        ?>
+            <!--lentes5-->
             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">
-              <div class="card" style="width: 19rem;">
-                <a href="#"><img src="../images/lentes2.png" class="card-img-top" alt="..."></a>
-                <div class="card-body">
-                  <h5 class="card-title h4">Ky Eyewear 3556</h5>
-                  <a class="objeto-texto" href="#"><p class="card-text h5">$1699,00 MXN</p></a>
+                <div class="card" style="width: 19rem;">
+                    <a href="prodejem.php?id=<?php echo $reco['sku']; ?>"><img src="<?php echo '/../productosimg/' . $reco['IMAGEN']; ?>" class="card-img-top" alt="..." width="200px" height="230px"></a>
+                    <div class="card-body">
+                        <h5 class="card-title h4"><?php echo $reco['nombre']; ?></h5>
+                        <a class="objeto-texto" href="prodejem.php?id=<?php echo $reco['sku']; ?>">
+                            <p class="card-text h5">$<?php echo $reco['precio']; ?> MXN</p>
+                        </a>
+                    </div>
                 </div>
-              </div>
             </div>
-       </div>
-      </div>
+        <?php
+        }
+        ?>
+    </div>
+</div>
+
 
     <!--footer-->
-    <div class="container-fluid border border-black footer bg-dark text-white">
-
-        <!--Footer superio-->
-        <div class="row p-5 text-aling-center">
-
-            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                <h3>Pop Ópticos</h3>
-                <a href="index.html"><img src="images/icon64.png" alt=""></a>
-
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                <p class="h5">Dirección</p>
-                <div class="mb-2">
-                    <p>Av.Juárez 4880 y Xochimilco Oriente, Torreón, Méxcio</p>
-                </div>
-            </div>
-
-            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                <p class="h5">Contacto</p>
-                <div class="mb-2">
-                    <p>871 735 8778</p>
-                </div>
-                <div class="mb-2">
-                    <a class="text-decoration-none text-white" href="#">ventas@opticapop.com</a>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                <p class="h5">Redes</p>
-                <div class="mb-2">
-                    <a href=""><img src="../images/facebook.png" alt=""></a>
-                </div>
-                <div class="mb-0">
-                    <p>Facebook</p>
-                </div>
-                <div class="mb-2">
-                    <a href=""><img src="../images/whatsapp.png" alt=""></a>
-                </div>
-                <div class="mb-0">
-                    <p>Whatsapp</p>
-                </div>
-            </div>
-            <!--Derechos de autor-->
-            <div class="col-xs-12 pt-5">
-                <p class="text-white text-center"> Copyright - All rights reserved © 2023</p>
-            </div>
-
-        </div>
-
-    </div>
+    <?php
+           include 'footer.php';
+           ?>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

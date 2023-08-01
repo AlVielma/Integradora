@@ -3,10 +3,16 @@ namespace App\Modelos;
 
 class validacionesUsuario
 {
+    //Sanitizar un parametro
+    private function sanitizar($parametro)
+    {
+        return filter_var($parametro, FILTER_SANITIZE_SPECIAL_CHARS);
+    }
     // Verificar si algún parámetro es nulo
     public function esNulo(array $parametros)
     {
         foreach ($parametros as $parametro) {
+            $parametro = $this->sanitizar($parametro);
             if (strlen(trim($parametro)) < 1) {
                 return true;
             }
@@ -17,6 +23,10 @@ class validacionesUsuario
     // Validar longitud del email y contraseña
     public function validarLongitud($email, $password)
     {
+        //Sanitizar los parametros antes de la validacion
+        $email = $this->sanitizar($email);
+        $password = $this->sanitizar($password);
+
         // Longitud mínima y máxima permitida para el email
         $minLongitudEmail = 5;
         $maxLongitudEmail = 100;
@@ -50,6 +60,9 @@ class validacionesUsuario
     // Validar las credenciales del usuario en la base de datos
     public function validarCredenciales($email, $password, $con)
     {
+         // Sanitizar los parámetros antes de la validación
+         $email = $this->sanitizar($email);
+         $password = $this->sanitizar($password);
         try {
             // Consultar la contraseña almacenada en la base de datos para el email proporcionado
             $sql = $con->prepare("SELECT contraseña FROM Usuarios WHERE email LIKE ? LIMIT 1");

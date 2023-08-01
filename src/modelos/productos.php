@@ -1,5 +1,6 @@
 <?php
 namespace App\Modelos;
+require_once 'Conexion.php';
 use App\Modelos\Conexion;
 require __DIR__.'/../../vendor/autoload.php';
 Class productos
@@ -24,7 +25,7 @@ Class productos
     {
         $mostarproductos = $this->pdo->query("SELECT p.sku, p.nombre, p.descripcion, c.nombre AS categoria, p.precio, p.stock, i.IMAGEN
         FROM Categorias c INNER JOIN Productos p ON p.categoria_id = c.id INNER JOIN Imagenes i
-        ON p.imagen = id_img");
+        ON p.imagen = i.id_img");
         return $mostarproductos->fetchAll(\PDO::FETCH_ASSOC);
     }
 
@@ -123,7 +124,7 @@ Class productos
 
     public function descproducto($id)
     {
-        $descproducto = $this->pdo->prepare("SELECT p.sku,p.nombre,p.descripcion, p.precio, m.nombre as Marca, i.IMAGEN,tp.tipo_lente
+        $descproducto = $this->pdo->prepare("SELECT p.sku,p.nombre,p.descripcion, p.precio, m.nombre as Marca, i.IMAGEN,tp.tipo_lente, stock
         FROM Imagenes i INNER JOIN Productos p on i.id_img = p.imagen INNER JOIN
         Marcas m on m.id = p.marca_id INNER JOIN TiposLentes tp on tp.id=p.tipo_lente_id WHERE p.sku=? LIMIT 1");
         $descproducto->execute([$id]);
@@ -178,5 +179,24 @@ Class productos
         FROM Productos p INNER JOIN Imagenes i on p.imagen = i.id_img WHERE p.categoria_id=6");
         $pophombres->execute();
         return $pophombres->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    // Función para obtener productos recomendados generales (sin necesidad de ID específico)
+    public function productosRecomendadosGenerales($cantidad = 8)
+    {
+        $recomendados = $this->pdo->prepare("SELECT p.sku, p.nombre, p.precio, i.IMAGEN 
+            FROM Productos p 
+            INNER JOIN Imagenes i ON p.imagen = i.id_img 
+            ORDER BY RAND() 
+            LIMIT ?");
+        $recomendados->execute([$cantidad]);
+        return $recomendados->fetchAll(\PDO::FETCH_ASSOC);
+    }
+   
+
+
+public function __destruct()
+    {
+        $this->pdo = null; // Cierra la conexión establecida
     }
 }

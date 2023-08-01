@@ -1,6 +1,7 @@
 <?php
 use App\Modelos\ValidacionesConsultas;
-require __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__.'/../../src/modelos/ValidacionesConsultas.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 $validacionesConsultas = new ValidacionesConsultas();
 session_start();
 $erroresConsulta = isset($_GET['errores']) ? json_decode($_GET['errores'], true) : [];
@@ -12,7 +13,7 @@ $erroresConsulta = isset($_GET['errores']) ? json_decode($_GET['errores'], true)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial y Antecedentes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/css/produc.css">
+    <link rel="stylesheet" href="/admin/css/consulta.css">
 </head>
 <body>
     <!--Sidebar-->

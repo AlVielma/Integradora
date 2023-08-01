@@ -5,6 +5,7 @@ use App\Modelos\metodoscita;
 
 $metodoscita = new metodoscita();
 session_start();
+<<<<<<< HEAD
 
 // Verificar si el formulario ha sido enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregarexam'])) {
@@ -24,6 +25,118 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregarexam'])) {
 
     // Llamar al método agregar con los valores capturados del formulario
     $metodoscita->agregar($nombre, $telefono, $fecha_nacimiento, $dia, $hora, $sintomas_oculares, $enfermedades_oculares, $lentes_actualmente, $armazon, $contacto, $ultimo_examen, $uso_gotas);
+=======
+use App\Modelos\metodoscita;
+use App\Modelos\validacionescita;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/Exception.php';
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/SMTP.php';
+require_once __DIR__.'/../src/modelos/metodoscita.php';
+require_once __DIR__.'/../src/modelos/validacionescita.php';
+require __DIR__ . '/../vendor/autoload.php';
+$cita = new metodoscita();
+$vali = new validacionescita();
+$errors = [];
+$horariovalido = array();
+$inicio = strtotime("9:00");
+$fin = strtotime("20:00");
+while ($inicio <= $fin) {
+    $horariovalido[] = date("H:i", $inicio);
+    $inicio = strtotime('+1 hour', $inicio);
+}
+
+if(isset($_POST['mandar_exm']))
+{   
+    if(isset($_SESSION['user_name']))
+    {   extract($_POST);
+        $ocupado =$cita->verificarcitas($dia,$hora);#SANITIZACION DE SCRIPTS
+        $nombres=$vali->filtrarString($nombre);
+        $sintomasocc=$vali->filtrarString($sintomas_oculares);
+        $enfermedadesoc=$vali->filtrarString($enfermedades_oculares);
+            // Obtener la hora actual
+        $hora_actual = date('H:i');
+
+        // Obtener el día seleccionado y convertirlo a formato Y-m-d para compararlo con el día actual
+        $dia_seleccionado = $_POST['dia'];
+        $dia_seleccionado_formato = date('Y-m-d', strtotime($dia_seleccionado));
+
+        // Obtener la hora seleccionada por el usuario
+        $hora_seleccionada = $_POST['hora'];
+
+        // Comprobar si la hora seleccionada es anterior a la hora actual y el día seleccionado es el mismo que el día actual
+        if ($dia_seleccionado_formato === date('Y-m-d') && $hora_seleccionada < $hora_actual) {
+            $errors[] = "No se puede seleccionar una hora anterior a la hora actual.";
+        }
+        if($ocupado->rowCount()>0)#SI UNA HORA ESTA OCUPADA EL MISMO DIA Y DEVUELVE 1 FILA
+        {
+            $errors[]="Esta hora esta ocupada";
+        }
+        if($vali->numero($telefono))
+        {
+            $errors[]="El numero solo debe constar de 10 digitos";
+        }
+        if(!$vali->issnumber($telefono))
+        {
+            $errors[]="El numero debe ser numerico";
+        }
+        if($vali->nulo([$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$lentes_actualmente,$armazon,$contacto,$uso_gotas]))
+        {
+            $errors[]="Los campos deben llenarse, solo Fecha del Ultimo examen, Síntomas oculares y Enfermedades oculares son opcionales";
+        }
+        if($vali->caractmas($nombre))
+        {
+            $errors[]="El nombre no debe tener mas de 50 caracteres";
+        }
+        if(count($errors)==0)
+        {
+           if($nombres == $nombre && $sintomasocc==$sintomas_oculares && $enfermedadesoc==$enfermedades_oculares)
+           {
+            $cita->agregar($_SESSION['user_id'],$nombres,$telefono,$fecha_nacimiento,$dia,$hora,$sintomasocc,$enfermedadesoc,$lentes_actualmente,$armazon,$contacto,$ultimo_examen,$uso_gotas);
+            #CORREO
+            $mail = new PHPMailer(true);
+
+            try {
+                //Server settings
+                $mail->SMTPDebug = SMTP::DEBUG_SERVER;                    
+                $mail->isSMTP();                                          
+                $mail->Host = 'smtp.gmail.com';                    
+                $mail->SMTPAuth   = true;                                   
+                $mail->Username   = 'fgolmos10@gmail.com';                   
+                $mail->Password   = 'irpfvhqxqxyivwbt';                               
+                $mail->SMTPSecure = 'tls';            
+                $mail->Port = 587;                           
+                    $persona = '<h1>CITA AGENDADA POR'.$nombres.'</h3>';
+                    $contenido = '<h3>CITA EL DIA '.$dia.'A LAS '.$hora.'</h3>';
+                $mail->setFrom('fgolmos10@gmail.com', $nombres);
+                $mail->addAddress($_SESSION['user_email']);
+             
+                $mail->isHTML(true);                                
+                $mail->Subject = 'CITA';
+                $mail->Body    = ''.$persona.''.$contenido;
+                $mail->send();
+                header('Location: exam.php');
+               
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+           }
+           else
+           {
+            $errors[] = "Hubo un problema con los datos ingresados.";
+           }
+
+        }
+
+    }
+    else 
+    {
+        header('Location: login.php');
+    }
+   
+>>>>>>> e513c5118efd58b1f8fe455b8472a39146efdf58
 }
 ?>
 <!DOCTYPE html>
@@ -40,6 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregarexam'])) {
     <!--Icon-->
     <link rel="icon" href="../images/icon.png">
     <title>Pop Ópticos</title>
+
 </head>
 
 <body>
@@ -52,6 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregarexam'])) {
     <!--Iconos y la bienvenida a la seccion-->
     <section id="container-fluid">
         <div class="row">
+        <div class="">
+            <?php
+                $vali->mensajes($errors);
+                ?>
+            </div>
             <div class="col-10 offset-1">
                 <div class="header text-center">
                     <h2 class="text-uppercase mb-3 mt-4 allies-title">Pop Ópticos te invita a sacar tu examen de la vista!</h2>
@@ -108,7 +227,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregarexam'])) {
             <div class="col-12 col-lg-7 d-flex align-items-center justify-content-center">
                 <button class="btn btn-light btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#myModal">Agenda ahora</button>
             </div>
+<<<<<<< HEAD
                     
+=======
+           
+          </div>
+>>>>>>> e513c5118efd58b1f8fe455b8472a39146efdf58
         </div>
         </div>
     </section>
@@ -120,13 +244,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregarexam'])) {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="myModalLabel">Agenda tu examen</h5>
+                
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="container">
+               
+            </div>
             <div class="modal-body">
+<<<<<<< HEAD
             <form action="exam.php" method="post">
+=======
+                <!--Formulario-->
+                <form action="exam.php" method="POST">
+>>>>>>> e513c5118efd58b1f8fe455b8472a39146efdf58
                     <div class="form-group">
                         <label for="nombre" class="text-center">Nombre del paciente:</label>
-                        <input type="text" class="form-control w-75 mx-auto" id="nombre" name="nombre" maxlength="50" required>
+                        <input type="text" class="form-control w-75 mx-auto" id="nombre" name="nombre" maxlengtha="50" required>
                     </div>
                     <div class="form-group">
                         <label for="telefono" class="text-center">Teléfono:</label>
@@ -138,12 +271,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregarexam'])) {
                     </div>
                     <div class="form-group">
                         <label for="dia" class="text-center">Día:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia" required>
+                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+10 days')); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="hora" class="text-center">Hora:</label>
-                        <input type="time" class="form-control w-75 mx-auto" id="hora" name="hora" required>
+                        <select name="hora"class="form-control" id="hora">
+                            <option value="">Horario</option>
+                            <?php
+                            foreach($horariovalido as $hora)
+                            {
+                                echo "<option value='$hora'>$hora</option>";
+                            }
+                            ?>
+                           
+                        </select>
                     </div>
+
                     <div class="form-group">
                         <label for="sintomas_oculares" class="text-center">Síntomas oculares:</label>
                         <textarea class="form-control w-75 mx-auto" id="sintomas_oculares" name="sintomas_oculares"></textarea>
@@ -184,13 +327,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregarexam'])) {
                             <option value="0">No</option>
                         </select>
                     </div>
+<<<<<<< HEAD
                     <button type="submit" class="btn btn-primary" name="agregarexam">Enviar</button></form>
+=======
+                    <button type="submit" name="mandar_exm" class="btn btn-primary">Enviar</button>
+>>>>>>> e513c5118efd58b1f8fe455b8472a39146efdf58
                 </form>
+
             </div>
         </div>
     </div>
 </div>
     <!--footer-->
+<<<<<<< HEAD
     <div class="container-fluid border border-black footer bg-dark text-white">
         <!--Footer superio-->
         <div class="row p-5 text-aling-center">
@@ -237,6 +386,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregarexam'])) {
         </div>
 
     </div>
+=======
+    <?php
+           include 'footer.php';
+           ?>
+>>>>>>> e513c5118efd58b1f8fe455b8472a39146efdf58
 
     <!--Javascript-->
     <!--Script de la api de leaflet-->

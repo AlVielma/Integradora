@@ -2,7 +2,9 @@
 use App\Modelos\Conexion;
 use App\Modelos\Usuario;
 use App\Modelos\validacionesUsuario;
-
+require_once __DIR__.'/../src/modelos/Conexion.php';
+require_once __DIR__.'/../src/modelos/Usuario.php';
+require_once __DIR__.'/../src/modelos/validacionesUsuario.php';
 require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
@@ -108,11 +110,11 @@ if (!empty($_POST)) {
                     <!-- Formulario de inicio de sesión -->
                     <form action="login.php" method="post" autocomplete="off">
                         <div class="mb-3 form-floating">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico">
                             <label for="email" class="form-label">Correo electrónico</label>
                         </div>
                         <div class="mb-3 form-floating">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña">
                             <label for="password" class="form-label">Contraseña</label>
                         </div>
 
@@ -141,6 +143,10 @@ if (!empty($_POST)) {
             </div>
         </div>
     </div>
+
+    <script>
+      history.replaceState(null,null,location.pathname);
+    </script>
 </body>
 
 </html>
