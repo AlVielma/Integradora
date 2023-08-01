@@ -59,8 +59,14 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               <td><?php echo $m['hora']; ?></td>
               
               <td>
-                <a href="" class="btn btn-danger"data-bs-toggle="modal" data-bs-id="<?=$m['id'];?>" data-bs-target="#modaleliminarcita">Cancelar</a>
+              <?php if ($m['activo'] == 2): ?>
+                <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="<?=$m['id'];?>" data-bs-target="#modaleliminarcita">Cancelar</a>
                 <a href="../../src/http/hechocita.php?id=<?php echo $m['id'];?>" class="btn btn-success">Hecho</a>
+              <?php elseif ($m['activo'] == 3): ?>
+                <?php echo '<b>Hecho</b>';  ?>
+              <?php elseif ($m['activo'] == 4): ?>
+                <?php echo '<b>Cancelada</b>'; ?>
+              <?php endif; ?>
               </td>
               
             </tr>

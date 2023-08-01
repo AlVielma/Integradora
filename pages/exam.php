@@ -30,7 +30,20 @@ if(isset($_POST['mandar_exm']))
         $nombres=$vali->filtrarString($nombre);
         $sintomasocc=$vali->filtrarString($sintomas_oculares);
         $enfermedadesoc=$vali->filtrarString($enfermedades_oculares);
+            // Obtener la hora actual
+        $hora_actual = date('H:i');
 
+        // Obtener el día seleccionado y convertirlo a formato Y-m-d para compararlo con el día actual
+        $dia_seleccionado = $_POST['dia'];
+        $dia_seleccionado_formato = date('Y-m-d', strtotime($dia_seleccionado));
+
+        // Obtener la hora seleccionada por el usuario
+        $hora_seleccionada = $_POST['hora'];
+
+        // Comprobar si la hora seleccionada es anterior a la hora actual y el día seleccionado es el mismo que el día actual
+        if ($dia_seleccionado_formato === date('Y-m-d') && $hora_seleccionada < $hora_actual) {
+            $errors[] = "No se puede seleccionar una hora anterior a la hora actual.";
+        }
         if($ocupado->rowCount()>0)#SI UNA HORA ESTA OCUPADA EL MISMO DIA Y DEVUELVE 1 FILA
         {
             $errors[]="Esta hora esta ocupada";
@@ -113,6 +126,7 @@ if(isset($_POST['mandar_exm']))
     <!--Icon-->
     <link rel="icon" href="../images/icon.png">
     <title>Pop Ópticos</title>
+
 </head>
 
 <body>
@@ -209,19 +223,19 @@ if(isset($_POST['mandar_exm']))
                 <form action="exam.php" method="POST">
                     <div class="form-group">
                         <label for="nombre" class="text-center">Nombre del paciente:</label>
-                        <input type="text" class="form-control w-75 mx-auto" id="nombre" name="nombre" maxlengtha="50" requireda>
+                        <input type="text" class="form-control w-75 mx-auto" id="nombre" name="nombre" maxlengtha="50" required>
                     </div>
                     <div class="form-group">
                         <label for="telefono" class="text-center">Teléfono:</label>
-                        <input type="tel" class="form-control w-75 mx-auto" id="telefono" name="telefono" maxlength="10" requireda>
+                        <input type="tel" class="form-control w-75 mx-auto" id="telefono" name="telefono" maxlength="10" required>
                     </div>
                     <div class="form-group">
                         <label for="fecha_nacimiento" class="text-center">Fecha de nacimiento:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="fecha_nacimiento" name="fecha_nacimiento" requireda>
+                        <input type="date" class="form-control w-75 mx-auto" id="fecha_nacimiento" name="fecha_nacimiento" required>
                     </div>
                     <div class="form-group">
                         <label for="dia" class="text-center">Día:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia"  min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+10 days')) ?>"requireda>
+                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+10 days')); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="hora" class="text-center">Hora:</label>
@@ -247,32 +261,32 @@ if(isset($_POST['mandar_exm']))
                     </div>
                     <div class="form-group">
                         <label for="lentes_actualmente" class="text-center">¿Usa lentes actualmente?</label>
-                        <select class="form-control w-75 mx-auto" id="lentes_actualmente" name="lentes_actualmente" requireda>
+                        <select class="form-control w-75 mx-auto" id="lentes_actualmente" name="lentes_actualmente" required>
                             <option value="1">Sí</option>
                             <option value="0">No</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="armazon" class="text-center">¿Necesita armazón?</label>
-                        <select class="form-control w-75 mx-auto" id="armazon" name="armazon" requireda>
+                        <select class="form-control w-75 mx-auto" id="armazon" name="armazon" required>
                             <option value="1">Sí</option>
                             <option value="0">No</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="contacto" class="text-center">¿Usa lentes de contacto?</label>
-                        <select class="form-control w-75 mx-auto" id="contacto" name="contacto" requireda>
+                        <select class="form-control w-75 mx-auto" id="contacto" name="contacto" required>
                             <option value="1">Sí</option>
                             <option value="0">No</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="ultimo_examen" class="text-center">Fecha del último examen:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="ultimo_examen" name="ultimo_examen" requireda>
+                        <input type="date" class="form-control w-75 mx-auto" id="ultimo_examen" name="ultimo_examen" required>
                     </div>
                     <div class="form-group">
                         <label for="uso_gotas" class="text-center">¿Usa gotas oculares?</label>
-                        <select class="form-control w-75 mx-auto" id="uso_gotas" name="uso_gotas" requireda>
+                        <select class="form-control w-75 mx-auto" id="uso_gotas" name="uso_gotas" required>
                             <option value="1">Sí</option>
                             <option value="0">No</option>
                         </select>

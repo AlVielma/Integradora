@@ -19,7 +19,7 @@ class metodoscita
     {
         $consulta = $this->conectar->query("SELECT cc.id,cc.nombre, u.apellido, cc.telefono,u.email ,cc.fecha_nacimiento
         ,cc.dia,cc.hora,cc.sintomas_oculares,cc.enfermedades_oculares,cc.lentes_actualmente,cc.armazon,cc.contacto,
-        cc.ultimo_examen,cc.uso_gotas,cc.activo FROM Citas_Cliente cc inner join Usuarios u on u.id = cc.usuario WHERE activo=2");
+        cc.ultimo_examen,cc.uso_gotas,cc.activo FROM Citas_Cliente cc inner join Usuarios u on u.id = cc.usuario WHERE activo=2 or activo=3 or activo=4");
         return $consulta->fetchAll(\PDO::FETCH_ASSOC);
     }
     public function agregar($sesion,$nombre,$telefono,$fecha_nacimiento,$dia,$hora,$sintomas_oculares,$enfermedades_oculares,$lentes_actualmente,$armazon,$contacto,$ultimo_examen

@@ -1,11 +1,47 @@
 <?php
+/*index.php*/
 session_start();
 
 use App\Modelos\productos;
-require_once 'src/modelos/productos.php';
+use App\http\correoquejas;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/Exception.php';
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/SMTP.php';
+require_once __DIR__ .'/src/http/correoquejas.php';
+require_once __DIR__. 'src/modelos/productos.php';
 require 'vendor/autoload.php';
 $productos = new productos();
 $vendidos= $productos->masvendidos3();
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  // Accede a los datos del formulario
+  $nombre = $_POST["nombre"];
+  $email = $_POST["email"];
+  $comentario = $_POST["comentario"];
+
+  // El resto de tu código existente para enviar el correo
+  // ...
+  // Configura los destinatarios
+  $mail->setFrom($email, $nombre);
+  $mail->addAddress('vafd_utt1@gmail.com');
+  $mail->addReplyTo($email, $nombre);
+
+  // Configura el contenido del correo
+  $mail->isHTML(true);
+  $mail->Subject = 'Queja o Comentario';
+  $mail->Body = 'Nombre: ' . $nombre . '<br>Email: ' . $email . '<br>Comentario: ' . $comentario;
+
+  // Envía el correo
+  $mail->send();
+  // Redirecciona a la página principal y muestra una alerta
+  echo '<script>alert("Gracias por tu queja o comentario. Lo hemos recibido y te responderemos pronto.");</script>';
+  echo '<script>window.location.href = "index.php";</script>';
+} else {
+  echo '<script>alert("Error: Método de solicitud incorrecto.");</script>';
+}
+?>
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -394,40 +430,41 @@ $vendidos= $productos->masvendidos3();
 
   <section id="contact" class="bg-light py-3">
     <div class="container">
-      <div class="row py-2">
-        <div class="col-12 text-center">
-          <h2 class="display-6 "><b>Contactanos</b></h2>
-          <p>Nos interesa saber tu opinion</p>
+        <div class="row py-2">
+            <div class="col-12 text-center">
+                <h2 class="display-6"><b>Contactanos</b></h2>
+                <p>Nos interesa saber tu opinión</p>
+            </div>
         </div>
-
-      </div>
-      <div class="row">
-        <div class="col-12 col-lg-5 text-center">
-          <img class="img-fluid" src="images/imagen2.jpg" alt="contactanos">
+        <div class="row">
+            <div class="col-12 col-lg-5 text-center">
+                <img class="img-fluid" src="images/imagen2.jpg" alt="contactanos">
+            </div>
+            <div class="col-12 col-lg-7">
+                <div class="">
+                    <form action="correoquejas.php" method="post">
+                        <div class="form-floating">
+                            <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre" name="nombre">
+                            <label for="floatingName">Tu nombre</label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <input required type="email" class="form-control rounded-0" id="floatingInput" placeholder="name@example.com" name="email">
+                            <label for="floatingInput">Correo electrónico</label>
+                        </div>
+                        <div class=" mt-3">
+                            <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="4" name="comentario"></textarea>
+                            <label for="floatingTextarea">Comentario</label>
+                        </div>
+                        <div class="mt-3">
+                            <button class="btn btn-primary w-100 rounded-0" type="submit">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="col-12 col-lg-7">
-          <div class="">
-            <form action="">
-              <div class="form-floating">
-                <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre">
-
-              </div>
-              <div class="form-floating mt-3">
-                <input required type="email" class="form-control rounded-0" id="floatingInput" placeholder="name@example.com">
-
-              </div>
-              <div class=" mt-3">
-                <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="4"></textarea>
-              </div>
-              <div class="mt-3">
-                <button class="btn btn-primary w-100 rounded-0" type="submit">Send</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
+
 
 
 
