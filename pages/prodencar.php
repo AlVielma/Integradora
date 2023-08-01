@@ -14,15 +14,26 @@ $productosModelo = new productos();
 
 // Verificar si el usuario ha iniciado sesión
 if (isset($_SESSION['user_id'])) {
-  // Obtener el ID del usuario actual desde la sesión
-  $usuario_id = $_SESSION['user_id'];
+    // Obtener el ID del usuario actual desde la sesión
+    $usuario_id = $_SESSION['user_id'];
 
-  // Obtener los productos del carrito para el usuario actual desde la base de datos
-  $productosCarrito = $carritoModelo->obtenerProductosCarritoEstado1($usuario_id);
+    // Obtener los productos del carrito para el usuario actual desde la base de datos
+    $productosCarrito = $carritoModelo->obtenerProductosCarritoEstado1($usuario_id);
+
+    // Verificar si el usuario tiene productos en el carrito en estado 1
+    if (empty($productosCarrito)) {
+        // Si el usuario no tiene productos en el carrito en estado 1, redirige a la vista incarejem.php
+        header("Location: incarejem.php");
+        exit;
+    } else {
+        header("Location: prodencar.php");
+    }
 } else {
-  // El usuario no ha iniciado sesión o no tiene productos en el carrito
-  $productosCarrito = [];
+    // Si el usuario no ha iniciado sesión, redirigir a la vista incarejem.php
+    header("Location: incarejem.php");
+    exit;
 }
+?>
 ?>
 
 <!DOCTYPE html>
@@ -50,10 +61,7 @@ if (isset($_SESSION['user_id'])) {
 
   <div class="container border border-black mt-4 mb-4">
     <?php
-    if (empty($productosCarrito)) {
-      // Mostrar mensaje de carrito vacío
-      echo '<h2 class="text-center">El carrito está vacío.</h2>';
-    } else {
+  
       $total = 0;
       foreach ($productosCarrito as $producto) {
         // Obtener los detalles del producto desde la base de datos
@@ -95,7 +103,7 @@ if (isset($_SESSION['user_id'])) {
     <?php
         }
       }
-    }
+    
     ?>
     <div class="text-center">
     <a href="../index.php" class="btn btn-primary btn-lg">Seguir comprando</a>
