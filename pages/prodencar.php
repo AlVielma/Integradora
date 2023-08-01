@@ -60,7 +60,6 @@ if (isset($_SESSION['user_id'])) {
   <div class="container border border-black mt-4 mb-4">
     <?php
   
-      $total = 0;
       foreach ($productosCarrito as $producto) {
         // Obtener los detalles del producto desde la base de datos
         $productoDetalles = $productosModelo->consultaeedit($producto['sku']);

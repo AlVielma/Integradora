@@ -61,7 +61,6 @@ if ($sku == '') {
   include 'header.php';
   ?>
 
-  <!--contenido-->
  <!--contenido-->
 <main class="mt-4 mb-4">
   <div class="container">
@@ -96,8 +95,6 @@ if ($sku == '') {
 
       </div>
       <div class="col-md-6 order-md-2">
-        <!--aqui es donde se utilizaria php, se utilizara foreach para imagenes-->
-
         <div id="carouselImages" class="carousel slide">
           <div class="carousel-inner">
             <div class="carousel-item active">
