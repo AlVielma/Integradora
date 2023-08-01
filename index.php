@@ -15,26 +15,30 @@ $vendidos= $productos->masvendidos3();
 if(isset($_POST['quejas'])){
 
   $nombre = $_POST["nombre"];
-  $email = $_POST["email"];
   $comentario = $_POST["comentario"];
 
   // Crea una nueva instancia de PHPMailer
   $mail = new PHPMailer(true);
 
   try {
-      // Configura los ajustes del servidor SMTP
-      $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Habilita la salida detallada del servidor SMTP
-      $mail->isSMTP();
-      // ...
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com'; // Cambia esto por el servidor SMTP que prefieras
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'quejas493@gmail.com';
+        $mail->Password   = 'pgcxdzecscaksoam';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
 
       // Configura los destinatarios
-      $mail->setFrom('vafd_utt1@gmail.com', $nombre);
-      $mail->addAddress($email);
+      $mail->setFrom('quejas493@gmail.com', 'Quejas o opiniones');
+      $mail->addAddress('vafd.utt1@gmail.com');
     
 
       $mail->isHTML(true);
       $mail->Subject = 'Queja o Comentario';
-      $mail->Body = 'Nombre: ' . $nombre . '<br>Email: ' . $email . '<br>Comentario: ' . $comentario;
+      $mail->Body = 'Buenas dias/tardes/noches un usuario quiere dar su queja o opinio
+      sobre tu pagina.<br><br> Te sugerimos que la revises para que asi tu negocio sea mejor.<br><br>Nombre del usuario: ' . $nombre . '<br>Comentario: ' . $comentario . '<br><br>
+      Esperamos que este comentario te sirva';
 
       // Envía el correo
       $mail->send();
@@ -455,10 +459,6 @@ if(isset($_POST['quejas'])){
                         <div class="form-floating">
                             <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre" name="nombre">
                             <label for="floatingName">Tu nombre</label>
-                        </div>
-                        <div class="form-floating mt-3">
-                            <input required type="email" class="form-control rounded-0" id="floatingInput" placeholder="name@example.com" name="email">
-                            <label for="floatingInput">Correo electrónico</label>
                         </div>
                         <div class=" mt-3">
                             <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="4" name="comentario"></textarea>
