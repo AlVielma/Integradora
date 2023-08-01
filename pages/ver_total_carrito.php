@@ -57,7 +57,7 @@ if (isset($_POST['finalizar_compra'])) {
         $mail->Host       = 'smtp.gmail.com'; // Cambia esto por el servidor SMTP que prefieras
         $mail->SMTPAuth   = true;
         $mail->Username   = 'vafd.utt1@gmail.com';
-        $mail->Password   = 'nuvikduzuldfywjy';
+        $mail->Password   = 'emqijncvtfirsmbj';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
