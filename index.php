@@ -442,7 +442,7 @@ if(isset($_POST['quejas'])){
                             <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre" name="nombre">
                             <label for="floatingName">Tu nombre</label>
                         </div>
-                        <div class=" mt-3">
+                        <div class="form-floating mt-3">
                             <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="4" name="comentario"></textarea>
                             <label for="floatingTextarea">Deja un comentario</label>
                         </div>
