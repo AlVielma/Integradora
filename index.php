@@ -3,7 +3,7 @@
 session_start();
 
 use App\Modelos\productos;
-use App\http\correoquejas;
+use App\Modelos\correoquejas;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
