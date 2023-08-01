@@ -3,9 +3,8 @@
 session_start();
 
 use App\Modelos\productos;
-use App\http\correoquejas;
-require_once __DIR__. 'src/modelos/productos.php';
-require_once __DIR__. 'vendor/autoload.php';
+require_once  'src/modelos/productos.php';
+require_once  'vendor/autoload.php';
 $productos = new productos();
 $vendidos= $productos->masvendidos3();
 ?>
