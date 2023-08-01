@@ -48,7 +48,7 @@ session_start();
                 </div>
                 <br>
                 <div class="row">
-                    <a href="" class="objeto-texto">Cambiar contraseña</a>
+                    <a href="recupera.php" class="objeto-texto">Cambiar contraseña</a>
                 </div>
                 <br>
                 <div class="row">

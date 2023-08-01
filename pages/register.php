@@ -67,7 +67,7 @@ if(!empty($_POST)){
             $apelliinj=$registrar->sqlinj($apellidos);
             $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash], $con);
     
-            header("Location: ../index.php");
+            header("Location: login.php");
         }
         else{
             $errors[] = "ERROR AL INGRESO DE DATOS";
