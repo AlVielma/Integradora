@@ -90,7 +90,11 @@ if ($sku == '') {
             <label for="cantidad" class="form-label">Cantidad:</label>
             <input type="number" name="cantidad" id="cantidad" min="1" max="<?php echo min(5, $stock); ?>" value="1" class="form-control">
           </div>
+          <?php if (isset($_SESSION['user_name'])) : ?>
           <button type="submit" name="agregar_al_carrito" class="btn btn-light btn-outline-dark">Añadir al carrito</button>
+          <?php else : ?>
+            <a href="login.php" class="btn btn-light btn-outline-dark">Añadir al carrito</a>
+            <?php endif; ?>
         </form>
 
       </div>
