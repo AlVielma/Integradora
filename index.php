@@ -6,6 +6,12 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+if (isset($_SESSION['user_id']) && $_SESSION['user_rol'] == 1) {
+  // Si el usuario es el administrador, redirigir a otra página 
+  header("Location: admin/app/aggimg.php"); 
+  exit;
+}
+
 use App\Modelos\productos;
 require_once  'src/modelos/productos.php';
 require_once  'vendor/autoload.php';
@@ -44,7 +50,7 @@ if(isset($_POST['quejas'])){
       $mail->send();
 
       // Redirecciona a la página principal y muestra una alerta
-      echo '<script>alert("Gracias por tu queja o comentario. Lo hemos recibido y te responderemos pronto.");</script>';
+      echo '<script>alert("Gracias por tu queja o comentario. Lo hemos recibido y trataremos de mejorar.");</script>';
       echo '<script>window.location.href = "index.php";</script>';
       exit(); // Asegura que no se ejecuten más líneas de código después de la redirección
   } catch (Exception $e) {
@@ -93,7 +99,6 @@ if(isset($_POST['quejas'])){
 
         <?php
             use App\Modelos\Carrito;
-            require 'vendor/autoload.php';
             require_once 'src/modelos/Carrito.php';
 
             $carrito = new Carrito();
@@ -101,7 +106,7 @@ if(isset($_POST['quejas'])){
             // Verificar si el usuario ha iniciado sesión y si el carrito está vacío
             $carritoVacio = true;
             if (isset($_SESSION['user_id'])) {
-                if (!empty($carrito->obtenerProductosCarrito($_SESSION['user_id']))) {
+                if (!empty($carrito->obtenerProductosCarritoEstado1($_SESSION['user_id']))) {
                     $carritoVacio = false;
                 }
             }
@@ -253,32 +258,10 @@ if(isset($_POST['quejas'])){
     </nav>
   </header>
 
-  <!--banner-->
-  <div class="container-fluid">
-    <div id="carouselExampleIndicators" class="carousel slide">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="images/banner.jpg" class="d-block w-100 h-100 " alt="banner 1">
-        </div>
-        <div class="carousel-item">
-          <img src="images/banner1.jpg" class="d-block w-100" alt="banner 2">
-        </div>
-
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  </div>
+<!-- Banner -->
+<div class="container-fluid p-0">
+  <img src="images/banner.jpg" class="img-fluid w-100" alt="banner 1">
+</div>
 
 
 
@@ -423,22 +406,21 @@ if(isset($_POST['quejas'])){
 
   </section>
 
+
   <section class="content-card-style-9 bg_cover mt-100 d-flex justify-content-center">
-    <div class="position-relative">
-      <img src="images/imagen7.jpg" alt="examen" class="img-fluid">
-        
+  <div class="position-relative">
+    <img src="images/imagen7.jpg" alt="examen" class="img-fluid">
+    <div class="d-flex justify-content-center mt-3">
       <?php if (isset($_SESSION['user_name'])) : ?>
-            <!-- Si la sesión está iniciada, muestre un carrito diferente -->
-            <a href="pages/exam.php" class="btn btn-primary custom-button">Agenda tu examen</a>
-        </a>
-          <?php else : ?>
-            <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
-            <a href="pages/login.php" class="btn btn-primary custom-button">Agenda tu examen</a>
-        </a>
-          <?php endif; ?>
-      
+        <!-- Si la sesión está iniciada, muestre un carrito diferente -->
+        <a href="pages/exam.php" class="btn btn-primary btn-lg custom-button btn-block">Obten tu cita</a>
+      <?php else : ?>
+        <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
+        <a href="pages/login.php" class="btn btn-primary btn-lg custom-button btn-block">Obten tu cita</a>
+      <?php endif; ?>
     </div>
-  </section>
+  </div>
+</section>
 
 
   <section id="contact" class="bg-light py-3">
@@ -462,7 +444,7 @@ if(isset($_POST['quejas'])){
                         </div>
                         <div class=" mt-3">
                             <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="4" name="comentario"></textarea>
-                            <label for="floatingTextarea">Comentario</label>
+                            <label for="floatingTextarea">Deja un comentario</label>
                         </div>
                         <div class="mt-3">
                             <button class="btn btn-primary w-100 rounded-0" name="quejas" type="submit">Enviar</button>

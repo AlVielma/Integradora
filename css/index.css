@@ -17,6 +17,7 @@ body
     /* Sombra más intensa y notoria */
     box-shadow: 0 8px 20px rgba(128, 0, 128, 0.5);
   }
+  
   .custom-button {
     position: absolute;
     top: 70%; /* Ajusta la posición vertical */
@@ -52,6 +53,5 @@ body
     align-items: center;
     margin-bottom: 25px;
 }
-  
-  
+
 

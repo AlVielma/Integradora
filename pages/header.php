@@ -18,6 +18,12 @@
             </div>
 
             <?php
+            if (isset($_SESSION['user_id']) && $_SESSION['user_rol'] == 1) {
+              // Si el usuario es el administrador, redirigir a otra página 
+              header("Location: ../admin/app/aggimg.php"); 
+              exit;
+            }
+            
             use App\Modelos\Carrito;
             require_once __DIR__ . '/../vendor/autoload.php';
             require_once __DIR__ . '/../src/modelos/Carrito.php';

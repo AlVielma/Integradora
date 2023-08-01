@@ -7,6 +7,12 @@ use App\Modelos\Carrito;
 // Crear un objeto de la clase Carrito
 $carritoModelo = new Carrito();
 
+if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
+  // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
+  header("Location: ../../pages/login.php");
+  exit;
+}
+
 // Obtener los detalles de todas las compras desde la base de datos
 $detallesCompras = $carritoModelo->obtenerDetallesCompra();
 ?>

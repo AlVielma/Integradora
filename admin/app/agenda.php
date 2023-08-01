@@ -4,12 +4,12 @@ use App\Modelos\metodoscita;
 require_once __DIR__.'/../../src/modelos/metodoscita.php';
 $cita= new metodoscita();
 $cita_m = $cita->mostrar();
-/*
+
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
   // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
   header("Location: ../../pages/login.php");
   exit;
-}*/
+}
 
 ?>
 <!DOCTYPE html>

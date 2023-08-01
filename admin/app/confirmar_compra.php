@@ -4,6 +4,11 @@ require_once __DIR__ . '/../../src/modelos/Carrito.php';
 
 use App\Modelos\Carrito;
 
+if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
+    // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
+    header("Location: ../../pages/login.php");
+    exit;
+  }
 
 // Obtener el ID de la compra a confirmar desde el parámetro en la URL
 if (isset($_GET['id'])) {

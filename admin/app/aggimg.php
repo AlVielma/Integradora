@@ -10,6 +10,12 @@ $mostrar=$productos->mostrar_productos();
 $marcas= $productos->mostrar_marca();
 $categorias= $productos->mostrar_categorias();
 $tlente = $productos->mostrar_tipo_lentes();
+
+if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
+  // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
+  header("Location: ../../pages/login.php");
+  exit;
+}
 $validacion = new validacionproductos();
 $errors = [];
 extract($_POST);
