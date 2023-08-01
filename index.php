@@ -4,6 +4,12 @@ session_start();
 
 use App\Modelos\productos;
 use App\http\correoquejas;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/Exception.php';
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require_once __DIR__.'/../vendor/phpmailer/phpmailer/src/SMTP.php';
 require_once 'src/http/correoquejas.php';
 require_once 'src/modelos/productos.php';
 require 'vendor/autoload.php';
