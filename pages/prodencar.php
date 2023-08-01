@@ -25,16 +25,14 @@ if (isset($_SESSION['user_id'])) {
         // Si el usuario no tiene productos en el carrito en estado 1, redirige a la vista incarejem.php
         header("Location: incarejem.php");
         exit;
-    } else {
-        header("Location: prodencar.php");
-    }
+    } 
 } else {
     // Si el usuario no ha iniciado sesión, redirigir a la vista incarejem.php
     header("Location: incarejem.php");
     exit;
 }
 ?>
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
