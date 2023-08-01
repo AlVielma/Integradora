@@ -8,19 +8,22 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require_once __DIR__ .'src/http/correoquejas.php';
-require_once __DIR__. 'src/modelos/productos.php';
+require_once __DIR__ . '/src/http/correoquejas.php'; // Added a forward slash (/) before 'src' to ensure an absolute path.
+require_once __DIR__ . '/src/modelos/productos.php'; // Added a forward slash (/) before 'src' to ensure an absolute path.
 require 'vendor/autoload.php';
+
 $productos = new productos();
-$vendidos= $productos->masvendidos3();
+$vendidos = $productos->masvendidos3();
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   // Accede a los datos del formulario
   $nombre = $_POST["nombre"];
   $email = $_POST["email"];
   $comentario = $_POST["comentario"];
 
-  // El resto de tu código existente para enviar el correo
+  // Rest of your existing code to send the email
   // ...
+
   // Configura los destinatarios
   $mail->setFrom($email, $nombre);
   $mail->addAddress('vafd_utt1@gmail.com');
@@ -33,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   // Envía el correo
   $mail->send();
+
   // Redirecciona a la página principal y muestra una alerta
   echo '<script>alert("Gracias por tu queja o comentario. Lo hemos recibido y te responderemos pronto.");</script>';
   echo '<script>window.location.href = "index.php";</script>';
@@ -40,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   echo '<script>alert("Error: Método de solicitud incorrecto.");</script>';
 }
 ?>
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

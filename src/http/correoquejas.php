@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 // Carga el autoloader de Composer
-require __DIR__ . '../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 
 // Crea una nueva instancia de PHPMailer
