@@ -2,11 +2,55 @@
 /*index.php*/
 session_start();
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 use App\Modelos\productos;
 require_once  'src/modelos/productos.php';
 require_once  'vendor/autoload.php';
 $productos = new productos();
 $vendidos= $productos->masvendidos3();
+
+if(isset($_POST['quejas'])){
+
+  $nombre = $_POST["nombre"];
+  $email = $_POST["email"];
+  $comentario = $_POST["comentario"];
+
+  // Crea una nueva instancia de PHPMailer
+  $mail = new PHPMailer(true);
+
+  try {
+      // Configura los ajustes del servidor SMTP
+      $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Habilita la salida detallada del servidor SMTP
+      $mail->isSMTP();
+      // ...
+
+      // Configura los destinatarios
+      $mail->setFrom('vafd_utt1@gmail.com', $nombre);
+      $mail->addAddress($email);
+    
+
+      $mail->isHTML(true);
+      $mail->Subject = 'Queja o Comentario';
+      $mail->Body = 'Nombre: ' . $nombre . '<br>Email: ' . $email . '<br>Comentario: ' . $comentario;
+
+      // Envía el correo
+      $mail->send();
+
+      // Redirecciona a la página principal y muestra una alerta
+      echo '<script>alert("Gracias por tu queja o comentario. Lo hemos recibido y te responderemos pronto.");</script>';
+      echo '<script>window.location.href = "index.php";</script>';
+      exit(); // Asegura que no se ejecuten más líneas de código después de la redirección
+  } catch (Exception $e) {
+      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+  }
+} else {
+  $errors[] = "Hubo un problema con los datos ingresados.";
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -407,7 +451,7 @@ $vendidos= $productos->masvendidos3();
             </div>
             <div class="col-12 col-lg-7">
                 <div class="">
-                    <form action="correoquejas.php" method="post">
+                    <form  action="index.php" method="post">
                         <div class="form-floating">
                             <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre" name="nombre">
                             <label for="floatingName">Tu nombre</label>
@@ -421,7 +465,7 @@ $vendidos= $productos->masvendidos3();
                             <label for="floatingTextarea">Comentario</label>
                         </div>
                         <div class="mt-3">
-                            <button class="btn btn-primary w-100 rounded-0" type="submit">Enviar</button>
+                            <button class="btn btn-primary w-100 rounded-0" name="quejas" type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>
