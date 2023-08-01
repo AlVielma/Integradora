@@ -23,10 +23,10 @@ class Carrito
 
     public function verificarProductoEnCarrito($producto_id, $usuario_id)
     {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM Carritos WHERE producto_id = ? AND usuario = ?");
-        $stmt->execute([$producto_id, $usuario_id]);
-        $count = $stmt->fetchColumn();
-        return ($count > 0);
+        $ver = $this->pdo->prepare("SELECT COUNT(*) FROM Carritos WHERE producto_id = ? AND usuario = ?");
+        $ver->execute([$producto_id, $usuario_id]);
+        $cuent = $ver->fetchColumn();
+        return ($cuent > 0);
     }
 
 
