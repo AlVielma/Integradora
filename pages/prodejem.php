@@ -67,6 +67,11 @@ if ($sku == '') {
   <div class="container">
     <div class="row">
       <div class="col-md-6 order-md-1 text-center">
+        <?php // Verificar si hay un mensaje de alerta en $_SESSION
+            if (isset($_SESSION['mensaje'])) {
+              echo '<div class="alert alert-warning">' . $_SESSION['mensaje'] . '</div>';
+              unset($_SESSION['mensaje']); // Eliminar el mensaje para que no se muestre nuevamente
+            } ?>
         <!--aqui es donde se utilizaria php, titulo, marca, precio e imagenes-->
         <h1><?php echo $producto; ?></h1>
         <h3><?php echo $marca; ?></h3>

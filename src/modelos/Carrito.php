@@ -21,19 +21,34 @@ class Carrito
         $this->pdo = $this->conexion->conectar();
     }
 
+    public function verificarProductoEnCarrito($producto_id, $usuario_id)
+{
+    $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM Carritos WHERE producto_id = ? AND usuario = ?");
+    $stmt->execute([$producto_id, $usuario_id]);
+    $count = $stmt->fetchColumn();
+    return ($count > 0);
+}
+
+
     public function agregarProducto($usuario_id, $producto_id, $cantidad, $estado_id)
-    {
-        // Obtener el precio del producto desde la base de datos
-        $productosModelo = new productos();
-        $producto = $productosModelo->consultaeedit($producto_id);
-        $precio = $producto[0]['precio'];
-
-        // Insertar el producto en la tabla "Carritos"
-        $total = $precio * $cantidad;
-
-        $agregarCarrito = $this->pdo->prepare("INSERT INTO Carritos (usuario, producto_id, cantidad, total, estado_id) VALUES (?, ?, ?, ?, ?)");
-        $agregarCarrito->execute([$usuario_id, $producto_id, $cantidad, $total, $estado_id]);
+{
+    // Verificar si el producto ya está en el carrito
+    if ($this->verificarProductoEnCarrito($producto_id, $usuario_id)) {
+        $_SESSION['mensaje'] = 'El producto ya está en el carrito.';
+        return; // El producto ya está en el carrito, no lo agregamos nuevamente
     }
+
+    // Obtener el precio del producto desde la base de datos
+    $productosModelo = new productos();
+    $producto = $productosModelo->consultaeedit($producto_id);
+    $precio = $producto[0]['precio'];
+
+    // Insertar el producto en la tabla "Carritos"
+    $total = $precio * $cantidad;
+
+    $agregarCarrito = $this->pdo->prepare("INSERT INTO Carritos (usuario, producto_id, cantidad, total, estado_id) VALUES (?, ?, ?, ?, ?)");
+    $agregarCarrito->execute([$usuario_id, $producto_id, $cantidad, $total, $estado_id]);
+}
 
     public function eliminarProducto($usuario_id, $producto_id)
     {
