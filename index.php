@@ -3,13 +3,13 @@
 session_start();
 
 use App\Modelos\productos;
-use App\Modelos\correoquejas;
+use App\http\correoquejas;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require_once 'src/modelos/correoquejas.php';
-require_once 'src/modelos/productos.php';
+require_once __DIR__ .'src/http/correoquejas.php';
+require_once __DIR__. 'src/modelos/productos.php';
 require 'vendor/autoload.php';
 $productos = new productos();
 $vendidos= $productos->masvendidos3();
