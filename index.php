@@ -18,21 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $nombre = $_POST["nombre"];
   $email = $_POST["email"];
   $comentario = $_POST["comentario"];
-
-  // Rest of your existing code to send the email
-  // ...
-
-  // Configura los destinatarios
   $mail->setFrom($email, $nombre);
   $mail->addAddress('vafd_utt1@gmail.com');
   $mail->addReplyTo($email, $nombre);
 
-  // Configura el contenido del correo
   $mail->isHTML(true);
   $mail->Subject = 'Queja o Comentario';
   $mail->Body = 'Nombre: ' . $nombre . '<br>Email: ' . $email . '<br>Comentario: ' . $comentario;
-
-  // Envía el correo
   $mail->send();
 
   // Redirecciona a la página principal y muestra una alerta
