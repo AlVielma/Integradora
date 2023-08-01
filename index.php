@@ -7,9 +7,9 @@ use App\http\correoquejas;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-require_once __DIR__ .'/src/http/correoquejas.php';
+require_once __DIR__ . '/src/http/correoquejas.php';
 require_once __DIR__. 'src/modelos/productos.php';
-require 'vendor/autoload.php';
+require_once __DIR__. 'vendor/autoload.php';
 $productos = new productos();
 $vendidos= $productos->masvendidos3();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
