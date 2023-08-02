@@ -27,7 +27,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
 ?>
     
     <div class="container-fluid" id="content">
-      
+    
         <form action="consultapdf.php" method="POST">
 
             <div class="row">
