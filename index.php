@@ -419,7 +419,7 @@ if(isset($_POST['quejas'])){
         <a href="pages/exam.php" class="btn btn-primary btn-lg custom-button btn-block">Obten tu cita</a>
       <?php else : ?>
         <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
-        <a href="pages/login.php" class="btn btn-primary btn-lg custom-button btn-block">Obten tu cita</a>
+        <a href="pages/login.php" class="btn btn-secondary btn-lg custom-button btn-block">Obten tu cita</a>
       <?php endif; ?>
     </div>
   </div>
@@ -450,7 +450,7 @@ if(isset($_POST['quejas'])){
                             <label for="floatingTextarea">Deja un comentario</label>
                         </div>
                         <div class="mt-3">
-                            <button class="btn btn-primary w-100 rounded-0" name="quejas" type="submit">Enviar</button>
+                            <button class="btn btn-secondary w-100 rounded-0" name="quejas" type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>
