@@ -12,8 +12,9 @@
 
             <div class="container-fluid">
                 <form class="d-flex" role="search" method="POST" action="busqueda.php">
-                    <input class="form-control me-2 busqueda" type="search" placeholder="Search" aria-label="Search"
+                    <input class="form-control me-2 busqueda" type="search" placeholder="Buscador" aria-label="Search"
                         name="busqueda">
+                      <Button class="btn btn-light">Buscar</Button>
                 </form>
             </div>
 
