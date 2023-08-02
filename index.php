@@ -471,7 +471,7 @@ if(isset($_POST['quejas'])){
 
       <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
         <h3>Pop Ópticos</h3>
-        <a href="index.php"><img src="images/icon64.png" alt=""></a>
+        <a href="index.php"><img class="log" src="images/icon64.png" alt=""></a>
 
       </div>
       <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
