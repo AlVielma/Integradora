@@ -8,6 +8,7 @@
   <a class="nav-link" href="consulta.php"><i class="fas fa-stethoscope"></i><span>Realizar Consulta</span></a>
   <a class="nav-link" href="receta.php"><i class="fas fa-prescription"></i><span>Generar Receta</span></a>
   <a class="nav-link" href="pendientes.php"><i class="fas fa-spinner"></i><span>Ver pendientes</span></a>
+  <a class="nav-link" href="Clientes.php"><i class="fa fa-user-o"></i><span>Clientes Pop</span></a>
   <a class="nav-link" href="../../src/http/logout.php"><i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span></a>
   
   <?php
