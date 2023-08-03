@@ -1,4 +1,5 @@
 /* Estilo personalizado para el sidebar */
+/*produc.css*/
     .sidebar {
       position: fixed;
       top: 0;
@@ -128,3 +129,12 @@
         max-width: none; /* Cancela la regla anterior */
       }
     }
+    /* Estilo para clientes activados */
+.cliente-activo {
+  background-color: #c5e1a5; /* Color de fondo verde */
+}
+
+/* Estilo para clientes desactivados */
+.cliente-inactivo {
+  background-color: #ffcdd2; /* Color de fondo rojo */
+}

@@ -2,30 +2,10 @@
 namespace App\Modelos;
 require_once 'Conexion.php';
 use App\Modelos\Conexion;
-$conexion = new Conexion();
-$pdo = $conexion->obtenerConexion();
+
 class Clientespop
 {
-    public function getUsuariosConRolDos()
-    {
-        $conexion = new Conexion();
-        $pdo = $conexion->obtenerConexion();
 
-        $query = "SELECT u.id, u.nombre, u.apellido, u.email, u.estado_id
-                FROM Usuarios u
-                INNER JOIN roles r ON u.id_rol = r.id_rol
-                WHERE u.id_rol = 2";
-        $stmt = $pdo->query($query);
-
-        $usuarios = [];
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $usuarios[] = $row;
-        }
-
-        return $usuarios;
-    }
-
-    
     public function buscarUsuariosConRolDos($busqueda)
     {
         $conexion = new Conexion();
@@ -40,8 +20,67 @@ class Clientespop
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $usuarios[] = $row;
         }
-
         return $usuarios;
     }
+
+    public function activarUsuario($id)
+    {
+        $conexion = new Conexion();
+        $pdo = $conexion->obtenerConexion();
+
+        $query = "UPDATE Usuarios SET estado_id = 5 WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function desactivarUsuario($id)
+    {
+        $conexion = new Conexion();
+        $pdo = $conexion->obtenerConexion();
+
+        $query = "UPDATE Usuarios SET estado_id = 1 WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    
+
+    public function obtenerUsuariosConEstado()
+{
+    $conexion = new Conexion();
+    $pdo = $conexion->obtenerConexion();
+    $query = "SELECT
+        u.id,
+        u.nombre,
+        u.apellido,
+        u.email,
+        IF(u.estado_id = 5, 'Activo', 'Inactivo') AS estado
+        FROM
+        Usuarios u
+        INNER JOIN
+        roles r ON u.id_rol = r.id_rol
+        WHERE
+        r.id_rol = 2";
+        $stmt = $pdo->query($query);
+        $usuarios = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+        $usuarios[] = $row;
+    }
+
+    return $usuarios;
+}
+
 }
 ?>
