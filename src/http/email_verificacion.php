@@ -1,5 +1,5 @@
 <?php
-/*correoquejas.php*/
+/*email_verificacion.php*/
 // Importa las clases de PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -23,15 +23,14 @@ try {
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       =  587;
 
-    // Configura los destinatarios
-    $mail->setFrom($email, $nombre . ' ' . $apellido);
-    $mail->addAddress('vafd_utt1@gmail.com');
-    $mail->addReplyTo($email, $nombre . ' ' . $apellido);
+   // Configura los destinatarios y el contenido del correo
+   $mail->setFrom('vafd_utt1@gmail.com', 'Pop Ópticos'); // Cambia esto por tu dirección de correo electrónico y nombre
+   $mail->addAddress($_SESSION['user_email'], $_SESSION['user_name'] . ' ' . $_SESSION['user_lastname'], $token); // Agrega al usuario como destinatario
 
     // Configura el contenido del correo
     $mail->isHTML(true);
     $mail->Subject = 'Esto es una prueba';
-    $mail->Body    = 'Hola, ' . $nombre . ' ' . $apellido . '!<br><br>.' . $asunto;
+    $mail->Body    = 'Hola, ' . $nombre . ' ' . $apellido . '!<br><br>.su codigo de activacion es ' . $token;
 
     // Envía el correo
     $mail->send();

@@ -65,9 +65,10 @@ if(!empty($_POST)){
             $password_hash = password_hash($passwordd, PASSWORD_DEFAULT);
             $nombresinj=$registrar->sqlinj($nombres);
             $apelliinj=$registrar->sqlinj($apellidos);
-            $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash], $con);
+            $token = rand(1000, 9999);
+            $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash ,$token], $con);
     
-            header("Location: login.php");
+            header("Location: verificacion_usuario.php");
         }
         else{
             $errors[] = "ERROR AL INGRESO DE DATOS";
