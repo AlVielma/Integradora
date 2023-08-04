@@ -20,7 +20,7 @@ if (isset($_POST['busqueda'])) {
   $consulta->execute([$busqueda]);
 
   $product = $consulta->fetchAll(PDO::FETCH_OBJ);
-  // Cierra el cursor de la consulta anterior para liberar recursos
+  // Cierra el cursor de la consulta
   $consulta->closeCursor();
 
   // Aplicar clasificación si es necesario
