@@ -1,8 +1,15 @@
 <?php
 use App\Modelos\Conexion;
 use App\Modelos\validacionesRegistrar;
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 require_once __DIR__.'/../src/modelos/Conexion.php';
 require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
+require_once __DIR__.'/../src/modelos/email_verificacion.php';
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -10,7 +17,9 @@ session_start();
 
 $registrar = new validacionesRegistrar();
 $conexion = new Conexion(); // Crear una instancia de la clase Conexion
+
 $con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
+
 
 // Verificar si el usuario ya ha iniciado sesión
 if(isset($_SESSION['user_id'])) {
@@ -66,7 +75,10 @@ if(!empty($_POST)){
             $nombresinj=$registrar->sqlinj($nombres);
             $apelliinj=$registrar->sqlinj($apellidos);
             $token = rand(1000, 9999);
-            $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash ,$token], $con);
+            $estado_id=2;
+            $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash ,$token, $estado_id], $con);
+
+            enviarCorreoToken($nombresinj, $apelliinj, $email, $token);
     
             header("Location: verificacion_usuario.php");
         }
@@ -75,6 +87,8 @@ if(!empty($_POST)){
         }
        
     }
+
+
 }
 ?>
 

@@ -58,7 +58,7 @@ class validacionesRegistrar{
     // Realizar más validaciones, si es necesario, para asegurar que los datos sean correctos
     // Por ejemplo, verificar si el email ya existe en la base de datos antes de insertar
 
-    $sql = $con->prepare("INSERT INTO Usuarios (nombre, apellido, email, contraseña, id_rol, token) VALUES (?,?,?,?,2,?)");
+    $sql = $con->prepare("INSERT INTO Usuarios (nombre, apellido, email, contraseña, id_rol, token, estado_id) VALUES (?,?,?,?,2,?,?)");
     if ($sql->execute($datos)) {
         // La consulta se realizó con éxito
         return true;
