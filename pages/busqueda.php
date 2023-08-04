@@ -41,7 +41,10 @@ if (isset($_POST['busqueda'])) {
   $product = $_SESSION['productos'];
 } else {
   // Si no hay resultados de búsqueda en la sesión ni se ha enviado el formulario, cargar todos los productos
-  $consultaTodos = $con->prepare("SELECT * FROM Productos;");
+  $consultaTodos = $con->prepare("SELECT p.sku, i.imagen, p.nombre, p.precio, p.stock
+  from Productos p
+  inner join Imagenes i
+  on p.imagen=i.id_img;");
   $consultaTodos->execute();
   $product = $consultaTodos->fetchAll(PDO::FETCH_OBJ);
   $consultaTodos->closeCursor();
