@@ -65,6 +65,7 @@ if(!empty($_POST)){
             $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash ,$token, $estado_id], $con);
             $enviar = new EnviarVerificacion();  
             $enviar->enviarCorreoToken($nombresinj, $apelliinj, $email, $token);
+            
             header("Location: verificacion_usuario.php");
         }
         else{

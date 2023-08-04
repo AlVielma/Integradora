@@ -26,13 +26,13 @@ class EnviarVerificacion
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'vafd_utt1@gmail.com';
-            $mail->Password   = 'wegvjpxcfkdynjim';
+            $mail->Username   = 'prueba1correo123@gmail.com';
+            $mail->Password   = 'fnnpzrhlqnqqypua';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       =  587;
 
         // Configura los destinatarios y el contenido del correo
-        $mail->setFrom('vafd_utt1@gmail.com', 'Pop Ópticos'); // Cambia esto por tu dirección de correo electrónico y nombre
+        $mail->setFrom('prueba1correo123@gmail.com', 'Pop Ópticos'); // Cambia esto por tu dirección de correo electrónico y nombre
         $mail->addAddress($email, $nombresinj . ' ' . $apelliinj); // Agrega al usuario como destinatario
 
             // Configura el contenido del correo
@@ -48,19 +48,8 @@ class EnviarVerificacion
         } catch (Exception $e) {
             echo '<script>alert("No se pudo enviar el correo. Error del correo: ' . $mail->ErrorInfo . '");</script>';
         }
-    }
-    public function enviarCorreoToken($nombresinj, $apelliinj, $email, $token)
-{
-    // Código para enviar el correo
-    // ...
+  
+    } 
+ }
 
-    // Configura el contenido del correo
-    $mail->isHTML(true);
-    $mail->Subject = 'Código de verificación';
-    $mail->Body    = 'Hola, ' . $nombresinj . ' ' . $apelliinj . '!<br><br>.su codigo de activacion es ' . $token;
-
-    // ...
-}
-
-}
 ?>

@@ -55,6 +55,7 @@ class validacionesRegistrar{
         }
     }
 
+    
     // Realizar más validaciones, si es necesario, para asegurar que los datos sean correctos
     // Por ejemplo, verificar si el email ya existe en la base de datos antes de insertar
 
@@ -66,7 +67,31 @@ class validacionesRegistrar{
         // Ocurrió un error al ejecutar la consulta
         return false;
     }
+
+
     }
+    public function verificarToken($email, $token, $con)
+    {
+        // Implementa la lógica para verificar el token en la base de datos
+        // Puedes usar una consulta SQL para buscar el token correspondiente al correo electrónico dado
+        // Si el token existe y es válido, devuelve true, de lo contrario, devuelve false
+        // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "token"):
+        $sql = $con->prepare("SELECT COUNT(*) FROM Usuarios WHERE email = ? AND token = ?");
+        $sql->execute([$email, $token]);
+        $count = $sql->fetchColumn();
+        return $count > 0;
+    }
+
+    public function actualizarEstadoUsuario($email, $estado_id, $con)
+    {
+        // Implementa la lógica para actualizar el estado del usuario en la base de datos
+        // Puedes usar una consulta SQL para actualizar el estado del usuario correspondiente al correo electrónico dado
+        // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "estado_id"):
+        $sql = $con->prepare("UPDATE Usuarios SET estado_id = ? WHERE email = ?");
+        $sql->execute([$estado_id, $email]);
+        return $sql->rowCount() > 0;
+    }
+
 
 
     function usuarioExist($usuario, $con)
