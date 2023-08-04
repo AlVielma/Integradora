@@ -1,3 +1,5 @@
+
+php
 <?php
 session_start();
 use App\Modelos\Clientespop;
@@ -5,14 +7,18 @@ require_once __DIR__.'/../../src/modelos/Clientespop.php';
 
 $clientesPop = new Clientespop();
 $busqueda = isset($_GET['busqueda']) ? $_GET['busqueda'] : '';
-$clientes = $clientesPop->buscarUsuariosConRolDos($busqueda);
-$clientesPop = new Clientespop();
-$usuariosConEstado = $clientesPop->obtenerUsuariosConEstado();
 
-// Procesar acciones de activar y desactivar
+if (!empty($busqueda)) {
+    $clientes = $clientesPop->buscarClientesPorNombreApellido($busqueda);
+} else {
+    $clientes = $clientesPop->obtenerUsuariosConEstado();
+}
+
 $alerta = '';
+
 if (isset($_GET['action']) && isset($_GET['id'])) {
     $id = $_GET['id'];
+
     if ($_GET['action'] === 'activar') {
         if ($clientesPop->activarUsuario($id)) {
             $alerta = '<div id="alerta" class="alert alert-success" role="alert">Cliente activado exitosamente.</div>';
@@ -28,6 +34,7 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,24 +84,19 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
                     </tr>
                 </thead>
                 <tbody>
-    <?php
-    $clientesPop = new Clientespop();
-    $usuariosConEstado = $clientesPop->obtenerUsuariosConEstado();
-
-    foreach ($usuariosConEstado as $usuario) {
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($usuario['id']) . "</td>";
-        echo "<td>" . htmlspecialchars($usuario['nombre']) . "</td>";
-        echo "<td>" . htmlspecialchars($usuario['apellido']) . "</td>";
-        echo "<td>" . htmlspecialchars($usuario['email']) . "</td>";
-        echo "<td>" . htmlspecialchars($usuario['estado']) . "</td>";
-        echo "<td>";
-        echo "<a href=\"?action=desactivar&id=" . htmlspecialchars($usuario['id']) . "\" class=\"btn btn-danger\">Desactivar</a>";
-        echo "<a href=\"?action=activar&id=" . htmlspecialchars($usuario['id']) . "\" class=\"btn btn-success\">Activar</a>";
-        echo "</td>";
-        echo "</tr>";
-    }
-    ?>
+                    <?php foreach ($clientes as $usuario): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($usuario['id']); ?></td>
+                            <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
+                            <td><?php echo htmlspecialchars($usuario['apellido']); ?></td>
+                            <td><?php echo htmlspecialchars($usuario['email']); ?></td>
+                            <td><?php echo htmlspecialchars($usuario['estado']); ?></td>
+                            <td>
+                                <a href="?action=desactivar&id=<?php echo htmlspecialchars($usuario['id']); ?>" class="btn btn-danger">Desactivar</a>
+                                <a href="?action=activar&id=<?php echo htmlspecialchars($usuario['id']); ?>" class="btn btn-success">Activar</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -107,4 +109,3 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
     </script>
 </body>
 </html>
-

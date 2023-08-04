@@ -2,27 +2,9 @@
 namespace App\Modelos;
 require_once 'Conexion.php';
 use App\Modelos\Conexion;
-
+/*Clientepop.php*/
 class Clientespop
 {
-
-    public function buscarUsuariosConRolDos($busqueda)
-    {
-        $conexion = new Conexion();
-        $pdo = $conexion->obtenerConexion();
-
-        $query = "CALL BuscarUsuariosConRolDos(:busqueda)";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':busqueda', $busqueda, \PDO::PARAM_STR);
-        $stmt->execute();
-
-        $usuarios = [];
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $usuarios[] = $row;
-        }
-        return $usuarios;
-    }
-
     public function activarUsuario($id)
     {
         $conexion = new Conexion();
@@ -82,5 +64,21 @@ class Clientespop
     return $usuarios;
 }
 
+public function buscarClientesPorNombreApellido($busqueda)
+{
+    $conexion = new Conexion();
+    $pdo = $conexion->obtenerConexion();
+
+    $query = "CALL BuscarClientesPorNombreApellido(:busqueda)";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':busqueda', $busqueda, \PDO::PARAM_STR);
+    $stmt->execute();
+
+    $clientes = [];
+    while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+        $clientes[] = $row;
+    }
+    return $clientes;
+}
 }
 ?>
