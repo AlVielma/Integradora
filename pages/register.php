@@ -2,14 +2,14 @@
 use App\Modelos\Conexion;
 use App\Modelos\validacionesRegistrar;
 
-
+use EnviarVerificacion as GlobalEnviarVerificacion;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require_once __DIR__.'/../src/modelos/Conexion.php';
 require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
-require_once __DIR__.'/../src/modelos/email_verificacion.php';
+
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -78,7 +78,8 @@ if(!empty($_POST)){
             $estado_id=2;
             $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash ,$token, $estado_id], $con);
 
-            enviarCorreoToken($nombresinj, $apelliinj, $email, $token);
+            $enviar = new GlobalEnviarVerificacion();
+           $enviar -> enviarCorreoToken($nombresinj, $apelliinj, $email, $token);
     
             header("Location: verificacion_usuario.php");
         }
@@ -87,9 +88,48 @@ if(!empty($_POST)){
         }
        
     }
+    if(isset($_POST['verificar'])){
+
+        $nombres = $_POST["nombres"];
+        $apelliinj = $_POST["apellido"];
+        $email = $_POST["email"];
+       
+      
+        // Crea una nueva instancia de PHPMailer
+        $mail = new PHPMailer(true);
+      
+        try {
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Habilita la salida detallada del servidor SMTP
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'vafd_utt1@gmail.com';
+            $mail->Password   = 'wegvjpxcfkdynjim';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       =  587;
+      
+           // Configura los destinatarios y el contenido del correo
+           $mail->setFrom('vafd_utt1@gmail.com', 'Pop Ópticos'); // Cambia esto por tu dirección de correo electrónico y nombre
+           $mail->addAddress($email, $nombresinj . ' ' . $apelliinj); // Agrega al usuario como destinatario
+   
+               // Configura el contenido del correo
+               $mail->isHTML(true);
+               $mail->Subject = 'Esto es una prueba';
+               $mail->Body    = 'Hola, ' . $nombre . ' ' . $apellido . '!<br><br>.su codigo de activacion es ' . $token;
+   
+               // Envía el correo
+               $mail->send();
+               // Redirecciona a la página principal y muestra una alerta
+               echo '<script>alert("El correo ha sido enviado correctamente");</script>';
+               echo '<script>window.location.href = "../index.php";</script>';
+           } catch (Exception $e) {
+               echo '<script>alert("No se pudo enviar el correo. Error del correo: ' . $mail->ErrorInfo . '");</script>';
+           }
 
 
+    }
 }
+
 ?>
 
 
@@ -156,7 +196,7 @@ if(!empty($_POST)){
                             <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirma tu contraseña" value="<?php echo isset($_POST['confpassword']) ? $_POST['confpassword'] : ''; ?>">
                         </div>
                         <div class="text-center">
-                            <input class="btn btn-primary" type="submit" value="registro" name="submit">
+                            <input class="btn btn-primary" type="submit" value="registro" name="verificar">
                         </div>
                     </form>
                 </div>

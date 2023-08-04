@@ -6,10 +6,15 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 // Carga el autoloader de Composer
+
 require __DIR__ . '../../vendor/autoload.php';
 
-    function enviarCorreoToken($nombresinj, $apelliinj, $email, $token)
+class EnviarVerificacion
+{
+    public function enviarCorreoToken($nombresinj, $apelliinj, $email, $token)
     {
+        echo '<script>alert("Si entro a la fucion);</script>';
+
         //Codigo enviar correo
         // Crea una nueva instancia de PHPMailer
         $mail = new PHPMailer(true);
@@ -44,3 +49,5 @@ require __DIR__ . '../../vendor/autoload.php';
             echo '<script>alert("No se pudo enviar el correo. Error del correo: ' . $mail->ErrorInfo . '");</script>';
         }
     }
+}
+?>
