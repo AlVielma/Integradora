@@ -143,8 +143,8 @@ if (isset($_POST['finalizar_compra'])) {
                         <tr>
                             <td><?php echo $nombre; ?></td>
                             <td><?php echo $cantidad; ?></td>
-                            <td>$<?php echo number_format($precio, 2); ?></td>
-                            <td>$<?php echo number_format($totalProducto, 2); ?></td>
+                            <td>$<?php echo number_format($precio, 2); ?> MXN</td>
+                            <td>$<?php echo number_format($totalProducto, 2); ?> MXN</td>
                         </tr>
                     <?php
                     }
@@ -153,7 +153,7 @@ if (isset($_POST['finalizar_compra'])) {
                 <tfoot>
                     <tr>
                         <td colspan="3" class="text-end fw-bold">Total del Carrito:</td>
-                        <td>$<?php echo number_format($totalCarrito, 2); ?></td>
+                        <td>$<?php echo number_format($totalCarrito, 2); ?> MXN</td>
                     </tr>
                 </tfoot>
             </table>
