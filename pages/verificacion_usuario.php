@@ -1,7 +1,4 @@
-
-
-
-
+/verificacion_usuario.php/
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,12 +39,12 @@
                     <h2 class="mb-4">Nuevo Usuario Pop</h2>
                         <div>
                         </div>
-                    <form action="register.php" method="POST" autocomplete="off">
+                        <form action="register.php" method="POST" autocomplete="off">
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">TOKEN</label>
-                            <input type="text" class="form-control" id="token" name="token" placeholder="Ingresa tu token" value="<?php echo isset($_POST['token']) ? htmlspecialchars($_POST['token']) : ''; ?>">
+                        <label for="token" class="form-label">TOKEN</label>
+                        <input type="hidden" name="email" value="<?php echo $email; ?>">
+                        <input type="text" class="form-control" id="token" name="token" placeholder="Ingresa tu token" value="<?php echo isset($_POST['token']) ? htmlspecialchars($_POST['token']) : ''; ?>">
                         </div>
-                        
                         <div class="text-center">
                             <input class="btn btn-primary" type="submit" value="registro" name="submit">
                         </div>
@@ -67,3 +64,5 @@
 </body>
 
 </html>
+
+

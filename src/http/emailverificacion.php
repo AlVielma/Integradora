@@ -1,5 +1,5 @@
 <?php
-
+/*emailverificacion.php*/
 // Importa las clases de PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 
 // Carga el autoloader de Composer
 
-require __DIR__ . '../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
 class EnviarVerificacion
 {
@@ -49,5 +49,18 @@ class EnviarVerificacion
             echo '<script>alert("No se pudo enviar el correo. Error del correo: ' . $mail->ErrorInfo . '");</script>';
         }
     }
+    public function enviarCorreoToken($nombresinj, $apelliinj, $email, $token)
+{
+    // Código para enviar el correo
+    // ...
+
+    // Configura el contenido del correo
+    $mail->isHTML(true);
+    $mail->Subject = 'Código de verificación';
+    $mail->Body    = 'Hola, ' . $nombresinj . ' ' . $apelliinj . '!<br><br>.su codigo de activacion es ' . $token;
+
+    // ...
+}
+
 }
 ?>

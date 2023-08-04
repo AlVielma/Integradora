@@ -1,36 +1,29 @@
 <?php
+/*register.php*/
 use App\Modelos\Conexion;
 use App\Modelos\validacionesRegistrar;
-
-use EnviarVerificacion as GlobalEnviarVerificacion;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use App\Modelos\emailverificacion;
 
 require_once __DIR__.'/../src/modelos/Conexion.php';
 require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
-
-
+require_once __DIR__.'/../src/http/emailverificacion.php';
 require __DIR__ . '/../vendor/autoload.php';
-
 session_start();
-
 $registrar = new validacionesRegistrar();
-$conexion = new Conexion(); // Crear una instancia de la clase Conexion
+$conexion = new Conexion();
+$con = $conexion->conectar();
 
-$con = $conexion->conectar(); // Llamar al método conectar() de la instancia de Conexion
-
-
-// Verificar si el usuario ya ha iniciado sesión
 if(isset($_SESSION['user_id'])) {
-    // Redirigir al usuario según su rol
-   if($_SESSION['user_rol'] == 1){
-       header("Location: ../admin/app/aggimg.php");
-   }
-   else {
-       header("Location: ../index.php");
-   }
-   exit;
+    if($_SESSION['user_rol'] == 1){
+        header("Location: ../admin/app/aggimg.php");
+    }
+    else {
+        header("Location: ../index.php");
+    }
+    exit;
 }
 
 $errors = [];
@@ -41,97 +34,45 @@ if(!empty($_POST)){
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     $confpassword = trim($_POST['confpassword']);
-
     $nombres = $registrar->filtrarString($nombre);
     $apellidos = $registrar->filtrarString($apellido);
     $passwordd = $registrar->filtrarString($password);
-    $confpasswords=$registrar->filtrarString($confpassword);
+    $confpasswords = $registrar->filtrarString($confpassword);
 
     if($registrar->esNulo([$nombre, $apellido, $email, $password, $confpassword])){
-        $errors[] = "Debe de llenar todos los campos";
+        $errors[] = "Debe llenar todos los campos";
     }
 
     if(!$registrar->esEmail($email)){
-        $errors[] = "La direccion de correo no es valida";
+        $errors[] = "La dirección de correo no es válida";
     }
 
     if(!$registrar->validarContr($password, $confpassword)){
         $errors[] = "Las contraseñas no coinciden";
     }
 
-    /*if($registrar->usuarioExist($nombre, $con)){
-        $errors[] = "El nombre de usuario $nombre ya existe";
-    }*/
-
     if($registrar->emailExist($email, $con)){
-        $errors[] = "El correo electronico $email ya existe";
+        $errors[] = "El correo electrónico $email ya existe";
     }
 
     if(count($errors) == 0){
-
-        if($nombres==$nombre && $apellidos==$apellido && $password==$passwordd && $confpasswords==$confpassword)
-        {
+        if($nombres == $nombre && $apellidos == $apellido && $password == $passwordd && $confpasswords == $confpassword){
             $password_hash = password_hash($passwordd, PASSWORD_DEFAULT);
-            $nombresinj=$registrar->sqlinj($nombres);
-            $apelliinj=$registrar->sqlinj($apellidos);
+            $nombresinj = $registrar->sqlinj($nombres);
+            $apelliinj = $registrar->sqlinj($apellidos);
             $token = rand(1000, 9999);
-            $estado_id=2;
+            $estado_id = 2;
             $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash ,$token, $estado_id], $con);
-
-            $enviar = new GlobalEnviarVerificacion();
-           $enviar -> enviarCorreoToken($nombresinj, $apelliinj, $email, $token);
-    
+            $enviar = new EnviarVerificacion();  
+            $enviar->enviarCorreoToken($nombresinj, $apelliinj, $email, $token);
             header("Location: verificacion_usuario.php");
         }
         else{
-            $errors[] = "ERROR AL INGRESO DE DATOS";
+            $errors[] = "ERROR AL INGRESAR DATOS";
         }
-       
-    }
-    if(isset($_POST['verificar'])){
-
-        $nombres = $_POST["nombres"];
-        $apelliinj = $_POST["apellido"];
-        $email = $_POST["email"];
-       
-      
-        // Crea una nueva instancia de PHPMailer
-        $mail = new PHPMailer(true);
-      
-        try {
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Habilita la salida detallada del servidor SMTP
-            $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'vafd_utt1@gmail.com';
-            $mail->Password   = 'wegvjpxcfkdynjim';
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port       =  587;
-      
-           // Configura los destinatarios y el contenido del correo
-           $mail->setFrom('vafd_utt1@gmail.com', 'Pop Ópticos'); // Cambia esto por tu dirección de correo electrónico y nombre
-           $mail->addAddress($email, $nombresinj . ' ' . $apelliinj); // Agrega al usuario como destinatario
-   
-               // Configura el contenido del correo
-               $mail->isHTML(true);
-               $mail->Subject = 'Esto es una prueba';
-               $mail->Body    = 'Hola, ' . $nombre . ' ' . $apellido . '!<br><br>.su codigo de activacion es ' . $token;
-   
-               // Envía el correo
-               $mail->send();
-               // Redirecciona a la página principal y muestra una alerta
-               echo '<script>alert("El correo ha sido enviado correctamente");</script>';
-               echo '<script>window.location.href = "../index.php";</script>';
-           } catch (Exception $e) {
-               echo '<script>alert("No se pudo enviar el correo. Error del correo: ' . $mail->ErrorInfo . '");</script>';
-           }
-
-
     }
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -202,15 +143,9 @@ if(!empty($_POST)){
                 </div>
             </div>
         </div>
-    </div>
-    
-    
-    
-    
+    </div>    
     <!-- Scripts de Bootstrap -->
     <script src="js/bootstrap.bundle.min.js"></script>
 
-
 </body>
-
 </html>
