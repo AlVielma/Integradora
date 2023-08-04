@@ -74,7 +74,7 @@ if ($sku == '') {
         <!--aqui es donde se utilizaria php, titulo, marca, precio e imagenes-->
         <h1><?php echo $producto; ?></h1>
         <h3><?php echo $marca; ?></h3>
-        <h2>$ <?php echo $precio; ?></h2>
+        <h2>$ <?php echo $precio; ?> MXN</h2>
         <p><strong> Productos disponibles:</strong> <?php echo $stock; ?></p> <!-- Mostrar el stock del producto -->
         <div class="mb-3 border-top border-5"></div>
         <p class="lead">

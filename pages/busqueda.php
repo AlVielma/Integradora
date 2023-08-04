@@ -98,7 +98,7 @@ if (isset($_POST['busqueda'])) {
                           echo '<a href="prodejem.php?id=' . $producto->sku. '"><img src="'. $rutaBaseImagenes . $producto->imagen .'" class="card-img-top" alt="Imagen del producto" width="200px" height="230px"></a>';
                           echo '<div class="card-body">';
                           echo '<h5 class="card-title h4">' . $producto->nombre . '</h5>';
-                          echo '<a class="objeto-texto" href="prodejem.php?id=' . $producto->sku. '"><p class="card-text h5">' . $producto->precio . '</p></a>';
+                          echo '<a class="objeto-texto" href="prodejem.php?id=' . $producto->sku. '"><p class="card-text h5">$' . $producto->precio . 'MXN</p></a>';
                           echo '</div>';
                           echo '</div>';
                           echo '</div>';
