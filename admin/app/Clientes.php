@@ -2,6 +2,7 @@
 php
 <?php
 session_start();
+require __DIR__.'/../../vendor/autoload.php';
 use App\Modelos\Clientespop;
 require_once __DIR__.'/../../src/modelos/Clientespop.php';
 
