@@ -24,7 +24,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
 
     if ($verificarToken) {
         // El token es válido, cambiar el estado del usuario a "activo" (estado_id = 5)
-        $registrar->actualizarEstadoUsuario($email, 5, $con);
+        $registrar->actualizarEstadoUsuario($email,5, 1, $con);
 
         // Redireccionar a una página de verificación exitosa o mostrar un mensaje de éxito
         header("Location: login.php");
