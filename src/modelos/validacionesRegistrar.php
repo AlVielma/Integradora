@@ -97,18 +97,16 @@ class validacionesRegistrar{
 
     public function actualizarEstadoUsuario($email, $status, $estado_id, $con)
     {
-        // Desactivar el safe update mode temporalmente
-           // $con->query("SET SQL_SAFE_UPDATES = 0");
+      
+      
         
         // Implementa la lógica para actualizar el estado del usuario en la base de datos
         // Puedes usar una consulta SQL para actualizar el estado del usuario correspondiente al correo electrónico dado
         // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "estado_id"):
-        $sql = $con->prepare("UPDATE Usuarios SET  estado_id = ?, status =? WHERE email = ?");
+        $sql = $con->prepare("UPDATE Usuarios SET  estado_id = 5, status =1 WHERE email = ?");
         $sql->execute([$estado_id, $status, $email]);
         return $sql->rowCount() > 0;
 
-          // Volver a activar el safe update mode
-        //$con->query("SET SQL_SAFE_UPDATES = 1");
 
     }
 
