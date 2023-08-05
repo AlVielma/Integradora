@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Modelos;
+
 class validacionesRegistrar{
 
     
@@ -70,27 +71,47 @@ class validacionesRegistrar{
 
 
     }
-    public function verificarToken($email, $token, $con)
+    /*public function verificarToken($email, $token, $con)
     {
         // Implementa la lógica para verificar el token en la base de datos
         // Puedes usar una consulta SQL para buscar el token correspondiente al correo electrónico dado
         // Si el token existe y es válido, devuelve true, de lo contrario, devuelve false
         // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "token"):
-        $sql = $con->prepare("SELECT COUNT(*) FROM Usuarios WHERE email = ? AND token = ?");
+        $sql = $con->prepare("SELECT * FROM USUARIOS WHERE email =? AND token = ?;");
         $sql->execute([$email, $token]);
-        $count = $sql->fetchColumn();
-        return $count > 0;
-    }
+        $sql->fetchColumn();
+        return $sql > 0;
+    }*/
 
-    public function actualizarEstadoUsuario($email, $estado_id, $con)
+    
+    public function verificarToken($email, $token, $con)
+        {
+            // Implementa la lógica para verificar el token en la base de datos
+            // Puedes usar una consulta SQL para buscar el token correspondiente al correo electrónico dado
+            // Si el token existe y es válido, devuelve true, de lo contrario, devuelve false
+            // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "token"):
+            $sql = $con->prepare("SELECT * FROM Usuarios WHERE email =? AND token = ?;");
+            $sql->execute([$email, $token]);
+            return $sql;
+        }
+
+    public function actualizarEstadoUsuario($email, $status, $estado_id, $con)
     {
+        // Desactivar el safe update mode temporalmente
+           // $con->query("SET SQL_SAFE_UPDATES = 0");
+        
         // Implementa la lógica para actualizar el estado del usuario en la base de datos
         // Puedes usar una consulta SQL para actualizar el estado del usuario correspondiente al correo electrónico dado
         // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "estado_id"):
-        $sql = $con->prepare("UPDATE Usuarios SET estado_id = ? WHERE email = ?");
-        $sql->execute([$estado_id, $email]);
+        $sql = $con->prepare("UPDATE Usuarios SET  estado_id = ?, status =? WHERE email = ?");
+        $sql->execute([$estado_id, $status, $email]);
         return $sql->rowCount() > 0;
+
+          // Volver a activar el safe update mode
+        //$con->query("SET SQL_SAFE_UPDATES = 1");
+
     }
+
 
 
 
@@ -104,7 +125,7 @@ class validacionesRegistrar{
         return false;
     }
 
-    function emailExist($email, $con)
+   function emailExist($email, $con)
     {
         $sql = $con->prepare("SELECT id FROM Usuarios WHERE email LIKE ? LIMIT 1");
         $sql->execute([$email]);
@@ -113,6 +134,7 @@ class validacionesRegistrar{
         }
         return false;
     }
+
 
     public function mostrarMensajes(array $errors) {
         if (count($errors) > 0) {
