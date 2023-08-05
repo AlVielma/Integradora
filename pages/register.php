@@ -62,13 +62,25 @@ if(!empty($_POST)){
             $apelliinj = $registrar->sqlinj($apellidos);
             $token = rand(1000, 9999);
             $estado_id = 2;
-            $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash ,$token, $estado_id], $con);
+       
+            $user_id = $registrar->registrarCliente([$nombresinj, $apelliinj, $email, $password_hash , $estado_id , $token], $con);
+          
+        // Si el registro fue exitoso y se obtuvo el ID, redirigimos al usuario a la página de verificación
+        if ($user_id) {
+
+            $_SESSION['id_usuario'] = $user_id;
+            //enviar el correo de verificacion
             $enviar = new EnviarVerificacion();  
             $enviar->enviarCorreoToken($nombresinj, $apelliinj, $email, $token);
+            // Agregamos el ID del usuario en la URL de la siguiente ubicación
+            header("Location: verificacion_usuario.php?id=" . urlencode($_SESSION['id_usuario']));
+            exit;
             
-            header("Location: verificacion_usuario.php");
+            exit; // Importante terminar la ejecución del script después de la redirección
+        } else {
+            $errors[] = "ERROR AL REGISTRAR DATOS";
         }
-        else{
+        }  else{
             $errors[] = "ERROR AL INGRESAR DATOS";
         }
     }

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Modelos;
+// Incluir el archivo con la conexión a la base de datos
+require_once __DIR__.'/../src/modelos/conexion.php';
 
 class validacionesRegistrar{
 
@@ -46,6 +48,8 @@ class validacionesRegistrar{
         return false;
     }
 
+
+
     function registrarCliente(array $datos, $con)
     {
     foreach ($datos as $dato) {
@@ -60,14 +64,15 @@ class validacionesRegistrar{
     // Realizar más validaciones, si es necesario, para asegurar que los datos sean correctos
     // Por ejemplo, verificar si el email ya existe en la base de datos antes de insertar
 
-    $sql = $con->prepare("INSERT INTO Usuarios (nombre, apellido, email, contraseña, id_rol, token, estado_id) VALUES (?,?,?,?,2,?,?)");
-    if ($sql->execute($datos)) {
-        // La consulta se realizó con éxito
-        return true;
-    } else {
-        // Ocurrió un error al ejecutar la consulta
-        return false;
-    }
+       // NOTA: Aquí se debe usar el array $datos como parámetro para el método execute()
+       $sql = $con->prepare("INSERT INTO Usuarios (nombre, apellido, email, contraseña, id_rol, estado_id, token) VALUES (?,?,?,?,2,?,?)");
+       if ($sql->execute($datos)) {
+           // La consulta se realizó con éxito
+           return true;
+       } else {
+           // Ocurrió un error al ejecutar la consulta
+           return false;
+       }
 
 
     }
@@ -84,18 +89,18 @@ class validacionesRegistrar{
     }*/
 
     
-    public function verificarToken($email, $token, $con)
+    public function verificarToken($id,$email, $token, $con)
         {
             // Implementa la lógica para verificar el token en la base de datos
             // Puedes usar una consulta SQL para buscar el token correspondiente al correo electrónico dado
             // Si el token existe y es válido, devuelve true, de lo contrario, devuelve false
             // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "token"):
-            $sql = $con->prepare("SELECT * FROM Usuarios WHERE email =? AND token = ?;");
-            $sql->execute([$email, $token]);
+            $sql = $con->prepare("SELECT * FROM Usuarios WHERE id=? AND email =? AND token = ?;");
+            $sql->execute([$id,$email, $token]);
             return $sql;
         }
 
-    public function actualizarEstadoUsuario($email, $status, $estado_id, $con)
+    public function actualizarEstadoUsuario($user_id, $estatus, $estado_id, $con)
     {
       
       
@@ -103,8 +108,8 @@ class validacionesRegistrar{
         // Implementa la lógica para actualizar el estado del usuario en la base de datos
         // Puedes usar una consulta SQL para actualizar el estado del usuario correspondiente al correo electrónico dado
         // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "estado_id"):
-        $sql = $con->prepare("UPDATE Usuarios SET  estado_id = 5, status =1 WHERE email = ?");
-        $sql->execute([$estado_id, $status, $email]);
+        $sql = $con->prepare("UPDATE Usuarios SET  estado_id = ?, estatus =? WHERE user_id = ?");
+        $sql->execute([$estado_id, $estatus, $user_id]);
         return $sql->rowCount() > 0;
 
 

@@ -18,17 +18,23 @@ $con = $conexion->conectar();
 if (!empty($_POST) && isset($_POST['submit'])) {
     $email = trim($_POST['email']);
     $token = trim($_POST['token']);
+    $user_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // Obtener el ID de usuario de la URL
+       // Suponiendo que tienes un $estado_id y $status válidos para el estado "activo"
+       $estado_id = 5;
+       $estatus = 1;
 
     // Realizar la verificación del token en la base de datos
-    $verificarToken = $registrar->verificarToken($email, $token, $con);
+    $verificarToken = $registrar->verificarToken($user_id, $email, $token, $con);
 
     if ($verificarToken) {
         // El token es válido, cambiar el estado del usuario a "activo" (estado_id = 5)
-        $registrar->actualizarEstadoUsuario($email,5, 1, $con);
+        $registrar->actualizarEstadoUsuario($user_id, $email,$estado_id, $estatus,$con);
 
         // Redireccionar a una página de verificación exitosa o mostrar un mensaje de éxito
         header("Location: login.php");
         exit;
+
+        
     } else {
         // El token no es válido, mostrar un mensaje de error o redireccionar a una página de error
         header("Location: verificacion_usuario.php");
