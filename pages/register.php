@@ -2,10 +2,7 @@
 /*register.php*/
 use App\Modelos\Conexion;
 use App\Modelos\validacionesRegistrar;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-use App\Modelos\emailverificacion;
+
 
 require_once __DIR__.'/../src/modelos/Conexion.php';
 require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
