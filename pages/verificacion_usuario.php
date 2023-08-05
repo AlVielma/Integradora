@@ -1,7 +1,7 @@
 
 <?php
  use App\Modelos\Conexion;
- USE App\Modelos\validacionesRegistrar;
+ use App\Modelos\validacionesRegistrar;
 // Incluir las clases y la conexión a la base de datos
 require_once __DIR__.'/../src/modelos/Conexion.php';
 require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
@@ -18,17 +18,17 @@ $con = $conexion->conectar();
 if (!empty($_POST) && isset($_POST['submit'])) {
     $email = trim($_POST['email']);
     $token = trim($_POST['token']);
-    $user_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // Obtener el ID de usuario de la URL
-       // Suponiendo que tienes un $estado_id y $status válidos para el estado "activo"
-       $estado_id = 5;
-       $estatus = 1;
+    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // Obtener el ID de usuario de la URL
+     
 
     // Realizar la verificación del token en la base de datos
-    $verificarToken = $registrar->verificarToken($user_id, $email, $token, $con);
+    $verificarToken = $registrar->verificarToken($id, $email, $token, $con);
 
     if ($verificarToken) {
         // El token es válido, cambiar el estado del usuario a "activo" (estado_id = 5)
-        $registrar->actualizarEstadoUsuario($user_id, $email,$estado_id, $estatus,$con);
+        $estado_id = 5;
+        $estatus = 1;
+        $registrar->actualizarEstadoUsuario($id,$estado_id, $estatus,$con);
 
         // Redireccionar a una página de verificación exitosa o mostrar un mensaje de éxito
         header("Location: login.php");
@@ -59,7 +59,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
     <!--Icon-->
     <link rel="icon" href="images/icon.png">
     <title>Verificar Usuario</title>
-   
+
 </head>
 <body>
     <!--Header-->
@@ -87,11 +87,11 @@ if (!empty($_POST) && isset($_POST['submit'])) {
                     <form action="verificacion_usuario.php" method="POST" autocomplete="off">
                         <div class="mb-3">
                             <label for="token" class="form-label">Token</label>
-                            <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
-                            <input type="text" class="form-control" id="token" name="token" placeholder="Ingresa tu token">
+                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
+                            <input type="text" class="form-control" id="token" name="token" placeholder="Ingresa tu token" >
                         </div>
                         <div class="text-center">
-                            <input class="btn btn-primary" type="submit" value="Verificar" name="submit">
+                            <input class="btn btn-primary" type="submit" value="Verificar" name="submit" >
                         </div>
                     </form>
                 </div>

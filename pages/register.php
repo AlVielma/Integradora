@@ -55,6 +55,9 @@ if(!empty($_POST)){
         $errors[] = "El correo electrónico $email ya existe";
     }
 
+
+
+
     if(count($errors) == 0){
         if($nombres == $nombre && $apellidos == $apellido && $password == $passwordd && $confpasswords == $confpassword){
             $password_hash = password_hash($passwordd, PASSWORD_DEFAULT);
@@ -68,12 +71,13 @@ if(!empty($_POST)){
         // Si el registro fue exitoso y se obtuvo el ID, redirigimos al usuario a la página de verificación
         if ($user_id) {
 
-            $_SESSION['id_usuario'] = $user_id;
+            $_SESSION['id'] = $user_id;
+
             //enviar el correo de verificacion
             $enviar = new EnviarVerificacion();  
             $enviar->enviarCorreoToken($nombresinj, $apelliinj, $email, $token);
             // Agregamos el ID del usuario en la URL de la siguiente ubicación
-            header("Location: verificacion_usuario.php?id=" . urlencode($_SESSION['id_usuario']));
+            header("Location: verificacion_usuario.php?id=" . urlencode($_SESSION['id']));
             exit;
             
             exit; // Importante terminar la ejecución del script después de la redirección
@@ -150,7 +154,7 @@ if(!empty($_POST)){
                             <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirma tu contraseña" value="<?php echo isset($_POST['confpassword']) ? $_POST['confpassword'] : ''; ?>">
                         </div>
                         <div class="text-center">
-                            <input class="btn btn-primary" type="submit" value="registro" name="verificar">
+                            <input class="btn btn-primary" type="submit" value="registro" name="verificar" >
                         </div>
                     </form>
                 </div>

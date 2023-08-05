@@ -2,7 +2,7 @@
 
 namespace App\Modelos;
 // Incluir el archivo con la conexión a la base de datos
-require_once __DIR__.'/../src/modelos/conexion.php';
+//require_once __DIR__.'/../src/modelos/conexion.php';
 
 class validacionesRegistrar{
 
@@ -68,7 +68,8 @@ class validacionesRegistrar{
        $sql = $con->prepare("INSERT INTO Usuarios (nombre, apellido, email, contraseña, id_rol, estado_id, token) VALUES (?,?,?,?,2,?,?)");
        if ($sql->execute($datos)) {
            // La consulta se realizó con éxito
-           return true;
+           $user_id = $con->lastInsertId();
+           return $user_id;
        } else {
            // Ocurrió un error al ejecutar la consulta
            return false;
@@ -97,10 +98,11 @@ class validacionesRegistrar{
             // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "token"):
             $sql = $con->prepare("SELECT * FROM Usuarios WHERE id=? AND email =? AND token = ?;");
             $sql->execute([$id,$email, $token]);
+
             return $sql;
         }
 
-    public function actualizarEstadoUsuario($user_id, $estatus, $estado_id, $con)
+    public function actualizarEstadoUsuario($id, $estatus, $estado_id, $con)
     {
       
       
@@ -108,8 +110,9 @@ class validacionesRegistrar{
         // Implementa la lógica para actualizar el estado del usuario en la base de datos
         // Puedes usar una consulta SQL para actualizar el estado del usuario correspondiente al correo electrónico dado
         // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "estado_id"):
-        $sql = $con->prepare("UPDATE Usuarios SET  estado_id = ?, estatus =? WHERE user_id = ?");
-        $sql->execute([$estado_id, $estatus, $user_id]);
+        $sql = $con->prepare("UPDATE Usuarios SET  estado_id = ?, estatus =? WHERE id = ?");
+        $sql->execute([ $estado_id, $estatus, $id]);
+
         return $sql->rowCount() > 0;
 
 
