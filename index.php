@@ -92,7 +92,7 @@ if(isset($_POST['quejas'])){
         </a>
 
         <div class="container-fluid">
-          <form class="d-flex" role="search" method="POST" action="/pages/busqueda.php">
+          <form class="d-flex" role="search" method="GET" action="/pages/busqueda.php">
             <div class="input-group">
               <input class="form-control busqueda" type="search" placeholder="Buscador" aria-label="Search"
                 name="busqueda">
