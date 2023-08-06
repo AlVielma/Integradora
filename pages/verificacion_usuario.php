@@ -1,5 +1,6 @@
 
 <?php
+session_start();
  use App\Modelos\Conexion;
  use App\Modelos\validacionesRegistrar;
 // Incluir las clases y la conexión a la base de datos
@@ -18,7 +19,7 @@ $con = $conexion->conectar();
 if (!empty($_POST) && isset($_POST['submit'])) {
     $email = trim($_POST['email']);
     $token = trim($_POST['token']);
-    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // Obtener el ID de usuario de la URL
+    $id = $_SESSION['id'];
      
 
     // Realizar la verificación del token en la base de datos

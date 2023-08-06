@@ -10,11 +10,11 @@ $con = $conexion->conectar();
 $rutaBaseImagenes = '../productosimg/';
 
 // Verificar si se ha enviado el formulario
-if (isset($_POST['busqueda'])) {
-  $busqueda = addslashes($_POST['busqueda']);
+if (isset($_GET['busqueda'])) {
+  $busqueda = addslashes($_GET['busqueda']);
 
   // Obtener la opción de ordenamiento seleccionada
-  $orden = isset($_POST['orden']) ? $_POST['orden'] : '';
+  $orden = isset($_GET['orden']) ? $_GET['orden'] : '';
 
   $consulta = $con->prepare("CALL BuscadorPro(?);");
   $consulta->execute([$busqueda]);
@@ -79,8 +79,8 @@ if (isset($_POST['busqueda'])) {
                     </div>
                     <!-- Filtrador -->
                         <div class="col-md-2 text-md-end">
-                            <form id="sort-form" method="POST">
-                                <input type="hidden" name="busqueda" value="<?php echo isset($_POST['busqueda']) ? htmlentities($_POST['busqueda']) : ''; ?>"> <!-- verifica si hay algun producto que ordenar y evita que el usuario ingrese código malicioso -->
+                            <form id="sort-form" method="GET">
+                                <input type="hidden" name="busqueda" value="<?php echo isset($_GET['busqueda']) ? htmlentities($_GET['busqueda']) : ''; ?>"> <!-- verifica si hay algun producto que ordenar y evita que el usuario ingrese código malicioso -->
                                 <select name="orden" id="filter-category" class="form-select border border-black" onchange="submitForm()">
                                     <option value="">Filtrar por:</option>
                                     <option value="mayor_menor">Precio: Mayor a Menor</option>
@@ -127,8 +127,6 @@ if (isset($_POST['busqueda'])) {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script src="../admin/js/recar.js"></script>
-    <script>
-      history.replaceState(null,null,location.pathname);
-    </script>
+
 </body>
 </html>
