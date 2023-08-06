@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../vendor/autoload.php';
 session_start();
-
+/*trabaj.php*/
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
   // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
   header("Location: ../../pages/login.php");
@@ -23,39 +23,57 @@ $registrar = new validacionesRegistrar();
 
 $successMessage = $errorMessage = '';
 $errors = [];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['email']) && isset($_POST['contraseña'])) {
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $email = $_POST['email'];
-    $contraseña = $_POST['contraseña'];
+      $nombre = $_POST['nombre'];
+      $apellido = $_POST['apellido'];
+      $email = $_POST['email'];
+      $contraseña = $_POST['contraseña'];
 
-      if($registrar->esNulo([$nombre, $apellido, $email, $contraseña])){
-        $errors[] = "Debe de llenar todos los campos";
+      if ($registrar->esNulo([$nombre, $apellido, $email, $contraseña])) {
+          $errors[] = "Debe de llenar todos los campos";
       }
-  
-      if(!$registrar->esEmail($email)){
-          $errors[] = "La direccion de correo no es valida";
+
+      if (!$registrar->esEmail($email)) {
+          $errors[] = "La dirección de correo no es válida";
       }
-  
-      if($registrar->emailExist($email, $con)){
-          $errors[] = "El correo electronico $email ya existe";
+
+      if ($registrar->emailExist($email, $con)) {
+          $errors[] = "El correo electrónico $email ya existe";
       }
 
       if (count($errors) == 0) {
-        $password_hash = password_hash($contraseña, PASSWORD_DEFAULT);
-        // Agregar el quinto argumento id_rol con valor 1
-        // Solo si el correo no existe previamente
-        $db->agregar($nombre, $apellido, $email, $password_hash, 1);
-        $successMessage = "El trabajador se agregó exitosamente.";
+          $password_hash = password_hash($contraseña, PASSWORD_DEFAULT);
+          $db->agregar($nombre, $apellido, $email, $password_hash, 1);
+          $successMessage = "El trabajador se agregó exitosamente.";
 
-        // Redireccionar después de procesar el formulario
-        header("Location: trabaj.php");
-        exit();
+          // Redireccionar después de procesar el formulario
+          header("Location: trabaj.php");
+          exit();
       }
-    }
   }
+}
+
+if (isset($_GET['action']) && isset($_GET['id'])) {
+  $id = $_GET['id'];
+
+  if ($_GET['action'] === 'activar') {
+      if ($db->activarUsuario($id)) {
+          $alerta = '<div id="alerta" class="alert alert-success" role="alert">Trabajador activado exitosamente.</div>';
+      } else {
+          $alerta = '<div id="alerta" class="alert alert-warning" role="alert">Error al activar el trabajador.</div>';
+      }
+  } elseif ($_GET['action'] === 'desactivar') {
+      if ($db->desactivarUsuario($id)) {
+          $alerta = '<div id="alerta" class="alert alert-danger" role="alert">Trabajador desactivado exitosamente.</div>';
+      } else {
+          $alerta = '<div id="alerta" class="alert alert-warning" role="alert">Error al desactivar el trabajador.</div>';
+      }
+  }
+
+  header("Location: trabaj.php");
+  exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +139,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <th scope="col">Nombre</th>
               <th scope="col">Apellido</th>
               <th scope="col">Email</th>
-              <th scope="col"></th>
+              <th scope="col">Estado</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -131,9 +150,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td><?php echo $fila['nombre']; ?></td>
                 <td><?php echo $fila['apellido']; ?></td>
                 <td><?php echo $fila['email']; ?></td>
+                <td><?php echo $fila['estado']; ?></td>
                 <td>
-                  <!-- Agrega el atributo data-bs-target para especificar el destino del modal -->
-                  <a href="../../src/http/eliminartrabajador.php?id=<?php echo $fila['id']; ?>" class="btn btn-danger"><img src="../img//circulo-x.png" alt="Eliminar"></a>
+                <a href="?action=activar&id=<?php echo $fila['id']; ?>" class="btn btn-success">Activar</a>
+<a href="?action=desactivar&id=<?php echo $fila['id']; ?>" class="btn btn-danger">Desactivar</a>
+
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -148,6 +169,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/admin/js/agregartra.js"></script>
   <script src="/admin/js/boton.js"></script>
+  <script>
+        setTimeout(function() {
+            document.getElementById('alerta').style.display = 'none';
+        }, 3000);
+    </script>
 </body>
 
 </html>
