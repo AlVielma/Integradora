@@ -11,7 +11,7 @@
             </a>
 
             <div class="container-fluid">
-                <form class="d-flex" role="search" method="POST" action="busqueda.php">
+                <form class="d-flex" role="search" method="GET" action="busqueda.php">
                   <div class="input-group">
                   <input class="form-control busqueda" type="search" placeholder="Buscador" aria-label="Search"
                         name="busqueda">
