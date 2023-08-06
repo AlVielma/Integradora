@@ -45,24 +45,36 @@ if (!empty($_POST)) {
     if (empty($errors)) {
         $usuario = new Usuario($con);
         $userData = $usuario->login($email, $password);
-
-        // Inicio de sesión exitoso, almacenar datos en las variables de sesión
-        $_SESSION['user_id'] = $userData['id'];
-        $_SESSION['user_email'] = $userData['email'];
-        $_SESSION['user_name'] = $userData['nombre'];
-        $_SESSION['user_lastname'] = $userData['apellido'];
-        $_SESSION['user_rol'] = $userData['id_rol'];
-
-        
-        // Redirigir al usuario según su rol
-        if ($_SESSION['user_rol'] == 1) {
-            header("Location: ../admin/app/aggimg.php");
-            exit;
+    
+        // Verificar acceso del usuario
+        $accessResult = $validacionesUsuario->verificarAccesoUsuario($userData['estado_id'], $userData['estatus']);
+        if (is_string($accessResult)) {
+            // No se permite el acceso, mostrar un mensaje
+            if ($accessResult === "Tu cuenta ha sido baneada. No se permite el acceso.") {
+                $_SESSION['access_message'] = $accessResult;
+            } elseif ($accessResult === "Tu cuenta ha sido desactivada. No se permite el acceso.") {
+                $_SESSION['access_message'] = $accessResult;
+            }
+            $errorMessage = $accessResult; // Almacenar el mensaje en una variable
         } else {
-            header("Location: ../index.php");
-            exit;
+            // Inicio de sesión exitoso, almacenar datos en las variables de sesión
+            $_SESSION['user_id'] = $userData['id'];
+            $_SESSION['user_email'] = $userData['email'];
+            $_SESSION['user_name'] = $userData['nombre'];
+            $_SESSION['user_lastname'] = $userData['apellido'];
+            $_SESSION['user_rol'] = $userData['id_rol'];
+    
+            // Redirigir al usuario según su rol
+            if ($_SESSION['user_rol'] == 1) {
+                header("Location: ../admin/app/aggimg.php");
+                exit;
+            } else {
+                header("Location: ../index.php");
+                exit;
+            }
         }
     }
+    
 }
 ?>
 
@@ -124,15 +136,23 @@ if (!empty($_POST)) {
                             <div class="col-12 d-flex justify-content-center mt-3">
                                 <div class="alert alert-danger" role="alert">
                                     <ul>
-                                        <?php foreach ($errors as $error): ?>
+                                            <?php foreach ($errors as $error): ?>
                                             <li><?php echo $error; ?></li>
-                                        <?php endforeach; ?>
+                                            <?php endforeach; ?>
                                     </ul>
                                 </div>
                             </div>
-                         </div>
+                        </div>
                         <?php endif; ?>
-
+                            <?php if (isset($errorMessage)) : ?>
+                                <div class='row'>
+                                <div class="col-12 d-flex justify-content-center mt-3">
+                                <div class="alert alert-danger" role="alert">
+                            <?php echo $errorMessage; ?>
+                                </div>
+                                </div>
+                                </div>
+                            <?php endif; ?>
                         <div class="col-12 d-flex justify-content-center">
                             <a href="recupera.php">¿Olvidaste tu contraseña?</a>
                         </div>
