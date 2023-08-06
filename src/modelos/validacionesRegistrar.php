@@ -102,7 +102,7 @@ class validacionesRegistrar{
             return $sql;
         }
 
-    public function actualizarEstadoUsuario($id, $estatus, $estado_id, $con)
+    public function actualizarEstadoUsuario($id, $estado_id, $estatus, $con)
     {
       
       
