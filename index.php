@@ -93,13 +93,7 @@ if(isset($_POST['quejas'])){
 
         <div class="container-fluid">
           <form class="d-flex" role="search" method="POST" action="/pages/busqueda.php">
-            <div class="input-group">
-              <input class="form-control busqueda" type="search" placeholder="Buscador" aria-label="Search"
-                name="busqueda">
-                <Button class="btn btn-secondary" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                </svg></Button>
-            </div>
+            <input class="form-control me-2 busqueda" type="search" placeholder="Search" aria-label="Search" name="busqueda">
           </form>
         </div>
 
@@ -393,7 +387,7 @@ if(isset($_POST['quejas'])){
         {?>
           <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0">
             <div class="single-content-card">
-              <a href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>"><img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap" height="230" width="200"></a>
+              <a href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>"><img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap"></a>
               <div class="card-body">
                 <h5 class="card-title h4"><?php echo $producto['nombre']; ?></h5>
                 <a class="h4 font-weight-bold text-decoration-none" href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>">
@@ -422,7 +416,7 @@ if(isset($_POST['quejas'])){
         <a href="pages/exam.php" class="btn btn-primary btn-lg custom-button btn-block">Obten tu cita</a>
       <?php else : ?>
         <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
-        <a href="pages/login.php" class="btn btn-secondary btn-lg custom-button btn-block">Obten tu cita</a>
+        <a href="pages/login.php" class="btn btn-primary btn-lg custom-button btn-block">Obten tu cita</a>
       <?php endif; ?>
     </div>
   </div>
@@ -453,7 +447,7 @@ if(isset($_POST['quejas'])){
                             <label for="floatingTextarea">Deja un comentario</label>
                         </div>
                         <div class="mt-3">
-                            <button class="btn btn-secondary w-100 rounded-0" name="quejas" type="submit">Enviar</button>
+                            <button class="btn btn-primary w-100 rounded-0" name="quejas" type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>
@@ -474,7 +468,7 @@ if(isset($_POST['quejas'])){
 
       <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
         <h3>Pop Ópticos</h3>
-        <a href="index.php"><img class="log" src="images/icon64.png" alt=""></a>
+        <a href="index.php"><img src="images/icon64.png" alt=""></a>
 
       </div>
       <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
