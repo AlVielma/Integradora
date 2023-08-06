@@ -8,7 +8,7 @@ $popniña= $productos->popniña();
 $total = count($popniña);
 
 // Obtener la opción de ordenamiento seleccionada
-$orden = isset($_POST['orden']) ? $_POST['orden'] : '';
+$orden = isset($_GET['orden']) ? $_GET['orden'] : '';
 
 // Aplicar clasificación si es necesario
 if ($orden === 'mayor_menor') {
@@ -60,8 +60,8 @@ if ($orden === 'mayor_menor') {
                     </div>
                     <!-- Filtrador -->
                     <div class="col-md-2 text-md-end">
-                            <form id="sort-form" method="POST">
-                                <input type="hidden" name="busqueda" value="<?php echo isset($_POST['busqueda']) ? htmlentities($_POST['busqueda']) : ''; ?>"> <!-- verifica si hay algun producto que ordenar y evita que el usuario ingrese código malicioso -->
+                            <form id="sort-form" method="GET">
+                                <input type="hidden" name="busqueda" value="<?php echo isset($_GET['busqueda']) ? htmlentities($_GET['busqueda']) : ''; ?>"> <!-- verifica si hay algun producto que ordenar y evita que el usuario ingrese código malicioso -->
                                 <select name="orden" id="filter-category" class="form-select border border-black" onchange="submitForm()">
                                     <option value="">Filtrar por:</option>
                                     <option value="mayor_menor">Precio: Mayor a Menor</option>
