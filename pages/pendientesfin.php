@@ -62,7 +62,7 @@ if (isset($_SESSION['user_id'])) {
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <h2 class="text-center mb-4">Mis Apartados</h2>
-                <form action="pendientesfin.php" method="GET">
+                <form action="pendientesfin.php" method="GET" autocomplete="off">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Buscar apartados..." name="search" aria-label="Buscar pedidos" aria-describedby="basic-addon2">
                         <div class="input-group-append">
@@ -76,6 +76,13 @@ if (isset($_SESSION['user_id'])) {
 
     <!-- Contenedor para todos los detalles de compra -->
     <div class="container">
+    <?php if (empty($detallesCompras)) : ?>
+        <!-- Mostrar mensaje cuando no hay resultados -->
+        <div class="text-center">
+            <h3>No se encontraron resultados</h3>
+            <p>Recuerda buscar tu número de folio o el estado en el que se encuentra.</p>
+        </div>
+    <?php else : ?>
         <?php foreach ($detallesCompras as $detalleCompra) : ?>
             <!-- Mostrar el id de compra y estado -->
             <div class="text-center mb-3">
@@ -109,12 +116,14 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                     <div class="mb-3 mt-3 border-top border-5"></div>
                 <?php endforeach; ?>
+                
                 <div class="text-center">
                     <p class="lead font-weight-bold">Total Apartado: $<?php echo number_format($detalleCompra['total'], 2); ?> MXN</p>
                 </div>
             </div>
             <div class="mb-3 mt-3 border-top border-5"></div>
         <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 
     <?php

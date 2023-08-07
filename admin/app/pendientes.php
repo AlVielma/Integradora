@@ -40,17 +40,19 @@ $detallesCompras = $carritoModelo->obtenerDetallesCompra();
 <table class="table">
   <thead>
     <tr>
+      <th>Folio</th>
       <th>Cliente</th>
       <th>Fecha</th>
       <th>Total pedido</th>
       <th>Estado</th>
-      <th>Productos</th> <!-- Nueva columna para los productos -->
+      <th>Productos</th>
       <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach ($detallesCompras as $detalleCompra) : ?>
       <tr>
+        <td><?php echo $detalleCompra['id_compra']; ?></td>
         <td><?php echo $detalleCompra['nombre_cliente'] . ' ' . $detalleCompra['apellido_cliente']; ?></td>
         <td><?php echo $detalleCompra['fecha_pedido']; ?></td>
         <td>$<?php echo number_format($detalleCompra['total'], 2); ?></td>

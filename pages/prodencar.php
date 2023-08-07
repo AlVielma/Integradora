@@ -103,8 +103,7 @@ if (isset($_SESSION['user_id'])) {
     
     ?>
     <div class="text-center">
-    <a href="../index.php" class="btn btn-primary btn-lg">Seguir comprando</a>
-    <a href="ver_total_carrito.php" class="btn btn-success btn-lg">Ver total y finalizar </a>
+    <a href="ver_total_carrito.php" class="btn btn-light btn-outline-dark btn-lg mt-4 mb-4">Ver total del apartado</a>
     </div>
   </div>
 

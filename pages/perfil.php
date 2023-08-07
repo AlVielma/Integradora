@@ -41,7 +41,7 @@ session_start();
                 <br>
                 <div class="d-flex align-items-center">
                     <img src="/../images/pendiente.png" alt="" class="me-3 img-fluid">
-                    <a href="pendientesfin.php" class="objeto-texto">Apartados pend</a>
+                    <a href="pendientesfin.php" class="objeto-texto">Apartados</a>
                 </div>
                 <br>
                 <div class="d-flex align-items-center">

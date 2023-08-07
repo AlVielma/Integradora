@@ -84,6 +84,9 @@ if (isset($_POST['finalizar_compra'])) {
 
         $contenidoCorreo .= '<p>Total: $' . calcularTotal($productosCarrito) . ' MXN';
 
+        // Agregar el folio (ID de la compra) al contenido del correo
+        $contenidoCorreo .= '<p>Folio de la compra: ' . $compra_id . '</p>';
+
         // Agrega el contenido del correo al cuerpo del mensaje
         $mail->Body = $contenidoCorreo;
 
