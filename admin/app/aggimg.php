@@ -166,7 +166,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
                 <td><?php echo $product['nombre']; ?></td>
                 <td><?php echo $product['descripcion']; ?></td>
                 <td><?php echo $product['categoria']; ?></td>
-                <td><?php echo $product['precio']; ?></td>
+                <td><?php echo '$'.$product['precio']; ?></td>
                 <td><?php echo $product['stock']; ?></td>
                 <td>
                   <img src="<?php echo '/../../productosimg/'.$product['IMAGEN']; ?>" alt="Imagen del producto" width="100px" height="100px">
