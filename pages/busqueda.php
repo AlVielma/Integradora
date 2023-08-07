@@ -2,8 +2,11 @@
 session_start();
 require __DIR__ . '/../vendor/autoload.php';
 use App\Modelos\Conexion;
+use App\Modelos\busque;
 require_once __DIR__.'/../src/modelos/Conexion.php';
+require_once __DIR__.'/../src/modelos/funbusqueda.php';
 $conexion = new Conexion();
+$buque = new busque();
 $con = $conexion->conectar();
 
 // Agregar la ruta base de las imágenes
@@ -16,23 +19,12 @@ if (isset($_GET['busqueda'])) {
   // Obtener la opción de ordenamiento seleccionada
   $orden = isset($_GET['orden']) ? $_GET['orden'] : '';
 
-  $consulta = $con->prepare("CALL BuscadorPro(?);");
-  $consulta->execute([$busqueda]);
+  //busca
+  $product = $buque->buscar($busqueda);
 
-  $product = $consulta->fetchAll(PDO::FETCH_OBJ);
-  // Cierra el cursor de la consulta
-  $consulta->closeCursor();
+  //ordena los productos
+  $product = $buque->ordenar($orden, $product);
 
-  // Aplicar clasificación si es necesario
-  if ($orden === 'mayor_menor') {
-    usort($product, function ($a, $b) {
-      return $b->precio - $a->precio;
-    });
-  } elseif ($orden === 'menor_mayor') {
-    usort($product, function ($a, $b) {
-      return $a->precio - $b->precio;
-    });
-  }
 
   // Guardar los resultados en la variable de sesión solo si se ha realizado una búsqueda o filtrado
   $_SESSION['productos'] = $product;
@@ -46,8 +38,7 @@ if (isset($_GET['busqueda'])) {
   inner join Imagenes i
   on p.imagen=i.id_img;");
   $consultaTodos->execute();
-  $product = $consultaTodos->fetchAll(PDO::FETCH_OBJ);
-  $consultaTodos->closeCursor();
+  $product = $consultaTodos->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
 
@@ -98,10 +89,10 @@ if (isset($_GET['busqueda'])) {
                       foreach ($product as $producto) {
                           echo '<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 centrar">';
                           echo '<div class="card" style="width: 19rem;">';
-                          echo '<a href="prodejem.php?id=' . $producto->sku. '"><img src="'. $rutaBaseImagenes . $producto->imagen .'" class="card-img-top" alt="Imagen del producto" width="200px" height="230px"></a>';
+                          echo '<a href="prodejem.php?id=' . $producto['sku']. '"><img src="'. $rutaBaseImagenes . $producto['imagen'] .'" class="card-img-top" alt="Imagen del producto" width="200px" height="230px"></a>';
                           echo '<div class="card-body">';
-                          echo '<h5 class="card-title h4">' . $producto->nombre . '</h5>';
-                          echo '<a class="objeto-texto" href="prodejem.php?id=' . $producto->sku. '"><p class="card-text h5">$' . $producto->precio . 'MXN</p></a>';
+                          echo '<h5 class="card-title h4">' . $producto['nombre'] . '</h5>';
+                          echo '<a class="objeto-texto" href="prodejem.php?id=' . $producto['sku']. '"><p class="card-text h5">$' . $producto['precio'] . 'MXN</p></a>';
                           echo '</div>';
                           echo '</div>';
                           echo '</div>';
