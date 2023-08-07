@@ -219,6 +219,70 @@ class Carrito
         $actualizarEstadoCarrito->execute([$compra_id, $usuario_id]);
     }
 
+public function obtenerDetallesCompraPorUsuario($usuario_id)
+{
+    $obtenerDetalles = $this->pdo->query("SELECT dc.id AS id_compra, dc.usuario_id, u.nombre AS nombre_cliente, u.apellido AS apellido_cliente, dc.fecha_pedido, dc.total, e.estado
+                                          FROM DetalleCompra dc
+                                          INNER JOIN Usuarios u ON dc.usuario_id = u.id
+                                          INNER JOIN estado e ON dc.estado_id = e.id
+                                          WHERE dc.usuario_id = $usuario_id
+                                          GROUP BY dc.id, dc.usuario_id, u.nombre, u.apellido, dc.fecha_pedido, dc.total, dc.estado_id
+                                          ORDER BY dc.fecha_pedido DESC");
+
+    $detallesCompras = $obtenerDetalles->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Ahora, para cada compra, obtendremos los productos asociados
+    foreach ($detallesCompras as &$detalleCompra) {
+        $obtenerProductos = $this->pdo->query("SELECT p.sku, p.nombre AS nombre_producto, p.descripcion, p.precio, c.cantidad, c.total AS total_producto, i.IMAGEN AS imagen_ruta, c.total
+        FROM Carritos c
+        INNER JOIN Productos p ON c.producto_id = p.sku
+        INNER JOIN Imagenes i ON p.imagen = i.id_img
+        WHERE c.compra_id = " . $detalleCompra['id_compra']);
+
+        $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
+
+        $detalleCompra['productos'] = $productos;
+    }
+
+    return $detallesCompras;
+}
+
+public function buscarDetallesCompra($usuario_id, $search)
+{
+    $stmt = $this->pdo->prepare("CALL buscar_detalles_compra(:usuario_id, :termino_busqueda)");
+    $stmt->bindValue(':usuario_id', $usuario_id, \PDO::PARAM_INT);
+    $stmt->bindValue(':termino_busqueda', $search, \PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+}
+
+// En la clase Carrito.php
+
+public function obtenerProductosPorCompra($detalle_compra_id)
+{
+    // Preparar la consulta SQL para obtener los productos asociados al detalle de compra
+    $sql = "SELECT p.sku, p.nombre AS nombre_producto, p.descripcion, p.precio, c.cantidad, c.total AS total_producto, i.IMAGEN AS imagen_ruta
+            FROM Carritos c
+            INNER JOIN Productos p ON c.producto_id = p.sku
+            INNER JOIN Imagenes i ON p.imagen = i.id_img
+            WHERE c.compra_id = :detalle_compra_id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+
+    $stmt->bindValue(':detalle_compra_id', $detalle_compra_id, \PDO::PARAM_INT);
+
+
+    $stmt->execute();
+
+    // Obtener los resultados como un array asociativo
+    $productos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    return $productos;
+}
+
+
     public function __destruct()
     {
         $this->pdo = null; // Cierra la conexión establecida
