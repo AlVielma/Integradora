@@ -28,7 +28,7 @@ if (isset($_SESSION['user_id'])) {
     } 
 } else {
     // Si el usuario no ha iniciado sesión, redirigir a la vista incarejem.php
-    header("Location: incarejem.php");
+    header("Location: car.php");
     exit;
 }
 ?>

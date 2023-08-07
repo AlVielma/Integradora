@@ -8,24 +8,34 @@ use App\Modelos\Carrito;
 // Crear un objeto de la clase Carrito
 $carritoModelo = new Carrito();
 
-$usuario_id = $_SESSION['user_id'];
+// Verificar si el usuario ha iniciado sesión
+if (isset($_SESSION['user_id'])) {
+    $usuario_id = $_SESSION['user_id'];
 
-// Obtener el valor de búsqueda del formulario
-$search = isset($_GET['search']) ? $_GET['search'] : null;
+    // Obtener el valor de búsqueda del formulario
+    $search = isset($_GET['search']) ? $_GET['search'] : null;
 
-// Verificar si se ha enviado el formulario de búsqueda y si el campo no está vacío
-if ($search !== null && !empty($search)) {
-    // Llamar al procedimiento almacenado para obtener los detalles de compra filtrados por la búsqueda
-    $detallesCompras = $carritoModelo->buscarDetallesCompra($usuario_id, $search);
+    // Verificar si se ha enviado el formulario de búsqueda y si el campo no está vacío
+    if ($search !== null && !empty($search)) {
+        // Llamar al procedimiento almacenado para obtener los detalles de compra filtrados por la búsqueda
+        $detallesCompras = $carritoModelo->buscarDetallesCompra($usuario_id, $search);
 
-    foreach ($detallesCompras as &$detalleCompra) {
-        $productos = $carritoModelo->obtenerProductosPorCompra($detalleCompra['id_compra']);
-        $detalleCompra['productos'] = $productos;
+        foreach ($detallesCompras as &$detalleCompra) {
+            $productos = $carritoModelo->obtenerProductosPorCompra($detalleCompra['id_compra']);
+            $detalleCompra['productos'] = $productos;
+        }
+    } else {
+        // Obtener los detalles de todas las compras desde la base de datos
+        $detallesCompras = $carritoModelo->obtenerDetallesCompraPorUsuario($usuario_id);
     }
 } else {
-    // Obtener los detalles de todas las compras desde la base de datos
-    $detallesCompras = $carritoModelo->obtenerDetallesCompraPorUsuario($usuario_id);
+    // Si el usuario no ha iniciado sesión, redirigir a la vista incarejem.php
+    header("Location: login.php");
+    exit;
 }
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,74 +59,73 @@ if ($search !== null && !empty($search)) {
     include 'header.php'
     ?>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h2 class="text-center mb-4">Mis Apartados</h2>
-            <form action="pendientesfin.php" method="GET">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Buscar apartados..." name="search" aria-label="Buscar pedidos" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2 class="text-center mb-4">Mis Apartados</h2>
+                <form action="pendientesfin.php" method="GET">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Buscar apartados..." name="search" aria-label="Buscar pedidos" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-   <!-- Contenedor para todos los detalles de compra -->
-<div class="container">
-    <?php foreach ($detallesCompras as $detalleCompra) : ?>
-        <!-- Mostrar el id de compra y estado -->
-        <div class="text-center mb-3">
-            <h3>Folio: <?php echo $detalleCompra['id_compra']; ?></h3>
-            <p>Estado: <?php echo $detalleCompra['estado']; ?></p>
-        </div>
-        <!-- Mostrar detalles de los productos asociados a la compra -->
-        <div class="container border border-black mt-4 mb-4">
-            <?php foreach ($detalleCompra['productos'] as $producto) : ?>
-                <h2 class="text-center"><?php echo $producto['nombre_producto']; ?></h2>
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="<?php echo '../productosimg/' . $producto['imagen_ruta']; ?>" alt="Imagen del producto" class="img-fluid">
-                    </div>
-                    <div class="col-md-8">
-                        <p class="lead font-weight-bold"><?php echo $producto['descripcion']; ?></p>
-                        <p class="lead font-weight-bold">Precio Unitario: $<?php echo number_format($producto['precio'], 2); ?> MXN</p>
-                        <p class="lead font-weight-bold">Pop Ópticos</p>
-                        <!-- Resto del contenido del producto -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="cantidad" class="form-label">Cantidad:</label>
-                                <!-- Mostrar la cantidad en un label o texto -->
-                                <span><?php echo $producto['cantidad']; ?></span>
-                                <p class="lead font-weight-bold">Total: $<?php echo number_format($producto['total_producto'], 2); ?> MXN</p>
-                            </div>
-                            <div class="col-md-6">
+    <!-- Contenedor para todos los detalles de compra -->
+    <div class="container">
+        <?php foreach ($detallesCompras as $detalleCompra) : ?>
+            <!-- Mostrar el id de compra y estado -->
+            <div class="text-center mb-3">
+                <h3>Folio: <?php echo $detalleCompra['id_compra']; ?></h3>
+                <p>Estado: <?php echo $detalleCompra['estado']; ?></p>
+            </div>
+            <!-- Mostrar detalles de los productos asociados a la compra -->
+            <div class="container border border-black mt-4 mb-4">
+                <?php foreach ($detalleCompra['productos'] as $producto) : ?>
+                    <h2 class="text-center"><?php echo $producto['nombre_producto']; ?></h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="<?php echo '../productosimg/' . $producto['imagen_ruta']; ?>" alt="Imagen del producto" class="img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <p class="lead font-weight-bold"><?php echo $producto['descripcion']; ?></p>
+                            <p class="lead font-weight-bold">Precio Unitario: $<?php echo number_format($producto['precio'], 2); ?> MXN</p>
+                            <p class="lead font-weight-bold">Pop Ópticos</p>
+                            <!-- Resto del contenido del producto -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="cantidad" class="form-label">Cantidad:</label>
+                                    <!-- Mostrar la cantidad en un label o texto -->
+                                    <span><?php echo $producto['cantidad']; ?></span>
+                                    <p class="lead font-weight-bold">Total: $<?php echo number_format($producto['total_producto'], 2); ?> MXN</p>
+                                </div>
+                                <div class="col-md-6">
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="mb-3 mt-3 border-top border-5"></div>
+                <?php endforeach; ?>
+                <div class="text-center">
+                    <!-- Agregar botón "Ver Total o Detalle" -->
+                    <a href="ver_total_carrito.php" class="btn btn-light btn-outline-dark btn-lg">Ver Detalle</a>
                 </div>
-                <div class="mb-3 mt-3 border-top border-5"></div>
-            <?php endforeach; ?>
-            <div class="text-center">
-                <!-- Agregar botón "Ver Total o Detalle" -->
-                <a href="ver_total_carrito.php" class="btn btn-light btn-outline-dark btn-lg">Ver Detalle</a>
             </div>
-        </div>
-        <div class="mb-3 mt-3 border-top border-5"></div>
-    <?php endforeach; ?>
-</div>
+            <div class="mb-3 mt-3 border-top border-5"></div>
+        <?php endforeach; ?>
+    </div>
 
-<?php
-include 'footer.php';
-?>
+    <?php
+    include 'footer.php';
+    ?>
 
-    <!-- Bootstrap JS (colócalo antes del cierre del body para un mejor rendimiento) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 </body>
 
 </html>
