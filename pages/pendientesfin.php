@@ -37,6 +37,7 @@ if (isset($_SESSION['user_id'])) {
 
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,8 +52,6 @@ if (isset($_SESSION['user_id'])) {
     <link rel="icon" href="/../images/icon.png">
     <title>Pop Ópticos</title>
 </head>
-
-
 
 <body>
     <?php
@@ -111,8 +110,7 @@ if (isset($_SESSION['user_id'])) {
                     <div class="mb-3 mt-3 border-top border-5"></div>
                 <?php endforeach; ?>
                 <div class="text-center">
-                    <!-- Agregar botón "Ver Total o Detalle" -->
-                    <a href="ver_total_carrito.php" class="btn btn-light btn-outline-dark btn-lg">Ver Detalle</a>
+                    <p class="lead font-weight-bold">Total Apartado: $<?php echo number_format($detalleCompra['total'], 2); ?> MXN</p>
                 </div>
             </div>
             <div class="mb-3 mt-3 border-top border-5"></div>
