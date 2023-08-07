@@ -36,6 +36,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
         <table class="table">
           <thead>
             <tr>
+              <th>N.folio</th>
               <th>Nombre</th>
               <th>Apellido</th>
               <th>Telefono</th>
@@ -51,6 +52,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
             {
             ?>
             <tr>
+              <td><?php echo $m['id']; ?></td>
               <td><?php echo $m['nombre']; ?></td>
               <td><?php echo $m['apellido']; ?></td>
               <td><?php echo $m['telefono']; ?></td>
