@@ -31,9 +31,25 @@ $detallesCompras = $carritoModelo->obtenerDetallesCompra();
 <body>
   <!--Sidebar-->
   <?php include 'sidebar.php'; ?>
+  <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <h1>LISTA DE APARTADOS</h1>
+                <form action="pendientesfin.php" method="GET" autocomplete="off">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Buscar apartados..." name="search" aria-label="Buscar pedidos" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
   <div class="container-fluid" id="content">
-    <h1>DETALLES DE COMPRAS</h1>
+
+
     <!-- Tabla de Compras -->
     <div class="table-responsive">
 <!-- Tabla de Compras -->
