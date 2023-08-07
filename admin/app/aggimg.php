@@ -126,6 +126,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               <th>Precio</th>
               <th>Cantidad</th>
               <th>Imagen</th>
+              <th>Activo/inactivo</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -143,7 +144,15 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
                 <td>
                   <img src="<?php echo '/../../productosimg/'.$product['IMAGEN']; ?>" alt="Imagen del producto" width="100px" height="100px">
                 </td>
-
+                <td>
+                <?php if ($product['estado_id']==5) {
+                  echo "<b style='color: green;'>Activo</b>";
+                }
+                elseif($product['estado_id']==1){
+                  echo "<b style='color: red;'>Inactivo</b>";
+                }?>
+                </td>
+                
                 <td>
                   <a href="../../src/http/editproducto.php?sku=<?php echo $product['sku']; ?>" class="btn btn-warning">
                     <img src="../../images/editar.png" alt="">
@@ -151,6 +160,8 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
 
                   <a class="btn btn-danger"data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modaleliminarproducto" ><img src="../../images/circulo-x.png" alt="">
                   </a>
+
+                  <a class="btn btn-success" data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modalactivarproducto" ><img src="../../images/controlar.png" alt=""></a>
                 </td>
               </tr>
             <?php
@@ -253,11 +264,13 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
     <!--/MODALAGREGAR-->
   <?php
   require __DIR__.'/../../src/http/modaleliminarproducto.php';
+  require __DIR__.'/../../src/http/modalactivarproducto.php';
   ?>
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/admin/js/boton.js"></script>
   <script src="/admin/js/modalcrudeliminar.js"></script>
+  <script src="/admin/js/modalactivar.js"></script>
 
 </body>
 

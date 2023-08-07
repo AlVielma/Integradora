@@ -23,9 +23,9 @@ Class productos
     }
     public function mostrar_productos()
     {
-        $mostarproductos = $this->pdo->query("SELECT p.sku, p.nombre, p.descripcion, c.nombre AS categoria, p.precio, p.stock, i.IMAGEN
+        $mostarproductos = $this->pdo->query("SELECT p.sku, p.nombre, p.descripcion, c.nombre AS categoria, p.precio, p.stock, i.IMAGEN,p.estado_id
         FROM Categorias c INNER JOIN Productos p ON p.categoria_id = c.id INNER JOIN Imagenes i
-        ON p.imagen = i.id_img");
+        ON p.imagen = i.id_img order by sku DESC");
         return $mostarproductos->fetchAll(\PDO::FETCH_ASSOC);
     }
 
@@ -68,29 +68,10 @@ Class productos
     }
 
 
-    public function eliminarimg($id)
-    {
-        $eliminarimg = $this->pdo->prepare("DELETE FROM Imagenes WHERE id_img=?");
-        $eliminarimg->execute([$id]);
-    }
-
-
     public function eliminarproducto($id)
     {
-        $obtenerimg = $this->pdo->prepare("SELECT IMAGEN FROM Imagenes WHERE id_img=?");
-        $obtenerimg->execute([$id]);
-        $imagenData = $obtenerimg->fetch(\PDO::FETCH_ASSOC);
-    
-        if ($imagenData && isset($imagenData['IMAGEN'])) {
-            $imagen = $imagenData['IMAGEN'];
-            $rutaImagen = __DIR__ . "/../../productosimg/" . $imagen;
-    
-           
-            if (file_exists($rutaImagen)) {
-                unlink($rutaImagen);
-            }
-        }
-        $eliminarprodu = $this->pdo->prepare("DELETE FROM Productos WHERE sku=?");
+      
+        $eliminarprodu = $this->pdo->prepare("UPDATE Productos SET estado_id = 1 WHERE sku=?");
         $eliminarprodu->execute([$id]);
     }
 
@@ -192,7 +173,12 @@ Class productos
         $recomendados->execute([$cantidad]);
         return $recomendados->fetchAll(\PDO::FETCH_ASSOC);
     }
-   
+    
+    public function activarproducto($id)
+    {
+        $activar = $this->pdo->prepare("UPDATE Productos SET estado_id = 5 WHERE sku=?");
+        $activar->execute([$id]);
+    }
 
 
 public function __destruct()

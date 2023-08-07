@@ -3,11 +3,11 @@ use App\Modelos\productos;
 require_once __DIR__.'/../modelos/productos.php';
 require __DIR__.'/../../vendor/autoload.php';
 
-if(isset($_POST['eliminar']))
+if(isset($_POST['activar']))
 {
     $db = new productos();
     $id = $_POST['id'];
-    $db->eliminarproducto($id);
+    $db->activarproducto($id);
     header('Location: /../../admin/app/aggimg.php');
     exit(); 
 }
