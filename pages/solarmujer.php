@@ -1,25 +1,20 @@
 <?php
 session_start();
 use App\Modelos\productos;
+use App\Modelos\busque;
 require_once __DIR__.'/../src/modelos/productos.php';
+require_once __DIR__.'/../src/modelos/funbusqueda.php';
 require __DIR__.'/../vendor/autoload.php';
 $productos = new productos();
+$buque = new busque();
 $solarmujer= $productos->solarmujer();
 $total = count($solarmujer);
 
 // Obtener la opción de ordenamiento seleccionada
 $orden = isset($_GET['orden']) ? $_GET['orden'] : '';
 
-// Aplicar clasificación si es necesario
-if ($orden === 'mayor_menor') {
-    usort($solarmujer, function ($a, $b) {
-        return $b['precio'] - $a['precio'];
-    });
-} elseif ($orden === 'menor_mayor') {
-    usort($solarmujer, function ($a, $b) {
-        return $a['precio'] - $b['precio'];
-    });
-}
+//ordena los productos
+$solarmujer = $buque->ordenar($orden, $solarmujer);
 ?>
 <!DOCTYPE html>
 <html lang="en">
