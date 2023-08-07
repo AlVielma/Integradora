@@ -99,7 +99,7 @@ if (isset($_GET['busqueda'])) {
                       }
                   } else {
                       echo '<div class="col-sm-12">';
-                      echo '<p class="h5">No se encontraron resultados.</p>';
+                      echo '<p class="h5 ms-5">No se encontraron resultados.</p>';
                       echo '</div>';
                   }
                   ?>
