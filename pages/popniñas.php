@@ -1,25 +1,20 @@
 <?php
 session_start();
 use App\Modelos\productos;
+use App\Modelos\busque;
 require_once __DIR__.'/../src/modelos/productos.php';
+require_once __DIR__.'/../src/modelos/funbusqueda.php';
 require __DIR__.'/../vendor/autoload.php';
 $productos = new productos();
+$buque = new busque();
 $popniña= $productos->popniña();
 $total = count($popniña);
 
 // Obtener la opción de ordenamiento seleccionada
 $orden = isset($_GET['orden']) ? $_GET['orden'] : '';
 
-// Aplicar clasificación si es necesario
-if ($orden === 'mayor_menor') {
-    usort($popniña, function ($a, $b) {
-        return $b['precio'] - $a['precio'];
-    });
-} elseif ($orden === 'menor_mayor') {
-    usort($popniña, function ($a, $b) {
-        return $a['precio'] - $b['precio'];
-    });
-}
+//ordena los productos
+$popniña = $buque->ordenar($orden, $popniña);
 ?>
 <!DOCTYPE html>
 <html lang="en">
