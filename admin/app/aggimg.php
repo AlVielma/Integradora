@@ -6,7 +6,7 @@ use App\Modelos\validacionproductos;
 require_once __DIR__.'/../../src/modelos/productos.php';
 require_once __DIR__.'/../../src/modelos/validacionproductos.php';
 $productos = new productos();
-$mostrar=$productos->mostrar_productos();
+
 $marcas= $productos->mostrar_marca();
 $categorias= $productos->mostrar_categorias();
 $tlente = $productos->mostrar_tipo_lentes();
@@ -15,6 +15,20 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
   // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
   header("Location: ../../pages/login.php");
   exit;
+}
+$busqueda = isset($_GET['busqueda']) ? $_GET['busqueda'] : '';
+if(!empty($busqueda))
+{
+  $busqueda = $busqueda.'%';
+  $mostrar=$productos->buscarproducto($busqueda);
+}
+elseif(isset($_GET['Reiniciar']))
+{
+  $busqueda="";
+  $mostrar=$productos->mostrar_productos();
+}
+else{
+  $mostrar=$productos->mostrar_productos();
 }
 $validacion = new validacionproductos();
 $errors = [];
@@ -104,6 +118,19 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
     }
     ?>
     </div>
+    <div>
+    <?php
+            
+            $validacion->mensajes($errors);
+            ?>
+    </div>
+    <form method="get" action="">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="busqueda" placeholder="Buscar producto" value="">
+                <button class="btn btn-primary" type="submit">Buscar</button>
+                <button class="btn btn-secondary" name="Reiniciar" type="submit">Reiniciar</button>
+            </div>
+    </form>
     <div class="">
       <h1>Agregar Producto</h1>
     </div>

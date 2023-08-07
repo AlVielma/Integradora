@@ -180,6 +180,15 @@ Class productos
         $activar->execute([$id]);
     }
 
+    public function buscarproducto($nombre)
+    {
+        $buscacrud = $this->pdo->prepare("SELECT p.sku, p.nombre, p.descripcion, c.nombre AS categoria, p.precio, p.stock, i.IMAGEN,p.estado_id
+        FROM Categorias c INNER JOIN Productos p ON p.categoria_id = c.id INNER JOIN Imagenes i
+        ON p.imagen = i.id_img WHERE p.nombre LIKE ?");
+        $buscacrud->execute([$nombre]);
+        return $buscacrud->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
 
 public function __destruct()
     {
