@@ -36,7 +36,7 @@ if (isset($_GET['busqueda'])) {
   $consultaTodos = $con->prepare("SELECT p.sku, i.imagen, p.nombre, p.precio, p.stock
   from Productos p
   inner join Imagenes i
-  on p.imagen=i.id_img;");
+  on p.imagen=i.id_img WHERE estado_id = 5;");
   $consultaTodos->execute();
   $product = $consultaTodos->fetchAll(PDO::FETCH_ASSOC);
 }
