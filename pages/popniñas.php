@@ -83,7 +83,7 @@ $popniña = $buque->ordenar($orden, $popniña);
                       <div class="card-body">
                         <h5 class="card-title h4"><?php echo $niña['nombre']; ?></h5>
                         <a class="objeto-texto" href="prodejem.php?id=<?php echo $niña['sku']; ?>">
-                        <p class="card-text h5">$<?php echo $niña['precio']; ?>MXN</p></a>
+                        <p class="card-text h5">$<?php echo number_format($niña['precio'], 2); ?>MXN</p></a>
                       </div>
                     </div>
                   </div>

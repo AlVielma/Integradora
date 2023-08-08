@@ -83,7 +83,7 @@ $solarmujer = $buque->ordenar($orden, $solarmujer);
                       <div class="card-body">
                         <h5 class="card-title h4"><?php echo $solarm['nombre']; ?></h5>
                         <a class="objeto-texto" href="prodejem.php?id=<?php echo $solarm['sku']; ?>">
-                        <p class="card-text h5">$<?php echo $solarm['precio']; ?>MXN</p></a>
+                        <p class="card-text h5">$<?php echo number_format($solarm['precio'], 2); ?>MXN</p></a>
                       </div>
                     </div>
                   </div>

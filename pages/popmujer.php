@@ -84,7 +84,7 @@ $popmujer = $buque->ordenar($orden, $popmujer);
                       <div class="card-body">
                         <h5 class="card-title h4"><?php echo $mujer['nombre']; ?></h5>
                         <a class="objeto-texto" href="prodejem.php?id=<?php echo $mujer['sku']; ?>">
-                        <p class="card-text h5">$<?php echo $mujer['precio']; ?>MXN</p></a>
+                        <p class="card-text h5">$<?php echo number_format($mujer['precio'], 2); ?>MXN</p></a>
                       </div>
                     </div>
                   </div>
