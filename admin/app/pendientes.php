@@ -56,7 +56,7 @@ if (isset($_GET['search'])) {
         <!-- Mostrar mensaje cuando no hay resultados -->
         <div class="text-center">
             <h3>No se encontraron resultados</h3>
-            <p>Recuerda buscar el folio del usuario/p>
+            <p>Recuerda buscar el folio del usuario</p>
         </div>
     <?php else : ?>
     <!-- Tabla de Compras -->
