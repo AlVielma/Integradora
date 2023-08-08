@@ -68,8 +68,11 @@ if(isset($_POST['mandar_exm']))
         {
            if($nombres == $nombre && $sintomasocc==$sintomas_oculares && $enfermedadesoc==$enfermedades_oculares)
            {
+            
             $cita->agregar($_SESSION['user_id'],$nombres,$telefono,$fecha_nacimiento,$dia,$hora,$sintomasocc,$enfermedadesoc,$lentes_actualmente,$armazon,$contacto,$ultimo_examen,$uso_gotas);
             #CORREO
+            $f= $cita->sf();
+            $ff = $f['ultimo_id'];
             $mail = new PHPMailer(true);
 
             try {
@@ -84,12 +87,14 @@ if(isset($_POST['mandar_exm']))
                 $mail->Port = 587;                           
                     $persona = '<h1>CITA AGENDADA POR'.$nombres.'</h3>';
                     $contenido = '<h3>CITA EL DIA '.$dia.'A LAS '.$hora.'</h3>';
+                    $folio ='<h3>Su numero de folio es '.$ff.'</h3>';
+
                 $mail->setFrom('fgolmos10@gmail.com', $nombres);
                 $mail->addAddress($_SESSION['user_email']);
              
                 $mail->isHTML(true);                                
                 $mail->Subject = 'CITA';
-                $mail->Body    = ''.$persona.''.$contenido;
+                $mail->Body    = ''.$persona.''.$contenido.''.$folio;
                 $mail->send();
                 header('Location: exam.php');
                
