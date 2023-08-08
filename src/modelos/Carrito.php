@@ -283,6 +283,18 @@ public function obtenerProductosPorCompra($detalle_compra_id)
     return $productos;
 }
 
+public function buscarCompras($searchTerm)
+{
+    $buscarDetalles = $this->pdo->prepare("CALL BuscarCompras(:search_term)");
+    $buscarDetalles->bindParam(':search_term', $searchTerm, \PDO::PARAM_STR);
+    $buscarDetalles->execute();
+
+    $detallesCompras = $buscarDetalles->fetchAll(\PDO::FETCH_ASSOC);    
+    return $detallesCompras;
+}
+
+
+
 
     public function __destruct()
     {
