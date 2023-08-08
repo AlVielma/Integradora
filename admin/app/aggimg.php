@@ -6,7 +6,7 @@ use App\Modelos\validacionproductos;
 require_once __DIR__.'/../../src/modelos/productos.php';
 require_once __DIR__.'/../../src/modelos/validacionproductos.php';
 $productos = new productos();
-$mostrar=$productos->mostrar_productos();
+
 $marcas= $productos->mostrar_marca();
 $categorias= $productos->mostrar_categorias();
 $tlente = $productos->mostrar_tipo_lentes();
@@ -15,6 +15,20 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
   // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
   header("Location: ../../pages/login.php");
   exit;
+}
+$busqueda = isset($_GET['busqueda']) ? $_GET['busqueda'] : '';
+if(!empty($busqueda))
+{
+  $busqueda = $busqueda.'%';
+  $mostrar=$productos->buscarproducto($busqueda);
+}
+elseif(isset($_GET['Reiniciar']))
+{
+  $busqueda="";
+  $mostrar=$productos->mostrar_productos();
+}
+else{
+  $mostrar=$productos->mostrar_productos();
 }
 $validacion = new validacionproductos();
 $errors = [];
@@ -104,6 +118,19 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
     }
     ?>
     </div>
+    <div>
+    <?php
+            
+            $validacion->mensajes($errors);
+            ?>
+    </div>
+    <form method="get" action="">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="busqueda" placeholder="Buscar producto" value="">
+                <button class="btn btn-primary" type="submit">Buscar</button>
+                <button class="btn btn-secondary" name="Reiniciar" type="submit">Reiniciar</button>
+            </div>
+    </form>
     <div class="">
       <h1>Agregar Producto</h1>
     </div>
@@ -126,6 +153,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               <th>Precio</th>
               <th>Cantidad</th>
               <th>Imagen</th>
+              <th>Activo/inactivo</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -138,12 +166,20 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
                 <td><?php echo $product['nombre']; ?></td>
                 <td><?php echo $product['descripcion']; ?></td>
                 <td><?php echo $product['categoria']; ?></td>
-                <td><?php echo $product['precio']; ?></td>
+                <td><?php echo '$'.$product['precio']; ?></td>
                 <td><?php echo $product['stock']; ?></td>
                 <td>
                   <img src="<?php echo '/../../productosimg/'.$product['IMAGEN']; ?>" alt="Imagen del producto" width="100px" height="100px">
                 </td>
-
+                <td>
+                <?php if ($product['estado_id']==5) {
+                  echo "<b style='color: green;'>Activo</b>";
+                }
+                elseif($product['estado_id']==1){
+                  echo "<b style='color: red;'>Inactivo</b>";
+                }?>
+                </td>
+                
                 <td>
                   <a href="../../src/http/editproducto.php?sku=<?php echo $product['sku']; ?>" class="btn btn-warning">
                     <img src="../../images/editar.png" alt="">
@@ -151,6 +187,8 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
 
                   <a class="btn btn-danger"data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modaleliminarproducto" ><img src="../../images/circulo-x.png" alt="">
                   </a>
+
+                  <a class="btn btn-success" data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modalactivarproducto" ><img src="../../images/controlar.png" alt=""></a>
                 </td>
               </tr>
             <?php
@@ -253,11 +291,13 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
     <!--/MODALAGREGAR-->
   <?php
   require __DIR__.'/../../src/http/modaleliminarproducto.php';
+  require __DIR__.'/../../src/http/modalactivarproducto.php';
   ?>
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/admin/js/boton.js"></script>
   <script src="/admin/js/modalcrudeliminar.js"></script>
+  <script src="/admin/js/modalactivar.js"></script>
 
 </body>
 
