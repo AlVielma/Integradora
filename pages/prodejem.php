@@ -76,7 +76,7 @@ if ($sku == '') {
         <!-- Mostrar la información del producto -->
         <h1><?php echo $producto; ?></h1>
         <h3><?php echo $marca; ?></h3>
-        <h2>$ <?php echo $precio; ?> MXN</h2>
+        <h2>$<?php echo number_format($precio, 2); ?> MXN</h2>
         <?php if ($stock<=0) : ?>
         <p><strong>Producto no disponible</strong></p>
         <?php else :?>
@@ -144,7 +144,7 @@ if ($sku == '') {
             <div class="card-body">
               <h5 class="card-title h4"><?php echo $reco['nombre']; ?></h5>
               <a class="objeto-texto" href="prodejem.php?id=<?php echo $reco['sku']; ?>">
-                <p class="card-text h5">$<?php echo $reco['precio']; ?> MXN</p>
+                <p class="card-text h5">$<?php echo number_format($reco['precio'], 2); ?> MXN</p>
               </a>
             </div>
           </div>
