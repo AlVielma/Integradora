@@ -110,34 +110,37 @@ if(isset($_POST['quejas'])){
             $carrito = new Carrito();
 
             // Verificar si el usuario ha iniciado sesión y si el carrito está vacío
-            $carritoVacio = true;
-            if (isset($_SESSION['user_id'])) {
-                if (!empty($carrito->obtenerProductosCarritoEstado1($_SESSION['user_id']))) {
-                    $carritoVacio = false;
-                }
-            }
-            ?>
+      $carritoVacio = true;
+      if (isset($_SESSION['user_id'])) {
+        if (!empty($carrito->obtenerProductosCarritoEstado1($_SESSION['user_id']))) {
+          $carritoVacio = false;
+        }
+      }
+      ?>
 
-            <!-- Mostrar el ícono del carrito y enlazarlo a la página correspondiente -->
-            <?php if (isset($_SESSION['user_name'])) : ?>
-                <!-- Si el usuario ha iniciado sesión, redirigir al carrito correspondiente -->
-                <?php if ($carritoVacio) : ?>
-                    <!-- Si el carrito está vacío, redireccionar a la página incarejem.php -->
-                    <a class="navbar-brand text-white" href="pages/incarejem.php">
-                        <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
-                    </a>
-                <?php else : ?>
-                    <!-- Si el carrito NO está vacío, redireccionar a la página prodencar.php -->
-                    <a class="navbar-brand text-white" href="pages/prodencar.php">
-                        <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
-                    </a>
-                <?php endif; ?>
-            <?php else : ?>
-                <!-- Si el usuario no ha iniciado sesión, redireccionar a la página car.php -->
-                <a class="navbar-brand text-white" href="pages/car.php">
-                    <img src="images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
-                </a>
-            <?php endif; ?>
+      <!-- Mostrar el ícono del carrito y enlazarlo a la página correspondiente -->
+      <?php if (isset($_SESSION['user_id'])) : ?>
+        <!-- Si el usuario ha iniciado sesión, redirigir al carrito correspondiente -->
+        <?php if ($carritoVacio) : ?>
+          <!-- Si el carrito está vacío, redireccionar a la página incarejem.php -->
+          <a class="navbar-brand text-white" href="pages/incarejem.php">
+            <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+            <span class="badge badge-danger">0</span> <!-- Aquí el contador -->
+          </a>
+        <?php else : ?>
+          <!-- Si el carrito NO está vacío, redireccionar a la página prodencar.php -->
+          <a class="navbar-brand text-white" href="pages/prodencar.php">
+            <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+            <span class="badge badge-danger"><?php echo count($carrito->obtenerProductosCarritoEstado1($_SESSION['user_id'])); ?></span> <!-- Aquí el contador -->
+          </a>
+        <?php endif; ?>
+      <?php else : ?>
+        <!-- Si el usuario no ha iniciado sesión, redireccionar a la página car.php -->
+        <a class="navbar-brand text-white" href="pages/car.php">
+          <img src="../images/carrito.png" alt="Logo" class="d-inline-block align-text-top carrito-icono">
+        </a>
+      <?php endif; ?>
+
 
 
 

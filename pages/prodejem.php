@@ -61,61 +61,69 @@ if ($sku == '') {
   include 'header.php';
   ?>
 
- <!--contenido-->
-<main class="mt-4 mb-4">
+
+  <!--contenido-->
+  <main class="mt-4 mb-4">
   <div class="container">
     <div class="row">
       <div class="col-md-6 order-md-1 text-center">
-        <?php // Verificar si hay un mensaje de alerta en $_SESSION
-            if (isset($_SESSION['mensaje'])) {
-              echo '<div class="alert alert-warning">' . $_SESSION['mensaje'] . '</div>';
-              unset($_SESSION['mensaje']); // Eliminar el mensaje para que no se muestre nuevamente
-            } ?>
-        <!--aqui es donde se utilizaria php, titulo, marca, precio e imagenes-->
+        <!-- Verificar si hay un mensaje de alerta en $_SESSION -->
+        <?php if (isset($_SESSION['mensaje'])) : ?>
+          <div class="alert alert-warning"><?php echo $_SESSION['mensaje']; ?></div>
+          <?php unset($_SESSION['mensaje']); // Eliminar el mensaje para que no se muestre nuevamente ?>
+        <?php endif; ?>
+
+        <!-- Mostrar la información del producto -->
         <h1><?php echo $producto; ?></h1>
         <h3><?php echo $marca; ?></h3>
-        <h2>$ <?php echo $precio; ?> MXN</h2>
-        <p><strong> Productos disponibles:</strong> <?php echo $stock; ?></p> <!-- Mostrar el stock del producto -->
+        <h2>$<?php echo number_format($precio, 2); ?> MXN</h2>
+        <?php if ($stock<=0) : ?>
+        <p><strong>Producto no disponible</strong></p>
+        <?php else :?>
+        <p><strong>Productos disponibles:</strong> <?php echo $stock; ?></p>
+        <?php endif;?>
         <div class="mb-3 border-top border-5"></div>
         <p class="lead">
-          <?php echo $descripcion; ?>
+          <?php echo ($stock > 0) ? $descripcion : 'Contactanos para más información'; ?>
           <br>
-          <?php echo $tipo_lente; ?>
         </p>
         <div class="mb-3 border-top border-5"></div>
 
-        <form action="agregar_al_carrito.php" method="post">
-          <input type="hidden" name="producto_id" value="<?php echo $sku; ?>">
-          <div class="mb-3">
-            <label for="cantidad" class="form-label">Cantidad:</label>
-            <input type="number" name="cantidad" id="cantidad" min="1" max="<?php echo min(5, $stock); ?>" value="1" class="form-control">
-          </div>
-          <?php if (isset($_SESSION['user_name'])) : ?>
-          <button type="submit" name="agregar_al_carrito" class="btn btn-light btn-outline-dark">Añadir al carrito</button>
-          <?php else : ?>
-            <a href="login.php" class="btn btn-light btn-outline-dark">Añadir al carrito</a>
+        <!-- Mostrar el formulario de agregar al carrito solo si el producto tiene stock -->
+        <?php if ($stock > 0) : ?>
+          <form action="agregar_al_carrito.php" method="post">
+            <input type="hidden" name="producto_id" value="<?php echo $sku; ?>">
+            <div class="mb-3">
+              <label for="cantidad" class="form-label">Cantidad:</label>
+              <input type="number" name="cantidad" id="cantidad" min="1" max="<?php echo min(5, $stock); ?>" value="1" class="form-control">
+            </div>
+            <?php if (isset($_SESSION['user_name'])) : ?>
+              <button type="submit" name="agregar_al_carrito" class="btn btn-light btn-outline-dark">Añadir al carrito</button>
+            <?php else : ?>
+              <a href="login.php" class="btn btn-light btn-outline-dark">Añadir al carrito</a>
             <?php endif; ?>
-        </form>
+          </form>
+        <?php endif; ?>
 
       </div>
-      <div class="col-md-6 order-md-2">
-        <div id="carouselImages" class="carousel slide">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
+        <div class="col-md-6 order-md-2">
+          <div id="carouselImages" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
 
-              <img src="<?php echo '/../productosimg/' . $imagen; ?>" class="d-block w-100" alt="...">
+                <img src="<?php echo '/../productosimg/' . $imagen; ?>" class="d-block w-100" alt="...">
+
+              </div>
 
             </div>
 
           </div>
 
         </div>
-
       </div>
-    </div>
 
-  </div>
-</main>
+    </div>
+  </main>
 
 
   <!--Contenido Recomendados-->
@@ -136,7 +144,7 @@ if ($sku == '') {
             <div class="card-body">
               <h5 class="card-title h4"><?php echo $reco['nombre']; ?></h5>
               <a class="objeto-texto" href="prodejem.php?id=<?php echo $reco['sku']; ?>">
-                <p class="card-text h5">$<?php echo $reco['precio']; ?> MXN</p>
+                <p class="card-text h5">$<?php echo number_format($reco['precio'], 2); ?> MXN</p>
               </a>
             </div>
           </div>

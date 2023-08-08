@@ -19,13 +19,13 @@ if (isset($_POST['producto_id'], $_POST['cantidad'])) {
 
     if ($cantidad <= 0) {
         // Manejar el caso cuando la cantidad sea inválida (menor o igual a cero)
-        echo "La cantidad debe ser mayor a cero.";
+        $_SESSION['mensaje_exito'] = "La cantidad debe ser mayor a cero";
+        header("Location: prodejem.php?id=" . $producto_id);
         exit;
     }
 
     $carrito->agregarProducto($usuario_id, $producto_id, $cantidad, $estado_id);
 
-    // Redirigir de vuelta a la página de detalle del producto
     header("Location: prodejem.php?id=" . $producto_id);
     exit;
 }
