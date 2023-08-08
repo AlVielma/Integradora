@@ -93,17 +93,10 @@ if (isset($_GET['search'])) {
               <!-- Columna para los detalles de los productos asociados a la compra -->
               <td>
                 <ul>
-                  <?php if (isset($_GET['search'])) : ?>
-                    <!-- Mostrar productos según la búsqueda -->
-                    <?php foreach ($detallesCompras as $detalleCompra) : ?>
-                      <li><?php echo $detalleCompra['nombre_producto'] . ' - Cantidad: ' . $detalleCompra['cantidad'] . ' - Precio: $' . number_format($detalleCompra['precio'], 2); ?></li
-                    <?php endforeach; ?>
-                  <?php else : ?>
                     <!-- Mostrar productos normales -->
                     <?php foreach ($detalleCompra['productos'] as $producto) : ?>
                       <li><?php echo $producto['nombre_producto'] . ' - Cantidad: ' . $producto['cantidad'] . ' - Precio: $' . number_format($producto['precio'], 2); ?></li>
                     <?php endforeach; ?>
-                  <?php endif; ?>
                 </ul>
               </td>
               <td>

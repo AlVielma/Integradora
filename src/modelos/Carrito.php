@@ -249,49 +249,72 @@ public function obtenerDetallesCompraPorUsuario($usuario_id)
     return $detallesCompras;
 }
 
-public function buscarDetallesCompra($usuario_id, $search)
+public function buscarApartadosPorUsuario($usuario_id, $searchTerm)
 {
-    $stmt = $this->pdo->prepare("CALL buscar_detalles_compra(:usuario_id, :termino_busqueda)");
-    $stmt->bindValue(':usuario_id', $usuario_id, \PDO::PARAM_INT);
-    $stmt->bindValue(':termino_busqueda', $search, \PDO::PARAM_STR);
-    $stmt->execute();
+    $query = "SELECT dc.id AS id_compra, dc.usuario_id, u.nombre AS nombre_cliente, u.apellido AS apellido_cliente, dc.fecha_pedido, dc.total, e.estado
+              FROM DetalleCompra dc
+              INNER JOIN Usuarios u ON dc.usuario_id = u.id
+              INNER JOIN estado e ON dc.estado_id = e.id
+              WHERE dc.usuario_id = :usuario_id AND CAST(dc.id AS CHAR) LIKE :search_term
+              GROUP BY dc.id, dc.usuario_id, u.nombre, u.apellido, dc.fecha_pedido, dc.total, dc.estado_id
+              ORDER BY dc.fecha_pedido DESC";
 
-    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-}
+    $buscarDetalles = $this->pdo->prepare($query);
+    $buscarDetalles->bindParam(':usuario_id', $usuario_id, \PDO::PARAM_INT);
+    $search_term_with_wildcards = '%' . $searchTerm . '%';
+    $buscarDetalles->bindParam(':search_term', $search_term_with_wildcards, \PDO::PARAM_STR);
+    $buscarDetalles->execute();
 
+    $detallesCompras = $buscarDetalles->fetchAll(\PDO::FETCH_ASSOC);
 
-public function obtenerProductosPorCompra($detalle_compra_id)
-{
-    // Preparar la consulta SQL para obtener los productos asociados al detalle de compra
-    $sql = "SELECT p.sku, p.nombre AS nombre_producto, p.descripcion, p.precio, c.cantidad, c.total AS total_producto, i.IMAGEN AS imagen_ruta
+    // Ahora, para cada compra, obtendremos los productos asociados
+    foreach ($detallesCompras as &$detalleCompra) {
+        $obtenerProductos = $this->pdo->prepare("SELECT p.sku, p.nombre AS nombre_producto, p.descripcion, p.precio, c.cantidad, c.total AS total_producto, i.IMAGEN AS imagen_ruta, c.total
             FROM Carritos c
             INNER JOIN Productos p ON c.producto_id = p.sku
             INNER JOIN Imagenes i ON p.imagen = i.id_img
-            WHERE c.compra_id = :detalle_compra_id";
+            WHERE c.compra_id = :compra_id");
+        $obtenerProductos->bindParam(':compra_id', $detalleCompra['id_compra'], \PDO::PARAM_INT);
+        $obtenerProductos->execute();
 
-    $stmt = $this->pdo->prepare($sql);
+        $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
 
+        $detalleCompra['productos'] = $productos;
+    }
 
-    $stmt->bindValue(':detalle_compra_id', $detalle_compra_id, \PDO::PARAM_INT);
-
-
-    $stmt->execute();
-
-    // Obtener los resultados como un array asociativo
-    $productos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-    return $productos;
+    return $detallesCompras;
 }
+
+
+
 
 public function buscarCompras($searchTerm)
 {
-    $buscarDetalles = $this->pdo->prepare("CALL BuscarCompras(:search_term)");
-    $buscarDetalles->bindParam(':search_term', $searchTerm, \PDO::PARAM_STR);
-    $buscarDetalles->execute();
+    $obtenerDetalles = $this->pdo->query("SELECT dc.id as id_compra, dc.usuario_id, u.nombre as nombre_cliente, u.apellido as apellido_cliente, dc.fecha_pedido, dc.total, dc.estado_id
+                                          FROM DetalleCompra dc
+                                          INNER JOIN Usuarios u ON dc.usuario_id = u.id
+                                          WHERE dc.id LIKE '%$searchTerm%'
+                                          OR u.nombre LIKE '%$searchTerm%'
+                                          OR u.apellido LIKE '%$searchTerm%'
+                                          GROUP BY dc.id, dc.usuario_id, u.nombre, u.apellido, dc.fecha_pedido, dc.total, dc.estado_id
+                                          ORDER BY dc.fecha_pedido DESC");
 
-    $detallesCompras = $buscarDetalles->fetchAll(\PDO::FETCH_ASSOC);    
+    $detallesCompras = $obtenerDetalles->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Ahora, para cada compra, obtendremos los productos asociados
+    foreach ($detallesCompras as &$detalleCompra) {
+        $obtenerProductos = $this->pdo->query("SELECT p.nombre as nombre_producto, c.cantidad, c.total as precio
+                                               FROM Carritos c
+                                               INNER JOIN Productos p ON c.producto_id = p.sku
+                                               WHERE c.compra_id = " . $detalleCompra['id_compra']);
+        $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
+
+        $detalleCompra['productos'] = $productos;
+    }
+
     return $detallesCompras;
 }
+
 
 
 
