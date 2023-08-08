@@ -52,8 +52,13 @@ if (isset($_GET['search'])) {
   </div>
 
   <div class="container-fluid" id="content">
-
-
+  <?php if (empty($detallesCompras)) : ?>
+        <!-- Mostrar mensaje cuando no hay resultados -->
+        <div class="text-center">
+            <h3>No se encontraron resultados</h3>
+            <p>Recuerda buscar el folio del usuario/p>
+        </div>
+    <?php else : ?>
     <!-- Tabla de Compras -->
     <div class="table-responsive">
       <!-- Tabla de Compras -->
@@ -96,7 +101,7 @@ if (isset($_GET['search'])) {
                   <?php else : ?>
                     <!-- Mostrar productos normales -->
                     <?php foreach ($detalleCompra['productos'] as $producto) : ?>
-                      <li><?php echo $producto['nombre_producto'] . ' - Cantidad: ' . $producto['cantidad']; ?></li>
+                      <li><?php echo $producto['nombre_producto'] . ' - Cantidad: ' . $producto['cantidad'] . ' - Precio: $' . number_format($producto['precio'], 2); ?></li>
                     <?php endforeach; ?>
                   <?php endif; ?>
                 </ul>
@@ -118,6 +123,7 @@ if (isset($_GET['search'])) {
       </table>
 
     </div>
+    <?php endif; ?>
   </div>
   <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

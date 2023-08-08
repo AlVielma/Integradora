@@ -162,7 +162,7 @@ class Carrito
 
         // Ahora, para cada compra, obtendremos los productos asociados
         foreach ($detallesCompras as &$detalleCompra) {
-            $obtenerProductos = $this->pdo->query("SELECT p.nombre as nombre_producto, c.cantidad, c.total as total_producto
+            $obtenerProductos = $this->pdo->query("SELECT p.nombre as nombre_producto, c.cantidad, c.total as precio
                                                    FROM Carritos c
                                                    INNER JOIN Productos p ON c.producto_id = p.sku
                                                    WHERE c.compra_id = " . $detalleCompra['id_compra']);

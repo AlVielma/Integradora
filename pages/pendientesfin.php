@@ -21,17 +21,9 @@ if (isset($_SESSION['user_id'])) {
         $detallesCompras = $carritoModelo->buscarDetallesCompra($usuario_id, $search);
 
         foreach ($detallesCompras as &$detalleCompra) {
-            $detalleCompraId = $detalleCompra['id_compra'];
-
-            // Obtener los productos por detalle de compra
-            $productos = $carritoModelo->obtenerProductosPorCompra($detalleCompraId);
-
-            // Asignar los productos al detalle de compra correspondiente como copias independientes
+            $productos = $carritoModelo->obtenerProductosPorCompra($detalleCompra['id_compra']);
             $detalleCompra['productos'] = $productos;
         }
-
-        //
-
     } else {
         // Obtener los detalles de todas las compras desde la base de datos
         $detallesCompras = $carritoModelo->obtenerDetallesCompraPorUsuario($usuario_id);
@@ -84,6 +76,13 @@ if (isset($_SESSION['user_id'])) {
 
     <!-- Contenedor para todos los detalles de compra -->
     <div class="container">
+    <?php if (empty($detallesCompras)) : ?>
+        <!-- Mostrar mensaje cuando no hay resultados -->
+        <div class="text-center">
+            <h3>No se encontraron resultados</h3>
+            <p>Recuerda buscar tu número de folio o el estado en el que se encuentra.</p>
+        </div>
+    <?php else : ?>
         <?php foreach ($detallesCompras as $detalleCompra) : ?>
             <!-- Mostrar el id de compra y estado -->
             <div class="text-center mb-3">
@@ -117,11 +116,15 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                     <div class="mb-3 mt-3 border-top border-5"></div>
                 <?php endforeach; ?>
+                
+                <div class="text-center">
+                    <p class="lead font-weight-bold">Total Apartado: $<?php echo number_format($detalleCompra['total'], 2); ?> MXN</p>
+                </div>
             </div>
             <div class="mb-3 mt-3 border-top border-5"></div>
         <?php endforeach; ?>
+        <?php endif; ?>
     </div>
-
 
     <?php
     include 'footer.php';
