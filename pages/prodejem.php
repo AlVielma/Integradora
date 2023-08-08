@@ -61,61 +61,70 @@ if ($sku == '') {
   include 'header.php';
   ?>
 
- <!--contenido-->
-<main class="mt-4 mb-4">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 order-md-1 text-center">
+
+  <!--contenido-->
+  <main class="mt-4 mb-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 order-md-1 text-center">
         <?php // Verificar si hay un mensaje de alerta en $_SESSION
-            if (isset($_SESSION['mensaje'])) {
-              echo '<div class="alert alert-warning">' . $_SESSION['mensaje'] . '</div>';
-              unset($_SESSION['mensaje']); // Eliminar el mensaje para que no se muestre nuevamente
-            } ?>
-        <!--aqui es donde se utilizaria php, titulo, marca, precio e imagenes-->
-        <h1><?php echo $producto; ?></h1>
-        <h3><?php echo $marca; ?></h3>
-        <h2>$ <?php echo $precio; ?> MXN</h2>
-        <p><strong> Productos disponibles:</strong> <?php echo $stock; ?></p> <!-- Mostrar el stock del producto -->
-        <div class="mb-3 border-top border-5"></div>
-        <p class="lead">
-          <?php echo $descripcion; ?>
-          <br>
-          <?php echo $tipo_lente; ?>
-        </p>
-        <div class="mb-3 border-top border-5"></div>
+        if (isset($_SESSION['mensaje'])) {
+          echo '<div class="alert alert-warning">' . $_SESSION['mensaje'] . '</div>';
+          unset($_SESSION['mensaje']); // Eliminar el mensaje para que no se muestre nuevamente
+        }
 
-        <form action="agregar_al_carrito.php" method="post">
-          <input type="hidden" name="producto_id" value="<?php echo $sku; ?>">
-          <div class="mb-3">
-            <label for="cantidad" class="form-label">Cantidad:</label>
-            <input type="number" name="cantidad" id="cantidad" min="1" max="<?php echo min(5, $stock); ?>" value="1" class="form-control">
-          </div>
-          <?php if (isset($_SESSION['user_name'])) : ?>
-          <button type="submit" name="agregar_al_carrito" class="btn btn-light btn-outline-dark">Añadir al carrito</button>
-          <?php else : ?>
-            <a href="login.php" class="btn btn-light btn-outline-dark">Añadir al carrito</a>
+        // Verificar si hay un mensaje de éxito en $_SESSION
+        if (isset($_SESSION['mensaje_exito'])) {
+          echo '<div class="alert alert-success">' . $_SESSION['mensaje_exito'] . '</div>';
+          unset($_SESSION['mensaje_exito']); // Eliminar el mensaje para que no se muestre nuevamente
+        }
+        ?>
+
+          <!--aqui es donde se utilizaria php, titulo, marca, precio e imagenes-->
+          <h1><?php echo $producto; ?></h1>
+          <h3><?php echo $marca; ?></h3>
+          <h2>$ <?php echo $precio; ?> MXN</h2>
+          <p><strong> Productos disponibles:</strong> <?php echo $stock; ?></p> <!-- Mostrar el stock del producto -->
+          <div class="mb-3 border-top border-5"></div>
+          <p class="lead">
+            <?php echo $descripcion; ?>
+            <br>
+            <?php echo $tipo_lente; ?>
+          </p>
+          <div class="mb-3 border-top border-5"></div>
+
+          <form action="agregar_al_carrito.php" method="post">
+            <input type="hidden" name="producto_id" value="<?php echo $sku; ?>">
+            <div class="mb-3">
+              <label for="cantidad" class="form-label">Cantidad:</label>
+              <input type="number" name="cantidad" id="cantidad" min="1" max="<?php echo min(5, $stock); ?>" value="1" class="form-control">
+            </div>
+            <?php if (isset($_SESSION['user_name'])) : ?>
+              <button type="submit" name="agregar_al_carrito" class="btn btn-light btn-outline-dark">Añadir al carrito</button>
+            <?php else : ?>
+              <a href="login.php" class="btn btn-light btn-outline-dark">Añadir al carrito</a>
             <?php endif; ?>
-        </form>
+          </form>
 
-      </div>
-      <div class="col-md-6 order-md-2">
-        <div id="carouselImages" class="carousel slide">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
+        </div>
+        <div class="col-md-6 order-md-2">
+          <div id="carouselImages" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
 
-              <img src="<?php echo '/../productosimg/' . $imagen; ?>" class="d-block w-100" alt="...">
+                <img src="<?php echo '/../productosimg/' . $imagen; ?>" class="d-block w-100" alt="...">
+
+              </div>
 
             </div>
 
           </div>
 
         </div>
-
       </div>
-    </div>
 
-  </div>
-</main>
+    </div>
+  </main>
 
 
   <!--Contenido Recomendados-->

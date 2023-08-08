@@ -21,9 +21,17 @@ if (isset($_SESSION['user_id'])) {
         $detallesCompras = $carritoModelo->buscarDetallesCompra($usuario_id, $search);
 
         foreach ($detallesCompras as &$detalleCompra) {
-            $productos = $carritoModelo->obtenerProductosPorCompra($detalleCompra['id_compra']);
+            $detalleCompraId = $detalleCompra['id_compra'];
+
+            // Obtener los productos por detalle de compra
+            $productos = $carritoModelo->obtenerProductosPorCompra($detalleCompraId);
+
+            // Asignar los productos al detalle de compra correspondiente como copias independientes
             $detalleCompra['productos'] = $productos;
         }
+
+        //
+
     } else {
         // Obtener los detalles de todas las compras desde la base de datos
         $detallesCompras = $carritoModelo->obtenerDetallesCompraPorUsuario($usuario_id);
@@ -75,44 +83,44 @@ if (isset($_SESSION['user_id'])) {
     </div>
 
     <!-- Contenedor para todos los detalles de compra -->
-<div class="container">
-    <?php foreach ($detallesCompras as $detalleCompra) : ?>
-        <!-- Mostrar el id de compra y estado -->
-        <div class="text-center mb-3">
-            <h3>Folio: <?php echo $detalleCompra['id_compra']; ?></h3>
-            <p>Estado: <?php echo $detalleCompra['estado']; ?></p>
-        </div>
-        <!-- Mostrar detalles de los productos asociados a la compra -->
-        <div class="container border border-black mt-4 mb-4">
-            <?php foreach ($detalleCompra['productos'] as $producto) : ?>
-                <h2 class="text-center"><?php echo $producto['nombre_producto']; ?></h2>
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="<?php echo '../productosimg/' . $producto['imagen_ruta']; ?>" alt="Imagen del producto" class="img-fluid">
-                    </div>
-                    <div class="col-md-8">
-                        <p class="lead font-weight-bold"><?php echo $producto['descripcion']; ?></p>
-                        <p class="lead font-weight-bold">Precio Unitario: $<?php echo number_format($producto['precio'], 2); ?> MXN</p>
-                        <p class="lead font-weight-bold">Pop Ópticos</p>
-                        <!-- Resto del contenido del producto -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="cantidad" class="form-label">Cantidad:</label>
-                                <!-- Mostrar la cantidad en un label o texto -->
-                                <span><?php echo $producto['cantidad']; ?></span>
-                                <p class="lead font-weight-bold">Total: $<?php echo number_format($producto['total_producto'], 2); ?> MXN</p>
-                            </div>
-                            <div class="col-md-6">
+    <div class="container">
+        <?php foreach ($detallesCompras as $detalleCompra) : ?>
+            <!-- Mostrar el id de compra y estado -->
+            <div class="text-center mb-3">
+                <h3>Folio: <?php echo $detalleCompra['id_compra']; ?></h3>
+                <p>Estado: <?php echo $detalleCompra['estado']; ?></p>
+            </div>
+            <!-- Mostrar detalles de los productos asociados a la compra -->
+            <div class="container border border-black mt-4 mb-4">
+                <?php foreach ($detalleCompra['productos'] as $producto) : ?>
+                    <h2 class="text-center"><?php echo $producto['nombre_producto']; ?></h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="<?php echo '../productosimg/' . $producto['imagen_ruta']; ?>" alt="Imagen del producto" class="img-fluid">
+                        </div>
+                        <div class="col-md-8">
+                            <p class="lead font-weight-bold"><?php echo $producto['descripcion']; ?></p>
+                            <p class="lead font-weight-bold">Precio Unitario: $<?php echo number_format($producto['precio'], 2); ?> MXN</p>
+                            <p class="lead font-weight-bold">Pop Ópticos</p>
+                            <!-- Resto del contenido del producto -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="cantidad" class="form-label">Cantidad:</label>
+                                    <!-- Mostrar la cantidad en un label o texto -->
+                                    <span><?php echo $producto['cantidad']; ?></span>
+                                    <p class="lead font-weight-bold">Total: $<?php echo number_format($producto['total_producto'], 2); ?> MXN</p>
+                                </div>
+                                <div class="col-md-6">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="mb-3 mt-3 border-top border-5"></div>
-            <?php endforeach; ?>
-        </div>
-        <div class="mb-3 mt-3 border-top border-5"></div>
-    <?php endforeach; ?>
-</div>
+                    <div class="mb-3 mt-3 border-top border-5"></div>
+                <?php endforeach; ?>
+            </div>
+            <div class="mb-3 mt-3 border-top border-5"></div>
+        <?php endforeach; ?>
+    </div>
 
 
     <?php

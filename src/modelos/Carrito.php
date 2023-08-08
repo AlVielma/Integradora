@@ -60,6 +60,8 @@ class Carrito
 
     $agregarCarrito = $this->pdo->prepare("INSERT INTO Carritos (usuario, producto_id, cantidad, total, estado_id) VALUES (?, ?, ?, ?, ?)");
     $agregarCarrito->execute([$usuario_id, $producto_id, $cantidad, $total, $estado_id]);
+
+    $_SESSION['mensaje_exito'] = 'Producto agregado al carrito';
 }
 
     public function eliminarProducto($usuario_id, $producto_id)
@@ -257,7 +259,6 @@ public function buscarDetallesCompra($usuario_id, $search)
     return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 }
 
-// En la clase Carrito.php
 
 public function obtenerProductosPorCompra($detalle_compra_id)
 {
