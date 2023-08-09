@@ -1,5 +1,3 @@
-
-php
 <?php
 session_start();
 require __DIR__.'/../../vendor/autoload.php';
@@ -103,11 +101,14 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
         </div>
     </div>
     <!-- Script para ocultar la alerta después de 5 segundos -->
+    <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
     <script>
         setTimeout(function() {
             document.getElementById('alerta').style.display = 'none';
         }, 3000);
     </script>
+    
     <script src="/admin/js/boton.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
