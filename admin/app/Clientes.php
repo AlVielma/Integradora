@@ -108,5 +108,6 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
             document.getElementById('alerta').style.display = 'none';
         }, 3000);
     </script>
+    <script src="/admin/js/boton.js"></script>
 </body>
 </html>
