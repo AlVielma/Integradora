@@ -49,6 +49,19 @@ if (isset($_SESSION['user_id'])) {
     include 'header.php'
     ?>
 
+    <?php if (empty($detallesCompras)) :?>
+        <div class="card-body text-center mt-5 mb-5">
+        <div class="mb-3">
+            <h5 class="display-6 fw-bold">No cuentas con apartados</h5>
+        </div>
+        <div class="mb-3">
+            <a href="login.php" class="btn btn-light btn-outline-dark">Regresar al inicio</a>
+        </div>
+       
+    </div>
+
+        <?php else : ?>
+
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -152,7 +165,7 @@ if (isset($_SESSION['user_id'])) {
         <?php endforeach; ?>
         <?php endif;?>
     </div>
-    
+    <?php endif;?>
 
     <?php
     include 'footer.php';
