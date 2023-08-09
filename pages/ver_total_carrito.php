@@ -29,6 +29,10 @@ $usuario_id = $_SESSION['user_id'];
 // Obtener los productos del carrito para el usuario actual desde la base de datos
 $productosCarrito = $carritoModelo->obtenerProductosCarritoEstado1($usuario_id);
 
+if (empty($productosCarrito)) {
+    header("Location: ../index.php");
+    exit;
+}
 
 // Función para calcular el total de la compra
 function calcularTotal($productosCarrito)
