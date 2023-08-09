@@ -396,11 +396,11 @@ if(isset($_POST['quejas'])){
         {?>
           <div class="col-12 col-lg-4 text-center mb-4 mb-lg-0">
             <div class="single-content-card">
-              <a href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>"><img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap"></a>
+              <a href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>"><img class="card-img-top" src="<?php echo 'productosimg/'.$producto['IMAGEN']; ?>" alt="Card image cap"  width="200px" height="230px"></a>
               <div class="card-body">
                 <h5 class="card-title h4"><?php echo $producto['nombre']; ?></h5>
                 <a class="h4 font-weight-bold text-decoration-none" href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>">
-                  <p class="card-text h5">$<?php echo $producto['precio']; ?> MXN</p>
+                  <p class="card-text h5">$<?php echo number_format($producto['precio'], 2); ?> MXN</p>
                 </a>
               </div>
             </div>

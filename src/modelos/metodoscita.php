@@ -56,6 +56,12 @@ class metodoscita
         $query->execute([$id]);
     }
 
+    public function sf()
+    {
+        $sf = $this->conectar->query("SELECT MAX(id) AS ultimo_id FROM Citas_Cliente;");
+        return $sf->fetch(\PDO::FETCH_ASSOC);
+    }
+
     public function __destruct()
     {
         $this->conectar = null; // Cierra la conexión establecida

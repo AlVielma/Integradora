@@ -83,7 +83,7 @@ $pophombres = $buque->ordenar($orden, $pophombres);
                       <img src="<?php echo '/../productosimg/'.$hombres['IMAGEN']; ?>" class="card-img-top" alt="..."width="200px" height="230px"></a>
                       <div class="card-body">
                         <h5 class="card-title h4"><?php echo $hombres['nombre']; ?></h5>
-                        <a class="objeto-texto" href="prodejem.php?id=<?php echo $hombres['sku']; ?>"><p class="card-text h5">$<?php echo $hombres['precio']; ?>MXN</p></a>
+                        <a class="objeto-texto" href="prodejem.php?id=<?php echo $hombres['sku']; ?>"><p class="card-text h5">$<?php echo number_format($hombres['precio'], 2); ?> MXN</p></a>
                       </div>
                     </div>
                   </div>
