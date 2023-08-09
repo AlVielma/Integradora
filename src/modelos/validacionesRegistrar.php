@@ -2,6 +2,7 @@
 namespace App\Modelos;
 // Incluir el archivo con la conexión a la base de datos
 //require_once __DIR__.'/../src/modelos/conexion.php';
+/*validacionesRegistrar*/
 use PDO;
 class validacionesRegistrar{
 
