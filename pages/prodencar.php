@@ -73,7 +73,7 @@ if (isset($_SESSION['user_id'])) {
           <h2 class="text-center"><?php echo $nombre; ?></h2>
           <div class="row">
             <div class="col-md-4">
-              <img src="<?php echo '../productosimg/' . $imagen; ?>" alt="Imagen del producto" class="img-fluid">
+              <img src="<?php echo '../productosimg/' . $imagen; ?>" alt="Imagen del producto" class="img-fluid" width="489" height="463">
             </div>
             <div class="col-md-8">
               <p class="lead font-weight-bold"><?php echo $descripcion; ?></p>
@@ -127,7 +127,7 @@ if (isset($_SESSION['user_id'])) {
                     <div class="card-body">
                         <h5 class="card-title h4"><?php echo $reco['nombre']; ?></h5>
                         <a class="objeto-texto" href="prodejem.php?id=<?php echo $reco['sku']; ?>">
-                            <p class="card-text h5">$<?php echo $reco['precio']; ?> MXN</p>
+                            <p class="card-text h5">$<?php echo number_format( $reco['precio'], 2); ?> MXN</p>
                         </a>
                     </div>
                 </div>

@@ -81,7 +81,7 @@ if (isset($_SESSION['user_id'])) {
                 <h2 class="text-center"><?php echo $producto['nombre_producto']; ?></h2>
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="<?php echo '../productosimg/' . $producto['imagen_ruta']; ?>" alt="Imagen del producto" class="img-fluid">
+                    <img src="<?php echo '../productosimg/' . $producto['imagen_ruta']; ?>" alt="Imagen del producto" class="img-fluid" width="489" height="463">
                     </div>
                     <div class="col-md-8">
                         <p class="lead font-weight-bold"><?php echo $producto['descripcion']; ?></p>

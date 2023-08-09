@@ -168,6 +168,7 @@ Class productos
         $recomendados = $this->pdo->prepare("SELECT p.sku, p.nombre, p.precio, i.IMAGEN 
             FROM Productos p 
             INNER JOIN Imagenes i ON p.imagen = i.id_img 
+            WHERE p.estado_id=5
             ORDER BY RAND() 
             LIMIT ?");
         $recomendados->execute([$cantidad]);
