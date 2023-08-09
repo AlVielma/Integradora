@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Modelos;
 // Incluir el archivo con la conexión a la base de datos
 //require_once __DIR__.'/../src/modelos/conexion.php';
-
+use PDO;
 class validacionesRegistrar{
 
     
@@ -90,17 +89,32 @@ class validacionesRegistrar{
     }*/
 
     
-    public function verificarToken($id,$email, $token, $con)
-        {
-            // Implementa la lógica para verificar el token en la base de datos
-            // Puedes usar una consulta SQL para buscar el token correspondiente al correo electrónico dado
-            // Si el token existe y es válido, devuelve true, de lo contrario, devuelve false
-            // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "token"):
-            $sql = $con->prepare("SELECT * FROM Usuarios WHERE id=? AND email =? AND token = ?;");
-            $sql->execute([$id,$email, $token]);
-
-            return $sql;
+    public function verificarToken($id, $token, $con)
+    {
+        try {
+            // Sanitizar los parámetros antes de la validación
+            $id = $this->sanitizar($id);
+            $token = $this->sanitizar($token);
+    
+            // Consultar la base de datos para verificar el token
+            $sql = $con->prepare("SELECT COUNT(*) as count FROM Usuarios WHERE id = ? AND token = ?");
+            $sql->execute([$id, $token]);
+    
+            $result = $sql->fetch(PDO::FETCH_ASSOC);
+    
+            if ($result['count'] > 0) {
+                return true; // Token válido
+            }
+    
+            return false; // Token incorrecto
+        } catch (\Exception $e) {
+            // Manejar errores
+            echo "Error: " . $e->getMessage();
+            return false;
         }
+    }
+    
+
 
     public function actualizarEstadoUsuario($id, $estado_id, $estatus, $con)
     {
@@ -191,5 +205,7 @@ class validacionesRegistrar{
     }
     
     */ 
+
+    
 }
 ?>
