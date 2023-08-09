@@ -3,12 +3,26 @@ session_start();
 use App\Modelos\metodoscita;
 require_once __DIR__.'/../../src/modelos/metodoscita.php';
 $cita= new metodoscita();
-$cita_m = $cita->mostrar();
+
 
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['user_rol'] != 1) {
   // Si el usuario no ha iniciado sesión o no tiene rol de admin, redirigir al index (página de usuario)
   header("Location: ../../pages/login.php");
   exit;
+}
+$busqueda = isset($_GET['busqueda']) ? $_GET['busqueda'] : '';
+if(!empty($busqueda))
+{
+  $busqueda = $busqueda;
+  $cita_m=$cita->busquedaagenda($busqueda);
+}
+elseif(isset($_GET['Reiniciara']))
+{
+  $busqueda="";
+  $cita_m=$cita->mostrar();
+}
+else{
+  $cita_m=$cita->mostrar();
 }
 
 ?>
@@ -30,6 +44,13 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
 
   
   <div class="container-fluid" id="content">
+  <form method="get" action="">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="busqueda" placeholder="Buscar por n. Folio" value="">
+                <button class="btn btn-primary" type="submit">Buscar</button>
+                <button class="btn btn-secondary" name="Reiniciara" type="submit">Reiniciar</button>
+            </div>
+    </form>
       <h1>CITAS</h1>
      <!-- Tabla de Citas -->
      <div class="table-responsive">
