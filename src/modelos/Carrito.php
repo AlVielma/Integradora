@@ -251,21 +251,16 @@ public function obtenerDetallesCompraPorUsuario($usuario_id)
 
 public function buscarApartadosPorUsuario($usuario_id, $searchTerm)
 {
-    $query = "SELECT dc.id AS id_compra, dc.usuario_id, u.nombre AS nombre_cliente, u.apellido AS apellido_cliente, dc.fecha_pedido, dc.total, e.estado
+    $query = $this->pdo->query("SELECT dc.id AS id_compra, dc.usuario_id, u.nombre AS nombre_cliente, u.apellido AS apellido_cliente, dc.fecha_pedido, dc.total, e.estado
               FROM DetalleCompra dc
               INNER JOIN Usuarios u ON dc.usuario_id = u.id
               INNER JOIN estado e ON dc.estado_id = e.id
-              WHERE dc.usuario_id = :usuario_id AND CAST(dc.id AS CHAR) LIKE :search_term
+              WHERE dc.usuario_id = $usuario_id AND dc.id LIKE '%$searchTerm%'
+              OR e.estado LIKE '%$searchTerm%'
               GROUP BY dc.id, dc.usuario_id, u.nombre, u.apellido, dc.fecha_pedido, dc.total, dc.estado_id
-              ORDER BY dc.fecha_pedido DESC";
-
-    $buscarDetalles = $this->pdo->prepare($query);
-    $buscarDetalles->bindParam(':usuario_id', $usuario_id, \PDO::PARAM_INT);
-    $search_term_with_wildcards = '%' . $searchTerm . '%';
-    $buscarDetalles->bindParam(':search_term', $search_term_with_wildcards, \PDO::PARAM_STR);
-    $buscarDetalles->execute();
-
-    $detallesCompras = $buscarDetalles->fetchAll(\PDO::FETCH_ASSOC);
+              ORDER BY dc.fecha_pedido DESC");
+  
+    $detallesCompras = $query->fetchAll(\PDO::FETCH_ASSOC);
 
     // Ahora, para cada compra, obtendremos los productos asociados
     foreach ($detallesCompras as &$detalleCompra) {
