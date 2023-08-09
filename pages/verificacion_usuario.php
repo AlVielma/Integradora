@@ -1,51 +1,42 @@
-
 <?php
 session_start();
- use App\Modelos\Conexion;
- use App\Modelos\validacionesRegistrar;
-// Incluir las clases y la conexión a la base de datos
+use App\Modelos\Conexion;
+use App\Modelos\validacionesRegistrar;
+
 require_once __DIR__.'/../src/modelos/Conexion.php';
 require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
 
-// Crear una instancia de validacionesRegistrar
 $registrar = new validacionesRegistrar();
-
-// Establecer la conexión a la base de datos
 $conexion = new Conexion();
 $con = $conexion->conectar();
 
+$message = "";
 
-// Verificar si se envió el formulario de verificación
 if (!empty($_POST) && isset($_POST['submit'])) {
-    $email = trim($_POST['email']);
-    $token = trim($_POST['token']);
+    // Obtenemos el ID de sesión almacenado previamente
     $id = $_SESSION['id'];
-     
-
-    // Realizar la verificación del token en la base de datos
-    $verificarToken = $registrar->verificarToken($id, $email, $token, $con);
-
+    
+    // Obtenemos el token y lo sanitizamos
+    $token = trim($_POST['token']);
+    
+    // Realizamos la verificación del token en la base de datos
+    $verificarToken = $registrar->verificarToken($id, $token, $con);
+    
     if ($verificarToken) {
         // El token es válido, cambiar el estado del usuario a "activo" (estado_id = 5)
         $estado_id = 5;
         $estatus = 1;
-        $registrar->actualizarEstadoUsuario($id,$estado_id, $estatus,$con);
+        $registrar->actualizarEstadoUsuario($id, $estado_id, $estatus, $con);
 
-        // Redireccionar a una página de verificación exitosa o mostrar un mensaje de éxito
+        // Redireccionamos a una página de verificación exitosa o mostramos un mensaje de éxito
         header("Location: login.php");
         exit;
-
-        
     } else {
-        // El token no es válido, mostrar un mensaje de error o redireccionar a una página de error
-        header("Location: verificacion_usuario.php");
-        exit;
+        // El token no es válido, establecemos el mensaje de error
+        $message = "Token incorrecto";
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +51,6 @@ if (!empty($_POST) && isset($_POST['submit'])) {
     <!--Icon-->
     <link rel="icon" href="images/icon.png">
     <title>Verificar Usuario</title>
-
 </head>
 <body>
     <!--Header-->
@@ -68,7 +58,6 @@ if (!empty($_POST) && isset($_POST['submit'])) {
         <!--Barra navegacion-->
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
-    
                 <a class="navbar-brand text-white" href="../index.php">
                     <img src="../images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top mx-auto">
                     Pop Ópticos
@@ -88,12 +77,15 @@ if (!empty($_POST) && isset($_POST['submit'])) {
                     <form action="verificacion_usuario.php" method="POST" autocomplete="off">
                         <div class="mb-3">
                             <label for="token" class="form-label">Token</label>
-                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
+                            <!-- No es necesario un campo oculto para el ID -->
                             <input type="text" class="form-control" id="token" name="token" placeholder="Ingresa tu token" >
                         </div>
                         <div class="text-center">
                             <input class="btn btn-primary" type="submit" value="Verificar" name="submit" >
                         </div>
+                        <?php if (!empty($message)) : ?>
+                            <div class="alert alert-danger mt-3"><?php echo $message; ?></div>
+                        <?php endif; ?>
                     </form>
                 </div>
             </div>
@@ -102,9 +94,5 @@ if (!empty($_POST) && isset($_POST['submit'])) {
 
     <!-- Scripts de Bootstrap -->
     <script src="js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
-
-
-
