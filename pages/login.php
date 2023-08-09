@@ -48,15 +48,21 @@ if (!empty($_POST)) {
     
         // Verificar acceso del usuario
         $accessResult = $validacionesUsuario->verificarAccesoUsuario($userData['estado_id'], $userData['estatus']);
+        $accessResult2 = $validacionesUsuario->verificarAccesoUsuarioEstado2($userData['estado_id'], $userData['estatus']);
         if (is_string($accessResult)) {
             // No se permite el acceso, mostrar un mensaje
             if ($accessResult === "Tu cuenta ha sido baneada. No se permite el acceso.") {
                 $_SESSION['access_message'] = $accessResult;
-            } elseif ($accessResult === "Tu cuenta ha sido desactivada. No se permite el acceso.") {
-                $_SESSION['access_message'] = $accessResult;
             }
             $errorMessage = $accessResult; // Almacenar el mensaje en una variable
-        } else {
+        } elseif (is_string($accessResult2)) {
+             // No se permite el acceso, mostrar un mensaje
+             if ($accessResult2 === "Tu cuenta no ha sido verificada") {
+                $_SESSION['access_message'] = $accessResult2;
+            } 
+            $errorMessage = $accessResult2; // Almacenar el mensaje en una variable
+        }
+         else {
             // Inicio de sesión exitoso, almacenar datos en las variables de sesión
             $_SESSION['user_id'] = $userData['id'];
             $_SESSION['user_email'] = $userData['email'];

@@ -88,7 +88,13 @@ class validacionesUsuario
             return true; // Se permite el acceso
         }
     }
-    
+    function verificarAccesoUsuarioEstado2($estado_id, $estatus) {
+        if ($estado_id == 2 && $estatus == 0) {
+            return "No se permite el acceso.";
+        } else {
+            return true; // Se permite el acceso
+        }
+    }
     
 }
 
