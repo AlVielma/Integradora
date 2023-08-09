@@ -400,7 +400,7 @@ if(isset($_POST['quejas'])){
               <div class="card-body">
                 <h5 class="card-title h4"><?php echo $producto['nombre']; ?></h5>
                 <a class="h4 font-weight-bold text-decoration-none" href="pages/prodejem.php?id=<?php echo $producto['sku']; ?>">
-                  <p class="card-text h5">$<?php echo $producto['precio']; ?> MXN</p>
+                  <p class="card-text h5">$<?php echo number_format($producto['precio'], 2); ?> MXN</p>
                 </a>
               </div>
             </div>
