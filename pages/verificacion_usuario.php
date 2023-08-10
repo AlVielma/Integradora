@@ -71,7 +71,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
         <!--Barra navegacion-->
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
-                <a class="navbar-brand text-white" href="../index.php">
+                <a class="navbar-brand text-white" href="">
                     <img src="../images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top mx-auto">
                     Pop Ópticos
                 </a>
@@ -106,5 +106,10 @@ if (!empty($_POST) && isset($_POST['submit'])) {
     </div>
     <!-- Scripts de Bootstrap -->
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+    window.addEventListener('beforeunload', function (event) {
+        event.returnValue = '¿Seguro que deseas salir?';
+    });
+  </script>
 </body>
 </html>
