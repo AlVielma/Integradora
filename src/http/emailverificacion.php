@@ -38,7 +38,7 @@ class EnviarVerificacion
             // Configura el contenido del correo
             $mail->isHTML(true);
             $mail->Subject = 'Token De Verficacion';
-            $mail->Body    = 'Hola, ' . $nombre . ' ' . $apellido . '!<br><br>.su codigo de Verficacion es ' . $token;
+            $mail->Body    = 'Hola, ' . $nombre . ' ' . $apellido . '!<br><br>.su codigo de Verficacion es :' . $token;
 
             // Envía el correo
             $mail->send();
