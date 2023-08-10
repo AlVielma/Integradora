@@ -124,15 +124,16 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
             $validacion->mensajes($errors);
             ?>
     </div>
-    <form method="get" action="">
+
+    <div class="">
+      <h1>Agregar Producto</h1>
+      <form method="get" action="">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" name="busqueda" placeholder="Buscar producto" value="">
                 <button class="btn btn-primary" type="submit">Buscar</button>
                 <button class="btn btn-secondary" name="Reiniciar" type="submit">Reiniciar</button>
             </div>
     </form>
-    <div class="">
-      <h1>Agregar Producto</h1>
     </div>
 
     <!-- Button trigger modal -->

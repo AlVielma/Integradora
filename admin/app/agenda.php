@@ -44,14 +44,15 @@ else{
 
   
   <div class="container-fluid" id="content">
-  <form method="get" action="">
+ 
+      <h1>CITAS</h1>
+      <form method="get" action="">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" name="busqueda" placeholder="Buscar por n. Folio" value="">
                 <button class="btn btn-primary" type="submit">Buscar</button>
                 <button class="btn btn-secondary" name="Reiniciara" type="submit">Reiniciar</button>
             </div>
     </form>
-      <h1>CITAS</h1>
      <!-- Tabla de Citas -->
      <div class="table-responsive">
         <table class="table">
