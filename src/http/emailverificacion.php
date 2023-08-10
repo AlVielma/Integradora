@@ -26,19 +26,19 @@ class EnviarVerificacion
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'prueba1correo123@gmail.com';
-            $mail->Password   = 'fnnpzrhlqnqqypua';
+            $mail->Username   = 'popopticosverificaciontoken@gmail.com';
+            $mail->Password   = 'rjkrhcucrnlrhjck';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       =  587;
 
         // Configura los destinatarios y el contenido del correo
-        $mail->setFrom('prueba1correo123@gmail.com', 'Pop Ópticos'); // Cambia esto por tu dirección de correo electrónico y nombre
+        $mail->setFrom('popopticosverificaciontoken@gmail.com', 'Pop Ópticos'); // Cambia esto por tu dirección de correo electrónico y nombre
         $mail->addAddress($email, $nombresinj . ' ' . $apelliinj); // Agrega al usuario como destinatario
 
             // Configura el contenido del correo
             $mail->isHTML(true);
-            $mail->Subject = 'Esto es una prueba';
-            $mail->Body    = 'Hola, ' . $nombre . ' ' . $apellido . '!<br><br>.su codigo de activacion es ' . $token;
+            $mail->Subject = 'Token De Verficacion';
+            $mail->Body    = 'Hola, ' . $nombre . ' ' . $apellido . '!<br><br>.su codigo de Verficacion es ' . $token;
 
             // Envía el correo
             $mail->send();
