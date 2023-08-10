@@ -22,7 +22,7 @@ class EnviarVerificacion
         try {
             // Configura los ajustes del servidor SMTP
             extract($_POST);
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Habilita la salida detallada del servidor SMTP
+            $mail->SMTPDebug = false;                      // Habilita la salida detallada del servidor SMTP
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
@@ -37,18 +37,77 @@ class EnviarVerificacion
 
             // Configura el contenido del correo
             $mail->isHTML(true);
-            $mail->Subject = 'Token De Verficacion';
-            $mail->Body    = 'Hola, ' . $nombre . ' ' . $apellido . '!<br><br>.su codigo de Verficacion es :' . $token;
+            $mail->CharSet = 'UTF-8';
+            $mail->Subject = 'Código de verificación';
+            $mail->Body = <<<EOT
+            <!DOCTYPE html>
+            <html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f5f5f5;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .container {
+                        max-width: 600px;
+                        margin: 20px auto;
+                        background-color: #ffffff;
+                        padding: 20px;
+                        border-radius: 5px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    }
+                    .logo {
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+                    .content {
+                        font-size: 16px;
+                        line-height: 1.6;
+                    }
+                    .verification-code {
+                        font-size: 24px;
+                        font-weight: bold;
+                        color: #007bff;
+                    }
+                    .log{
+                        height: 170px;
+                        width: 170px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="logo">
+                        <img class="log" src="cid:icon" alt="Logo de Pop Ópticos">
+                    </div>
+                    <div class="content">
+                        <p>Hola <b>{$nombresinj} {$apelliinj}</b>,</p>
+                        <p>Estamos emocionados de tenerte como parte de la comunidad de Pop Ópticos.</p>
+                        <p>Para verificar tu cuenta, por favor ingresa el siguiente código de verificación:</p>
+                        <p class="verification-code">{$token}</p>
+                        <p>Ingresa este código en la página de verificación para completar el proceso.</p>
+                        <p>¡Gracias por confiar en nosotros!</p>
+                        <p>El equipo de Pop Ópticos</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            EOT;
+
+            // Adjuntar la imagen al correo (usando el CID)
+            $attachmentPath = $_SERVER['DOCUMENT_ROOT'] . '/images/icon.png';
+            $mail->AddEmbeddedImage($attachmentPath, 'icon', 'icon.png');
 
             // Envía el correo
             $mail->send();
-            // Redirecciona a la página principal y muestra una alerta
-            echo '<script>alert("El correo ha sido enviado correctamente");</script>';
-            echo '<script>window.location.href = "../index.php";</script>';
+            echo '<script>window.location.href = "/pages/verificacion_usuario.php";</script>';
         } catch (Exception $e) {
             echo '<script>alert("No se pudo enviar el correo. Error del correo: ' . $mail->ErrorInfo . '");</script>';
         }
-  
     } 
  }
 
