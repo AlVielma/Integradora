@@ -1,5 +1,4 @@
 <?php
-
 use App\Modelos\Conexion;
 use App\Modelos\productos;
 
@@ -100,7 +99,7 @@ if ($sku == '') {
             <?php if (isset($_SESSION['user_name'])) : ?>
               <button type="submit" name="agregar_al_carrito" class="btn btn-light btn-outline-dark">Añadir al carrito</button>
             <?php else : ?>
-              <a href="login.php" class="btn btn-light btn-outline-dark">Añadir al carrito</a>
+              <a href="login.php?redirect=prodejem&id=<?php echo $sku; ?>" class="btn btn-light btn-outline-dark">Iniciar sesión</a>
             <?php endif; ?>
           </form>
         <?php endif; ?>
