@@ -100,7 +100,7 @@ class EnviarVerificacion
 
             // Adjuntar la imagen al correo (usando el CID)
             $attachmentPath = $_SERVER['DOCUMENT_ROOT'] . '/images/icon.png';
-            $mail->AddAttachment($attachmentPath, 'icon.png');
+            $mail->AddEmbeddedImage($attachmentPath, 'icon', 'icon.png');
 
             // Envía el correo
             $mail->send();
