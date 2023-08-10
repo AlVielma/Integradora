@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Modelos;
-
+/*carrito.php*/
 require_once 'Conexion.php';
 require_once 'productos.php';
 
@@ -318,4 +318,12 @@ public function buscarCompras($searchTerm)
     {
         $this->pdo = null; // Cierra la conexión establecida
     }
+
+    public function obtenerStockProductos()
+{
+    $obtenerStock = $this->pdo->query("SELECT nombre, stock FROM Productos");
+    $stockProductos = $obtenerStock->fetchAll(\PDO::FETCH_ASSOC);
+    return $stockProductos;
+}
+
 }
