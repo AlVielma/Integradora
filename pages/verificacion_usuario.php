@@ -89,9 +89,9 @@ if (!empty($_POST) && isset($_POST['submit'])) {
                     <h2 class="mb-4">Verificar Usuario</h2>
                     <form action="verificacion_usuario.php" method="POST" autocomplete="off">
                         <div class="mb-3">
-                            <label for="token" class="form-label">Token</label>
+                            <label for="token" class="form-label">Código de verificación</label>
                             <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
-                            <input type="text" class="form-control" id="token" name="token" placeholder="Ingresa tu token" >
+                            <input type="text" class="form-control" id="token" name="token" placeholder="Ingrese su código de verificación">
                         </div>
                         <div class="text-center">
                             <input class="btn btn-primary" type="submit" value="Verificar" name="submit" >
