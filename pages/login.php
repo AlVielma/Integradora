@@ -1,10 +1,12 @@
 <?php
+
 use App\Modelos\Conexion;
 use App\Modelos\Usuario;
 use App\Modelos\validacionesUsuario;
-require_once __DIR__.'/../src/modelos/Conexion.php';
-require_once __DIR__.'/../src/modelos/Usuario.php';
-require_once __DIR__.'/../src/modelos/validacionesUsuario.php';
+
+require_once __DIR__ . '/../src/modelos/Conexion.php';
+require_once __DIR__ . '/../src/modelos/Usuario.php';
+require_once __DIR__ . '/../src/modelos/validacionesUsuario.php';
 require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
@@ -17,16 +19,20 @@ $validacionesUsuario = new validacionesUsuario();
 $errors = [];
 
 // Verificar si el usuario ya ha iniciado sesión
-if(isset($_SESSION['user_id'])) {
-     // Redirigir al usuario según su rol
-    if($_SESSION['user_rol'] == 1){
+if (isset($_SESSION['user_id'])) {
+    // Redirigir al usuario según su rol
+    if ($_SESSION['user_rol'] == 1) {
         header("Location: ../admin/app/aggimg.php");
-    }
-    else {
+    } else {
         header("Location: ../index.php");
     }
     exit;
 }
+
+if (isset($_GET['redirect']) && $_GET['redirect'] === 'prodejem') {
+    $redirectMessage = "Debes iniciar sesión para agregar productos al carrito. ";
+}
+
 
 if (!empty($_POST)) {
     $email = trim($_POST['email']);
@@ -45,7 +51,7 @@ if (!empty($_POST)) {
     if (empty($errors)) {
         $usuario = new Usuario($con);
         $userData = $usuario->login($email, $password);
-    
+
         // Verificar acceso del usuario
         $accessResult = $validacionesUsuario->verificarAccesoUsuario($userData['estado_id'], $userData['estatus']);
         $accessResult2 = $validacionesUsuario->verificarAccesoUsuarioEstado2($userData['estado_id'], $userData['estatus']);
@@ -56,20 +62,19 @@ if (!empty($_POST)) {
             }
             $errorMessage = $accessResult; // Almacenar el mensaje en una variable
         } elseif (is_string($accessResult2)) {
-             // No se permite el acceso, mostrar un mensaje
-             if ($accessResult2 === "Tu cuenta no ha sido verificada") {
+            // No se permite el acceso, mostrar un mensaje
+            if ($accessResult2 === "Tu cuenta no ha sido verificada") {
                 $_SESSION['access_message'] = $accessResult2;
-            } 
+            }
             $errorMessage = $accessResult2; // Almacenar el mensaje en una variable
-        }
-         else {
+        } else {
             // Inicio de sesión exitoso, almacenar datos en las variables de sesión
             $_SESSION['user_id'] = $userData['id'];
             $_SESSION['user_email'] = $userData['email'];
             $_SESSION['user_name'] = $userData['nombre'];
             $_SESSION['user_lastname'] = $userData['apellido'];
             $_SESSION['user_rol'] = $userData['id_rol'];
-    
+
             // Redirigir al usuario según su rol
             if ($_SESSION['user_rol'] == 1) {
                 header("Location: ../admin/app/aggimg.php");
@@ -80,7 +85,6 @@ if (!empty($_POST)) {
             }
         }
     }
-    
 }
 ?>
 
@@ -125,6 +129,14 @@ if (!empty($_POST)) {
                         <h2 class="mb-4">Inicio de Sesión</h2>
                     </div>
 
+                    <?php if (isset($redirectMessage)) : ?>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <?php echo $redirectMessage; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php endif; ?>
+
+
                     <!-- Formulario de inicio de sesión -->
                     <form action="login.php" method="post" autocomplete="off">
                         <div class="mb-3 form-floating">
@@ -137,28 +149,28 @@ if (!empty($_POST)) {
                         </div>
 
                         <!-- Mostrar errores -->
-                        <?php if (!empty($errors)): ?>
-                        <div class='row'>
-                            <div class="col-12 d-flex justify-content-center mt-3">
-                                <div class="alert alert-danger" role="alert">
-                                    <ul>
-                                            <?php foreach ($errors as $error): ?>
-                                            <li><?php echo $error; ?></li>
+                        <?php if (!empty($errors)) : ?>
+                            <div class='row'>
+                                <div class="col-12 d-flex justify-content-center mt-3">
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul>
+                                            <?php foreach ($errors as $error) : ?>
+                                                <li><?php echo $error; ?></li>
                                             <?php endforeach; ?>
-                                    </ul>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         <?php endif; ?>
-                            <?php if (isset($errorMessage)) : ?>
-                                <div class='row'>
+                        <?php if (isset($errorMessage)) : ?>
+                            <div class='row'>
                                 <div class="col-12 d-flex justify-content-center mt-3">
-                                <div class="alert alert-danger" role="alert">
-                            <?php echo $errorMessage; ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <?php echo $errorMessage; ?>
+                                    </div>
                                 </div>
-                                </div>
-                                </div>
-                            <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
                         <div class="col-12 d-flex justify-content-center">
                             <a href="recupera.php">¿Olvidaste tu contraseña?</a>
                         </div>
@@ -172,8 +184,10 @@ if (!empty($_POST)) {
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
     <script>
-      history.replaceState(null,null,location.pathname);
+        history.replaceState(null, null, location.pathname);
     </script>
 </body>
 
