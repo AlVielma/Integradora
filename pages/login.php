@@ -29,8 +29,9 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
-if (isset($_GET['redirect']) && $_GET['redirect'] === 'prodejem') {
-    $redirectMessage = "Debes iniciar sesión para agregar productos al carrito. ";
+if (isset($_GET['redirect']) && ($_GET['redirect'] === 'prodejem' || $_GET['redirect'] === 'exam')) {
+    $_SESSION['redirect_url'] = $_GET['redirect'];
+    $redirectMessage = "Debes iniciar sesión para continuar.";
 }
 
 
@@ -80,6 +81,7 @@ if (!empty($_POST)) {
                 header("Location: ../admin/app/aggimg.php");
                 exit;
             } else {
+                
                 header("Location: ../index.php");
                 exit;
             }

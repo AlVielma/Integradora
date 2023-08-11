@@ -8,6 +8,7 @@ session_start();
 require __DIR__ . '/../vendor/autoload.php';
 
 
+
 $productos = new productos();
 $db = new Conexion();
 $con = $db->conectar();

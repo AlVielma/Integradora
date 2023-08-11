@@ -179,7 +179,7 @@
             </a>
           <?php else : ?>
             <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
-            <a class="nav-link text-white" href="login.php">Agenda Examen</a>
+            <a href="login.php?redirect=exam&message=login_required" class="nav-link text-white">Agenda Examen</a>
             </a>
           <?php endif; ?>
 
