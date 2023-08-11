@@ -257,7 +257,7 @@ if(isset($_POST['quejas'])){
         </a>
           <?php else : ?>
             <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
-            <a href="login.php?redirect=exam&message=login_required" class="nav-link text-white">Agenda Examen</a>
+            <a href="pages/login.php?redirect=exam&message=login_required" class="nav-link text-white">Agenda Examen</a>
         </a>
           <?php endif; ?>
           </li>
@@ -425,7 +425,7 @@ if(isset($_POST['quejas'])){
         <a href="pages/exam.php" class="btn btn-primary btn-lg custom-button btn-block">Obten tu cita</a>
       <?php else : ?>
         <!-- Si el usuario no ha iniciado sesión, si no, que lo mande a registrarse -->
-        <a href="login.php?redirect=exam&message=login_required" class="nav-link text-white">Agenda Examen</a>
+        <a href="pages/login.php?redirect=exam&message=login_required" class="btn btn-primary btn-lg custom-button btn-block">Agenda Examen</a>
       <?php endif; ?>
     </div>
   </div>
