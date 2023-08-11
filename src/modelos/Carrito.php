@@ -162,7 +162,7 @@ class Carrito
 
         // Ahora, para cada compra, obtendremos los productos asociados
         foreach ($detallesCompras as &$detalleCompra) {
-            $obtenerProductos = $this->pdo->query("SELECT p.nombre as nombre_producto, c.cantidad, c.total as precio
+            $obtenerProductos = $this->pdo->query("SELECT p.nombre as nombre_producto, c.cantidad, p.stock , c.total as precio
                                                    FROM Carritos c
                                                    INNER JOIN Productos p ON c.producto_id = p.sku
                                                    WHERE c.compra_id = " . $detalleCompra['id_compra']);
@@ -175,40 +175,39 @@ class Carrito
     }
 
 
-    // Función para cambiar el estado de una compra a "Finalizado" (3)
     public function confirmarCompra($compra_id, $usuario_id)
-    {
-        // Actualizar el estado de la compra a "Finalizado" (3) en la tabla DetalleCompra
-        $actualizarEstadoCompra = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 3 WHERE id = ?");
-        $actualizarEstadoCompra->execute([$compra_id]);
+{
+    // Actualizar el estado de la compra a "Finalizado" (3) en la tabla DetalleCompra
+    $actualizarEstadoCompra = $this->pdo->prepare("UPDATE DetalleCompra SET estado_id = 3 WHERE id = ?");
+    $actualizarEstadoCompra->execute([$compra_id]);
 
-        // Actualizar el estado del carrito a "Confirmado" (3) en la tabla Carritos
-        $actualizarEstadoCarrito = $this->pdo->prepare("UPDATE Carritos SET estado_id = 3 WHERE id = ? AND usuario = ?");
-        $actualizarEstadoCarrito->execute([$compra_id, $usuario_id]);
+    // Actualizar el estado del carrito a "Confirmado" (3) en la tabla Carritos
+    $actualizarEstadoCarrito = $this->pdo->prepare("UPDATE Carritos SET estado_id = 3 WHERE id = ? AND usuario = ?");
+    $actualizarEstadoCarrito->execute([$compra_id, $usuario_id]);
 
-        // Obtener los productos asociados al carrito confirmado
-        $obtenerProductos = $this->pdo->prepare("SELECT producto_id, cantidad FROM Carritos WHERE compra_id = ? AND usuario = ?");
-        $obtenerProductos->execute([$compra_id, $usuario_id]);
-        $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
+    // Obtener los productos asociados al carrito confirmado
+    $obtenerProductos = $this->pdo->prepare("SELECT producto_id, cantidad FROM Carritos WHERE compra_id = ? AND usuario = ?");
+    $obtenerProductos->execute([$compra_id, $usuario_id]);
+    $productos = $obtenerProductos->fetchAll(\PDO::FETCH_ASSOC);
 
-        // Reducir el stock de los productos confirmados
-        foreach ($productos as $producto) {
-            $producto_id = $producto['producto_id'];
-            $cantidad_confirmada = $producto['cantidad'];
+    // Reducir el stock de los productos confirmados
+    foreach ($productos as $producto) {
+        $producto_id = $producto['producto_id'];
+        $cantidad_confirmada = $producto['cantidad'];
 
-            // Obtener el stock actual del producto
-            $obtenerStock = $this->pdo->prepare("SELECT stock FROM Productos WHERE sku = ?");
-            $obtenerStock->execute([$producto_id]);
-            $stock_actual = $obtenerStock->fetchColumn();
+        // Obtener el stock actual del producto
+        $obtenerStock = $this->pdo->prepare("SELECT stock FROM Productos WHERE sku = ?");
+        $obtenerStock->execute([$producto_id]);
+        $stock_actual = $obtenerStock->fetchColumn();
 
-            // Calcular el nuevo stock después de confirmar la compra
-            $nuevo_stock = $stock_actual - $cantidad_confirmada;
+        // Calcular el nuevo stock después de confirmar la compra
+        $nuevo_stock = $stock_actual - $cantidad_confirmada;
 
-            // Actualizar el stock del producto en la tabla Productos
-            $actualizarStock = $this->pdo->prepare("UPDATE Productos SET stock = ? WHERE sku = ?");
-            $actualizarStock->execute([$nuevo_stock, $producto_id]);
-        }
+        // Actualizar el stock del producto en la tabla Productos
+        $actualizarStock = $this->pdo->prepare("UPDATE Productos SET stock = ? WHERE sku = ?");
+        $actualizarStock->execute([$nuevo_stock, $producto_id]);
     }
+}
 
     public function cancelarCompra($compra_id, $usuario_id)
     {
@@ -298,7 +297,7 @@ public function buscarCompras($searchTerm)
 
     // Ahora, para cada compra, obtendremos los productos asociados
     foreach ($detallesCompras as &$detalleCompra) {
-        $obtenerProductos = $this->pdo->query("SELECT p.nombre as nombre_producto, c.cantidad, c.total as precio
+        $obtenerProductos = $this->pdo->query("SELECT p.nombre as nombre_producto, c.cantidad, p.stock , c.total as precio
                                                FROM Carritos c
                                                INNER JOIN Productos p ON c.producto_id = p.sku
                                                WHERE c.compra_id = " . $detalleCompra['id_compra']);
