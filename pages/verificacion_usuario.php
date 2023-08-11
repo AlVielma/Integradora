@@ -3,6 +3,12 @@ session_start();
 use App\Modelos\Conexion;
 use App\Modelos\validacionesRegistrar;
 
+// Agrega este bloque al inicio del archivo para verificar la sesión
+if (!isset($_SESSION['id'])) {
+    header("Location: login.php");
+    exit;
+}
+
 /*verificacion_usuario.php*/
 require_once __DIR__.'/../src/modelos/Conexion.php';
 require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
