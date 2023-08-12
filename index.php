@@ -346,7 +346,7 @@ if(isset($_POST['quejas'])){
             </div>
             <div class="content-card-content">
               <h4><a href="pages/popniños.php" class="h4 font-weight-bold text-decoration-none">Pop niños</a></h4>
-              <p>Tenemos los mejores accesorios para tus lentes</p>
+              <p>Tenemos los mejores lentes para los niños</p>
             </div>
           </div>
         </div>
