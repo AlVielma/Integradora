@@ -175,7 +175,7 @@ if (isset($_GET['search'])) {
                         <?php endforeach; ?>
                     </div>
                     <div class="modal-footer">
-                        <a href="confirmar_compra.php?id=<?php echo $detalleCompra['id_compra']; ?>" class="btn btn-success">Confirmar</a>
+                        <a href="confirmar_compra.php?id=<?php echo $detalleCompra['id_compra']; ?>&usuario_id=<?php echo $detalleCompra['usuario_id']; ?>" class="btn btn-success">Confirmar</a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
