@@ -60,6 +60,11 @@ if (!empty($_POST) && isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            alert('Favor de verificar su correo. Se le ha enviado un código de verificación.');
+        });
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Bootstrap-->
