@@ -131,14 +131,17 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
     ?>
         </form>
     </div>
+    
+  <button class="collapse-button hidden" id="collapseButton"><i class="fas fa-bars"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/admin/js/boton.js"></script>
     <script>
     window.addEventListener('beforeunload', function (event) {
         event.returnValue = '¿Seguro que deseas salir? Los datos que has ingresado se perderán.';
     });
   </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="src/public/js/boton.js"></script>
    
 </body>
 </html>
