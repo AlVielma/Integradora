@@ -47,11 +47,14 @@ else{
  
       <h1>CITAS</h1>
       <form method="get" action="">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="busqueda" placeholder="Buscar por n. Folio" value="">
-                <button class="btn btn-primary" type="submit">Buscar</button>
-                <button class="btn btn-secondary" name="Reiniciara" type="submit">Reiniciar</button>
+      <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control" name="busqueda" placeholder="Buscar por n. Folio" value="">
+            <div class="input-group-append">
+            <button class="btn btn-sm btn-outline-primary" type="submit">Buscar</button>
+            <button class="btn btn-sm btn-outline-secondary" name="Reiniciara" type="submit">Reiniciar</button>
             </div>
+      </div>
+
     </form>
      <!-- Tabla de Citas -->
      <div class="table-responsive">

@@ -3,6 +3,12 @@ session_start();
 use App\Modelos\Conexion;
 use App\Modelos\validacionesRegistrar;
 
+// Agrega este bloque al inicio del archivo para verificar la sesión
+if (!isset($_SESSION['id'])) {
+    header("Location: login.php");
+    exit;
+}
+
 /*verificacion_usuario.php*/
 require_once __DIR__.'/../src/modelos/Conexion.php';
 require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
@@ -54,6 +60,11 @@ if (!empty($_POST) && isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            alert('Favor de verificar su correo. Se le ha enviado un código de verificación.');
+        });
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Bootstrap-->

@@ -130,8 +130,8 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
       <form method="get" action="">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" name="busqueda" placeholder="Buscar producto" value="">
-                <button class="btn btn-primary" type="submit">Buscar</button>
-                <button class="btn btn-secondary" name="Reiniciar" type="submit">Reiniciar</button>
+                <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                <button class="btn btn-outline-primary" name="Reiniciar" type="submit">Reiniciar</button>
             </div>
     </form>
     </div>
@@ -303,4 +303,3 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
 </body>
 
 </html>
-

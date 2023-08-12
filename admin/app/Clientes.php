@@ -64,10 +64,18 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 
         <!-- Formulario de búsqueda -->
         <form method="get" action="">
-            <div class="input-group mb-3">
+        <!-- <div class="input-group mb-3">
                 <input type="text" class="form-control" name="busqueda" placeholder="Buscar por nombre o apellido" value="<?php echo htmlspecialchars($busqueda); ?>">
                 <button class="btn btn-primary" type="submit">Buscar</button>
-            </div>
+            </div>-->
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="busqueda" placeholder="Buscar por nombre o apellido" value="<?php echo htmlspecialchars($busqueda); ?>">
+            <button class="btn btn-outline-primary" type="submit" style="border-color: #ccc;">Buscar</button>
+        </div>
+
+
+
         </form>
 
         <div class="table-responsive">

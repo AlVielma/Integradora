@@ -81,12 +81,12 @@ if(isset($_POST['mandar_exm']))
 
             try {
                 //Server settings
-                $mail->SMTPDebug = SMTP::DEBUG_SERVER;                    
+                $mail->SMTPDebug = false;                    
                 $mail->isSMTP();                                          
                 $mail->Host = 'smtp.gmail.com';                    
                 $mail->SMTPAuth   = true;                                   
-                $mail->Username   = 'fgolmos10@gmail.com';                   
-                $mail->Password   = 'irpfvhqxqxyivwbt';                               
+                $mail->Username   = 'vafd.utt1@gmail.com';                   
+                $mail->Password   = 'emqijncvtfirsmbj';                               
                 $mail->SMTPSecure = 'tls';            
                 $mail->Port = 587;                           
                     $persona = '<h1>CITA AGENDADA POR'.$nombres.'</h3>';
@@ -95,11 +95,72 @@ if(isset($_POST['mandar_exm']))
 
                 $mail->setFrom('fgolmos10@gmail.com', $nombres);
                 $mail->addAddress($_SESSION['user_email']);
+                $mail->addAddress('vafd.utt1@gmail.com');  
              
                 $mail->isHTML(true);                                
-                $mail->Subject = 'CITA';
-                $mail->Body    = ''.$persona.''.$contenido.''.$folio;
+                $mail->Subject = 'CITA AGENDADA';
+                $mail->Body= <<<EOT
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            background-color: #f5f5f5;
+                            margin: 0;
+                            padding: 0;
+                        }
+                        .container {
+                            max-width: 600px;
+                            margin: 20px auto;
+                            background-color: #ffffff;
+                            padding: 20px;
+                            border-radius: 5px;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        }
+                        .logo {
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+                        .content {
+                            font-size: 16px;
+                            line-height: 1.6;
+                        }
+                        .verification-code {
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #007bff;
+                        }
+                        .log{
+                            height: 170px;
+                            width: 170px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="logo">
+                            <img class="log" src="cid:icon" alt="Logo de Pop Ópticos">
+                        </div>
+                        <div class="content">
+                            <p>Cita agendada por <b>{$nombres}</b>,</p>
+                            <p>La cita fue agendada el dia {$dia} a las {$hora}</p>
+                            <p>Con este folio <b>{$ff}</b> pasar a la optica para poder ser atendido</p>
+                            
+                            <p>¡Te esperamos!</p>
+                            <p>El equipo de Pop Ópticos</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                EOT;
+                 // Adjuntar la imagen al correo (usando el CID)
+                $attachmentPath = $_SERVER['DOCUMENT_ROOT'] . '/images/icon.png';
+                $mail->AddEmbeddedImage($attachmentPath, 'icon', 'icon.png');
                 $mail->send();
+                echo '<script>alert("La cita a sido agendada correctamente");</script>';
                 header('Location: exam.php');
                
             } catch (Exception $e) {
