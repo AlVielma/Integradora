@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    // Redirigir a la página de inicio de sesión con el parámetro "redirect"
+    header("Location: login.php?redirect=perfil");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
