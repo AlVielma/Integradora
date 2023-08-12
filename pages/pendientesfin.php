@@ -115,11 +115,9 @@ if (isset($_SESSION['user_id'])) {
                 </div>
                 <div class="mb-3 mt-3 border-top border-5"></div>
             <?php endforeach; ?>
-            
-                
-           
+
             </div>
-            <div class="mb-3 mt-3 border-top border-5"></div>
+            
         <?php endforeach; ?>
         <?php else : ?>
 
@@ -157,11 +155,9 @@ if (isset($_SESSION['user_id'])) {
                 </div>
                 <div class="mb-3 mt-3 border-top border-5"></div>
             <?php endforeach; ?>
-            
-                
-           
+
             </div>
-            <div class="mb-3 mt-3 border-top border-5"></div>
+           
         <?php endforeach; ?>
         <?php endif;?>
     </div>
