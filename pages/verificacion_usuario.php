@@ -9,6 +9,11 @@ if (!isset($_SESSION['id'])) {
     exit;
 }
 
+if (isset($_SESSION['verificacion_completada']) && $_SESSION['verificacion_completada']) {
+    header("Location: index.php"); // Cambia "pagina_de_inicio.php" por la URL de la página a la que deseas redirigirlos
+    exit;
+}
+
 /*verificacion_usuario.php*/
 require_once __DIR__.'/../src/modelos/Conexion.php';
 require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
@@ -59,12 +64,8 @@ if (!empty($_POST) && isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            alert('Favor de verificar su correo. Se le ha enviado un código de verificación.');
-        });
-    </script>
+<head> 
+  </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Bootstrap-->
@@ -98,6 +99,9 @@ if (!empty($_POST) && isset($_POST['submit'])) {
                         <img src="../images/icon.png" alt="Imagen" class="img-fluid col-6 col-md-4 col-lg-3">
                     </div>
                     <h2 class="mb-4">Verificar Usuario</h2>
+                    <div class="alert alert-warning mt-3" role="alert">
+                    Favor de verificar su correo Se le ha enviado un código de verificación.
+                    </div>
                     <form action="verificacion_usuario.php" method="POST" autocomplete="off">
                         <div class="mb-3">
                             <label for="token" class="form-label">Código de verificación</label>
@@ -117,10 +121,6 @@ if (!empty($_POST) && isset($_POST['submit'])) {
     </div>
     <!-- Scripts de Bootstrap -->
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script>
-    window.addEventListener('beforeunload', function (event) {
-        event.returnValue = '¿Seguro que deseas salir?';
-    });
-  </script>
+    
 </body>
 </html>
