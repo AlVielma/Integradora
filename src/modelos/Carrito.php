@@ -182,7 +182,7 @@ class Carrito
     $actualizarEstadoCompra->execute([$compra_id]);
 
     // Actualizar el estado del carrito a "Confirmado" (3) en la tabla Carritos
-    $actualizarEstadoCarrito = $this->pdo->prepare("UPDATE Carritos SET estado_id = 3 WHERE id = ? AND usuario = ?");
+    $actualizarEstadoCarrito = $this->pdo->prepare("UPDATE Carritos SET estado_id = 3 WHERE compra_id = ? AND usuario = ?");
     $actualizarEstadoCarrito->execute([$compra_id, $usuario_id]);
 
     // Obtener los productos asociados al carrito confirmado

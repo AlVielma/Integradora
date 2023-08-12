@@ -58,7 +58,7 @@ if (isset($_POST['finalizar_compra'])) {
 
     try {
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com'; // Cambia esto por el servidor SMTP que prefieras
+        $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'vafd.utt1@gmail.com';
         $mail->Password   = 'emqijncvtfirsmbj';
@@ -66,33 +66,98 @@ if (isset($_POST['finalizar_compra'])) {
         $mail->Port       = 587;
 
         // Configura los destinatarios y el contenido del correo
-        $mail->setFrom('vafd_utt1@gmail.com', 'Pop Ópticos'); // Cambia esto por tu dirección de correo electrónico y nombre
-        $mail->addAddress($_SESSION['user_email'], $_SESSION['user_name'] . ' ' . $_SESSION['user_lastname']); // Agrega al usuario como destinatario
+        $mail->setFrom('vafd.utt1@gmail.com', 'Pop Ópticos');
+        $mail->addAddress($_SESSION['user_email'], $_SESSION['user_name'] . ' ' . $_SESSION['user_lastname']);
 
         // Configura el contenido del correo
         $mail->isHTML(true);
+        $mail->CharSet = 'UTF-8';
         $mail->Subject = 'Confirmación de compra';
 
         // Construye el contenido del correo con los productos comprados y su cantidad
-        $contenidoCorreo = '<h3>Detalles de la compra:</h3>';
-        $contenidoCorreo .= '<table>';
-        $contenidoCorreo .= '<tr><th>Producto</th><th>Cantidad</th><th>Precio</th></tr>';
+        $contenidoCorreo = <<<EOT
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f5f5f5;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 20px auto;
+                    background-color: #ffffff;
+                    padding: 20px;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                .logo {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                .content {
+                    font-size: 16px;
+                    line-height: 1.6;
+                }
+                .verification-code {
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #007bff;
+                }
+                .log {
+                    height: 170px;
+                    width: 170px;
+                }
+            </style>
+        </head>
+        <body>
+        <div class="container">
+        <div class="logo">
+            <img class="log" src="cid:icon" alt="Logo de Pop Ópticos">
+        </div>
+        <div class="content">
+            <h3>Detalles de la compra:</h3>
+            <table>
+                <tr><th>Producto</th><th>Cantidad</th><th>Precio</th></tr>
+EOT;
+
         foreach ($productosCarrito as $producto) {
-            $contenidoCorreo .= '<tr>';
-            $contenidoCorreo .= '<td>' . $producto['nombre'] . '</td>';
-            $contenidoCorreo .= '<td>' . $producto['cantidad'] . '</td>';
-            $contenidoCorreo .= '<td>$' . $producto['precio'] . '</td>';
-            $contenidoCorreo .= '</tr>';
+            $contenidoCorreo .= <<<EOT
+                <tr>
+                    <td>{$producto['nombre']}</td>
+                    <td>{$producto['cantidad']}</td>
+                    <td>\${$producto['precio']}</td>
+                </tr>
+EOT;
         }
-        $contenidoCorreo .= '</table>';
 
-        $contenidoCorreo .= '<p>Total: $' . calcularTotal($productosCarrito) . ' MXN';
+        $totalCompra = calcularTotal($productosCarrito);
 
-        // Agregar el folio (ID de la compra) al contenido del correo
-        $contenidoCorreo .= '<p>Folio de la compra: ' . $compra_id . '</p>';
+        $contenidoCorreo .= <<<EOT
+            </table>
+            <p>Total: \${$totalCompra} MXN</p>
+            <p>Folio de la compra: {$compra_id}</p>
+            <p>Gracias por apartar en Pop Ópticos</p>
+            <p>Recuerda recoger tus productos en Av. Juárez 4880 y Xochimilco Oriente, Torreón, Mexico, 27085</p>
+            <p>Cualquier duda, información o detalle hazmelo saber respondiendo este correo </p>
+        </div>
+    </div>
+</body>
+</html>
+EOT;
+
 
         // Agrega el contenido del correo al cuerpo del mensaje
         $mail->Body = $contenidoCorreo;
+
+        // Adjuntar la imagen al correo (usando el CID)
+        $attachmentPath = $_SERVER['DOCUMENT_ROOT'] . '/images/icon.png';
+        $mail->AddEmbeddedImage($attachmentPath, 'icon', 'icon.png');
 
         // Envía el correo
         $mail->send();
