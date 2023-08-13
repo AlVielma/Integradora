@@ -65,7 +65,6 @@ if (!empty($_POST) && isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head> 
-  </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Bootstrap-->
@@ -121,6 +120,22 @@ if (!empty($_POST) && isset($_POST['submit'])) {
     </div>
     <!-- Scripts de Bootstrap -->
     <script src="js/bootstrap.bundle.min.js"></script>
-    
+    <script>
+    var verified = false;
+
+    window.addEventListener('beforeunload', function (event) {
+        if (!verified) {
+            var confirmationMessage = '¿Estás seguro de querer salir? Si abandonas, los cambios no se guardarán.';
+            event.returnValue = confirmationMessage;
+            return confirmationMessage;
+        }
+    });
+
+    // Esta función marca al usuario como verificado y permite que salga sin alerta
+    function markVerified() {
+        verified = true;
+    }
+</script>
+
 </body>
 </html>
