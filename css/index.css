@@ -29,6 +29,15 @@ body
     font-weight: bold;
     border-radius: 5px;
   }
+
+  @media (max-width: 767px) {
+      .custom-button {
+          padding: 6px 12px; /* Ajusta el padding para dispositivos móviles */
+          font-size: 14px; /* Ajusta el tamaño de fuente para dispositivos móviles */
+          left: 24%; /* Ajusta la posición horizontal */
+      }
+  }
+
   
   .content-card-style-9:hover .custom-button {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);

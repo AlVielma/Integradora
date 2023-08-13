@@ -29,8 +29,7 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
-if (isset($_GET['redirect']) && ($_GET['redirect'] === 'prodejem' || $_GET['redirect'] === 'exam')) {
-    $_SESSION['redirect_url'] = $_GET['redirect'];
+if (isset($_GET['redirect']) && ($_GET['redirect'] === 'prodejem' || $_GET['redirect'] === 'exam' || $_GET['redirect'] === 'perfil')) {
     $redirectMessage = "Debes iniciar sesión para continuar.";
 }
 
