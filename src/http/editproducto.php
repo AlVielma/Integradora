@@ -63,11 +63,17 @@ if(isset($_POST['editar']))
           if (!empty($imagenactual) && file_exists(__DIR__ . "/../../productosimg/" . $imagenactual)) {
               unlink(__DIR__ . "/../../productosimg/" . $imagenactual);
           }
-          move_uploaded_file($imagen['tmp_name'], $real_path);
+          $dirs = __DIR__.'/../../productosimg/';
+          $pathinfos = pathinfo($_FILES['imagen']['name']);
+          $filenames = $pathinfos["filename"];
+          $extensions = $pathinfos["extension"];
+          $names = time() . ".{$extensions}"; // Aquí agregamos el timestamp actual al nombre del archivo
+          $real_paths = "{$dirs}{$names}";
+          move_uploaded_file($_FILES['imagen']['tmp_name'], $real_paths);
           $nombresinj=$validacion->sqlinj($nombres);
           $descripcioninj=$validacion->sqlinj($descripcions);
           $productos->actualizarproducto($nombresinj, $marca, $tipo_lente, $descripcioninj, $precio, $stock, $categoria, $id);
-          $productos->actualizarimg($name, $id);
+          $productos->actualizarimg($names, $id);
           header('Location: /../../admin/app/aggimg.php');
           exit();
         }
