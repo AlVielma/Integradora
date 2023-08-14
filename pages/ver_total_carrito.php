@@ -232,7 +232,7 @@ EOT;
 
             <div class="text-center">
                 <!-- Botón para finalizar la compra -->
-                <button type="submit" name="finalizar_compra" class="btn btn-success btn-lg">Finalizar Compra</button>
+                <button type="submit" name="finalizar_compra" class="btn btn-light btn-outline-dark btn-lg">Finalizar apartado</button>
             </div>
         </form>
     </div>
