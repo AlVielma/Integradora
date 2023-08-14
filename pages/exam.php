@@ -160,8 +160,8 @@ if(isset($_POST['mandar_exm']))
                 $attachmentPath = $_SERVER['DOCUMENT_ROOT'] . '/images/icon.png';
                 $mail->AddEmbeddedImage($attachmentPath, 'icon', 'icon.png');
                 $mail->send();
-                echo '<script>alert("La cita a sido agendada correctamente");</script>';
-                header('Location: exam.php');
+                echo '<script>alert("Cita agendada correctamente, favor de revisar su correo");</script>';
+               
                
             } catch (Exception $e) {
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
