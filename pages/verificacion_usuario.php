@@ -4,15 +4,18 @@ use App\Modelos\Conexion;
 use App\Modelos\validacionesRegistrar;
 
 // Agrega este bloque al inicio del archivo para verificar la sesión
-if (!isset($_SESSION['id'])) {
-    header("Location: login.php");
+if (isset($_SESSION['user_id'])) {
+
+    // Redirigir al usuario según su rol
+    if ($_SESSION['user_rol'] == 1) {
+        header("Location: ../admin/app/aggimg.php");
+    } else {
+        header("Location: ../index.php");
+    }
     exit;
 }
 
-if (isset($_SESSION['verificacion_completada']) && $_SESSION['verificacion_completada']) {
-    header("Location: index.php"); // Cambia "pagina_de_inicio.php" por la URL de la página a la que deseas redirigirlos
-    exit;
-}
+
 
 /*verificacion_usuario.php*/
 require_once __DIR__.'/../src/modelos/Conexion.php';
@@ -82,7 +85,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
         <!--Barra navegacion-->
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
-                <a class="navbar-brand text-white" href="">
+                <a class="navbar-brand text-white" href="login.php">
                     <img src="../images/icon.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top mx-auto">
                     Pop Ópticos
                 </a>
@@ -108,7 +111,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
                             <input type="text" class="form-control" id="token" name="token" placeholder="Ingrese su código de verificación">
                         </div>
                         <div class="text-center">
-                            <input class="btn btn-primary" type="submit" value="Verificar" name="submit" >
+                            <input class="btn btn-primary" type="submit" value="Verificar" name="submit" onclick="markVerified()" >
                         </div>
                         <?php if (!empty($message)) : ?>
                             <div class="alert alert-danger mt-3"><?php echo $message; ?></div>
