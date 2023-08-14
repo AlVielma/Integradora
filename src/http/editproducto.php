@@ -50,12 +50,11 @@ if(isset($_POST['editar']))
     if(count($errores)==0)
     {
       $dir = __DIR__.'/../../productosimg/';
-      $pathinfo = pathinfo($_FILES['imagen']['name']);
+      $pathinfo = pathinfo($imagen['name']);
       $filename = $pathinfo["filename"];
       $extension = isset($pathinfo["extension"]) ? $pathinfo["extension"] : null;
-      $timestamp = time(); 
-      $name = "{$filename}_{$timestamp}.{$extension}";
-      $real_path = "{$dir}{$name}";
+      $name= "{$filename}.{$extension}";
+      $real_path = "{$dir}{$filename}.{$extension}";
       if (!file_exists($real_path))
       {
         if($nombre==$nombres && $descripcion==$descripcions)
@@ -64,7 +63,7 @@ if(isset($_POST['editar']))
           if (!empty($imagenactual) && file_exists(__DIR__ . "/../../productosimg/" . $imagenactual)) {
               unlink(__DIR__ . "/../../productosimg/" . $imagenactual);
           }
-          move_uploaded_file($_FILES['imagen']['tmp_name'], $real_path);
+          move_uploaded_file($imagen['tmp_name'], $real_path);
           $nombresinj=$validacion->sqlinj($nombres);
           $descripcioninj=$validacion->sqlinj($descripcions);
           $productos->actualizarproducto($nombresinj, $marca, $tipo_lente, $descripcioninj, $precio, $stock, $categoria, $id);
