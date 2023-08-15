@@ -100,7 +100,7 @@ if (!empty($_POST)) {
     <!--Css-->
     <link rel="stylesheet" href="../css/index.css">
     <!--Icon-->
-    <link rel="icon" href="images/icon.png">
+    <link rel="icon" href="../images/icon.png">
     <title>Pop Ópticos</title>
 </head>
 

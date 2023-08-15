@@ -27,9 +27,9 @@ $conss = $query->fetch(PDO::FETCH_ASSOC);
  extract($_FILES);
 if(isset($_POST['editar']))
 {
-   
-      $nombres = $validacion->filtrarString($nombre);
-    $descripcions = $validacion->filtrarString($descripcion);
+    $nombreij = $validacion->sqlinj($nombre);
+    $descripcionij = $validacion->sqlinj($descripcion);
+    
     if(!$validacion->issnumber($stock))
     {
       $errores[]="El stock debe ser numerico";
@@ -57,8 +57,6 @@ if(isset($_POST['editar']))
       $real_path = "{$dir}{$filename}.{$extension}";
       if (!file_exists($real_path))
       {
-        if($nombre==$nombres && $descripcion==$descripcions)
-        {
           $imagenactual = $productos->imagenactual($id);
           if (!empty($imagenactual) && file_exists(__DIR__ . "/../../productosimg/" . $imagenactual)) {
               unlink(__DIR__ . "/../../productosimg/" . $imagenactual);
@@ -70,30 +68,19 @@ if(isset($_POST['editar']))
           $names = time() . ".{$extensions}"; // Aquí agregamos el timestamp actual al nombre del archivo
           $real_paths = "{$dirs}{$names}";
           move_uploaded_file($_FILES['imagen']['tmp_name'], $real_paths);
-          $nombresinj=$validacion->sqlinj($nombres);
-          $descripcioninj=$validacion->sqlinj($descripcions);
-          $productos->actualizarproducto($nombresinj, $marca, $tipo_lente, $descripcioninj, $precio, $stock, $categoria, $id);
+          $productos->actualizarproducto($nombreij, $marca, $tipo_lente, $descripcionij, $precio, $stock, $categoria, $id);
           $productos->actualizarimg($names, $id);
           header('Location: /../../admin/app/aggimg.php');
           exit();
-        }
-        else
-        {
-          $errores[]="ERROR CON EL INGRESO DE DATOS";
-        }
+
       }
       else {
-         if($nombre==$nombres && $descripcion==$descripcions)
-         {
+         
           $nombresinj=$validacion->sqlinj($nombres);
           $descripcioninj=$validacion->sqlinj($descripcions);
-          $productos->actualizarproducto($nombresinj, $marca, $tipo_lente, $descripcioninj, $precio, $stock, $categoria, $id);
+          $productos->actualizarproducto($nombreij, $marca, $tipo_lente, $descripcionij, $precio, $stock, $categoria, $id);
           header('Location: /../../admin/app/aggimg.php');
-         }
-         else
-        {
-          $errores[]="ERROR CON EL INGRESO DE DATOS";
-        }
+         
       }
     }
 }

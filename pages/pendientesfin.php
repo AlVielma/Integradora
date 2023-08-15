@@ -49,18 +49,7 @@ if (isset($_SESSION['user_id'])) {
     include 'header.php'
     ?>
 
-    <?php if (empty($detallesCompras)) :?>
-        <div class="card-body text-center mt-5 mb-5">
-        <div class="mb-3">
-            <h5 class="display-6 fw-bold">No cuentas con apartados</h5>
-        </div>
-        <div class="mb-3">
-            <a href="login.php" class="btn btn-light btn-outline-dark">Regresar al inicio</a>
-        </div>
-       
-    </div>
-
-        <?php else : ?>
+   
 
     <div class="container mt-5">
         <div class="row">
@@ -68,7 +57,7 @@ if (isset($_SESSION['user_id'])) {
                 <h2 class="text-center mb-4">Mis Apartados</h2>
                 <form action="pendientesfin.php" method="GET" autocomplete="off">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Buscar apartados..." name="search" aria-label="Buscar pedidos" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control" placeholder="Buscar apartados... Ejemplo: tu folio o el estado de tu apartado" name="search" aria-label="Buscar pedidos" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                         </div>
@@ -81,6 +70,11 @@ if (isset($_SESSION['user_id'])) {
     <!-- Contenedor para todos los detalles de compra -->
     <div class="container">
     <?php if (isset($_GET['search'])) : ?>
+        <?php if (empty($detalle)) : ?>
+        <div class="text-center mt-4">
+            <p>No se encontraron resultados para la búsqueda.</p>
+        </div>
+    <?php else : ?>
     <?php foreach ($detalle as $detalleCompra) : ?>
         <!-- Mostrar el id de compra y estado -->
         <div class="text-center mb-3">
@@ -119,8 +113,13 @@ if (isset($_SESSION['user_id'])) {
             </div>
             
         <?php endforeach; ?>
+        <?php endif; ?>
         <?php else : ?>
-
+            <?php if (empty($detallesCompras)) : ?>
+        <div class="text-center mt-4">
+            <p>No cuentas con apartados disponibles.</p>
+        </div>
+    <?php else : ?>
             <?php foreach ($detallesCompras as $detalleCompra) : ?>
         <!-- Mostrar el id de compra y estado -->
         <div class="text-center mb-3">
@@ -159,9 +158,10 @@ if (isset($_SESSION['user_id'])) {
             </div>
            
         <?php endforeach; ?>
+        <?php endif; ?>
         <?php endif;?>
     </div>
-    <?php endif;?>
+    
 
     <?php
     include 'footer.php';

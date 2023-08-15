@@ -148,39 +148,38 @@ if (isset($_GET['search'])) {
 
         <!-- Modal de Confirmación -->
         <div class="modal fade" id="confirmModal<?php echo $detalleCompra['id_compra']; ?>" tabindex="-1" aria-labelledby="confirmModalLabel<?php echo $detalleCompra['id_compra']; ?>" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmModalLabel<?php echo $detalleCompra['id_compra']; ?>">Confirmación</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>¿Estás seguro de confirmar esta compra?</p>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content alert alert-warning"> <!-- Cambio de clase para el fondo amarillo -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel<?php echo $detalleCompra['id_compra']; ?>">¿Estás seguro de confirmar esta compra?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php foreach ($detalleCompra['productos'] as $producto) : ?>
+                    <p>Stock de <?php echo $producto['nombre_producto']; ?>: <?php echo isset($producto['cantidad']) ? $producto['cantidad'] : 'N/A'; ?></p>
 
-                        <?php foreach ($detalleCompra['productos'] as $producto) : ?>
-                            <p>Stock de <?php echo $producto['nombre_producto']; ?>: <?php echo isset($producto['cantidad']) ? $producto['cantidad'] : 'N/A'; ?></p>
+                    <?php
+                    // Calcular la cantidad que quedaría después de la confirmación
+                    $cantidadSolicitada = $producto['cantidad'];
+                    $cantidadDisponible = $producto['stock']; 
+                    $cantidadQuedaria =  $cantidadDisponible - $cantidadSolicitada;
+                    ?>
 
-                            <?php
-                            // Calcular la cantidad que quedaría después de la confirmación
-                            $cantidadSolicitada = $producto['cantidad'];
-                            $cantidadDisponible = $producto['stock']; 
-                            $cantidadQuedaria =  $cantidadDisponible - $cantidadSolicitada;
-                            ?>
-
-                            <?php if ($cantidadQuedaria > 0) : ?>
-                                <p>Te quedarían <?php echo $cantidadQuedaria; ?> unidades después de confirmar.</p>
-                            <?php else : ?>
-                                <p>No quedarían unidades disponibles después de confirmar.</p>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="confirmar_compra.php?id=<?php echo $detalleCompra['id_compra']; ?>&usuario_id=<?php echo $detalleCompra['usuario_id']; ?>" class="btn btn-success">Confirmar</a>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
+                    <?php if ($cantidadQuedaria > 0) : ?>
+                        <p>Te quedarían <b><?php echo $cantidadQuedaria; ?> </b> unidades después de confirmar.</p>
+                    <?php else : ?>
+                        <p>No quedarían unidades disponibles después de confirmar.</p>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+            <div class="modal-footer">
+                <a href="confirmar_compra.php?id=<?php echo $detalleCompra['id_compra']; ?>&usuario_id=<?php echo $detalleCompra['usuario_id']; ?>" class="btn btn-success">Confirmar</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
+    </div>
+</div>
+
 
 
 
