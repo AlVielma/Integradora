@@ -126,7 +126,7 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
         </div>
       </div>
       <div class="col-12">
-        <button class="btn btn-primary" type="submit">Agregar</button>
+        <button class="btn btn-dark" type="submit">Agregar</button>
       </div>
     </form>
 
