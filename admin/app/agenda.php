@@ -87,8 +87,8 @@ else{
               
               <td>
               <?php if ($m['activo'] == 2): ?>
-                <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="<?=$m['id'];?>" data-bs-target="#modaleliminarcita">Cancelar</a>
-                <a href="../../src/http/hechocita.php?id=<?php echo $m['id'];?>" class="btn btn-success">Hecho</a>
+                <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="<?=$m['id'];?>" data-bs-target="#modaleliminarcita"><img src="../../images/circulo-x.png" alt=""></a>
+                <a href="../../src/http/hechocita.php?id=<?php echo $m['id'];?>" class="btn btn-success"><img src="../../images/controlar.png" alt=""></a>
               <?php elseif ($m['activo'] == 3): ?>
                 <?php echo '<b>Hecho</b>';  ?>
               <?php elseif ($m['activo'] == 4): ?>
