@@ -137,7 +137,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
     </div>
 
     <!-- Button trigger modal -->
-    <a href="../../http/modalproducto.php" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalproducto">
+    <a href="../../http/modalproducto.php" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalproducto">
         Agregar
     </a>
     

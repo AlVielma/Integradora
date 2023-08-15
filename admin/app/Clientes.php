@@ -99,8 +99,8 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
                             <td><?php echo htmlspecialchars($usuario['email']); ?></td>
                             <td><?php echo htmlspecialchars($usuario['estado']); ?></td>
                             <td>
-                                <a href="?action=desactivar&id=<?php echo htmlspecialchars($usuario['id']); ?>" class="btn btn-danger">Desactivar</a>
-                                <a href="?action=activar&id=<?php echo htmlspecialchars($usuario['id']); ?>" class="btn btn-success">Activar</a>
+                                <a href="?action=desactivar&id=<?php echo htmlspecialchars($usuario['id']); ?>" class="btn btn-danger"><img src="../../images/circulo-x.png" alt=""></a>
+                                <a href="?action=activar&id=<?php echo htmlspecialchars($usuario['id']); ?>" class="btn btn-success"><img src="../../images/controlar.png" alt=""></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

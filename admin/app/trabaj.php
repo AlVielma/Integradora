@@ -126,7 +126,7 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
         </div>
       </div>
       <div class="col-12">
-        <button class="btn btn-primary" type="submit">Agregar</button>
+        <button class="btn btn-dark" type="submit">Agregar</button>
       </div>
     </form>
 
@@ -152,9 +152,8 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
                 <td><?php echo $fila['email']; ?></td>
                 <td><?php echo $fila['estado']; ?></td>
                 <td>
-                <a href="?action=activar&id=<?php echo $fila['id']; ?>" class="btn btn-success">Activar</a>
-<a href="?action=desactivar&id=<?php echo $fila['id']; ?>" class="btn btn-danger">Desactivar</a>
-
+                <a href="?action=activar&id=<?php echo $fila['id']; ?>" class="btn btn-success"><img src="../../images/controlar.png" alt=""></a>
+<a href="?action=desactivar&id=<?php echo $fila['id']; ?>" class="btn btn-danger"><img src="../../images/circulo-x.png" alt=""></a>
                 </td>
               </tr>
             <?php endforeach; ?>

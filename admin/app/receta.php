@@ -165,7 +165,7 @@ $errorMessages = [];
                 </div>
                 <br>
               <div class="print-button">
-                <button type="submit" class="btn btn-success">Imprimir Receta</button>
+                <button type="submit" class="btn btn-success"><i class="fas fa-print"></i>  Imprimir Receta</button>
               </div>
             </form>            
           </div>
