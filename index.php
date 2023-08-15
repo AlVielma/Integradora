@@ -166,7 +166,7 @@ if(isset($_POST['quejas'])){
         <div class="row">
           <!-- Si la sesión está iniciada, muestra el saludo personalizado con el nombre del usuario -->
           <?php if (isset($_SESSION['user_name'])) : ?>
-            <h3 class="offcanvas-title" id="offcanvasTopLabel text-center">¡Hola Pop! <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h3>
+            <h3 class="offcanvas-title" id="offcanvasTopLabel text-center">¡Hola Pop <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h3>
           <?php else : ?>
             <!-- Si el usuario no ha iniciado sesión, muestra el saludo predeterminado -->
             <h3 class="offcanvas-title" id="offcanvasTopLabel text-center">¡Hola Pop!</h3>
