@@ -99,9 +99,9 @@ if (isset($_GET['search'])) {
                                 <td>
                                     <?php if ($detalleCompra['estado_id'] == 2) : ?>
                                         <!-- Botón para confirmar la compra -->
-                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#productModal<?php echo $detalleCompra['id_compra']; ?>">Confirmar</button>
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#productModal<?php echo $detalleCompra['id_compra']; ?>"><img src="../../images/controlar.png" alt=""></button>
                                         <!-- Botón para cancelar la compra -->
-                                        <a href="cancelar_compra.php?id=<?php echo $detalleCompra['id_compra']; ?>&usuario_id=<?php echo $detalleCompra['usuario_id']; ?>" class="btn btn-danger">Cancelar</a>
+                                        <a href="cancelar_compra.php?id=<?php echo $detalleCompra['id_compra']; ?>&usuario_id=<?php echo $detalleCompra['usuario_id']; ?>" class="btn btn-danger"><img src="../../images/circulo-x.png" alt=""></a>
                                     <?php else : ?>
                                         <!-- Mostrar mensaje indicando que la compra está confirmada o finalizada -->
                                         <?php echo ($detalleCompra['estado_id'] == 4) ? 'Cancelada' : 'Confirmada'; ?>
