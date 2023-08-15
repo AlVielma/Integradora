@@ -250,13 +250,13 @@ public function obtenerDetallesCompraPorUsuario($usuario_id)
 
 public function buscarApartadosPorUsuario($usuario_id, $searchTerm)
 {
-    $query = $this->pdo->query("SELECT dc.id AS id_compra, dc.usuario_id, u.nombre AS nombre_cliente, u.apellido AS apellido_cliente, dc.fecha_pedido, dc.total, e.estado
+    $query = $this->pdo->query("SELECT dc.id AS id_compra, dc.usuario_id, dc.fecha_pedido, dc.total, e.estado
               FROM DetalleCompra dc
               INNER JOIN Usuarios u ON dc.usuario_id = u.id
               INNER JOIN estado e ON dc.estado_id = e.id
               WHERE dc.usuario_id = $usuario_id AND dc.id LIKE '%$searchTerm%'
-              OR e.estado LIKE '%$searchTerm%'
-              GROUP BY dc.id, dc.usuario_id, u.nombre, u.apellido, dc.fecha_pedido, dc.total, dc.estado_id
+              OR e.estado LIKE '%$searchTerm%' AND dc.usuario_id = $usuario_id
+              GROUP BY dc.id, dc.usuario_id, dc.fecha_pedido, dc.total, dc.estado_id
               ORDER BY dc.fecha_pedido DESC");
   
     $detallesCompras = $query->fetchAll(\PDO::FETCH_ASSOC);

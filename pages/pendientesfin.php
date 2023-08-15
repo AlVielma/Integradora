@@ -109,7 +109,11 @@ if (isset($_SESSION['user_id'])) {
             
         <?php endforeach; ?>
         <?php else : ?>
-
+            <?php if (empty($detallesCompras)) : ?>
+        <div class="text-center mt-4">
+            <p>No cuentas con apartados disponibles.</p>
+        </div>
+    <?php else : ?>
             <?php foreach ($detallesCompras as $detalleCompra) : ?>
         <!-- Mostrar el id de compra y estado -->
         <div class="text-center mb-3">
@@ -148,6 +152,7 @@ if (isset($_SESSION['user_id'])) {
             </div>
            
         <?php endforeach; ?>
+        <?php endif; ?>
         <?php endif;?>
     </div>
     
