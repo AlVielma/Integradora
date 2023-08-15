@@ -27,8 +27,8 @@ if (!isset($_SESSION['user_id'])) {
     <?php include 'header.php';
     ?>
 
-<div class="container mt-5">
-    <div class="row">
+<div class="container mt-5 justify-content-center">
+    <div class="row ">
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <img src="/../images/icon2.png" width="200" height="200" alt="">
         </div>
