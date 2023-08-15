@@ -76,80 +76,102 @@ if (isset($_POST['finalizar_compra'])) {
 
         // Construye el contenido del correo con los productos comprados y su cantidad
         $contenidoCorreo = <<<EOT
-        <!DOCTYPE html>
-        <html lang="es">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    background-color: #f5f5f5;
-                    margin: 0;
-                    padding: 0;
-                }
-                .container {
-                    max-width: 600px;
-                    margin: 20px auto;
-                    background-color: #ffffff;
-                    padding: 20px;
-                    border-radius: 5px;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                }
-                .logo {
-                    text-align: center;
-                    margin-bottom: 20px;
-                }
-                .content {
-                    font-size: 16px;
-                    line-height: 1.6;
-                }
-                .verification-code {
-                    font-size: 24px;
-                    font-weight: bold;
-                    color: #007bff;
-                }
-                .log {
-                    height: 170px;
-                    width: 170px;
-                }
-            </style>
-        </head>
-        <body>
-        <div class="container">
-        <div class="logo">
-            <img class="log" src="cid:icon" alt="Logo de Pop Ópticos">
-        </div>
-        <div class="content">
-            <h3>Detalles de la compra:</h3>
-            <table>
-                <tr><th>Producto</th><th>Cantidad</th><th>Precio</th></tr>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .content {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .verification-code {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .log {
+            height: 170px;
+            width: 170px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<div class="logo">
+    <img class="log" src="cid:icon" alt="Logo de Pop Ópticos">
+</div>
+<div class="content">
+    <h3>Detalles de la compra:</h3>
+    <table>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+        </tr>
 EOT;
 
         foreach ($productosCarrito as $producto) {
             $contenidoCorreo .= <<<EOT
-                <tr>
-                    <td>{$producto['nombre']}</td>
-                    <td>{$producto['cantidad']}</td>
-                    <td>\${$producto['precio']}</td>
-                </tr>
+        <tr>
+            <td>{$producto['nombre']}</td>
+            <td>{$producto['cantidad']}</td>
+            <td>\${$producto['precio']}</td>
+        </tr>
 EOT;
         }
-
         $totalCompra = calcularTotal($productosCarrito);
 
         $contenidoCorreo .= <<<EOT
-            </table>
-            <p>Total: \${$totalCompra} MXN</p>
-            <p>Folio de la compra: {$compra_id}</p>
-            <p>Gracias por apartar en Pop Ópticos</p>
-            <p>Recuerda recoger tus productos en Av. Juárez 4880 y Xochimilco Oriente, Torreón, Mexico, 27085</p>
-            <p>Cualquier duda, información o detalle hazmelo saber respondiendo este correo </p>
-        </div>
-    </div>
+        <tr>
+            <td colspan="2" style="text-align: right;"><strong>Total:</strong></td>
+            <td>\${$totalCompra} MXN</td>
+        </tr>
+    </table>
+    <p>Folio de la compra: {$compra_id}</p>
+    <p>Gracias por apartar en Pop Ópticos</p>
+    <p>Recuerda recoger tus productos en Av. Juárez 4880 y Xochimilco Oriente, Torreón, Mexico, 27085</p>
+    <p>Cualquier duda, información o detalle hazmelo saber respondiendo este correo </p>
+</div>
+</div>
 </body>
 </html>
 EOT;
+
 
 
         // Agrega el contenido del correo al cuerpo del mensaje
