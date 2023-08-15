@@ -130,14 +130,14 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
       <form method="get" action="">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" name="busqueda" placeholder="Buscar producto" value="">
-                <button class="btn btn-outline-primary" type="submit">Buscar</button>
-                <button class="btn btn-outline-primary" name="Reiniciar" type="submit">Reiniciar</button>
+                <button class="btn btn btn-outline-secondary" type="submit">Buscar</button>
+                <button class="btn btn btn-outline-secondary" name="Reiniciar" type="submit">Reiniciar</button>
             </div>
     </form>
     </div>
 
     <!-- Button trigger modal -->
-    <a href="../../http/modalproducto.php" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalproducto">
+    <a href="../../http/modalproducto.php" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalproducto">
         Agregar
     </a>
     

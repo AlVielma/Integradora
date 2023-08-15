@@ -71,7 +71,7 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 
         <div class="input-group mb-3">
             <input type="text" class="form-control" name="busqueda" placeholder="Buscar por nombre o apellido" value="<?php echo htmlspecialchars($busqueda); ?>">
-            <button class="btn btn-outline-primary" type="submit" style="border-color: #ccc;">Buscar</button>
+            <button class="btn btn-outline-secondary" type="submit" style="border-color: #ccc;">Buscar</button>
         </div>
 
 

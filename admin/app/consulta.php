@@ -122,7 +122,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success" name="aceptar"><i class="fas fa-print"></i> Imprimir Consulta </button>
+            <button type="submit" class="btn btn-outline-secondary" name="aceptar"><i class="fas fa-print"></i> Generar Consulta </button>
             <?php
     
     if (is_array($erroresConsulta) && count($erroresConsulta) > 0) {

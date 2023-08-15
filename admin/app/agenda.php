@@ -50,7 +50,7 @@ else{
       <div class="input-group input-group-sm mb-3">
             <input type="text" class="form-control" name="busqueda" placeholder="Buscar por n. Folio" value="">
             <div class="input-group-append">
-            <button class="btn btn-sm btn-outline-primary" type="submit">Buscar</button>
+            <button class="btn btn-sm btn btn-outline-secondary" type="submit">Buscar</button>
             <button class="btn btn-sm btn-outline-secondary" name="Reiniciara" type="submit">Reiniciar</button>
             </div>
       </div>
