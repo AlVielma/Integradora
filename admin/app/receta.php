@@ -56,14 +56,14 @@ $errorMessages = [];
                 <div class="col-md-6">
                     <div class="mb-3">
                       <label for="tratamiento">Tratamiento: <span id="tratamientoValue"></span></label>
-                      <textarea class="form-control" id="tratamiento" name="tratamiento" rows="5" required></textarea>
+                      <textarea class="form-control" id="tratamiento" name="tratamiento" rows="5" maxlength="70" required></textarea>
                     </div>
                   </div>
                   
                   <div class="col-md-6">
                     <div class="mb-3">
                       <label for="diagnostico">Diagnóstico: <span id="diagnosticoValue"></span></label>
-                      <textarea class="form-control" id="diagnostico" name="diagnostico" rows="5" required></textarea>
+                      <textarea class="form-control" id="diagnostico" name="diagnostico" rows="5" maxlength="70" required></textarea>
                     </div>
                   </div>
                 </div>

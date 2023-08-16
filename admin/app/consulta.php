@@ -118,7 +118,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="descripcion">Descripcion:</label>
-                        <textarea class="form-control" id="descripcion" rows="5" name="descripcion"></textarea>
+                        <textarea class="form-control" id="descripcion" rows="5" name="descripcion" maxlength="70"></textarea>
                     </div>
                 </div>
             </div>
