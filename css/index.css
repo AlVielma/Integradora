@@ -62,5 +62,9 @@ body
   height: 170px;
   width: 170px;
 }
-
+/* Aumenta la altura del textarea */
+#floatingTextarea {
+  height: 265px; /* Ajusta este valor según tus necesidades */
+  resize: vertical; /* Permite redimensionar verticalmente */
+}
 

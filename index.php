@@ -279,23 +279,23 @@ if(isset($_POST['quejas'])){
     <div class="container">
       <div class="row">
         <div class="col-12 col-lg-5">
-          <img src="images/imagen2.2.jpg" alt="sobre nosotros" class="img-fluid">
+          <img src="images/imagen2.2.jpg" alt="sobre nosotros" class="img-fluid" style="height: 570px; width: 530px;">
         </div>
         <div class="col-12 col-lg-7">
           <h2>Conócenos</h2>
-          <p>
+          <p style="text-align: justify;">
             Bienvenido a nuestra tienda de lentes y centro de exámenes de la vista. Nos enorgullece ofrecer una amplia gama de productos ópticos y servicios profesionales para satisfacer todas tus necesidades visuales.
           </p>
-          <p>
+          <p style="text-align: justify;">
             En nuestra tienda, encontrarás una gran variedad de lentes de contacto, gafas graduadas, gafas de sol y accesorios de las marcas más reconocidas del mercado. Nuestro equipo de expertos ópticos está siempre dispuesto a ayudarte a encontrar la opción perfecta que se ajuste a tu estilo y necesidades visuales.
           </p>
-          <p>
+          <p style="text-align: justify;">
             Además, contamos con un moderno y completo laboratorio donde realizamos exámenes de la vista exhaustivos para evaluar tu salud ocular y determinar la prescripción más precisa para tus lentes. Nuestros optometristas altamente capacitados utilizan tecnología de vanguardia para garantizar resultados precisos y una atención personalizada.
           </p>
-          <p>
+          <p style="text-align: justify;">
             En nuestra tienda, nos comprometemos a brindarte una experiencia excepcional y un servicio al cliente de primera calidad. Nos esforzamos por superar tus expectativas y asegurarnos de que salgas con una visión clara y una sonrisa en el rostro.
           </p>
-          <p>
+          <p style="text-align: justify;">
             Te invitamos a visitarnos y descubrir todo lo que nuestra tienda de lentes y centro de exámenes de la vista tiene para ofrecer. Estamos ansiosos por atenderte y ayudarte a mejorar tu salud visual. ¡Conócenos hoy mismo!
           </p>
         </div>
@@ -342,11 +342,11 @@ if(isset($_POST['quejas'])){
         <div class="col-md-4 col-sm-9">
           <div class="single-content-card text-center mt-30">
             <div class="content-card-image">
-             <a  href="pages/popniños.php"><img src="images/imagen4.jpg" alt="lente niños" class="img-fluid"></a>
+             <a  href="pages/popniños.php"><img src="images/niño.png" alt="lente niños" class="img-fluid"></a>
             </div>
             <div class="content-card-content">
               <h4><a href="pages/popniños.php" class="h4 font-weight-bold text-decoration-none">Pop niños</a></h4>
-              <p>Tenemos los mejores lentes para los niños</p>
+              <p>Tenemos los mejores lentes para los niños y para niñas</p>
             </div>
           </div>
         </div>
@@ -360,15 +360,15 @@ if(isset($_POST['quejas'])){
         <div class="col-12 col-lg-5">
           <img src="images/icon.png" alt="sobre nosotros" class="img-fluid">
         </div>
-        <div class="col-12 col-lg-7">
-          <h2 class="text-center mt-4">Misión</h2>
-          <p>
-            Promover el plan de salud visual pública en las empresas de la Laguna y el norte del país, a través del programa de salud visual. Contribuir a la sociedad y a las empresas ofreciendo servicios de examen de la vista, asesoría clínica visual y venta de anteojos y lentes de contacto.
-          </p>
-          <h2 class="text-center">Visión</h2>
-          <p>
-            Ser líderes en la promoción del plan de salud visual en las empresas de la Laguna y el norte del país, mediante un programa integral de salud visual. Brindar valor a la sociedad y a las empresas a través de servicios de examen de la vista, asesoría clínica visual y compra de anteojos y lentes de contacto.
-          </p>
+          <div class="col-12 col-lg-7">
+            <h2 class="text-center mt-4">Misión</h2>
+            <p style="text-align: justify;">
+                Promover el plan de salud visual pública en las empresas de la Laguna y el norte del país, a través del programa de salud visual. Contribuir a la sociedad y a las empresas ofreciendo servicios de examen de la vista, asesoría clínica visual y venta de anteojos y lentes de contacto.
+            </p>
+            <h2 class="text-center">Visión</h2>
+            <p style="text-align: justify;">
+                Ser líderes en la promoción del plan de salud visual en las empresas de la Laguna y el norte del país, mediante un programa integral de salud visual. Brindar valor a la sociedad y a las empresas a través de servicios de examen de la vista, asesoría clínica visual y compra de anteojos y lentes de contacto.
+            </p>
         </div>
       </div>
     </div>
@@ -445,21 +445,21 @@ if(isset($_POST['quejas'])){
                 <img class="img-fluid" src="images/imagen2.jpg" alt="contactanos">
             </div>
             <div class="col-12 col-lg-7">
-                <div class="">
-                    <form  action="index.php" method="post">
-                        <div class="form-floating">
-                            <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre" name="nombre">
-                            <label for="floatingName">Tu nombre</label>
-                        </div>
-                        <div class="form-floating mt-3">
-                            <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="4" name="comentario"></textarea>
-                            <label for="floatingTextarea">Deja un comentario</label>
-                        </div>
-                        <div class="mt-3">
-                            <button class="btn btn-dark w-100 rounded-0" name="quejas" type="submit">Enviar</button>
-                        </div>
-                    </form>
-                </div>
+              <div class="">
+                  <form  action="index.php" method="post">
+                      <div class="form-floating">
+                          <input required type="text" class="form-control rounded-0" id="floatingName" placeholder="Tu nombre" name="nombre">
+                          <label for="floatingName">Tu nombre</label>
+                      </div>
+                      <div class="form-floating mt-3">
+                          <textarea required class="form-control rounded-0" placeholder="Deja un comentario" id="floatingTextarea" cols="30" rows="6" name="comentario"></textarea>
+                          <label for="floatingTextarea">Deja un comentario</label>
+                      </div>
+                      <div class="mt-3">
+                          <button class="btn btn-dark w-100 rounded-0" name="quejas" type="submit">Enviar</button>
+                      </div>
+                  </form>
+              </div>
             </div>
         </div>
     </div>
