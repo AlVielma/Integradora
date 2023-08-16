@@ -280,7 +280,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
                 <label for="cantidad">Cantidad</label>
                 <input type="number" class="form-control" name="stock" requireda>
               </div>
-              <button type="submit" class="btn btn-primary" name="agregar">Guardar</button>
+              <button type="submit" class="btn btn-outline-secondary" name="agregar">Guardar</button>
             </form>
             <?php
             $validacion->mensajes($errors);
