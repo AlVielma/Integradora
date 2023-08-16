@@ -170,15 +170,15 @@ if(isset($_POST['editar']))
               </div>
               <div class="mb-3">
                 <label for="precio">Precio</label>
-                <input type="number" class="form-control" name="precio" value="<?php echo $conss['precio']; ?>" min="<?php echo 100;?>" max="<?php echo 10000;?>">
+                <input type="number" class="form-control" name="precio" value="<?php echo $conss['precio']; ?>" mine="<?php echo 100;?>" maxe="<?php echo 10000;?>">
               </div>
               <div class="mb-3">
                 <label for="imagen">Agregar Imagen</label>
-                <input type="file" class="form-control" name="imagen" value="<?php echo $conss['IMAGEN']; ?>" accept=".jpg, .png, .jpeg">
+                <input type="file" class="form-control" name="imagen" value="<?php echo $conss['IMAGEN']; ?>" accepte=".jpg, .png, .jpeg">
               </div>
               <div class="mb-3">
                 <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control" name="stock" value="<?php echo $conss['stock']; ?>" min="<?php echo 0;?>"  >
+                <input type="number" class="form-control" name="stock" value="<?php echo $conss['stock']; ?>" mine="<?php echo 0;?>"  >
               </div>
               <div class="text-center">
               <button type="submit" class="btn btn-outline-secondary" name="editar">Guardar</button>
