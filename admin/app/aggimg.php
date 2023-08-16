@@ -53,6 +53,15 @@ if (isset($_POST['agregar'])) {
         $errors[]="El stock debe ser numerico";
     }
 
+    if(!$validacion->mayorq($precio))
+    {
+      $errors[]="El numero debe ser mayor a 0";
+    }
+    if(!$validacion->mayorq2($stock))
+    {
+      $errors[]="El numero debe ser mayor o igual a 0";
+    }
+
     if (isset($_FILES['imagen']) && is_array($_FILES['imagen'])) {
         // Llamamos a la función validarExtensionImagen solo si hay información válida en $_FILES['imagen']
         if (!$validacion->validarExtensionImagen($_FILES['imagen'])) {
@@ -280,7 +289,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
                 <label for="cantidad">Cantidad</label>
                 <input type="number" class="form-control" name="stock" requireda>
               </div>
-              <button type="submit" class="btn btn-primary" name="agregar">Guardar</button>
+              <button type="submit" class="btn btn-outline-secondary" name="agregar">Guardar</button>
             </form>
             <?php
             $validacion->mensajes($errors);
