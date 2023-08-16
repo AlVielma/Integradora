@@ -89,9 +89,9 @@ if (isset($_SESSION['exito']) && $_SESSION['exito'] === true) {
                     <div class="text-center mb-4">
                         <img src="../images/icon.png" alt="Imagen" class="img-fluid col-6 col-md-4 col-lg-3">
                     </div>
-                    <h2 class="mb-4">Cambiar Tu Contraseña Pop</h2>
+                    <h2 class="text-center  mb-4">Cambiar Tu Contraseña Pop</h2>
                     <?php if (!empty($mensaje)): ?>
-                        <div class="mensaje text-success">
+                        <div class="text-center mensaje text-success">
                             <p><?php echo $mensaje; ?></p>
                             <p class="text-center">Por favor, presiona <a href="../index.php" class="text-primary">Pop Ópticos</a> para continuar en nuestra página.</p>
                         </div>
@@ -127,4 +127,3 @@ if (isset($_SESSION['exito']) && $_SESSION['exito'] === true) {
     </script>
 </body>
 </html>
-

@@ -125,7 +125,7 @@ if(!empty($_POST)){
                     <div class="text-center mb-4">
                         <img src="../images/icon.png" alt="Imagen" class="img-fluid col-6 col-md-4 col-lg-3">
                     </div>
-                    <h2 class="mb-4">Nuevo Usuario Pop</h2>
+                    <h2 class="text-center mb-4">Nuevo Usuario Pop</h2>
                         <div>
                             <?php $registrar->mostrarMensajes($errors); ?>
                         </div>

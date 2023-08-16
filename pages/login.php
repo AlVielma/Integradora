@@ -127,7 +127,7 @@ if (!empty($_POST)) {
                         <img src="../images/user-circle.png" alt="Imagen" class="img-fluid">
                     </div>
                     <div class="col-12 d-flex justify-content-center">
-                        <h2 class="mb-4">Inicio de Sesión</h2>
+                        <h2 class="text-center mb-4">Inicio de Sesión</h2>
                     </div>
 
                     <?php if (isset($redirectMessage)) : ?>
