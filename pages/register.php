@@ -25,7 +25,7 @@ if(isset($_SESSION['user_id'])) {
 
 $errors = [];
 
-if(!empty($_POST)){
+if(!empty($_POST) && isset($_POST['verificar'])){
     $nombre = trim($_POST['nombre']);
     $apellido = trim($_POST['apellido']);
     $email = trim($_POST['email']);
@@ -99,7 +99,7 @@ if(!empty($_POST)){
    <!--Css-->
     <link rel="stylesheet" href="../css/index.css">
     <!--Icon-->
-    <link rel="icon" href="images/icon.png">
+    <link rel="icon" href="../images/icon.png">
     <title>Pop Ópticos</title>
    
 </head>
@@ -151,7 +151,7 @@ if(!empty($_POST)){
                             <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirma tu contraseña" value="<?php echo isset($_POST['confpassword']) ? $_POST['confpassword'] : ''; ?>">
                         </div>
                         <div class="text-center">
-                            <input class="btn btn-light btn-outline-dark" type="submit" value="registro" name="verificar" >
+                            <input class="btn btn-light btn-outline-dark" type="submit" value="Registro" name="verificar" >
                         </div>
                     </form>
                 </div>
