@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
   exit;
 }
 $busqueda = isset($_GET['busqueda']) ? $_GET['busqueda'] : '';
+$busqueda='%'.$busqueda.'%';
 if(!empty($busqueda))
 {
   $busqueda = $busqueda;
@@ -58,6 +59,10 @@ else{
     </form>
      <!-- Tabla de Citas -->
      <div class="table-responsive">
+      <?php
+      if(count($cita_m)>0)
+      {
+      ?>
         <table class="table">
           <thead>
             <tr>
@@ -73,6 +78,7 @@ else{
           </thead>
           <tbody>
             <?php
+            
             foreach($cita_m as $m)
             {
             ?>
@@ -98,6 +104,14 @@ else{
               
             </tr>
             <?php
+            }
+            } 
+            else
+            {
+              echo '<div class="text-center">
+                
+                <h1> Sin resultados encontrados</h1>
+               </div>';
             }
             ?>
           </tbody>

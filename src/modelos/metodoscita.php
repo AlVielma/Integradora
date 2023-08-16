@@ -64,10 +64,13 @@ class metodoscita
 
     public function busquedaagenda($busqueda)
     {
-        $consulta = $this->conectar->prepare("SELECT cc.id,cc.nombre, u.apellido, cc.telefono,u.email ,cc.fecha_nacimiento
-        ,cc.dia,cc.hora,cc.sintomas_oculares,cc.enfermedades_oculares,cc.lentes_actualmente,cc.armazon,cc.contacto,
-        cc.ultimo_examen,cc.uso_gotas,cc.activo FROM Citas_Cliente cc inner join Usuarios u on u.id = cc.usuario WHERE cc.id like ? and (activo=2 or activo=3 or activo=4);");
-        $consulta->execute([$busqueda]);
+        $consulta = $this->conectar->prepare("SELECT cc.id, cc.nombre, u.apellido, cc.telefono, u.email, cc.fecha_nacimiento, cc.dia, cc.hora,
+        cc.sintomas_oculares, cc.enfermedades_oculares, cc.lentes_actualmente, cc.armazon, cc.contacto,
+        cc.ultimo_examen, cc.uso_gotas, cc.activo
+        FROM Citas_Cliente cc
+        INNER JOIN Usuarios u ON u.id = cc.usuario
+        WHERE (cc.nombre LIKE ? OR cc.id LIKE ?) AND (cc.activo = 2 OR cc.activo = 3 OR cc.activo = 4);");
+        $consulta->execute([$busqueda,$busqueda]);
         return $consulta->fetchAll(\PDO::FETCH_ASSOC);
     }
 
