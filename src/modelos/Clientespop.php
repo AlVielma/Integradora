@@ -10,7 +10,7 @@ class Clientespop
         $conexion = new Conexion();
         $pdo = $conexion->obtenerConexion();
 
-        $query = "UPDATE Usuarios SET estado_id = 5 WHERE id = :id";
+        $query = "UPDATE Usuarios SET estado_id = 5 ,estatus=1 WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
 
@@ -26,7 +26,7 @@ class Clientespop
         $conexion = new Conexion();
         $pdo = $conexion->obtenerConexion();
 
-        $query = "UPDATE Usuarios SET estado_id = 1 WHERE id = :id";
+        $query = "UPDATE Usuarios SET estado_id = 1, estatus=0  WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
 
@@ -80,5 +80,16 @@ public function buscarClientesPorNombreApellido($busqueda)
     }
     return $clientes;
 }
+
+function mensajes(array $act)
+    {
+        if(count($act) > 0){
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert"><ul>';
+        foreach($act as $act){
+            echo '<li>' . $act . '</li>';
+        }
+        echo '</ul>';
+        }
+    }
 }
 ?>

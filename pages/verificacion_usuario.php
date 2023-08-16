@@ -3,21 +3,6 @@ session_start();
 use App\Modelos\Conexion;
 use App\Modelos\validacionesRegistrar;
 
-// Agrega este bloque al inicio del archivo para verificar la sesión
-if (isset($_SESSION['user_id'])) {
-
-    // Redirigir al usuario según su rol
-    if ($_SESSION['user_rol'] == 1) {
-        header("Location: ../admin/app/aggimg.php");
-    } else {
-        header("Location: ../index.php");
-    }
-    exit;
-}
-
-
-
-/*verificacion_usuario.php*/
 require_once __DIR__.'/../src/modelos/Conexion.php';
 require_once __DIR__.'/../src/modelos/validacionesRegistrar.php';
 
@@ -25,42 +10,41 @@ $registrar = new validacionesRegistrar();
 $conexion = new Conexion();
 $con = $conexion->conectar();
 
+if(isset($_SESSION['user_id'])) {
+    if($_SESSION['user_rol'] == 1){
+        header("Location: ../admin/app/aggimg.php");
+    }
+    else {
+        header("Location: ../index.php");
+    }
+    exit;
+}
+if (!isset($_SESSION['id'])) {
+    header("Location: login.php");
+    exit;
+}
 $message = "";
 
-if (!empty($_POST) && isset($_POST['submit'])) {
-    try {
-        // Obtenemos el ID de sesión almacenado previamente
-        $id = $_SESSION['id'];
-        
-        // Obtenemos el token y lo sanitizamos
-        $token = trim($_POST['token']);
-        
-        // Realizamos la verificación del token en la base de datos
-        $verificarToken = $registrar->verificarToken($id, $token, $con);
-        
-        if ($verificarToken) {
-            // El token es válido, cambiar el estado del usuario a "activo" (estado_id = 5)
-            $estado_id = 5;
-            $estatus = 1;
-            $updateResult = $registrar->actualizarEstadoUsuario($id, $estado_id, $estatus, $con);
+if (isset($_POST['submit'])) {
+    $token = isset($_POST['token']) ? trim($_POST['token']) : '';
 
-            if ($updateResult) {
-                // Redireccionamos a una página de verificación exitosa o mostramos un mensaje de éxito
-                header("Location: login.php");
-                exit;
-            } else {
-                $message = "Error al actualizar el estado del usuario";
-            }
+    if (!empty($_SESSION['id']) && $registrar->verificarToken($_SESSION['id'], $token, $con)) {
+        // El usuario ya ha sido verificado, redirigir a la página deseada
+        $updateResult = $registrar->actualizarEstadoUsuario($_SESSION['id'], 5, 1, $con);
+
+        if ($updateResult) {
+            // Eliminamos la variable de sesión
+            unset($_SESSION['id']);
+            
+            // Redireccionamos a una página de verificación exitosa o mostramos un mensaje de éxito
+            header("Location: login.php");
+            exit;
         } else {
-            // El token no es válido, establecemos el mensaje de error
-            $message = "Token incorrecto";
+            $message = "Error al actualizar el estado del usuario";
         }
-    } catch (\PDOException $e) {
-        // Handle database errors
-        $message = "Error en la base de datos: " . $e->getMessage();
-    } catch (\Exception $e) {
-        // Handle other errors
-        $message = "Error: " . $e->getMessage();
+    } else {
+        // El token no es válido, establecemos el mensaje de error
+        $message = "Token incorrecto";
     }
 }
 ?>
@@ -133,7 +117,8 @@ if (!empty($_POST) && isset($_POST['submit'])) {
             return confirmationMessage;
         }
     });
-
+    
+    history.replaceState(null, null, location.pathname);
     // Esta función marca al usuario como verificado y permite que salga sin alerta
     function markVerified() {
         verified = true;

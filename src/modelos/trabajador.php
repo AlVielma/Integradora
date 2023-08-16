@@ -83,7 +83,7 @@ class Trabajador
             $conexion = new Conexion();
             $pdo = $conexion->obtenerConexion();
     
-            $query = "UPDATE Usuarios SET estado_id = :estado_id WHERE id = :id";
+            $query = "UPDATE Usuarios SET estado_id = :estado_id, estatus= 1 WHERE id = :id";
             $stmt = $pdo->prepare($query);
             $estado_id = 5; // Cambia el valor al estado activo correcto
             $stmt->bindParam(':estado_id', $estado_id, \PDO::PARAM_INT);
@@ -106,7 +106,7 @@ class Trabajador
             $conexion = new Conexion();
             $pdo = $conexion->obtenerConexion();
     
-            $query = "UPDATE Usuarios SET estado_id = :estado_id WHERE id = :id";
+            $query = "UPDATE Usuarios SET estado_id = :estado_id, estatus = 0 WHERE id = :id";
             $stmt = $pdo->prepare($query);
             $estado_id = 1; // Cambia el valor al estado inactivo correcto
             $stmt->bindParam(':estado_id', $estado_id, \PDO::PARAM_INT);
