@@ -192,13 +192,13 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
                 
                 <td>
                   <a href="../../src/http/editproducto.php?sku=<?php echo $product['sku']; ?>" class="btn btn-warning">
-                    <img src="../../images/editar.png" alt="">
+                    <img src="../../images/editar.png" alt="Editar">
                   </a>
 
-                  <a class="btn btn-danger"data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modaleliminarproducto" ><img src="../../images/circulo-x.png" alt="">
+                  <a class="btn btn-danger"data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modaleliminarproducto" ><img src="../../images/circulo-x.png" alt="Desactivar">
                   </a>
 
-                  <a class="btn btn-success" data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modalactivarproducto" ><img src="../../images/controlar.png" alt=""></a>
+                  <a class="btn btn-success" data-bs-toggle="modal" data-bs-id="<?=$product['sku'];?>" data-bs-target="#modalactivarproducto" ><img src="../../images/controlar.png" alt="Activar"></a>
                 </td>
               </tr>
             <?php
