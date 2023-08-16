@@ -170,15 +170,15 @@ if(isset($_POST['editar']))
               </div>
               <div class="mb-3">
                 <label for="precio">Precio</label>
-                <input type="number" class="form-control" name="precio" value="<?php echo $conss['precio']; ?>" >
+                <input type="number" class="form-control" name="precio" value="<?php echo $conss['precio']; ?>" min="<?php echo 100;?>" max="<?php echo 10000;?>">
               </div>
               <div class="mb-3">
                 <label for="imagen">Agregar Imagen</label>
-                <input type="file" class="form-control" name="imagen" value="<?php echo $conss['IMAGEN']; ?>">
+                <input type="file" class="form-control" name="imagen" value="<?php echo $conss['IMAGEN']; ?>" accept=".jpg, .png, .jpeg">
               </div>
               <div class="mb-3">
                 <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control" name="stock" value="<?php echo $conss['stock']; ?>">
+                <input type="number" class="form-control" name="stock" value="<?php echo $conss['stock']; ?>" min="<?php echo 0;?>"  >
               </div>
               <div class="text-center">
               <button type="submit" class="btn btn-outline-secondary" name="editar">Guardar</button>
@@ -192,7 +192,7 @@ if(isset($_POST['editar']))
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script>
-        history.replaceState(null, null, location.pathname);
+      history.replaceState(null, null, "editproducto.php?sku=<?php echo $id; ?>");
     </script>
   </body>
 </html>

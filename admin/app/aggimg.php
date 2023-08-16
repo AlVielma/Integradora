@@ -226,11 +226,11 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
             <form action="aggimg.php" method="post" enctype="multipart/form-data" >
               <div class="mb-3">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" name="nombre" requireda>
+                <input type="text" class="form-control" name="nombre" required>
               </div>
               <div class="mb-3">
                 <label for="marca">Marca</label>
-                <select class="form-control" name="marca" requireda>
+                <select class="form-control" name="marca" required>
                   <option value="">Marcas</option>
                   <?php
                   foreach ($marcas as $marc) {
@@ -245,7 +245,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               </div>
               <div class="mb-3">
                 <label for="tipo">Tipo de lente</label>
-                <select class="form-control" name="tipo_lente" requireda>
+                <select class="form-control" name="tipo_lente" required>
                   <option value="">Tipo de lentes</option>
                   <?php
                   foreach ($tlente as $tlente) {
@@ -260,11 +260,11 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               </div>
               <div class="mb-3">
                 <label for="descripcion">Descripción</label>
-                <textarea class="form-control" name="descripcion" rows="3" requireda></textarea>
+                <textarea class="form-control" name="descripcion" rows="3" required></textarea>
               </div>
               <div class="mb-3">
                 <label for="categoria">Categoría</label>
-                <select class="form-control" name="categoria" requireda>
+                <select class="form-control" name="categoria" required>
                  <option value="">Categorías</option>
                   <?php
                   foreach ($categorias as $cat) {
@@ -279,15 +279,15 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['us
               </div>
               <div class="mb-3">
                 <label for="precio">Precio</label>
-                <input type="number" class="form-control" name="precio" requireda>
+                <input type="number" class="form-control" name="precio" min="<?php echo 100?>" max="<?php echo 10000?>"required>
               </div>
               <div class="mb-3">
                 <label for="imagen">Agregar Imagen</label>
-                <input type="file" class="form-control" name="imagen" accept=".jpg, .png, .jpeg">
+                <input type="file" class="form-control" name="imagen" accept=".jpg, .png, .jpeg" required>
               </div>
               <div class="mb-3">
                 <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control" name="stock" requireda>
+                <input type="number" class="form-control" name="stock" min="<?php echo 0?>" required >
               </div>
               <button type="submit" class="btn btn-outline-secondary" name="agregar">Guardar</button>
             </form>
