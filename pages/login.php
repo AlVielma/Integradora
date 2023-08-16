@@ -140,13 +140,15 @@ if (!empty($_POST)) {
 
                     <!-- Formulario de inicio de sesión -->
                     <form action="login.php" method="post" autocomplete="off">
+                        <label for="correo" class="form-label">Correo electrónico</label>
                         <div class="mb-3 form-floating">
                             <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico">
-                            <label for="email" class="form-label">Correo electrónico</label>
+                            <label for="email" class="form-label">Ingresa tu correo electrónico</label>
                         </div>
+                        <label for="contraseña" class="form-label">Contraseña</label>
                         <div class="mb-3 form-floating">
                             <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña">
-                            <label for="password" class="form-label">Contraseña</label>
+                            <label for="password" class="form-label">Ingresa tu contraseña</label>
                         </div>
 
                         <!-- Mostrar errores -->
