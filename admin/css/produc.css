@@ -6,7 +6,7 @@
       left: 0;
       width: 250px;
       height: 100vh;
-      background: linear-gradient(to bottom, #d6fcfa, #fff);
+      background: linear-gradient(to bottom, #e9e9e9, #ffffff);
       padding: 20px;
       z-index: 100;
       transition: all 0.3s;
@@ -26,7 +26,7 @@
     }
 
     .sidebar a:hover {
-      background-color: #d6fcfa;
+      background-color: #bdbdbd;
       color: #000;
     }
 
