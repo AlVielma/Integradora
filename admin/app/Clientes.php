@@ -21,12 +21,19 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
     if ($_GET['action'] === 'activar') {
         if ($clientesPop->activarUsuario($id)) {
             $alerta = '<div id="alerta" class="alert alert-success" role="alert">Cliente activado exitosamente.</div>';
+           
+            header('Location: Clientes.php');
+            exit;
+            
         } else {
             $alerta = '<div id="alerta" class="alert alert-warning" role="alert">Error al activar el cliente.</div>';
         }
     } elseif ($_GET['action'] === 'desactivar') {
         if ($clientesPop->desactivarUsuario($id)) {
             $alerta = '<div id="alerta" class="alert alert-danger" role="alert">Cliente desactivado exitosamente.</div>';
+            
+            header('Location: Clientes.php');
+            exit;
         } else {
             $alerta = '<div id="alerta" class="alert alert-warning" role="alert">Error al desactivar el cliente.</div>';
         }
@@ -57,6 +64,7 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
     <br>
     <div class="container-fluid" id="content">
         <div class=""></div>
+
         <h2>Clientes Pop</h2>
 
         <!-- Mostrar la alerta -->
