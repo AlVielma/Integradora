@@ -181,7 +181,7 @@ if(isset($_POST['editar']))
                 <input type="number" class="form-control" name="stock" value="<?php echo $conss['stock']; ?>">
               </div>
               <div class="text-center">
-              <button type="submit" class="btn btn-primary" name="editar">Guardar</button>
+              <button type="submit" class="btn btn-outline-secondary" name="editar">Guardar</button>
                     
               </div>
              
