@@ -100,7 +100,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
                     <div class="text-center mb-4">
                         <img src="../images/icon.png" alt="Imagen" class="img-fluid col-6 col-md-4 col-lg-3">
                     </div>
-                    <h2 class="mb-4">Verificar Usuario</h2>
+                    <h2 class="text-center">Verificar Usuario</h2>
                     <div class="alert alert-warning mt-3" role="alert">
                     Favor de verificar su correo Se le ha enviado un código de verificación.
                     </div>
