@@ -301,11 +301,11 @@ if(isset($_POST['mandar_exm']))
                     </div>
                     <div class="form-group">
                         <label for="fecha_nacimiento" class="text-center">Fecha de nacimiento:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                        <input type="date" class="form-control w-75 mx-auto" id="fecha_nacimiento" name="fecha_nacimiento"  min="<?php echo date('Y-m-d', strtotime('-70 years'));?>" max="<?php echo date('Y-m-d', strtotime('-6 years')); ?>" required onkeydown="return false">
                     </div>
                     <div class="form-group">
                         <label for="dia" class="text-center">Día:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+10 days')); ?>" required>
+                        <input type="date" class="form-control w-75 mx-auto" id="dia" name="dia" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+10 days')); ?>" required onkeydown="return false">
                     </div>
                     <div class="form-group">
                         <label for="hora" class="text-center">Hora:</label>
@@ -352,7 +352,7 @@ if(isset($_POST['mandar_exm']))
                     </div>
                     <div class="form-group">
                         <label for="ultimo_examen" class="text-center">Fecha del último examen:</label>
-                        <input type="date" class="form-control w-75 mx-auto" id="ultimo_examen" name="ultimo_examen" required>
+                        <input type="date" class="form-control w-75 mx-auto" id="ultimo_examen" name="ultimo_examen"   min="<?php echo date('Y-m-d', strtotime('-70 years'));?>" max="<?php echo date('Y-m-d', strtotime('today')); ?>" onkeydown="return false">
                     </div>
                     <div class="form-group">
                         <label for="uso_gotas" class="text-center">¿Usa gotas oculares?</label>
