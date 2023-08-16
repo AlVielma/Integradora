@@ -151,7 +151,7 @@ if(!empty($_POST)){
                             <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirma tu contraseña" value="<?php echo isset($_POST['confpassword']) ? $_POST['confpassword'] : ''; ?>">
                         </div>
                         <div class="text-center">
-                            <input class="btn btn-primary" type="submit" value="registro" name="verificar" >
+                            <input class="btn btn-light btn-outline-dark" type="submit" value="registro" name="verificar" >
                         </div>
                     </form>
                 </div>

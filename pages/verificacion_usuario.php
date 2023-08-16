@@ -111,7 +111,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
                             <input type="text" class="form-control" id="token" name="token" placeholder="Ingrese su código de verificación">
                         </div>
                         <div class="text-center">
-                            <input class="btn btn-primary" type="submit" value="Verificar" name="submit" onclick="markVerified()" >
+                            <input class="btn btn-light btn-outline-dark" type="submit" value="Verificar" name="submit" onclick="markVerified()" >
                         </div>
                         <?php if (!empty($message)) : ?>
                             <div class="alert alert-danger mt-3"><?php echo $message; ?></div>

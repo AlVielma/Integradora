@@ -113,7 +113,7 @@ if (isset($_SESSION['exito']) && $_SESSION['exito'] === true) {
                             <input type="password" class="form-control" id="confirmarcontraseña" name="confirmarcontraseña">
                         </div>
                         <div class="text-center">
-                            <input class="btn btn-primary" type="submit" value="Confirmar" name="submit">
+                            <input class="btn btn-light btn-outline-dark" type="submit" value="Confirmar" name="submit">
                         </div>
                     </form>
                 </div>
