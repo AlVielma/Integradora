@@ -70,6 +70,23 @@ class validacionproductos
         echo '</ul>';
         }
     }
+
+    function mayorq($string)
+    {
+        if($string>0)
+        {
+            return true;
+        }
+        return false;
+    }
+    function mayorq2($string)
+    {
+        if($string>=0)
+        {
+            return true;
+        }
+        return false;
+    }
     
     function filtrarString($string)
     {

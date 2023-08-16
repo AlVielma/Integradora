@@ -38,6 +38,14 @@ if(isset($_POST['editar']))
     {
       $errores[]="El precio debe ser numerico";
     }
+    if(!$validacion->mayorq2($stock))
+    {
+      $errores[]="El numero debe ser mayor o igual a 0";
+    }
+    if(!$validacion->mayorq($precio))
+    {
+      $errores[]="El precio debe ser mayor a 0";
+    }
     if (isset($_FILES['imagen']['name']) && !empty($_FILES['imagen']['name'])) {
       // Llamamos a la función validarExtensionImagen solo si hay información válida en $_FILES['imagen']
       if (!$validacion->validarExtensionImagen($_FILES['imagen'])) {
@@ -184,7 +192,7 @@ if(isset($_POST['editar']))
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script>
-        history.replaceState(null, null, location.pathname);
+       
     </script>
   </body>
 </html>

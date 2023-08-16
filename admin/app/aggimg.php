@@ -53,6 +53,15 @@ if (isset($_POST['agregar'])) {
         $errors[]="El stock debe ser numerico";
     }
 
+    if(!$validacion->mayorq($precio))
+    {
+      $errors[]="El numero debe ser mayor a 0";
+    }
+    if(!$validacion->mayorq2($stock))
+    {
+      $errors[]="El numero debe ser mayor o igual a 0";
+    }
+
     if (isset($_FILES['imagen']) && is_array($_FILES['imagen'])) {
         // Llamamos a la función validarExtensionImagen solo si hay información válida en $_FILES['imagen']
         if (!$validacion->validarExtensionImagen($_FILES['imagen'])) {
