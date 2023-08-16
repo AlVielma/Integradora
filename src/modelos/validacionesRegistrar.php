@@ -77,17 +77,7 @@ class validacionesRegistrar{
 
 
     }
-    /*public function verificarToken($email, $token, $con)
-    {
-        // Implementa la lógica para verificar el token en la base de datos
-        // Puedes usar una consulta SQL para buscar el token correspondiente al correo electrónico dado
-        // Si el token existe y es válido, devuelve true, de lo contrario, devuelve false
-        // Ejemplo (asumiendo que existe una tabla "Usuarios" con una columna "token"):
-        $sql = $con->prepare("SELECT * FROM USUARIOS WHERE email =? AND token = ?;");
-        $sql->execute([$email, $token]);
-        $sql->fetchColumn();
-        return $sql > 0;
-    }*/
+  
 
     
     public function verificarToken($id, $token, $con)
